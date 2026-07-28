@@ -1,0 +1,89 @@
+# Custom Fonts
+
+If text appears as solid black rectangles in the snapshots under `build/.widgetbook`,
+a `TextStyle` is naming a font family that is not registered in the test's font manifest.
+`flutter test` renders any family it cannot resolve with a placeholder font whose glyphs are filled boxes.
+
+<Info>
+  The same misconfiguration is invisible in the running app, where an unresolved
+  family silently falls back to a system font. Only the snapshot makes it
+  visible.
+</Info>
+
+## Reference Fonts by Their Registered Name
+
+Flutter registers a font family under a name that depends on which package declares it.
+
+| Font declared in                     | Registered as                | Correct `TextStyle`                                   |
+| ------------------------------------ | ---------------------------- | ----------------------------------------------------- |
+| the package you run tests from        | `MyFont`                     | `TextStyle(fontFamily: 'MyFont')`                     |
+| a package you depend on               | `packages/assets/MyFont`     | `TextStyle(fontFamily: 'MyFont', package: 'assets')`  |
+
+So a font declared in a shared package needs the `package` argument:
+
+```dart
+Text(
+  label,
+  style: const TextStyle(
+    fontFamily: 'My Custom Font',
+    package: 'assets',
+  ),
+)
+```
+
+A package cannot reference its own fonts this way — fonts declared by the package
+you run tests from are registered under the bare family name, and adding
+`package` makes them stop resolving.
+
+## Fonts Declared in Your App Package
+
+When your Widgetbook lives in a separate package that depends on your app, fonts
+declared in the app's `pubspec.yaml` are registered as `packages/my_app/MyFont`.
+Widget code using the bare `MyFont` renders correctly in the app but as rectangles
+in Widgetbook snapshots.
+
+Re-declare the family in your Widgetbook package's `pubspec.yaml`, pointing at the
+asset in the app package:
+
+```yaml
+flutter:
+  fonts:
+    - family: MyFont
+      fonts:
+        - asset: packages/my_app/fonts/MyFont-Regular.ttf
+        - asset: packages/my_app/fonts/MyFont-Bold.ttf
+          weight: 700
+```
+
+The family is then registered under the bare name your widgets already use.
+
+## Fonts Loaded at Runtime
+
+Packages that resolve fonts over the network, such as
+[`google_fonts`](https://pub.dev/packages/google_fonts), cannot fetch during tests.
+Bundle the font files as assets and await them before handing over to `testWidgetbook`:
+
+```dart
+import 'package:flutter_test/flutter_test.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:widgetbook/test.dart';
+
+import 'package:design-system/widgetbook.config.dart';
+
+Future<void> main() async {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  GoogleFonts.config.allowRuntimeFetching = false;
+  await GoogleFonts.pendingFonts([GoogleFonts.lobster()]);
+
+  await testWidgetbook(config);
+}
+```
+
+Without the `await`, the font is still loading when the snapshot is captured.
+
+## Material and Cupertino Fonts
+
+Flutter does not ship the default Material or Cupertino fonts to tests. Widgetbook
+supplies Roboto, so Material's default text renders. To snapshot with any other
+default font, add your own copy to your `pubspec.yaml`.
