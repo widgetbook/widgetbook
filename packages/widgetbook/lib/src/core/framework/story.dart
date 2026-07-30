@@ -101,8 +101,11 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     StoryArgs args,
   ) {
     final key = ValueKey(
-      Object.hashAll(
-        args.safeList.map((arg) => arg.toQueryGroup()),
+      Object.hash(
+        WidgetbookState.maybeOf(context)?.path,
+        Object.hashAll(
+          args.safeList.map((arg) => arg.toQueryGroup()),
+        ),
       ),
     );
 
