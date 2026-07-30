@@ -42,8 +42,9 @@ declared in the app's `pubspec.yaml` are registered as `packages/my_app/MyFont`.
 Widget code using the bare `MyFont` renders correctly in the app but as rectangles
 in Widgetbook snapshots.
 
-Re-declare the family in your Widgetbook package's `pubspec.yaml`, pointing at the
-asset in the app package:
+Either add the `package` argument as above, or re-declare the family in your
+Widgetbook package's `pubspec.yaml` so it is registered under the bare name your
+widgets already use:
 
 ```yaml
 flutter:
@@ -55,7 +56,18 @@ flutter:
           weight: 700
 ```
 
-The family is then registered under the bare name your widgets already use.
+A `packages/<package>/<path>` reference resolves against that package's `lib/`
+directory, so the font files must live under `lib/` in the package that ships
+them, at `my_app/lib/fonts/MyFont-Regular.ttf` for the example above. If they sit
+outside `lib/`, the build fails with
+`unable to locate asset entry in pubspec.yaml`.
+
+<Warning>
+  Do not reach for a relative path such as
+  `../my_app/fonts/MyFont-Regular.ttf` instead. `flutter test` reads it straight
+  from disk, so your snapshots look correct, but `flutter build` does not bundle
+  the file and the font silently falls back in the built Widgetbook app.
+</Warning>
 
 ## Fonts Loaded at Runtime
 
