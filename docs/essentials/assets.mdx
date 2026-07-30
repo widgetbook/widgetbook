@@ -1,54 +1,96 @@
 # Assets
 
 <Info>
-  If you have a separate package for your design system with its assets, you can
-  skip this guide, because the assets are already included in a separate
-  package.
+  If you already have a separate package holding your images and fonts, such as a
+  design system package, you can skip this guide.
 </Info>
 
-If your app have assets, and you want to display them in Widgetbook, you need to set the `package` parameter in the `Image.asset` constructor.
-But doing so will make the image not display in your app. To fix this, you need to convert your assets folder into a package as follows.
+Flutter registers an image or font declared by a package under a
+`packages/<package>/` prefix, and resolving it requires naming that package at the
+call site. A package cannot name itself, so adding `package: 'my_app'` to a
+resource your app declares makes it stop resolving in your app.
 
-1. Add a `pubspec.yaml` file in the root of your `assets` folder
+That means a resource declared in your app package cannot be referenced from both
+your app and your Widgetbook. Move it into a package that both depend on, and it
+gets one name that resolves in both.
 
-   <Info> No `dependencies` are needed</Info>
+<Tip>
+  If your team does not have a shared package yet, this is a good moment to create
+  one. Setting Widgetbook aside, a `design_system` package that owns your images,
+  fonts and theme keeps them from being copied between apps and gives you a single
+  place to change them. If you would rather start small, a package holding only
+  the assets works exactly the same way.
+</Tip>
 
-   ```yaml
-   name: assets
-   description: >
-     Holds the assets for the app. The assets are included in a
-     separate package, to be able to share it with Widgetbook app.
+<Steps>
+  <Step title="Create the package">
+    Add a `pubspec.yaml` next to your images and fonts. No `dependencies` are
+    needed.
 
-   version: 0.0.0
-   publish_to: none
+    ```yaml title="design_system/pubspec.yaml"
+    name: design_system
+    description: >
+      Holds the images and fonts for the app, in a separate package
+      so they can be shared with the Widgetbook app.
 
-   environment:
-     sdk: ">=3.1.0 <4.0.0"
+    version: 0.0.0
+    publish_to: none
 
-   flutter:
-     assets:
-       - .
-   ```
+    environment:
+      sdk: ">=3.1.0 <4.0.0"
 
-1. Add the `assets` package to your app and widgetbook `pubspec.yaml` files
+    flutter:
+      assets:
+        - .
+      fonts:
+        - family: My Custom Font
+          fonts:
+            - asset: fonts/MyCustomFont/MyCustomFont-Regular.otf
+            - asset: fonts/MyCustomFont/MyCustomFont-Bold.otf
+              weight: 700
+    ```
 
-   ```yaml title="pubspec.yaml"
-   dependencies:
-     assets:
-       path: assets
-   ```
+    Font paths are relative to the package root.
+  </Step>
 
-   ```yaml title="widgetbook/pubspec.yaml"
-   dependencies:
-     assets:
-       path: ../assets
-   ```
+  <Step title="Depend on it from both packages">
+    ```yaml title="pubspec.yaml"
+    dependencies:
+      design_system:
+        path: design_system
+    ```
 
-1. Use the `package` parameter in the `Image.asset` constructor whenever you want to display an image asset in your app
+    ```yaml title="widgetbook/pubspec.yaml"
+    dependencies:
+      design_system:
+        path: ../design_system
+    ```
+  </Step>
 
-   ```dart
-   Image.asset(
-     'assets/image.png',
-     package: 'assets',
-   )
-   ```
+  <Step title="Name the package at every call site">
+    ```dart
+    Image.asset(
+      'images/logo.png',
+      package: 'design_system',
+    )
+    ```
+
+    ```dart
+    Text(
+      label,
+      style: const TextStyle(
+        fontFamily: 'My Custom Font',
+        package: 'design_system',
+      ),
+    )
+    ```
+
+    The `package` argument names the package that **declares** the resource, never
+    the one referencing it, so it stays the same in your app, in your design
+    system, and in your Widgetbook. A package that is only a transitive dependency
+    still works.
+  </Step>
+</Steps>
+
+See [Fonts](/essentials/fonts) for font loading concerns that are not about
+packaging, such as `google_fonts` and Flutter's default fonts.

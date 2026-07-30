@@ -166,10 +166,6 @@
               "href": "/testing/run-scenarios"
             },
             {
-              "title": "Custom Fonts",
-              "href": "/testing/custom-fonts"
-            },
-            {
               "title": "Layout Constraining",
               "href": "/testing/layout-constraining"
             }
