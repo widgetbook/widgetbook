@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **FEAT**: Add `cloud review skip`, which resolves the Widgetbook Review check on pull requests that upload no build.
 - **FIX**: Append a missing trailing slash to the `--api-url` value of `cloud build push`, so custom API URLs work without a trailing slash. ([#1976](https://github.com/widgetbook/widgetbook/pull/1976))
 
 ## 4.0.0-beta.10

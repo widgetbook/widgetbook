@@ -76,3 +76,66 @@ This prevents PRs from being merged until the Widgetbook review is accepted.
     <Image src="/assets/cloud/setup/github/result.png" />
   </Step>
 </Steps>
+
+<Warning>
+  Only make the `Widgetbook Review` check required.
+  The `Widgetbook Build` check is reported per uploaded build, so requiring it blocks every pull request that uploads none.
+</Warning>
+
+## Pull requests without a build
+
+Widgetbook reports the review check once it can compare a build against the base branch.
+On a pull request that touches no UI code, and therefore uploads no build, the check is never reported and the pull request stays blocked with nothing to click.
+
+To resolve the check on those pull requests, let your CI say that no build is coming:
+
+<Steps>
+  <Step title="Allow CI to skip the review">
+    In your project's *General* settings, enable *Allow CI to skip the review check*.
+
+    This is off by default because it lets anyone who can run CI with the project API key waive the review — keep your workflow files protected accordingly.
+  </Step>
+  <Step title="Call the CLI when no build is uploaded">
+    In the branch of your workflow that skips the Widgetbook build, run [`cloud review skip`](/cli/commands/cloud-review-skip) instead:
+
+    ```yaml
+    permissions:
+      contents: read
+    jobs:
+      widgetbook:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v4
+          - uses: dorny/paths-filter@v3
+            id: filter
+            with:
+              filters: |
+                ui:
+                  - 'lib/**'
+                  - 'packages/design_system/**'
+
+          # ... build and `widgetbook cloud build push` when steps.filter.outputs.ui == 'true'
+
+          - name: Skip Widgetbook review
+            if: steps.filter.outputs.ui == 'false'
+            run: |
+              dart pub global activate widgetbook_cli
+              widgetbook cloud review skip \
+                --api-key ${{ secrets.WIDGETBOOK_API_KEY }} \
+                --pr ${{ github.event.pull_request.number }} \
+                --sha ${{ github.event.pull_request.head.sha }} \
+                --reason "No UI changes"
+    ```
+  </Step>
+</Steps>
+
+<Note>
+  A skip applies only to the commit it was issued for.
+  Pushing a new commit leaves the review check unreported again, so the pull request blocks until that commit is either built or skipped in turn.
+</Note>
+
+If your repository contains several Widgetbook projects, each one posts its own `Widgetbook Review (<project>)` check.
+Run the command once per project, with that project's API key.
+
+Once the ruleset is active, pull requests that were already open have no review check reported yet.
+They stay blocked until their next push, or until CI runs again for them.

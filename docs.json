@@ -635,6 +635,10 @@
               "href": "/cli/commands/cloud-build-push"
             },
             {
+              "title": "cloud review skip",
+              "href": "/cli/commands/cloud-review-skip"
+            },
+            {
               "title": "coverage",
               "href": "/cli/commands/coverage"
             }

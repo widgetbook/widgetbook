@@ -4,6 +4,7 @@ import 'package:args/args.dart';
 
 import '../core/core.dart';
 import 'build_push.dart';
+import 'review_skip.dart';
 
 class CloudCommand extends CliVoidCommand {
   CloudCommand({
@@ -18,6 +19,18 @@ class CloudCommand extends CliVoidCommand {
         description: 'Manage your Widgetbook Cloud builds.',
         commands: [
           BuildPushCommand(
+            context: context,
+          ),
+        ],
+      ),
+    );
+
+    addSubcommand(
+      CliCommandsGroup(
+        name: 'review',
+        description: 'Manage your Widgetbook Cloud reviews.',
+        commands: [
+          ReviewSkipCommand(
             context: context,
           ),
         ],
