@@ -107,6 +107,39 @@ void main() {
           ).called(1);
         },
       );
+
+      testWidgets(
+        'when it is removed from the tree, '
+        'then its controller and focus node are disposed',
+        (tester) async {
+          await tester.pumpWidgetWithMaterialApp(
+            const SearchField(),
+          );
+
+          final textField = tester.widget<TextField>(
+            find.byType(TextField),
+          );
+
+          final controller = textField.controller!;
+          final focusNode = textField.focusNode!;
+
+          await tester.pumpWidgetWithMaterialApp(
+            const SizedBox(),
+          );
+
+          expect(
+            () => controller.addListener(() {}),
+            throwsFlutterError,
+            reason: 'TextEditingController was not disposed',
+          );
+
+          expect(
+            () => focusNode.addListener(() {}),
+            throwsFlutterError,
+            reason: 'FocusNode was not disposed',
+          );
+        },
+      );
     },
   );
 }
