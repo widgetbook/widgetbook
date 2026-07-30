@@ -31,7 +31,7 @@ Text(
 )
 ```
 
-A package cannot reference its own fonts this way — fonts declared by the package
+A package cannot reference its own fonts this way. Fonts declared by the package
 you run tests from are registered under the bare family name, and adding
 `package` makes them stop resolving.
 
@@ -42,32 +42,13 @@ declared in the app's `pubspec.yaml` are registered as `packages/my_app/MyFont`.
 Widget code using the bare `MyFont` renders correctly in the app but as rectangles
 in Widgetbook snapshots.
 
-Either add the `package` argument as above, or re-declare the family in your
-Widgetbook package's `pubspec.yaml` so it is registered under the bare name your
-widgets already use:
+Adding `package: 'my_app'` is not a fix here: it resolves in Widgetbook but stops
+resolving in the app itself, because a package's own fonts are registered under
+the bare name.
 
-```yaml
-flutter:
-  fonts:
-    - family: MyFont
-      fonts:
-        - asset: packages/my_app/fonts/MyFont-Regular.ttf
-        - asset: packages/my_app/fonts/MyFont-Bold.ttf
-          weight: 700
-```
-
-A `packages/<package>/<path>` reference resolves against that package's `lib/`
-directory, so the font files must live under `lib/` in the package that ships
-them, at `my_app/lib/fonts/MyFont-Regular.ttf` for the example above. If they sit
-outside `lib/`, the build fails with
-`unable to locate asset entry in pubspec.yaml`.
-
-<Warning>
-  Do not reach for a relative path such as
-  `../my_app/fonts/MyFont-Regular.ttf` instead. `flutter test` reads it straight
-  from disk, so your snapshots look correct, but `flutter build` does not bundle
-  the file and the font silently falls back in the built Widgetbook app.
-</Warning>
+Move the font declaration into a package that both your app and your Widgetbook
+depend on, and reference it with `package` everywhere. The family then has one
+declaration and one registered name in both.
 
 ## Fonts Loaded at Runtime
 
