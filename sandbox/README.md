@@ -22,3 +22,11 @@ Widgetbook's own "Widgetbook" (i.e. a catalog for widgets built inside `widgetbo
     ```bash
     flutter run lib/widgetbook.dart
     ```
+
+    On a screen narrower than 840 logical pixels, Widgetbook renders the
+    `MobileLayout`, which shows the navigation, addons and knobs panels in a
+    bottom sheet. To exercise that layout on iOS:
+
+    ```bash
+    flutter run -d <ios-device-or-simulator> lib/widgetbook.dart
+    ```
