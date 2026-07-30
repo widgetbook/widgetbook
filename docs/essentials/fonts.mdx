@@ -79,10 +79,3 @@ Both mistakes produce rectangles: omitting `package` for a font a dependency
 declares, and passing `package` for one the package you run tests from declares.
 Move shared fonts into their own package and name it at every call site, as
 described in [Assets](/essentials/assets).
-
-<Warning>
-  Do not point at another package's font file with a relative path such as
-  `../design_system/fonts/MyFont-Regular.otf`. `flutter test` reads it straight
-  from disk, so snapshots look correct, but `flutter build` does not bundle the
-  file and the font silently falls back in the built Widgetbook app.
-</Warning>
