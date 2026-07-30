@@ -1,12 +1,81 @@
 # Fonts
 
-If you are using [`google_fonts`](https://pub.dev/packages/google_fonts) package to load custom fonts in your app, you need to pre-load the fonts in Widgetbook, to avoid visual font swaps.
+## Fonts From a Shared Package
 
-```dart title=widgetbook/lib/main.dart
+Fonts declared by a package are registered under a `packages/<package>/` prefix, so
+every `TextStyle` naming them has to pass that package:
+
+```dart
+TextStyle(fontFamily: 'My Custom Font', package: 'design_system')
+```
+
+See [Assets](/essentials/assets) for how to set that package up so the same font
+resolves in your app and in your Widgetbook.
+
+## Fonts Loaded at Runtime
+
+[`google_fonts`](https://pub.dev/packages/google_fonts) resolves a font the first
+time it is used. In the Widgetbook app that shows up as a visible font swap, so
+preload the fonts you use:
+
+```dart title=widgetbook/lib/widgetbook.dart
 Future<void> main() async {
   // TODO: replace `lato` with your desired font
   WidgetsFlutterBinding.ensureInitialized(); // [!code highlight]
   await GoogleFonts.pendingFonts([GoogleFonts.lato()]); // [!code highlight]
-  runApp(const WidgetbookApp());
+  runWidgetbook(config);
 }
 ```
+
+Tests cannot reach the network at all, so bundle the font files in a `google_fonts`
+directory, declare it under `assets`, and turn runtime fetching off:
+
+```yaml title=widgetbook/pubspec.yaml
+flutter:
+  assets:
+    - google_fonts/
+```
+
+```dart title=widgetbook/test/widgetbook_test.dart
+Future<void> main() async {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  GoogleFonts.config.allowRuntimeFetching = false; // [!code highlight]
+  await GoogleFonts.pendingFonts([GoogleFonts.lato()]); // [!code highlight]
+
+  await testWidgetbook(config);
+}
+```
+
+Without the `await`, the font is still loading when the snapshot is captured.
+
+## Material and Cupertino Fonts
+
+Flutter does not ship the default Material or Cupertino fonts to tests. Widgetbook
+supplies Roboto, so Material's default text renders. To snapshot with a different
+default font, add your own copy to your `pubspec.yaml`.
+
+## Text Renders as Black Rectangles in Snapshots
+
+If text appears as solid black rectangles in the snapshots under
+`build/.widgetbook`, a `TextStyle` is naming a font family that is not registered
+in the test's font manifest. `flutter test` renders any family it cannot resolve
+with a placeholder font whose glyphs are filled boxes.
+
+<Info>
+  The same misconfiguration is invisible when your app runs, because there an
+  unresolved family falls back to a system font. Only the snapshot makes it
+  visible.
+</Info>
+
+Check the family name against how it was declared:
+
+| Font declared in                   | Registered as                    | Correct `TextStyle`                                     |
+| ---------------------------------- | -------------------------------- | ------------------------------------------------------- |
+| the package you run tests from     | `MyFont`                         | `fontFamily: 'MyFont'`                                  |
+| a package you depend on            | `packages/design_system/MyFont`  | `fontFamily: 'MyFont', package: 'design_system'`        |
+
+Both mistakes produce rectangles: omitting `package` for a font a dependency
+declares, and passing `package` for one the package you run tests from declares.
+Move shared fonts into their own package and name it at every call site, as
+described in [Assets](/essentials/assets).
