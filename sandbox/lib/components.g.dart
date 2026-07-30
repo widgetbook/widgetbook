@@ -12,7 +12,6 @@ import 'package:sandbox/[sam]/generic_num.stories.dart' as _sandbox__sam__generi
 import 'package:sandbox/[sam]/generic_text.stories.dart' as _sandbox__sam__generic_text_stories;
 import 'package:sandbox/[sam]/label_badge.stories.dart' as _sandbox__sam__label_badge_stories;
 import 'package:sandbox/[sam]/types_table.stories.dart' as _sandbox__sam__types_table_stories;
-import 'package:sandbox/brewing/brewing_screen.stories.dart' as _sandbox_brewing_brewing_screen_stories;
 import 'package:sandbox/settings/nullable_setting.stories.dart' as _sandbox_settings_nullable_setting_stories;
 
 final components = <_widgetbook.Component>[
@@ -22,6 +21,5 @@ final components = <_widgetbook.Component>[
   _sandbox__sam__generic_text_stories.GenericTextComponent,
   _sandbox__sam__label_badge_stories.LabelBadgeComponent,
   _sandbox__sam__types_table_stories.TypesTableComponent,
-  _sandbox_brewing_brewing_screen_stories.BrewingScreenComponent,
   _sandbox_settings_nullable_setting_stories.NullableSettingComponent,
 ];

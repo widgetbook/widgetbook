@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: Rebuild the workbench preview when switching between stories of the same component, instead of keeping the previously selected story's state. ([#1994](https://github.com/widgetbook/widgetbook/pull/1994))
+
 ## 4.0.0-beta.10
 
 - **FEAT**: Add `excludeFromTests` to `Story` and `Scenario` to skip a story or scenario during `testWidgetbook` snapshot generation while keeping it browsable in the app. Excluded items are reported as skipped by `flutter test`. ([#1978](https://github.com/widgetbook/widgetbook/pull/1978))

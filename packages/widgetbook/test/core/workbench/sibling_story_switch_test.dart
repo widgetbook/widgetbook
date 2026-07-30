@@ -9,16 +9,17 @@ import 'package:widgetbook/widgetbook.dart';
 import '../../helper/helper.dart';
 
 // Regression for https://github.com/widgetbook/widgetbook/issues/1984: the
-// preview stays stuck on the previous story when switching between two stories
-// of the same component, and only updates after visiting a story under another
+// preview stayed stuck on the previous story when switching between two stories
+// of the same component, and only updated after visiting a story under another
 // path and coming back.
 //
-// `Story.defaultSetup` keys the use case subtree by the story's args alone, so
-// two sibling stories that build the same widget with equal args (e.g. all args
-// are `Arg.fixed`, which `safeList` drops) share a key. Flutter then reuses the
-// element, and the use case keeps the `State` of the previously selected story.
+// `Story.defaultSetup` used to key the use case subtree by the story's args
+// alone, so two sibling stories that build the same widget with equal args
+// (e.g. all args are `Arg.fixed`, which `safeList` drops) shared a key. Flutter
+// then reused the element, and the use case kept the `State` of the previously
+// selected story.
 //
-// Sibling stories are the remaining case after
+// Sibling stories were the remaining case after
 // https://github.com/widgetbook/widgetbook/pull/1948, which fixed the preview
 // getting pinned inside the `Viewport`'s nested `Navigator` for every story.
 
@@ -166,9 +167,8 @@ void main() {
         },
       );
 
-      // The detour reported as a workaround in the issue: the story under
-      // another path builds a different widget, which drops the reused element
-      // and lets the next sibling story build from scratch.
+      // The detour reported as a workaround in the issue, which kept working
+      // while the direct switch was broken.
       testWidgets(
         'when navigating to a story under another path and back, '
         'then the preview shows the newly selected story',
