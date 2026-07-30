@@ -10,7 +10,9 @@ void main() {
   group(
     '$MobileLayout',
     () {
-      final iOS = TargetPlatformVariant.only(TargetPlatform.iOS);
+      // The reported freeze in #1989 was iOS-only, so every case runs on
+      // all platforms to show whether the behaviour is platform-specific.
+      final allPlatforms = TargetPlatformVariant.all();
 
       Future<void> pumpMobileWidgetbook(WidgetTester tester) async {
         tester.view.physicalSize = const Size(400, 800);
@@ -50,7 +52,7 @@ void main() {
 
           expect(find.byType(NavigationPanel), findsNothing);
         },
-        variant: iOS,
+        variant: allPlatforms,
       );
 
       testWidgets(
@@ -81,7 +83,7 @@ void main() {
 
           expect(textField.controller?.text, 'Folder 2');
         },
-        variant: iOS,
+        variant: allPlatforms,
       );
     },
   );
