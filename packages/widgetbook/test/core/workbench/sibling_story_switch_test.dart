@@ -8,23 +8,12 @@ import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';
 
-// Regression for https://github.com/widgetbook/widgetbook/issues/1984: the
-// preview stayed stuck on the previous story when switching between two stories
-// of the same component, and only updated after visiting a story under another
-// path and coming back.
-//
-// `Story.defaultSetup` used to key the use case subtree by the story's args
-// alone, so two sibling stories that build the same widget with equal args
-// (e.g. all args are `Arg.fixed`, which `safeList` drops) shared a key. Flutter
-// then reused the element, and the use case kept the `State` of the previously
-// selected story.
-//
-// Sibling stories were the remaining case after
-// https://github.com/widgetbook/widgetbook/pull/1948, which fixed the preview
-// getting pinned inside the `Viewport`'s nested `Navigator` for every story.
+// Regression for https://github.com/widgetbook/widgetbook/issues/1984: two
+// stories of the same component shared a `Story.defaultSetup` key when their
+// args were equal, so the preview kept the previous story's state.
 
-/// A screen that reads its input in `initState`, like screens that set up
-/// controllers or animations once for the state they were built with.
+/// Reads its input in `initState`, like screens that set up controllers or
+/// animations once.
 class _Screen extends StatefulWidget {
   const _Screen({required this.status});
 
@@ -87,8 +76,7 @@ void main() {
     flushing = _ScreenStory(name: 'Flushing');
     cleaning = _OtherStory(name: 'Default');
 
-    // Building the components wires up `story.component`,
-    // so that `story.path` resolves below.
+    // Wires up `story.component`, so that `story.path` resolves below.
     final brewingScreen = Component<_Screen, _ScreenArgs>(
       path: 'brewing',
       name: 'BrewingScreen',
@@ -133,8 +121,8 @@ void main() {
         },
       );
 
-      // Pumped through the full production stack: `MaterialApp.router` ->
-      // `AppRouterDelegate` -> `ResponsiveLayout` -> `Workbench`.
+      // Full stack: `MaterialApp.router` -> `AppRouterDelegate` ->
+      // `ResponsiveLayout` -> `Workbench`.
       testWidgets(
         'given the full router stack, '
         'when navigating to a sibling story, '
@@ -167,8 +155,7 @@ void main() {
         },
       );
 
-      // The detour reported as a workaround in the issue, which kept working
-      // while the direct switch was broken.
+      // The workaround reported in the issue.
       testWidgets(
         'when navigating to a story under another path and back, '
         'then the preview shows the newly selected story',

@@ -102,10 +102,6 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   ) {
     final key = ValueKey(
       Object.hash(
-        // Args alone don't identify a story: two stories of the same component
-        // can build the same widget with equal args, e.g. when all args are
-        // `Arg.fixed`, which [StoryArgs.safeList] drops. Without the path they
-        // would share a key, and the subtree would be reused across them.
         WidgetbookState.maybeOf(context)?.path,
         Object.hashAll(
           args.safeList.map((arg) => arg.toQueryGroup()),
