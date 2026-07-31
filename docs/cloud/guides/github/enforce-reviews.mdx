@@ -119,7 +119,7 @@ To resolve the check on those pull requests, let your CI say that no build is co
           - name: Skip Widgetbook review
             if: steps.filter.outputs.ui == 'false'
             run: |
-              dart pub global activate widgetbook_cli
+              dart pub global activate widgetbook_cli {{ versions.cli }}
               widgetbook cloud review skip \
                 --api-key ${{ secrets.WIDGETBOOK_API_KEY }} \
                 --pr ${{ github.event.pull_request.number }} \
