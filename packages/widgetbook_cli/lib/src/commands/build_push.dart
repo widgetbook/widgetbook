@@ -83,9 +83,6 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         hide: true,
         callback: (url) {
           if (url == null) return;
-          // Dio joins relative request paths (e.g. `v4/builds`) onto
-          // [baseUrl] via string concatenation, so a missing trailing
-          // slash would corrupt the URL.
           this.cloudClient.client.options.baseUrl = url.endsWith('/')
               ? url
               : '$url/';
