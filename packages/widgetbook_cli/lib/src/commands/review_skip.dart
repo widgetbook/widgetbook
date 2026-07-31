@@ -108,7 +108,7 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
       );
 
       progress.complete(
-        '${response.context}: ${response.state} '
+        'Skipped Widgetbook review for PR #${response.prNumber} '
         'on ${response.sha.substring(0, 7)}',
       );
 

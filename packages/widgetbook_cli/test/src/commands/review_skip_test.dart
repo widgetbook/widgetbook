@@ -113,7 +113,6 @@ void main() {
           () => client.skipReview(any(), any()),
         ).thenAnswer(
           (_) async => const SkipReviewResponse(
-            context: 'Widgetbook Review (my-app)',
             sha: headSha,
             state: 'success',
             prNumber: 123,
