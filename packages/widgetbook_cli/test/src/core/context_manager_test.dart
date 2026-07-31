@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:file/memory.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 import 'package:widgetbook_cli/widgetbook_cli.dart';
@@ -121,65 +118,6 @@ void main() {
           ),
         ),
       );
-    });
-
-    test('GitHub pull request', () async {
-      // On a pull request event GITHUB_SHA is the ephemeral merge commit; the
-      // head Widgetbook tracks only exists in the event payload.
-      const mergeSha = '0000000111112222233333444445555566666777';
-      final fileSystem = MemoryFileSystem.test();
-      final eventPath = '/github/workflow/event.json';
-
-      await fileSystem.file(eventPath).create(recursive: true);
-      await fileSystem
-          .file(eventPath)
-          .writeAsString(
-            jsonEncode({
-              'pull_request': {
-                'number': 123,
-                'head': {'sha': sha},
-              },
-            }),
-          );
-
-      ciManager.mock(isGitHub: true);
-      when(() => platform.environment).thenReturn({
-        'GITHUB_ACTOR': userName,
-        'GITHUB_REPOSITORY': repoName,
-        'GITHUB_SHA': mergeSha,
-        'GITHUB_REF': 'refs/pull/123/merge',
-        'GITHUB_EVENT_PATH': eventPath,
-      });
-
-      final context = await ContextManager(
-        ciManager: ciManager,
-        platform: platform,
-        fileSystem: fileSystem,
-      ).load(repository);
-
-      expect(context.providerPrNumber, equals(123));
-      expect(context.providerPrHeadSha, equals(sha));
-      expect(context.providerSha, equals(mergeSha));
-    });
-
-    test('GitHub pull request with an unreadable event payload', () async {
-      ciManager.mock(isGitHub: true);
-      when(() => platform.environment).thenReturn({
-        'GITHUB_ACTOR': userName,
-        'GITHUB_REPOSITORY': repoName,
-        'GITHUB_SHA': sha,
-        'GITHUB_REF': 'refs/pull/123/merge',
-        'GITHUB_EVENT_PATH': '/does/not/exist.json',
-      });
-
-      final context = await ContextManager(
-        ciManager: ciManager,
-        platform: platform,
-        fileSystem: MemoryFileSystem.test(),
-      ).load(repository);
-
-      expect(context.providerPrNumber, equals(123));
-      expect(context.providerPrHeadSha, isNull);
     });
 
     test('GitLab', () {

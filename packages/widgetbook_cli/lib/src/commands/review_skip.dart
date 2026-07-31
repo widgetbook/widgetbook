@@ -28,12 +28,14 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
       ..addOption(
         'pr',
         help: 'Pull request number (e.g. 123)',
+        mandatory: true,
       )
       ..addOption(
         'sha',
         help:
             'Head commit SHA of the pull request. Must be the head commit, '
             'not the merge commit your CI checks out by default.',
+        mandatory: true,
       )
       ..addOption(
         'reason',
@@ -57,36 +59,24 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
     ArgResults results,
   ) {
     final apiKey = results['api-key'] as String;
+    final prOption = results['pr'] as String;
+    final prNumber = int.tryParse(prOption);
 
-    final prOption = results['pr'] as String?;
-    final prNumber = prOption != null
-        ? int.tryParse(prOption)
-        : context.providerPrNumber;
-
-    if (prOption != null && prNumber == null) {
+    if (prNumber == null) {
       throw CliException(
         'The option pr must be a number, got "$prOption".',
         ExitCode.data.code,
       );
     }
 
-    if (prNumber == null) {
-      throw MissingOptionException('pr');
-    }
-
-    // Never falls back to `context.providerSha`: on a pull request event that
-    // is the merge commit, which Widgetbook does not track as the head, so
-    // every skip would be rejected as stale.
-    final sha = results['sha'] as String? ?? context.providerPrHeadSha;
-
-    if (sha == null) {
-      throw MissingOptionException('sha');
-    }
-
+    // Both the pull request and its head commit are passed explicitly rather
+    // than read from the environment: every CI provider names them
+    // differently, and several expose a merge commit where the head is
+    // expected, which Widgetbook would reject as a stale SHA.
     return ReviewSkipArgs(
       apiKey: apiKey,
       prNumber: prNumber,
-      sha: sha,
+      sha: results['sha'] as String,
       reason: results['reason'] as String?,
     );
   }

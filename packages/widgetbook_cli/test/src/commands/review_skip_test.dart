@@ -15,7 +15,6 @@ void main() {
 
   group('$ReviewSkipCommand', () {
     const headSha = '832e76a9899f560a90ffd62ae2ce83bbeff58f54';
-    const mergeSha = '0000000111112222233333444445555566666777';
 
     late Logger logger;
     late Progress progress;
@@ -34,13 +33,9 @@ void main() {
       command = ReviewSkipCommand(context: context, logger: logger);
 
       when(() => results['api-key']).thenReturn('key');
-      when(() => results['pr']).thenReturn(null);
-      when(() => results['sha']).thenReturn(null);
+      when(() => results['pr']).thenReturn('123');
+      when(() => results['sha']).thenReturn(headSha);
       when(() => results['reason']).thenReturn(null);
-
-      when(() => context.providerPrNumber).thenReturn(null);
-      when(() => context.providerPrHeadSha).thenReturn(null);
-      when(() => context.providerSha).thenReturn(null);
     });
 
     group('parseResults', () {
@@ -55,38 +50,6 @@ void main() {
         expect(args.prNumber, equals(123));
         expect(args.sha, equals(headSha));
         expect(args.reason, equals('No UI changes'));
-      });
-
-      test('falls back to the pull request detected from CI', () async {
-        when(() => context.providerPrNumber).thenReturn(456);
-        when(() => context.providerPrHeadSha).thenReturn(headSha);
-
-        final args = await command.parseResults(context, results);
-
-        expect(args.prNumber, equals(456));
-        expect(args.sha, equals(headSha));
-      });
-
-      test('never falls back to the merge commit', () async {
-        // On a pull request event `providerSha` is the merge commit, which
-        // Widgetbook does not track as the head. Defaulting to it would make
-        // every skip fail as a stale SHA.
-        when(() => context.providerPrNumber).thenReturn(456);
-        when(() => context.providerSha).thenReturn(mergeSha);
-
-        expect(
-          () => command.parseResults(context, results),
-          throwsA(isA<MissingOptionException>()),
-        );
-      });
-
-      test('throws when no pull request can be resolved', () async {
-        when(() => results['sha']).thenReturn(headSha);
-
-        expect(
-          () => command.parseResults(context, results),
-          throwsA(isA<MissingOptionException>()),
-        );
       });
 
       test('throws when the pull request number is not a number', () async {

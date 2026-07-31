@@ -18,15 +18,14 @@ widgetbook cloud review skip --api-key <API_KEY> --pr 123 --reason "No UI change
 
 The CLI accepts the following arguments.
 
-| Argument    | Mandatory | Default\*                       | Description                                            |
-| ----------- | --------- | ------------------------------- | ------------------------------------------------------ |
-| `--api-key` | ✅        | -                               | The project specific API key for Widgetbook Cloud.     |
-| `--pr`      | ➖        | Pull request number from CI     | The number of the pull request to skip the review for. |
-| `--sha`     | ➖        | Head commit of the pull request | The head commit SHA of the pull request.               |
-| `--reason`  | ➖        | -                               | Shown in the commit status.                            |
+| Argument    | Mandatory | Description                                            |
+| ----------- | --------- | ------------------------------------------------------ |
+| `--api-key` | ✅        | The project specific API key for Widgetbook Cloud.     |
+| `--pr`      | ✅        | The number of the pull request to skip the review for. |
+| `--sha`     | ✅        | The head commit SHA of the pull request.               |
+| `--reason`  | ➖        | Shown in the commit status.                            |
 
-_\* These defaults are only resolved on GitHub Actions.
-On other CI providers, pass `--pr` and `--sha` explicitly._
+The pull request and its head commit are passed explicitly because every CI provider exposes them under different variables, and several expose a merge commit where the head commit is expected.
 
 <Warning>
   `--sha` must be the **head** commit of the pull request, not the merge commit.
