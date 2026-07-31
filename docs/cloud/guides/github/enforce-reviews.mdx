@@ -96,36 +96,17 @@ To resolve the check on those pull requests, let your CI say that no build is co
     This is off by default because it lets anyone who can run CI with the project API key waive the review — keep your workflow files protected accordingly.
   </Step>
   <Step title="Call the CLI when no build is uploaded">
-    In the branch of your workflow that skips the Widgetbook build, run [`cloud review skip`](/cli/commands/cloud-review-skip) instead:
+    In the branch of your pipeline that skips the Widgetbook build, run [`cloud review skip`](/cli/commands/cloud-review-skip) instead:
 
-    ```yaml
-    permissions:
-      contents: read
-    jobs:
-      widgetbook:
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v4
-          - uses: dorny/paths-filter@v3
-            id: filter
-            with:
-              filters: |
-                ui:
-                  - 'lib/**'
-                  - 'packages/design_system/**'
-
-          # ... build and `widgetbook cloud build push` when steps.filter.outputs.ui == 'true'
-
-          - name: Skip Widgetbook review
-            if: steps.filter.outputs.ui == 'false'
-            run: |
-              dart pub global activate widgetbook_cli {{ versions.cli }}
-              widgetbook cloud review skip \
-                --api-key ${{ secrets.WIDGETBOOK_API_KEY }} \
-                --pr ${{ github.event.pull_request.number }} \
-                --sha ${{ github.event.pull_request.head.sha }} \
-                --reason "No UI changes"
+    ```bash
+    widgetbook cloud review skip \
+      --api-key <API_KEY> \
+      --pr <PULL_REQUEST_NUMBER> \
+      --sha <HEAD_COMMIT_SHA> \
+      --reason "No UI changes"
     ```
+
+    Pass the head commit of the pull request, not the merge commit that your CI checks out by default.
   </Step>
 </Steps>
 
