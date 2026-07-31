@@ -84,10 +84,10 @@ This prevents PRs from being merged until the Widgetbook review is accepted.
 
 ## Pull requests without a build
 
-Widgetbook reports the review check once it can compare a build against the base branch.
-On a pull request that touches no UI code, and therefore uploads no build, the check is never reported and the pull request stays blocked with nothing to click.
+A pull request that touches no UI code uploads no build, so Widgetbook never reports the review check for it.
+With the ruleset active, those pull requests stay blocked with nothing to click.
 
-To resolve the check on those pull requests, let your CI say that no build is coming:
+To resolve the check on them, let your CI declare that no build is coming:
 
 <Steps>
   <Step title="Allow CI to skip the review">
@@ -96,27 +96,9 @@ To resolve the check on those pull requests, let your CI say that no build is co
     This is off by default because it lets anyone who can run CI with the project API key waive the review — keep your workflow files protected accordingly.
   </Step>
   <Step title="Call the CLI when no build is uploaded">
-    In the branch of your pipeline that skips the Widgetbook build, run [`cloud review skip`](/cli/commands/cloud-review-skip) instead:
-
-    ```bash
-    widgetbook cloud review skip \
-      --api-key <API_KEY> \
-      --pr <PULL_REQUEST_NUMBER> \
-      --sha <HEAD_COMMIT_SHA> \
-      --reason "No UI changes"
-    ```
-
-    Pass the head commit of the pull request, not the merge commit that your CI checks out by default.
+    In the branch of your pipeline that skips the Widgetbook build, run [`cloud review skip`](/cli/commands/cloud-review-skip) instead.
   </Step>
 </Steps>
-
-<Note>
-  A skip applies only to the commit it was issued for.
-  Pushing a new commit leaves the review check unreported again, so the pull request blocks until that commit is either built or skipped in turn.
-</Note>
-
-If your repository contains several Widgetbook projects, each one posts its own `Widgetbook Review (<project>)` check.
-Run the command once per project, with that project's API key.
 
 Once the ruleset is active, pull requests that were already open have no review check reported yet.
 They stay blocked until their next push, or until CI runs again for them.
