@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: Append a missing trailing slash to the `--api-url` value of `cloud build push`, so custom API URLs work without a trailing slash. ([#1976](https://github.com/widgetbook/widgetbook/pull/1976))
+
 ## 4.0.0-beta.10
 
 - **CHORE**: Align version with `widgetbook` so both packages share `4.0.0-beta.10`.

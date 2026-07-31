@@ -83,7 +83,9 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         hide: true,
         callback: (url) {
           if (url == null) return;
-          this.cloudClient.client.options.baseUrl = url;
+          this.cloudClient.client.options.baseUrl = url.endsWith('/')
+              ? url
+              : '$url/';
         },
       )
       ..addFlag(
