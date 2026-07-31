@@ -69,10 +69,6 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
       );
     }
 
-    // Both the pull request and its head commit are passed explicitly rather
-    // than read from the environment: every CI provider names them
-    // differently, and several expose a merge commit where the head is
-    // expected, which Widgetbook would reject as a stale SHA.
     return ReviewSkipArgs(
       apiKey: apiKey,
       prNumber: prNumber,
