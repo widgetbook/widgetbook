@@ -59,13 +59,28 @@ A review happens in your browser. Open it, look at each changed screen, compare 
 
 ## What to look for
 
-A review that reaches you should already contain only intentional changes. Judge whether they are right:
+A review that reaches you should already contain only intentional changes. Your job is to judge whether they are right.
+
+You can only review a state that was captured as a snapshot. If a state you expect is missing from the diff, that is itself a finding. Ask for the scenario to be added.
+
+### Confirm against the design
+
+Check these directly in the diff, comparing each snapshot against Figma:
 
 - **States.** Are empty, loading, error, selected, and disabled states all correct, not just the default?
-- **Content extremes.** Does it hold up with very long text, very short text, missing values, and large numbers?
-- **Dark mode.** Does it look right in both light and dark, not just the one it was built in?
+- **Content extremes.** Does it hold with very long text, very short text, missing values, and large numbers?
+- **Dark mode.** Does it look right in light and dark, not just the one it was built in?
 - **Text scaling.** Does the layout survive larger accessibility text sizes without clipping or overlap?
 - **Spacing.** Is padding, margin, and alignment consistent with the design and with neighbours?
-- **Token usage.** Do colours, typography, and spacing come from design tokens, not one-off values?
-- **Design system reuse.** Does it reuse the right shared component instead of reinventing one?
-- **Accessibility.** Are semantics, labels, and focus order correct, not just the pixels?
+- **Colour and type.** Do fills, text colours, and type styles match the design exactly, with no near-misses?
+
+### Flag, then confirm in code
+
+A screenshot shows the result, not how it was built. You cannot see from the image whether a value is a design token or whether the real shared component was used. What you can see is a mismatch, and a mismatch is your signal:
+
+- **Token usage.** A colour, spacing, or type value that is close but not exact usually means a raw value slipped in instead of the token. Comment on it. Code review confirms the token.
+- **Design system reuse.** A component that looks or behaves a little differently from the canonical one may be a reinvention rather than the shared component. Comment on it. The developer or code review confirms which component is used.
+
+### Accessibility
+
+You can judge **contrast** and **visible focus states** from the image. **Semantics, labels, and focus order** are not visible in a screenshot. Those are confirmed in code review, or in Widgetbook Cloud's accessibility view when your project has it enabled.
