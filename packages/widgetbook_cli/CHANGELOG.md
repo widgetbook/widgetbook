@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Add `--allow-existing` to `cloud build push`, which exits successfully instead of failing when a build for the commit already exists. ([#1986](https://github.com/widgetbook/widgetbook/pull/1986))
+
 ## 4.0.0-beta.11
 
 - **FEAT**: Add `cloud review skip`, which resolves the Widgetbook Review check on pull requests that upload no build. ([#1995](https://github.com/widgetbook/widgetbook/pull/1995))

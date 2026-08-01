@@ -72,6 +72,7 @@ void main() {
         when(() => results['path']).thenReturn('default path');
         when(() => results['api-key']).thenReturn('default key');
         when(() => results['no-turbo']).thenReturn(true);
+        when(() => results['allow-existing']).thenReturn(false);
 
         // Default Context
         when(() => context.name).thenReturn('default');

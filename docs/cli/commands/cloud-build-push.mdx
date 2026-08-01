@@ -20,6 +20,7 @@ The CLI accepts the following arguments.
 | `--commit`     | ➖        | HEAD commit of current branch | The SHA hash of the commit for which the Widgetbook is uploaded. |
 | `--repository` | ➖        | Repository top-level name     | The name of the repository for which the Widgetbook is uploaded. |
 | `--actor`      | ➖        | Git config `user.name`        | The username of the actor which triggered the build.             |
+| `--allow-existing` | ➖    | `false`                       | Exit successfully instead of failing when a build for this commit already exists on Widgetbook Cloud. Useful when a CI workflow re-uploads a pull request's base build. |
 
 _\* These defaults are used when the CLI is used locally.
 If the CLI is used in a CI/CD environment, the defaults have different respective values._
