@@ -2,9 +2,7 @@
 
 When a pull request changes the accessibility tree of a scenario, Widgetbook Cloud shows an **Accessibility Changes** section on that scenario's story diff, right next to the visual diff. It appears whenever the semantics tree differs, **even if the screenshot is identical**.
 
-<Image src="/assets/cloud/accessibility/accessibility-changes-expanded.png" caption="An accessibility change with its property table expanded" zoom />
-
-{/* TODO: replace with a real screenshot of an expanded accessibility change (Property / Previous / Current table). Provide light + dark variants if available. */}
+<Image src="/assets/cloud/accessibility/story-diff-accessibility.png" caption="Accessibility Changes and Accessibility Violations on a story diff" zoom />
 
 ## Reading a Change
 
@@ -28,6 +26,17 @@ Compared properties include `label`, `value`, `hint`, `tooltip`, `role`, `headin
 <Info>
 **Role changes appear as a removed + added pair.** A node's `role` is part of how Widgetbook matches nodes between versions, so changing a role (for example, from a button to plain text) is reported as the old node being **removed** and a new node being **added**, rather than a single change.
 </Info>
+
+## Accessibility Violations
+
+Below the changes, the story diff lists the [accessibility guideline](/cloud/accessibility/guidelines) violations found in the latest build, with **new violations** called out so you catch them in the pull request. Each violation shows:
+
+- a **severity** level, such as `SERIOUS`,
+- the guideline that failed, such as `Tap target too small` or `Tappable without a label`,
+- a **message** with the specifics, such as `Expected at least 48×48, found 358×24`, and
+- a **docs** link to the relevant accessibility guideline.
+
+Configure which guidelines run from your Widgetbook app. See [Accessibility guidelines](/cloud/accessibility/guidelines).
 
 ## Reviewing Alongside Visual Changes
 

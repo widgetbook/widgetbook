@@ -1,6 +1,6 @@
 # Accessibility Guidelines
 
-Accessibility guidelines are checks that `testWidgetbook` evaluates against every captured scenario. Each guideline inspects the rendered widget's semantics and reports **violations**, such as a tappable element that is too small or missing a label. Violations are captured alongside the scenario's screenshot and semantics tree, and uploaded with the build.
+Accessibility guidelines are checks that `testWidgetbook` evaluates against every captured scenario. Each guideline inspects the rendered widget's semantics and reports **violations**, such as a tappable element that is too small or missing a label. Violations are uploaded with the build and shown on the story diff in the pull request, each with a severity and a link to the relevant guideline. See [Reviewing changes](/cloud/accessibility/review#accessibility-violations).
 
 Guidelines describe the accessibility of a **single** version of your UI. The [regression diff](/cloud/accessibility/overview) compares two versions.
 
