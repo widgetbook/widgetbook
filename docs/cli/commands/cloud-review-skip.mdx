@@ -1,0 +1,49 @@
+# `cloud review skip`
+
+Marks the Widgetbook Review check of a pull request as passing, for a commit that uploads no build.
+
+Widgetbook only reports the review check once it has a build to compare, so a pull request that does not touch UI code never gets the check at all.
+If the check is [required](/cloud/guides/github/enforce-reviews), those pull requests stay blocked with nothing to click.
+This command resolves the check for them.
+
+Requires *Allow CI to skip the review check* to be enabled in the project's general settings.
+
+## Usage
+
+```bash
+widgetbook cloud review skip --api-key <API_KEY> --pr 123 --reason "No UI changes"
+```
+
+## Arguments
+
+The CLI accepts the following arguments.
+
+| Argument    | Mandatory | Description                                            |
+| ----------- | --------- | ------------------------------------------------------ |
+| `--api-key` | ✅        | The project specific API key for Widgetbook Cloud.     |
+| `--pr`      | ✅        | The number of the pull request to skip the review for. |
+| `--sha`     | ✅        | The head commit SHA of the pull request.               |
+| `--reason`  | ➖        | Shown in the commit status.                            |
+
+The pull request and its head commit are passed explicitly because every CI provider exposes them under different variables, and several expose a merge commit where the head commit is expected.
+
+<Warning>
+  `--sha` must be the **head** commit of the pull request, not the merge commit.
+  Widgetbook tracks the head commit, so a skip for any other commit is rejected.
+  In GitHub Actions this is `github.event.pull_request.head.sha` — not `github.sha`.
+</Warning>
+
+## Behavior
+
+The command fails, and does not resolve the check, when:
+
+- a newer commit was pushed to the pull request while CI was running,
+- the pull request already has visual changes awaiting review,
+- the pull request is closed, or
+- the project has no git provider connected.
+
+A skip only applies to the commit it was issued for.
+Pushing a new commit leaves the review check unreported again, so the pull request is blocked until a build is uploaded or the commit is skipped in turn.
+
+One skip covers one Widgetbook project.
+If a repository holds several projects, call the command once per project with that project's API key.

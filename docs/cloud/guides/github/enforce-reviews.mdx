@@ -76,3 +76,29 @@ This prevents PRs from being merged until the Widgetbook review is accepted.
     <Image src="/assets/cloud/setup/github/result.png" />
   </Step>
 </Steps>
+
+<Warning>
+  Only make the `Widgetbook Review` check required.
+  The `Widgetbook Build` check is reported per uploaded build, so requiring it blocks every pull request that uploads none.
+</Warning>
+
+## Pull requests without a build
+
+A pull request that touches no UI code uploads no build, so Widgetbook never reports the review check for it.
+With the ruleset active, those pull requests stay blocked with nothing to click.
+
+To resolve the check on them, let your CI declare that no build is coming:
+
+<Steps>
+  <Step title="Allow CI to skip the review">
+    In your project's *General* settings, enable *Allow CI to skip the review check*.
+
+    This is off by default because it lets anyone who can run CI with the project API key waive the review — keep your workflow files protected accordingly.
+  </Step>
+  <Step title="Call the CLI when no build is uploaded">
+    In the branch of your pipeline that skips the Widgetbook build, run [`cloud review skip`](/cli/commands/cloud-review-skip) instead.
+  </Step>
+</Steps>
+
+Once the ruleset is active, pull requests that were already open have no review check reported yet.
+They stay blocked until their next push, or until CI runs again for them.
