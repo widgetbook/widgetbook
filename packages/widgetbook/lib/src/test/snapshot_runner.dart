@@ -8,7 +8,6 @@ import '../../widgetbook.dart';
 import 'scenario_metadata.dart';
 import 'semantics/semantics_tree_serializer.dart';
 
-/// A captured scenario image and the dimensions describing it.
 @internal
 class CapturedSnapshot {
   const CapturedSnapshot({
@@ -24,23 +23,15 @@ class CapturedSnapshot {
   final double pixelRatio;
 }
 
-/// The parts of snapshot capture that differ between the headless
-/// (`flutter test`) and on-device (`integration_test`) runners: how the
-/// viewport is applied, and how the built scenario is captured and persisted.
-///
-/// Everything else — the component/story/scenario walk, `Scenario.run`,
-/// accessibility evaluation, semantics, image-cache reset, `wrapper`, and
-/// `excludeFromTests` — is shared by [declareSnapshotTests].
+/// The capture behavior that differs between the headless (`flutter test`) and
+/// on-device (`integration_test`) runners. The scenario walk and everything
+/// around capture is shared by [declareSnapshotTests].
 @internal
 abstract class SnapshotStrategy {
   const SnapshotStrategy();
 
-  /// Applies [viewport] to the tester's view before the scenario is pumped.
   void applyViewport(WidgetTester tester, ViewportData viewport) {}
 
-  /// Captures the pumped scenario (keyed by [key]) and persists the resulting
-  /// image plus its [ScenarioMetadata]. Implementations build the metadata via
-  /// [buildScenarioMetadata] so both runners emit an identical shape.
   Future<void> captureAndPersist({
     required WidgetTester tester,
     required Scenario scenario,
@@ -51,8 +42,6 @@ abstract class SnapshotStrategy {
   });
 }
 
-/// Assembles [ScenarioMetadata] from a captured image. Shared so the headless
-/// and on-device runners produce byte-identical metadata.
 @internal
 ScenarioMetadata buildScenarioMetadata(
   Scenario scenario,
@@ -71,10 +60,8 @@ ScenarioMetadata buildScenarioMetadata(
   );
 }
 
-/// Declares a test group per component/story and a test case per scenario in
-/// [config], delegating capture and persistence to [strategy]. When [where] is
-/// given, only components it selects are included — the mechanism customers use
-/// to partition components between the headless and on-device runs.
+/// [where] restricts the run to matching components — how a project partitions
+/// components between the headless and on-device runs.
 @internal
 void declareSnapshotTests(
   Config config,
@@ -87,7 +74,6 @@ void declareSnapshotTests(
   }
 }
 
-/// Declares the test group for a single [component] using [strategy].
 @internal
 void declareComponentTests(
   Config config,
@@ -101,7 +87,6 @@ void declareComponentTests(
   });
 }
 
-/// Declares the test group for a single [story] using [strategy].
 @internal
 void declareStoryTests(
   Config config,
@@ -119,7 +104,6 @@ void declareStoryTests(
   );
 }
 
-/// Declares the test case for a single [scenario] using [strategy].
 @internal
 void declareScenarioTest(
   Config config,
@@ -175,17 +159,16 @@ void declareScenarioTest(
         await config.scenarioConfig.tearDown?.call(tester, scenario);
       }
 
-      // The wrapper must already be on the call stack when the widget is
-      // pumped, so that Zone values (e.g. package:clock's clock) are visible
-      // to the build methods of the scenario's widget tree.
+      // The wrapper must be on the call stack before pumping so its Zone values
+      // (e.g. package:clock) are visible to the scenario's build methods.
       final wrapper = config.scenarioConfig.wrapper;
       await (wrapper == null ? body() : wrapper(tester, scenario, body));
 
       semanticsHandle.dispose();
       addTearDown(tester.view.reset);
     },
-    // `null` (not `false`) so a non-excluded scenario inside an excluded story
-    // still inherits the story group's `skip`.
+    // `null` (not `false`) so a non-excluded scenario in an excluded story still
+    // inherits the group's `skip`.
     skip: scenario.excludeFromTests ? true : null,
   );
 }

@@ -15,12 +15,8 @@ const outputDir = 'build/.widgetbook';
 /// Generates a snapshot for every scenario in [config] headlessly under
 /// `flutter test`, optionally narrowed to the components matching [where].
 ///
-/// Widgets backed by platform textures/views (e.g. `video_player`, `pdfrx`)
-/// render blank here because there is no real engine or GPU — only the Flutter
-/// layer tree is rasterized. For those, use `testWidgetbookOnDevice` from
-/// `package:widgetbook/integration_test.dart`, which runs on a device/simulator.
-/// The two share the same `where` filter, so a project can partition its
-/// components between the fast headless run and the on-device run.
+/// Platform-backed widgets (e.g. `video_player`, `pdfrx`) render blank here;
+/// capture those with `testWidgetbookOnDevice` (they share the `where` filter).
 Future<void> testWidgetbook(
   Config config, {
   bool Function(Component component)? where,
@@ -30,20 +26,16 @@ Future<void> testWidgetbook(
   declareSnapshotTests(config, const _LayerStrategy(), where: where);
 }
 
-/// Declares the headless snapshot tests for a single [component].
 void testComponent(Config config, Component component) =>
     declareComponentTests(config, component, const _LayerStrategy());
 
-/// Declares the headless snapshot tests for a single [story].
 void testStory(Config config, Story story) =>
     declareStoryTests(config, story, const _LayerStrategy());
 
-/// Declares the headless snapshot test for a single [scenario].
 void testScenario(Config config, Scenario scenario) =>
     declareScenarioTest(config, scenario, const _LayerStrategy());
 
-/// Headless capture strategy: rasterizes the Flutter layer tree offscreen via
-/// [captureImage] and writes the results straight to disk.
+/// Headless capture: rasterizes the layer tree offscreen and writes to disk.
 class _LayerStrategy extends SnapshotStrategy {
   const _LayerStrategy();
 
@@ -65,8 +57,7 @@ class _LayerStrategy extends SnapshotStrategy {
     final element = tester.element(find.byKey(key));
     final imageFuture = captureImage(element, 1);
 
-    // Run on a real event loop as async operations cannot be run inside
-    // testWidgets directly.
+    // Async image encoding + file I/O can't run inside testWidgets directly.
     await TestWidgetsFlutterBinding.instance.runAsync(() async {
       final image = await imageFuture;
       final byteData = await image.toByteData(format: ImageByteFormat.png);

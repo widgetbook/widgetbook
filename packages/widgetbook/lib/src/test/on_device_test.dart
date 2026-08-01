@@ -8,25 +8,15 @@ import 'package:integration_test/integration_test.dart';
 import '../../widgetbook.dart';
 import 'font_loader.dart';
 import 'report_key.dart';
-import 'scenario_metadata.dart';
 import 'snapshot_runner.dart';
 
-/// On-device counterpart of `testWidgetbook`.
+/// On-device counterpart of `testWidgetbook`, run via `flutter drive` on a real
+/// device or simulator so widgets backed by platform textures/views (e.g.
+/// `video_player`, `pdfrx`) render for real instead of appearing blank.
 ///
-/// Runs every scenario (optionally narrowed by [where]) under
-/// [IntegrationTestWidgetsFlutterBinding] on a real device or simulator, so
-/// widgets backed by platform textures/views (e.g. `video_player`, `pdfrx`)
-/// render for real and appear in the captured screenshot — unlike headless
-/// `testWidgetbook`, whose offscreen layer rasterization leaves them blank.
-///
-/// Because the device file system is remote from the host, results are handed
-/// back through the integration-test driver: screenshot bytes via
-/// `takeScreenshot`, and the per-scenario [ScenarioMetadata] via the binding's
-/// `reportData`. Pair it with `widgetbookIntegrationDriver` from
-/// `package:widgetbook/integration_test_driver.dart` and run via `flutter drive`.
-///
-/// Use [where] to opt only selected components into on-device capture while the
-/// rest stay on the faster headless path (mark those `excludeFromTests` there):
+/// Pair it with `widgetbookIntegrationDriver` from
+/// `package:widgetbook/integration_test_driver.dart`. Use [where] to route only
+/// selected components on-device while the rest stay on `testWidgetbook`:
 ///
 /// ```dart
 /// void main() => testWidgetbookOnDevice(
@@ -40,17 +30,13 @@ void testWidgetbookOnDevice(
 }) {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  // Fonts must be loaded before tests run, but tests are declared
-  // synchronously — the integration-test runner begins before an async `main`
-  // resumes, so awaiting before declaring throws "Can't call group() once
-  // tests have begun running". Defer the load into setUpAll instead.
+  // Tests are declared synchronously (the runner starts before an async `main`
+  // resumes), so defer font loading into setUpAll rather than awaiting here.
   setUpAll(loadFonts);
 
   declareSnapshotTests(config, _IntegrationTestStrategy(binding), where: where);
 }
 
-/// On-device capture strategy: reads back the real composited surface via
-/// `takeScreenshot` and hands bytes + metadata to the host driver.
 class _IntegrationTestStrategy extends SnapshotStrategy {
   _IntegrationTestStrategy(this.binding);
 
@@ -67,8 +53,8 @@ class _IntegrationTestStrategy extends SnapshotStrategy {
   }) async {
     final pixelRatio = tester.view.devicePixelRatio;
 
-    // The screenshot name is the target PNG path; the driver writes the bytes
-    // there and derives the sibling `.json` path from it.
+    // Pass the target PNG path as the screenshot name so the driver knows where
+    // to write it.
     final imagePath = buildScenarioMetadata(
       scenario,
       CapturedSnapshot(
@@ -84,10 +70,8 @@ class _IntegrationTestStrategy extends SnapshotStrategy {
     final raw = await binding.takeScreenshot(imagePath);
     var bytes = Uint8List.fromList(raw);
 
-    // A `ViewportMode` on the scenario makes `ViewportAddon` size the use case
-    // to the viewport (centered) during build; crop the physical screenshot to
-    // it. Unlike the offscreen headless path, the viewport cannot exceed the
-    // device screen and renders at the device's own pixel ratio.
+    // A viewport is sized (centered) by ViewportAddon during build; crop the
+    // physical screenshot to it. It cannot exceed the device screen.
     final framed = viewport.maxWidth.isFinite && viewport.maxHeight.isFinite;
     if (framed) {
       final screen = tester.view.physicalSize;
@@ -118,9 +102,8 @@ class _IntegrationTestStrategy extends SnapshotStrategy {
     final store =
         (binding.reportData![widgetbookReportKey] ??= <String, dynamic>{})
             as Map<String, dynamic>;
-    // `takeScreenshot` already streamed the full-screen bytes to the driver's
-    // onScreenshot. When cropped, ship the cropped bytes so the driver
-    // overwrites the PNG to match the metadata.
+    // Ship the cropped bytes so the driver can replace the full-screen PNG that
+    // takeScreenshot already streamed to it.
     store[metadata.imageFile.path] = {
       'metadata': metadata.toJson(),
       if (framed) 'png': bytes,
@@ -128,7 +111,6 @@ class _IntegrationTestStrategy extends SnapshotStrategy {
   }
 }
 
-/// Crops [png] to the given physical-pixel rectangle and re-encodes it.
 Future<Uint8List> _cropPng(
   Uint8List png,
   double left,
@@ -157,8 +139,7 @@ Future<Uint8List> _cropPng(
   return data!.buffer.asUint8List();
 }
 
-/// Reads a big-endian uint32 from a PNG byte stream. Width/height live in the
-/// IHDR chunk at byte offsets 16 and 20 respectively.
+/// Reads a big-endian uint32 from a PNG's IHDR chunk (width at 16, height at 20).
 int _pngUint32(Uint8List b, int offset) =>
     (b[offset] << 24) |
     (b[offset + 1] << 16) |
