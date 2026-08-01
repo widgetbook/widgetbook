@@ -1,4 +1,4 @@
-## Unreleased
+## 4.0.0-beta.11
 
 - **FIX**: Rebuild the workbench preview when switching between stories of the same component, instead of keeping the previously selected story's state. ([#1994](https://github.com/widgetbook/widgetbook/pull/1994))
 
