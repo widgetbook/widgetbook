@@ -1,3 +1,8 @@
+## Unreleased
+
+- **FEAT**: Add on-device snapshotting. `testWidgetbookOnDevice` (`package:widgetbook/integration_test.dart`) and `widgetbookIntegrationDriver` (`package:widgetbook/integration_test_driver.dart`) capture scenarios on a real device or simulator via `integration_test`, so widgets backed by platform textures/views (e.g. `video_player`, `pdfrx`) render instead of appearing blank under `flutter test`. Opt selected components in with the `where` filter; `testWidgetbook` (headless) remains the default.
+- **BREAKING**: Remove the incidental `testComponent`/`testStory`/`testScenario` helpers from `package:widgetbook/test.dart`; use `testWidgetbook`.
+
 ## 4.0.0-beta.11
 
 - **FIX**: Rebuild the workbench preview when switching between stories of the same component, instead of keeping the previously selected story's state. ([#1994](https://github.com/widgetbook/widgetbook/pull/1994))

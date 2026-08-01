@@ -28,6 +28,8 @@ dependencies:
     sdk: flutter
   flutter_test:
     sdk: flutter
+  integration_test:
+    sdk: flutter
   glob: ^2.0.2
   meta: ^1.8.0
   nested: ^1.0.0
