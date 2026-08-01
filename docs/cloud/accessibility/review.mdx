@@ -6,14 +6,14 @@ When a pull request changes the accessibility tree of a scenario, Widgetbook Clo
 
 ## Reading a Change
 
-Each entry represents a node in the semantics tree that changed between the `base` and `head` builds. The header shows the node's path in the tree and the **type** of change:
+Each entry represents a node in the semantics tree that changed between the `base` and `head` builds. The header shows the node's path in the tree, a color-coded icon, and the **type** of change:
 
-| Type        | Meaning                                                                                          |
-| ----------- | ------------------------------------------------------------------------------------------------ |
-| **Added**   | A node exists in the new version but not the old one. An element was added to the tree.           |
-| **Removed** | A node existed in the old version but not the new one. An element was dropped from the tree.      |
-| **Changed** | A node's properties differ, for example its `label` or `value`.                                   |
-| **Moved**   | A node's position among its siblings changed, altering the order assistive technologies read it.  |
+| Icon | Type        | Meaning                                                                                          |
+| ---- | ----------- | ------------------------------------------------------------------------------------------------ |
+| 🟩   | **Added**   | A node exists in the new version but not the old one. An element was added to the tree.           |
+| 🟥   | **Removed** | A node existed in the old version but not the new one. An element was dropped from the tree.      |
+| 🟨   | **Changed** | A node's properties differ, for example its `label` or `value`.                                   |
+| ↩️   | **Moved**   | A node's position among its siblings changed, altering the order assistive technologies read it.  |
 
 Expanding a **changed** entry shows a table comparing the node's properties:
 
