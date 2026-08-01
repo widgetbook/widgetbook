@@ -1,33 +1,36 @@
 # For Designers
 
-Widgetbook Cloud has two audiences: the developers who build the UI and the designers who own how it should look. Most of these docs are written for developers. This section is written for you — the designer — and assumes you have never opened a Flutter project and never will.
+Widgetbook Cloud has two audiences: the developers who build the UI, and the designers who own how it should look. Most of these docs are written for developers. This section is for you. It assumes you have never opened a Flutter project and never will.
 
-You do not need to run any code, check out a branch, or install anything. Every pull request produces a [review](/cloud/reviews) you open in your browser, where you compare the implementation against your design and leave feedback the developer sees directly on the change.
+You do not need to run code, check out a branch, or install anything. Every pull request produces a [review](/cloud/reviews) you open in your browser. You compare the implementation against your design and leave feedback the developer sees on the change itself.
+
+<Image theme="light" src="/assets/cloud/review.light.png" />
+<Image theme="dark" src="/assets/cloud/review.dark.png" />
 
 <Info>
   New to the words developers use around this workflow? Start with the
-  [Glossary](/cloud/for-designers/glossary). It is a short translation table, and
-  the vocabulary — not the tool — is usually what causes the confusion.
+  [Glossary](/cloud/for-designers/glossary). The vocabulary is usually what causes
+  the confusion, not the tool.
 </Info>
 
 ## The two-stage review
 
-A single UI review has two passes, and they are usually done by two different people.
+A single UI review has two passes. They are usually done by two different people.
 
-1. **Filter out the unintended.** The developer who opened the pull request reviews it first, looking for changes they did *not* mean to make — a component that shifted because a shared value changed, spacing that moved, a state that now renders differently. They resolve those before asking anyone else to look.
-2. **Judge whether it is right.** Once only intentional changes remain, the next reviewer decides whether those changes are *correct*. When that is a design question — does this match the intended design, is this the right treatment for this state — that reviewer is you.
+1. **Filter out the unintended.** The developer who opened the pull request looks first, for changes they did not mean to make. A component that shifted, spacing that moved, a state that now renders differently. They fix those before asking anyone else to look.
+2. **Judge whether it is right.** Once only intentional changes remain, the next reviewer decides whether those changes are correct. When that is a design question, that reviewer is you.
 
-The first pass is a filter. **A review that reaches you should contain only deliberate changes.** Your job is not to hunt for accidents the developer already caught; it is to judge whether the deliberate changes are right.
+The first pass is a filter. A review that reaches you should contain only deliberate changes. Your job is not to hunt for accidents the developer already caught. It is to judge whether the deliberate changes are right.
 
 ## In this section
 
 <CardGroup>
   <Card title="When to involve a designer" icon="user-plus" href="/cloud/for-designers/when-to-involve-a-designer">
-    The three policies for deciding which pull requests need a design review — and how to read a recurring deviation.
+    The three policies for deciding which pull requests need a design review, and how to read a recurring deviation.
   </Card>
 
   <Card title="Doing a review" icon="clipboard-check" href="/cloud/for-designers/doing-a-review">
-    Step through a review in the browser, comment on a specific change, and approve or request changes. Includes a practical checklist.
+    Step through a review in the browser, comment on a change, and approve or request changes. Includes a practical checklist.
   </Card>
 
   <Card title="Working with Figma" icon="figma fa-brands" href="/cloud/for-designers/figma">
@@ -35,6 +38,6 @@ The first pass is a filter. **A review that reaches you should contain only deli
   </Card>
 
   <Card title="Glossary" icon="book" href="/cloud/for-designers/glossary">
-    Developer vocabulary — pull request, story, build, base, head — translated into what it means for you.
+    Developer vocabulary translated: pull request, story, build, base, head.
   </Card>
 </CardGroup>

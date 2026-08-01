@@ -1,42 +1,48 @@
 # When to Involve a Designer
 
-Not every pull request needs a design review. Pulling a designer into a change that has no open design questions wastes everyone's time; skipping one on a change that does creates a deviation nobody catches until it ships. The right policy depends on two things: how confident the developer is in this specific change, and how well the team's design intent has held up in the past.
+Not every pull request needs a design review. Pull a designer into a change with no open design questions and you waste their time. Skip one on a change that has them and a deviation ships. Two things decide the policy: how confident the developer is in the change, and how well the team's design intent has held up before.
 
-Widgetbook Cloud supports this through [required reviewers](/cloud/reviews/required-reviewer) — you can require design approval on a project, or leave it to the developer to request a designer per pull request. Which of the three policies below you choose is a team decision, not a product setting.
+Widgetbook Cloud supports this through [required reviewers](/cloud/reviews/required-reviewer). You can require design approval on a project, or leave it to the developer to [request a designer](/cloud/reviews/request-reviewer) per pull request. Which of the three policies below you use is a team decision, not a product setting.
 
 ## On demand (recommended default)
 
-The developer invites a designer only when the change warrants it: when they struggled with something, had to guess at a state the design did not specify, or have an open question they want answered before merging. They request you as a reviewer on that pull request; you are notified and review it.
+The developer invites a designer only when the change warrants it:
 
-This is the default we recommend. Involving a designer **early is cheap** — at review time the work is real enough to judge, but nothing has been built on top of it yet. A design correction here changes one pull request. The same correction after the component has shipped and been reused changes many.
+- They struggled with something.
+- They had to guess at a state the design did not specify.
+- They have an open question they want answered before merging.
+
+They request you as a reviewer. You are notified and review that pull request.
+
+Involving a designer early is cheap. At review time the work is real enough to judge, but nothing is built on top of it yet. A correction here changes one pull request. The same correction after the component ships and gets reused changes many.
 
 ## Trust-based
 
-The developer is confident in the change, and designers have historically trusted that judgement — reviews of this developer's work rarely surface design problems. In that case, no design review is needed. The developer merges after the code and UI review, and the designer's attention stays on the changes that actually need it.
+The developer is confident, and designers have historically trusted that judgement. Reviews of this developer's work rarely surface design problems. No design review is needed. The developer merges after code and UI review, and designer attention stays on the changes that need it.
 
 ## Always
 
-Designers have historically found deviations in this team's work, so every pull request requires design approval before it can merge. In Widgetbook Cloud this is enforced with [required reviewers](/cloud/reviews/required-reviewer): a designated designer must approve before the pull request is considered approved.
+Designers have historically found deviations in this team's work. Every pull request requires design approval before it can merge. Enforce it with [required reviewers](/cloud/reviews/required-reviewer): a designated designer must approve before a pull request counts as approved.
 
 <Warning>
-  Treat "always" as a **temporary correction, not a permanent state.** Requiring
-  design approval on every pull request is how you stop the bleeding while you
-  fix why deviations keep happening — not how the team should operate forever. As
-  the underlying cause is addressed, move back toward on-demand review.
+  Treat "always" as a temporary correction, not a permanent state. Requiring design
+  approval on every pull request stops the bleeding while you fix why deviations
+  keep happening. It is not how the team should run forever. As the cause is
+  addressed, move back toward on-demand review.
 </Warning>
 
 ## A deviation is not automatically the developer's fault
 
-This framing matters more than the policy you pick, so do not skip it.
+Do not skip this. It matters more than the policy you pick.
 
-When a review turns up a change that does not match the design, the reflex is to read it as a developer mistake. Often it is not. An ambiguous or incomplete design forces the developer to make a best guess, and a reasonable guess that happens to be wrong is a specification problem, not a coding one.
+When a review turns up a change that does not match the design, the reflex is to read it as a developer mistake. Often it is not. An ambiguous or incomplete design forces a best guess. A reasonable guess that turns out wrong is a specification problem, not a coding one.
 
-A deviation that keeps showing up — the same kind of finding across many reviews — is almost always pointing at a **gap in the design**, not a pattern of carelessness. Common sources:
+A deviation that keeps showing up, the same kind of finding across many reviews, points at a gap in the design, not a pattern of carelessness. Common sources:
 
-- **An undesigned state.** Empty, loading, error, and edge states that the design never specified, so the developer invented one.
+- **An undesigned state.** Empty, loading, error, and edge states the design never specified, so the developer invented one.
 - **A missing design system component.** The design uses something that does not exist yet in the shared system, so it gets approximated.
 - **Unspecified responsive behaviour.** What the layout should do at narrow or very wide sizes was never defined.
 - **Unspecified accessibility behaviour.** Focus order, semantics, or contrast expectations were never written down.
 - **Raw values instead of tokens.** The design specifies a literal colour or spacing value rather than a token, so implementations drift.
 
-The productive response to a recurring finding is to **fix the source** — design the missing state, add the component to the design system, specify the behaviour — not to add another review gate on top of the gap. A review gate catches the deviation every time; fixing the specification means there is nothing to catch.
+The productive response to a recurring finding is to fix the source. Design the missing state. Add the component to the design system. Specify the behaviour. Do not add another review gate on top of the gap. A gate catches the deviation every time. Fixing the specification means there is nothing to catch.
