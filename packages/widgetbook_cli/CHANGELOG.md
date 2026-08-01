@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **FEAT**: Add `--allow-existing` to `cloud build push`, which exits successfully instead of failing when a build for the commit already exists. ([#1986](https://github.com/widgetbook/widgetbook/pull/1986))
+- **REFACTOR**: Bump `analyzer` to 14.x.
 
 ## 4.0.0-beta.11
 
