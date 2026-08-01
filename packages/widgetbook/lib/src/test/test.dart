@@ -30,6 +30,18 @@ Future<void> testWidgetbook(
   declareSnapshotTests(config, const _LayerStrategy(), where: where);
 }
 
+/// Declares the headless snapshot tests for a single [component].
+void testComponent(Config config, Component component) =>
+    declareComponentTests(config, component, const _LayerStrategy());
+
+/// Declares the headless snapshot tests for a single [story].
+void testStory(Config config, Story story) =>
+    declareStoryTests(config, story, const _LayerStrategy());
+
+/// Declares the headless snapshot test for a single [scenario].
+void testScenario(Config config, Scenario scenario) =>
+    declareScenarioTest(config, scenario, const _LayerStrategy());
+
 /// Headless capture strategy: rasterizes the Flutter layer tree offscreen via
 /// [captureImage] and writes the results straight to disk.
 class _LayerStrategy extends SnapshotStrategy {

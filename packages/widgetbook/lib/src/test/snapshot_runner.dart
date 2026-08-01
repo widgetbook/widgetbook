@@ -74,7 +74,7 @@ ScenarioMetadata buildScenarioMetadata(
 /// Declares a test group per component/story and a test case per scenario in
 /// [config], delegating capture and persistence to [strategy]. When [where] is
 /// given, only components it selects are included — the mechanism customers use
-/// to opt specific components into on-device snapshotting.
+/// to partition components between the headless and on-device runs.
 @internal
 void declareSnapshotTests(
   Config config,
@@ -83,24 +83,45 @@ void declareSnapshotTests(
 }) {
   for (final component in config.components) {
     if (where != null && !where(component)) continue;
-
-    group(component.name, () {
-      for (final story in component.stories) {
-        group(
-          story.name,
-          () {
-            for (final scenario in story.allScenarios(config)) {
-              _testScenario(config, scenario, strategy);
-            }
-          },
-          skip: story.excludeFromTests ? 'Excluded from snapshots' : null,
-        );
-      }
-    });
+    declareComponentTests(config, component, strategy);
   }
 }
 
-void _testScenario(
+/// Declares the test group for a single [component] using [strategy].
+@internal
+void declareComponentTests(
+  Config config,
+  Component component,
+  SnapshotStrategy strategy,
+) {
+  group(component.name, () {
+    for (final story in component.stories) {
+      declareStoryTests(config, story, strategy);
+    }
+  });
+}
+
+/// Declares the test group for a single [story] using [strategy].
+@internal
+void declareStoryTests(
+  Config config,
+  Story story,
+  SnapshotStrategy strategy,
+) {
+  group(
+    story.name,
+    () {
+      for (final scenario in story.allScenarios(config)) {
+        declareScenarioTest(config, scenario, strategy);
+      }
+    },
+    skip: story.excludeFromTests ? 'Excluded from snapshots' : null,
+  );
+}
+
+/// Declares the test case for a single [scenario] using [strategy].
+@internal
+void declareScenarioTest(
   Config config,
   Scenario scenario,
   SnapshotStrategy strategy,

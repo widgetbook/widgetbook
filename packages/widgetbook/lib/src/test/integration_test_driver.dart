@@ -23,7 +23,8 @@ Future<void> widgetbookIntegrationDriver() async {
       return true;
     },
     responseDataCallback: (data) async {
-      final store = (data?[widgetbookReportKey] as Map<String, dynamic>?) ??
+      final store =
+          (data?[widgetbookReportKey] as Map<String, dynamic>?) ??
           const <String, dynamic>{};
       const encoder = JsonEncoder.withIndent('  ');
 
