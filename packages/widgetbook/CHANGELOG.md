@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **FEAT**: Add on-device snapshotting (`testWidgetbookOnDevice` + `widgetbookIntegrationDriver`) that captures scenarios on a device/simulator, so platform-backed widgets (e.g. `video_player`, `pdfrx`) render instead of appearing blank under `flutter test`. Both runners take a `where` filter to split components between them.
+- **FEAT**: Add `testWidgetbookOnDevice` to snapshot scenarios on a device/simulator, so platform-backed widgets render instead of appearing blank. ([#2001](https://github.com/widgetbook/widgetbook/pull/2001))
 
 ## 4.0.0-beta.11
 
