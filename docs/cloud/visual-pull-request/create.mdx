@@ -33,3 +33,73 @@ Follow the instructions for [uploading builds](/cloud/builds/upload#upload-build
 Some Git providers, like GitHub, run their CI/CD pipeline on the merge commit `m` when triggered by a pull request.
 This causes Widgetbook Cloud to miss the head commit `z` for the pull request, which may cause confusion during setup.
 </Warning>
+
+## GitHub Actions for Visual Pull Requests
+
+The workflow below uploads a build for **both** the head commit `z` and the base commit `a` of every pull request, so the visual pull request is complete as soon as CI finishes.
+It avoids the merge commit pitfall from the caution above by checking out and pushing the pull request's head commit explicitly, instead of the merge commit `m` that GitHub checks out by default.
+
+Add `WIDGETBOOK_API_KEY` to your [repository secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository), then add the workflow:
+
+```yaml
+name: Widgetbook Cloud Visual PR
+on: pull_request
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - commit: ${{ github.event.pull_request.head.sha }}
+            branch: ${{ github.event.pull_request.head.ref }}
+            extra: ''
+          - commit: ${{ github.event.pull_request.base.sha }}
+            branch: ${{ github.event.pull_request.base.ref }}
+            extra: '--allow-existing'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.commit }}
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Bootstrap app
+        run: flutter pub get
+
+      - name: Build Widgetbook
+        working-directory: widgetbook
+        run: |
+          flutter pub get
+          dart run build_runner build -d
+          flutter build web -t lib/main.dart
+          flutter test
+
+      - name: Install Widgetbook CLI
+        run: dart pub global activate widgetbook_cli {{ versions.cli }}
+
+      - name: Push Widgetbook build
+        working-directory: widgetbook
+        run: >
+          widgetbook cloud build push
+          --api-key ${{ secrets.WIDGETBOOK_API_KEY }}
+          --branch ${{ matrix.branch }}
+          --commit ${{ matrix.commit }}
+          ${{ matrix.extra }}
+```
+
+The matrix runs the job twice:
+
+- **Head build** — checks out and uploads the pull request's head commit `z` (not the merge commit `m`), so Widgetbook Cloud can match the build to the pull request's head. Passing `--branch` and `--commit` explicitly is required, because the checked-out head commit is in a detached `HEAD` state.
+- **Base build** — checks out and uploads the base commit `a`. `--allow-existing` makes the step succeed instead of failing if that build was already uploaded (for example by a push workflow on your default branch), so the pipeline stays green.
+
+Uploading both builds on the pull request guarantees the visual pull request is valid right away.
+
+<Info>
+Snapshots are billed for every build that is uploaded, even when identical snapshots already exist.
+When a build for the base commit already exists, `--allow-existing` skips the upload and Widgetbook Cloud reuses that build at no extra cost.
+</Info>
