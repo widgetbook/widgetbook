@@ -1,0 +1,25 @@
+# Working with Figma
+
+A review is only as good as what you compare against. Today that comparison happens between Widgetbook Cloud and Figma, side by side.
+
+## How it works today
+
+The developer sets a **design link** on a story — a link to the matching component in your Figma file. In the review, that link appears as a **View in Figma** button on the story. You click through to Figma and compare the implementation against the design manually.
+
+{/* TODO: screenshot of the "View in Figma" button on a story in a review. */}
+
+The developer-side setup for this lives in [Figma Reviews](/cloud/reviews/figma). Because the link points at a specific Figma component, a few things you control in Figma make the comparison faster and less error-prone:
+
+- **Keep component naming stable.** The developer links to a component by its Figma URL. Renaming, restructuring, or replacing components breaks those links and leaves reviews pointing at the wrong place — or nowhere. Stable names and structure keep the links pointing where they should.
+- **Design the states that will be built.** A developer can only link to a state that exists in Figma. If empty, loading, error, and edge states are designed explicitly, the review can compare against them instead of against your best guess of what you intended.
+- **Specify tokens, not raw values.** When your design calls out a token (a named colour, a spacing step, a type style) rather than a literal value, the developer implements the token and the result stays consistent as the system evolves. Raw values in the design invite raw values in the code, and those drift.
+
+<Info>
+**Coming soon.** We are building a tighter Figma integration: the Figma design
+visible **inside** Widgetbook Cloud, with a direct **Figma ↔ Flutter** diff — so
+you no longer click out to Figma and compare by eye. Beyond regression testing one
+Flutter build against another (**Flutter ↔ Flutter**), this lets Widgetbook Cloud
+regression-test the implementation **against the design itself**. This is not
+available yet; today's workflow is the manual View-in-Figma comparison described
+above.
+</Info>

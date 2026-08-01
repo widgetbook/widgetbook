@@ -1,0 +1,62 @@
+# Doing a Review
+
+A review happens entirely in your browser. You open the review, look at each changed screen, compare it against the design, and leave your decision. The developer is notified and responds — all without either of you running the app.
+
+{/* TODO: screenshot of a review open in Widgetbook Cloud, showing the list of changed stories on the left and a story diff on the right (light + dark pair if available). */}
+
+<Steps>
+  <Step title="Open the review">
+    Every pull request gets a review automatically. Open it from the link in the
+    pull request, from your [email or Slack notification](/cloud/reviews/notifications/email),
+    or from the project in Widgetbook Cloud. You do not need to check anything out.
+  </Step>
+  <Step title="Look at each changed story">
+    A **story** is one component shown in one state (see the
+    [Glossary](/cloud/for-designers/glossary)). The review lists every story that
+    changed. For each one, the old version is on the left and the new version on
+    the right. Click **Show diff** to highlight exactly what changed — differences
+    are shaded in pink, so even small shifts are easy to spot.
+  </Step>
+  <Step title="Compare against the Figma design">
+    If the developer set a design link on the story, a **View in Figma** button
+    opens the matching component in Figma so you can compare the implementation
+    against the source of truth. See [Working with Figma](/cloud/for-designers/figma)
+    for how this works and how to make it more reliable.
+  </Step>
+  <Step title="Comment on the specific change">
+    Use the comment section on a story diff to leave feedback tied to that exact
+    change, so the developer knows precisely which component and state you mean.
+    Use **mark as viewed** to track which changes you have already been through;
+    if a story changes again later, its viewed state resets so you re-check it.
+  </Step>
+  <Step title="Submit your decision">
+    Click the **Review changes** button in the top-right corner to publish your
+    review with one of three statuses:
+
+    - **Approved** — the changes are right and can be merged.
+    - **Comment** — you are leaving feedback without approving or blocking.
+    - **Changes requested** — something needs to be revised before it merges.
+
+    If your team uses [required reviewers](/cloud/reviews/required-reviewer), your
+    approval as a designer may be what unblocks the merge.
+  </Step>
+  <Step title="The developer responds">
+    Your decision is reflected on the pull request. If you requested changes, the
+    developer revises and pushes again, which updates the review; you then re-check
+    the stories that changed and update your decision.
+  </Step>
+</Steps>
+
+## What to look for
+
+A review that reaches you should already contain only intentional changes. Your job is to judge whether they are right. A practical checklist:
+
+- **States.** Are empty, loading, error, selected, and disabled states all correct — not just the default one?
+- **Content extremes.** Does it hold up with very long text, very short text, missing values, and large numbers?
+- **Dark mode.** Does the change look right in both light and dark, not just the one the developer happened to build in?
+- **Text scaling.** Does the layout survive larger accessibility text sizes without clipping or overlap?
+- **Spacing.** Is padding, margin, and alignment consistent with the design and with neighbouring components?
+- **Token usage.** Are colours, typography, and spacing coming from design tokens rather than one-off hard-coded values?
+- **Design system reuse.** Is this reusing the right shared component, or quietly reinventing one that already exists?
+
+For accessibility specifically — semantics, labels, focus order — Widgetbook Cloud surfaces changes to the accessibility tree directly in the review. See [reviewing accessibility changes](/cloud/accessibility/review).

@@ -1,0 +1,17 @@
+# Glossary for Designers
+
+You already understand the tool. What tends to cause confusion is the workflow language developers use around it — the words in a pull request, a review, or a Slack message. This table translates that vocabulary into what it means for you.
+
+| Developer term | What it means for you |
+| -------------- | --------------------- |
+| **Pull request** (PR) | A proposed set of changes to the app, waiting to be reviewed and merged. Each pull request produces one [review](/cloud/reviews) in Widgetbook Cloud. Sometimes called a *merge request* (GitLab). |
+| **Story** | One component shown in one specific state — for example, a button in its disabled state. It is the unit you review and comment on. In older Widgetbook (v3) this was called a *use case*; if a developer says "use case", they mean a story. |
+| **Snapshot** | A screenshot of a story in one configuration (for example, dark mode with long text). A single story can produce several snapshots — one per state or theme being tested. See [Snapshots](/cloud/snapshots/overview). |
+| **Build** | The full set of stories and snapshots generated from one version of the code. A review compares two builds. See [Builds](/cloud/builds/overview). |
+| **Base / Head** | The two sides of the comparison. **Base** is the existing version (what is already merged); **head** is the proposed version (the pull request). In the review, base is on the left, head is on the right. |
+| **Approve / Request changes** | Your decision on a review. **Approve** means the changes are right and can merge; **request changes** means something must be fixed first. There is also a **Comment** option for feedback that neither approves nor blocks. See [Submit a review](/cloud/reviews/submit). |
+| **Merge** | Accepting a pull request so its changes become part of the app. This is the point of no return the review protects — once merged, the change ships. |
+
+<Info>
+  Ready to put these into practice? See [Doing a review](/cloud/for-designers/doing-a-review).
+</Info>
