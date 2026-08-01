@@ -1,6 +1,6 @@
 # Setup
 
-Accessibility regression testing runs on the builds you already upload to Widgetbook Cloud — there is **nothing extra to enable**. Widgetbook 4 automatically captures each scenario's semantics tree and accessibility violations during testing, and the [Widgetbook CLI](/cloud/builds/upload) uploads them with the build's [snapshots](/cloud/snapshots/overview).
+Accessibility regression testing runs on the builds you already upload to Widgetbook Cloud. There is **nothing extra to enable**. Widgetbook 4 automatically captures each scenario's semantics tree and accessibility violations during testing, and the [Widgetbook CLI](/cloud/builds/upload) uploads them with the build's [snapshots](/cloud/snapshots/overview).
 
 If your project already produces [visual pull requests](/cloud/visual-pull-request/overview), accessibility regression testing is already working.
 
@@ -14,7 +14,7 @@ If your project already produces [visual pull requests](/cloud/visual-pull-reque
 
 ## How Semantics Are Captured
 
-When you run `testWidgetbook`, the test runtime — for every scenario — captures a screenshot, **captures the semantics tree**, and **evaluates the [accessibility guidelines](/cloud/accessibility/guidelines)**, writing all of it to the local build cache.
+When you run `testWidgetbook`, the test runtime captures a screenshot, **captures the semantics tree**, and **evaluates the [accessibility guidelines](/cloud/accessibility/guidelines)** for every scenario, writing all of it to the local build cache.
 
 <Steps>
   <Step title="Confirm your test entry point">
@@ -51,7 +51,7 @@ When you run `testWidgetbook`, the test runtime — for every scenario — captu
 
 ## Comparing Across a Pull Request
 
-To diff accessibility between two versions, Widgetbook Cloud needs builds for **both** the `base` and `head` commits of the pull request — exactly the same requirement as [visual pull requests](/cloud/visual-pull-request/create). Once both builds are uploaded, the comparison is automatic.
+To diff accessibility between two versions, Widgetbook Cloud needs builds for **both** the `base` and `head` commits of the pull request. This is the same requirement as [visual pull requests](/cloud/visual-pull-request/create). Once both builds are uploaded, the comparison is automatic.
 
 Your CI should push a build for both commits of every pull request, using `--allow-existing` on the base commit so the step succeeds if that build was already uploaded (for example by a push workflow on your default branch):
 
@@ -64,7 +64,7 @@ widgetbook cloud build push \
 ```
 
 <Info>
-Accessibility regression testing uses the exact same builds as visual pull requests. For the complete CI setup — the ready-to-use GitHub Actions workflow, the base/head commit model, and the merge-commit pitfall — follow [Create Visual Pull Requests](/cloud/visual-pull-request/create). No accessibility-specific CI changes are needed.
+Accessibility regression testing uses the exact same builds as visual pull requests. For the complete CI setup (the ready-to-use GitHub Actions workflow, the base/head commit model, and the merge-commit pitfall), follow [Create Visual Pull Requests](/cloud/visual-pull-request/create). No accessibility-specific CI changes are needed.
 </Info>
 
 Once both builds are uploaded, open the pull request in Widgetbook Cloud to [review the accessibility changes](/cloud/accessibility/review).

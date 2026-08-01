@@ -1,8 +1,8 @@
 # Accessibility Guidelines
 
-Accessibility guidelines are checks that `testWidgetbook` evaluates against every captured scenario. Each guideline inspects the rendered widget's semantics and reports **violations** — for example, a tappable element that is too small or missing a label. Violations are captured alongside the scenario's screenshot and semantics tree, and uploaded with the build.
+Accessibility guidelines are checks that `testWidgetbook` evaluates against every captured scenario. Each guideline inspects the rendered widget's semantics and reports **violations**, such as a tappable element that is too small or missing a label. Violations are captured alongside the scenario's screenshot and semantics tree, and uploaded with the build.
 
-Guidelines describe the accessibility of a **single** version of your UI, and complement the [regression diff](/cloud/accessibility/overview), which compares two versions.
+Guidelines describe the accessibility of a **single** version of your UI. The [regression diff](/cloud/accessibility/overview) compares two versions.
 
 ## Recommended Guidelines
 
@@ -13,7 +13,7 @@ By default, Widgetbook evaluates `WidgetbookGuidelines.recommended`:
 | Min tap target (Android) | `tap-target-android` | Tappable elements are at least **48×48** logical pixels.                                    |
 | Min tap target (iOS)     | `tap-target-ios`     | Tappable elements are at least **44×44** logical pixels.                                    |
 | Labeled tappable         | `labeled-tappable`   | Every element with a tap or long-press action has a `label` or `tooltip`.                   |
-| Text contrast            | `text-contrast`      | Text meets minimum contrast ratios. Adapted from Flutter's built-in guideline — text-only and approximate, so treat it as **advisory**. |
+| Text contrast            | `text-contrast`      | Text meets minimum contrast ratios. Adapted from Flutter's built-in guideline. Text-only and approximate, so treat it as **advisory**. |
 
 ## Configuring Guidelines
 
@@ -94,7 +94,7 @@ A guideline that throws during evaluation is recorded as a violation with a `rea
 
 ## Adapting a Flutter Guideline
 
-Flutter ships its own [`AccessibilityGuideline`](https://api.flutter.dev/flutter/flutter_test/AccessibilityGuideline-class.html)s. Wrap any of them — or your own — with `FlutterGuideline` to run it as part of your Widgetbook set:
+Flutter ships its own [`AccessibilityGuideline`](https://api.flutter.dev/flutter/flutter_test/AccessibilityGuideline-class.html)s. Wrap any of them (or your own) with `FlutterGuideline` to run it as part of your Widgetbook set:
 
 ```dart
 import 'package:flutter_test/flutter_test.dart';
