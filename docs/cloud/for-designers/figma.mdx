@@ -1,25 +1,27 @@
-# Working with Figma
+# Compare against Figma
 
-A review is only as good as what you compare against. Today that comparison runs between Widgetbook Cloud and Figma, side by side.
+A review is only as good as the reference behind it.
+Today the comparison runs between Widgetbook Cloud and Figma, side by side.
 
 ## How it works today
 
-The developer sets a design link on a story, a link to the matching component in your Figma file. In the review it shows as a **View in Figma** button. You click through and compare the implementation against the design by eye.
+The developer sets a design link on a story, a link to the matching component in the Figma file.
+In the review the link shows as a **View in Figma** button.
+Click through to compare the implementation against the design by eye.
 
 <Image src="/assets/cloud/reviews/view-in-figma.png" zoom caption="Click View in Figma on the story" />
-<Image src="/assets/cloud/reviews/figma-design.png" zoom caption="The matching component opens in your Figma file" />
+<Image src="/assets/cloud/reviews/figma-design.png" zoom caption="The matching component opens in the Figma file" />
 
-The developer setup lives in [Figma Reviews](/cloud/reviews/figma). Because the link points at a specific Figma component, a few things you control in Figma make the comparison faster and more accurate:
+The developer setup lives in [Figma Reviews](/cloud/reviews/figma).
+Because the link points at a specific Figma component, a few habits in Figma make the comparison faster and more accurate:
 
 - **Keep component naming stable.** The link targets a component by its Figma URL. Renaming, restructuring, or replacing components breaks the link and points the review at the wrong place. Stable names and structure keep links pointing where they should.
 - **Design the states that will be built.** A developer can only link to a state that exists in Figma. Design empty, loading, error, and edge states explicitly, and the review compares against them instead of a guess.
-- **Specify tokens, not raw values.** When your design names a token (a colour, a spacing step, a type style) rather than a literal value, the developer implements the token and the result stays consistent as the system changes. Raw values in the design invite raw values in the code, and those drift.
+- **Specify tokens, not raw values.** A design that names a token (a colour, a spacing step, a type style) rather than a literal value gets implemented as that token and stays consistent as the system changes. Raw values in the design invite raw values in the code, and those drift.
 
 <Info>
-**Coming soon.** We are building a tighter Figma integration: the Figma design
-visible inside Widgetbook Cloud, with a direct **Figma to Flutter** diff. No more
-clicking out to compare by eye. Beyond regression-testing one Flutter build against
-another (**Flutter to Flutter**), this regression-tests the implementation against
-the design itself. It is not available yet. Today's workflow is the manual
-View-in-Figma comparison above.
+**Coming soon.** A tighter Figma integration is on the way: the Figma design visible inside Widgetbook Cloud, with a direct **Figma to Flutter** diff.
+No more clicking out to compare by eye.
+Beyond regression-testing one Flutter build against another (**Flutter to Flutter**), this regression-tests the implementation against the design itself.
+The feature is not available yet, so today's workflow is the manual View-in-Figma comparison above.
 </Info>

@@ -1,17 +1,17 @@
 # Glossary for Designers
 
-You already understand the tool. What causes confusion is the workflow language developers use around it, the words in a pull request, a review, or a Slack message. This table translates that vocabulary.
+Designers already understand the tool.
+The confusion comes from the surrounding workflow language, the words in a pull request, a review, or a Slack message.
+This table translates that vocabulary.
 
-| Developer term | What it means for you |
-| -------------- | --------------------- |
-| **Pull request** (PR) | A proposed set of changes to the app, waiting to be reviewed and merged. Each pull request produces one [review](/cloud/reviews) in Widgetbook Cloud. GitLab calls it a *merge request*. |
-| **Story** | One component shown in one specific state, for example a button when disabled. It is the unit you review and comment on. Older Widgetbook (v3) called this a *use case*. If a developer says "use case", they mean a story. |
+| Developer term | What it means for a designer |
+| -------------- | ---------------------------- |
+| **Pull request** (PR) | A proposed set of changes to the app, waiting to be reviewed and merged. Each pull request produces one [review](/cloud/reviews) in Widgetbook Cloud. GitLab uses the term *merge request*. |
+| **Story** | One component shown in one specific state, for example a button when disabled. A story is the unit under review and the target of a comment. Older Widgetbook (v3) called a story a *use case*, so a developer saying "use case" means a story. |
 | **Snapshot** | A screenshot of a story in one configuration, for example dark mode with long text. One story can produce several snapshots, one per state or theme being tested. See [Snapshots](/cloud/snapshots/overview). |
 | **Build** | The full set of stories and snapshots generated from one version of the code. A review compares two builds. See [Builds](/cloud/builds/overview). |
-| **Base / Head** | The two sides of the comparison. **Base** is the existing version, what is already merged. **Head** is the proposed version, the pull request. The review labels these columns **Baseline** (left) and **Latest** (right). |
-| **Approve / Request changes** | Your decision on a review. **Approve** means the changes can merge. **Request changes** means something must be fixed first. A **Comment** option leaves feedback that neither approves nor blocks. See [Submit a review](/cloud/reviews/submit). |
-| **Merge** | Accepting a pull request so its changes become part of the app. This is the point of no return the review protects. Once merged, the change ships. |
+| **Base / Head** | The two sides of the comparison. **Base** is the existing version, already merged. **Head** is the proposed version, the pull request. The review labels these columns **Baseline** (left) and **Latest** (right). |
+| **Approve / Request changes** | A designer's decision on a review. **Approve** means the changes can merge. **Request changes** means a fix is needed first. A **Comment** option leaves feedback that neither approves nor blocks. See [Submit a review](/cloud/reviews/submit). |
+| **Merge** | Accepting a pull request so its changes become part of the app. Merge is the point of no return the review protects. Once merged, the change ships. |
 
-<Info>
-  Ready to put these into practice? See [Doing a review](/cloud/for-designers/doing-a-review).
-</Info>
+Next, [review a change](/cloud/for-designers/doing-a-review).

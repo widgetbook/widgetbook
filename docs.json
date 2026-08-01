@@ -484,33 +484,34 @@
           ]
         },
         {
-          "group": "For Designers",
-          "pages": [
-            {
-              "title": "Overview",
-              "href": "/cloud/for-designers/overview"
-            },
-            {
-              "title": "When to involve a designer",
-              "href": "/cloud/for-designers/when-to-involve-a-designer"
-            },
-            {
-              "title": "Doing a review",
-              "href": "/cloud/for-designers/doing-a-review"
-            },
-            {
-              "title": "Working with Figma",
-              "href": "/cloud/for-designers/figma"
-            },
-            {
-              "title": "Glossary",
-              "href": "/cloud/for-designers/glossary"
-            }
-          ]
-        },
-        {
           "title": "Product Tour",
           "href": "https://app.arcade.software/share/KAUbnlpbFF26PJzIGrwG"
+        }
+      ]
+    },
+    {
+      "tab": "cloud",
+      "group": "For Designers",
+      "pages": [
+        {
+          "title": "Overview",
+          "href": "/cloud/for-designers/overview"
+        },
+        {
+          "title": "Decide when to review",
+          "href": "/cloud/for-designers/when-to-involve-a-designer"
+        },
+        {
+          "title": "Review a change",
+          "href": "/cloud/for-designers/doing-a-review"
+        },
+        {
+          "title": "Compare against Figma",
+          "href": "/cloud/for-designers/figma"
+        },
+        {
+          "title": "Glossary",
+          "href": "/cloud/for-designers/glossary"
         }
       ]
     },

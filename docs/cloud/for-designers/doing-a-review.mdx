@@ -1,47 +1,46 @@
-# Doing a Review
+# Review a Change
 
-A review happens in your browser. Open it, look at each changed screen, compare against the design, and leave your decision. The developer is notified and responds. Neither of you runs the app.
+A review happens in the browser.
+Open the review, look at each changed screen, compare against the design, and leave a decision.
+The developer is notified and responds.
+Neither side runs the app.
 
 <Steps>
   <Step title="Open the review">
-    Every pull request gets a review automatically. Open it from the link in the
-    pull request, from your [email or Slack notification](/cloud/reviews/notifications/email),
-    or from the project in Widgetbook Cloud.
+    Every pull request gets a review automatically.
+    Open the review from the link in the pull request, from an [email or Slack notification](/cloud/reviews/notifications/email), or from the project in Widgetbook Cloud.
   </Step>
   <Step title="Look at each changed story">
-    A story is one component in one state (see the
-    [Glossary](/cloud/for-designers/glossary)). The review lists every story that
-    changed, **Baseline** on the left and **Latest** on the right. Click **Show diff**
-    to shade what changed in pink, so even small shifts stand out.
+    A story is one component in one state (see the [Glossary](/cloud/for-designers/glossary)).
+    The review lists every story that changed, **Baseline** on the left and **Latest** on the right.
+    Click **Show diff** to shade what changed in pink, so even small shifts stand out.
 
     <Image src="/assets/cloud/reviews/review-diff.png" zoom caption="Show diff shades every change in pink" />
   </Step>
   <Step title="Interact live with the story">
-    A snapshot is a still image. To feel the change, click **View Build** to open
-    the story in Widgetbook. Play with different args and addon combinations to
-    check the user experience, not just the pixels.
+    A snapshot is a still image.
+    To feel the change, click **View Build** to open the story in Widgetbook.
+    Play with different args and addon combinations to check the user experience, not just the pixels.
 
     <Image src="/assets/cloud/reviews/view-build.png" zoom caption="View Build opens the story in Widgetbook" />
 
     <YouTube id="0YGbkE5qITE" />
   </Step>
   <Step title="Compare against the Figma design">
-    If the developer set a design link on the story, click **View in Figma** to open
-    the matching component in Figma and compare it against the build. See
-    [Working with Figma](/cloud/for-designers/figma) for how to make this reliable.
+    When the developer set a design link on the story, click **View in Figma** to open the matching component and compare against the build.
+    See [Compare against Figma](/cloud/for-designers/figma) for how to keep this reliable.
 
     <Image src="/assets/cloud/reviews/view-in-figma.png" zoom caption="Click View in Figma on the story" />
-    <Image src="/assets/cloud/reviews/figma-design.png" zoom caption="The matching component opens in your Figma file" />
+    <Image src="/assets/cloud/reviews/figma-design.png" zoom caption="The matching component opens in the Figma file" />
   </Step>
   <Step title="Comment on the specific change">
-    Use the comment section on a story diff to tie feedback to that exact change,
-    so the developer knows which component and state you mean.
+    Use the comment section on a story diff to tie feedback to that exact change.
+    A comment on a story tells the developer which component and state to fix.
 
     <Image src="/assets/cloud/reviews/comment.png" zoom caption="Comment on a story to point at the exact change" />
   </Step>
-  <Step title="Submit your decision">
-    Click the **Review changes** button in the top-right corner, pick an option, and
-    click **Submit Review**:
+  <Step title="Submit a decision">
+    Click the **Review changes** button in the top-right corner, pick an option, and click **Submit Review**:
 
     - **Approve.** Approve merging these changes.
     - **Comment.** Submit general feedback without explicit approval.
@@ -49,43 +48,41 @@ A review happens in your browser. Open it, look at each changed screen, compare 
 
     <Image src="/assets/cloud/reviews/submit-review.png" zoom />
 
-    If your team uses [required reviewers](/cloud/reviews/required-reviewer), your
-    approval as a designer can be what unblocks the merge.
+    With [required reviewers](/cloud/reviews/required-reviewer) configured, a designer's approval can be what unblocks the merge.
   </Step>
   <Step title="The developer responds">
-    Your decision shows on the pull request. If you requested changes, the developer
-    revises and pushes again. That updates the review. You re-check the stories that
-    changed and update your decision.
+    The decision shows on the pull request.
+    After a request for changes, the developer revises and pushes again, which updates the review.
+    Re-check the stories that changed and update the decision.
   </Step>
 </Steps>
 
 ## What to look for
 
-A review that reaches you should already contain only intentional changes. Your job is to judge whether they are right.
+A review that reaches a designer should already contain only intentional changes.
+The task is to judge whether those changes are right.
 
-You can only review a state that was captured as a snapshot. If a state you expect is missing from the diff, that is itself a finding. Ask for the scenario to be added.
+A snapshot is the only way to review a state.
+A state missing from the diff is itself a finding, so ask for the scenario to be added.
 
 ### Confirm against the design
 
-Check these directly in the diff, comparing each snapshot against Figma:
+Compare each snapshot against Figma:
 
 - **States.** Are empty, loading, error, selected, and disabled states all correct, not just the default?
-- **Content extremes.** Does it hold with very long text, very short text, missing values, and large numbers?
-- **Dark mode.** Does it look right in light and dark, not just the one it was built in?
+- **Content extremes.** Does the layout hold with very long text, very short text, missing values, and large numbers?
+- **Dark mode.** Does the change look right in light and dark, not just the one it was built in?
 - **Text scaling.** Does the layout survive larger accessibility text sizes without clipping or overlap?
 - **Spacing.** Is padding, margin, and alignment consistent with the design and with neighbours?
 - **Colour and type.** Do fills, text colours, and type styles match the design exactly, with no near-misses?
 
 <Info>
-**Coming soon.** Right now you compare the design visually. Soon the review will
-include the widget tree, so you can inspect the properties of each widget and
-confirm correct spacing, colours, tokens, and component reuse directly in Widgetbook
-Cloud.
+**Coming soon.** Today the comparison is visual.
+Soon the review will include the widget tree, so designers can inspect the properties of each widget and confirm correct spacing, colours, tokens, and component reuse directly in Widgetbook Cloud.
 </Info>
 
 ### Accessibility
 
-You can judge **contrast** and **visible focus states** from the image. **Semantics,
-labels, and focus order** are not visible in a screenshot. Those are confirmed in
-code review, or in Widgetbook Cloud's accessibility view when your project has it
-enabled.
+Contrast and visible focus states are clear from the image.
+Semantics, labels, and focus order are not visible in a screenshot.
+Confirm those in code review, or in Widgetbook Cloud's accessibility view when the project has it enabled.
