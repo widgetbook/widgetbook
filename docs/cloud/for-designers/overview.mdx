@@ -1,26 +1,24 @@
 # For Designers
 
 Widgetbook Cloud has two audiences: the developers who build the UI, and the designers who own how it should look.
-Most of these docs are written for developers.
-This section is for designers, who usually never open Flutter projects and likely never will.
+Most of these docs are written for developers. This section is for designers.
 
-Every pull request produces a [review](/cloud/reviews) that a designer opens in the browser, with no Flutter involved.
+Every pull request produces a [review](/cloud/reviews) that a designer opens in the browser. No need to run a Flutter app.
 
 <Image theme="light" src="/assets/cloud/review.light.png" />
 <Image theme="dark" src="/assets/cloud/review.dark.png" />
 
 ## The two-stage review
 
-A single UI review has two passes.
-Two different people usually run them.
+Every UI review has two checks:
 
-1. **Filter out the unintended.** The developer who opened the pull request looks for changes they did not mean to make. A component that shifted, spacing that moved, a state that now renders differently. They fix those before asking other team members to review.
-2. **Judge whether the change is right.** Once only intentional changes remain, the next reviewer decides whether those changes are correct. When the question is a design one, that reviewer is a designer.
+1. **Catch unintended changes.** The developer who opened the pull request looks for changes they did not mean to make. A component that shifted, spacing that moved, a state that now renders differently. They fix those before asking other team members to review.
+2. **Ensure the change works as expected.** Once only intentional changes remain, the next reviewer decides whether those changes are correct. When it's not clear that the design was met correctly, a designer should be involved.
 
-The first pass is a filter.
-A review that reaches a designer should contain only deliberate changes.
-A designer does not re-hunt for accidents the developer already caught.
-A designer judges whether the deliberate changes are right.
+The first check is a filter. 
+So, a review that reaches a designer should contain only deliberate changes. 
+A designer does not re-hunt for accidents the developer already caught. 
+A designer only judges whether the deliberate changes are right.
 
 ## Designer actions
 
