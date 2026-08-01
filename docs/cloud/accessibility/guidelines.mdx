@@ -1,0 +1,116 @@
+# Accessibility Guidelines
+
+Accessibility guidelines are checks that `testWidgetbook` evaluates against every captured scenario. Each guideline inspects the rendered widget's semantics and reports **violations** — for example, a tappable element that is too small or missing a label. Violations are captured alongside the scenario's screenshot and semantics tree, and uploaded with the build.
+
+Guidelines describe the accessibility of a **single** version of your UI, and complement the [regression diff](/cloud/accessibility/overview), which compares two versions.
+
+## Recommended Guidelines
+
+By default, Widgetbook evaluates `WidgetbookGuidelines.recommended`:
+
+| Guideline           | ID                    | Checks                                                                                     |
+| ------------------- | --------------------- | ------------------------------------------------------------------------------------------ |
+| Min tap target (Android) | `tap-target-android` | Tappable elements are at least **48×48** logical pixels.                                    |
+| Min tap target (iOS)     | `tap-target-ios`     | Tappable elements are at least **44×44** logical pixels.                                    |
+| Labeled tappable         | `labeled-tappable`   | Every element with a tap or long-press action has a `label` or `tooltip`.                   |
+| Text contrast            | `text-contrast`      | Text meets minimum contrast ratios. Adapted from Flutter's built-in guideline — text-only and approximate, so treat it as **advisory**. |
+
+## Configuring Guidelines
+
+Guidelines are set on `Config.accessibilityConfig`. If you don't set it, the recommended set is used automatically.
+
+```dart title=widgetbook/lib/widgetbook.config.dart
+import 'package:widgetbook/widgetbook.dart';
+
+import 'components.g.dart';
+
+final config = Config(
+  components: components,
+  accessibilityConfig: AccessibilityConfig(
+    guidelines: [
+      ...WidgetbookGuidelines.recommended, // [!code highlight]
+      MyCustomGuideline(),                 // [!code highlight]
+    ],
+  ),
+);
+```
+
+<Info>
+Guidelines are only evaluated during testing (`testWidgetbook`). They have no effect on the interactive Widgetbook app.
+</Info>
+
+### Disabling Guidelines
+
+Pass an empty list to skip accessibility evaluation entirely. Semantics data is still captured, so the [regression diff](/cloud/accessibility/overview) keeps working.
+
+```dart
+final config = Config(
+  components: components,
+  accessibilityConfig: AccessibilityConfig(
+    guidelines: const [], // [!code highlight]
+  ),
+);
+```
+
+## Writing a Custom Guideline
+
+Implement `WidgetbookGuideline` to add your own check. Return a `GuidelineViolation` for each failure, optionally pinned to the offending nodes with `ViolationNode`s.
+
+```dart
+import 'package:flutter_test/flutter_test.dart';
+import 'package:widgetbook/widgetbook.dart';
+
+class MyCustomGuideline extends WidgetbookGuideline {
+  const MyCustomGuideline();
+
+  @override
+  String get id => 'my-custom-guideline';
+
+  @override
+  Future<List<GuidelineViolation>> evaluate(WidgetTester tester) async {
+    final violations = <GuidelineViolation>[];
+
+    // Inspect the pumped tree with the standard flutter_test APIs, and add a
+    // violation whenever your rule is broken.
+    // violations.add(
+    //   GuidelineViolation(
+    //     guidelineId: id,
+    //     title: 'My custom guideline',
+    //     helpUrl: 'https://example.com/my-guideline',
+    //     nodes: [
+    //       ViolationNode(message: 'This element violates the rule.'),
+    //     ],
+    //   ),
+    // );
+
+    return violations;
+  }
+}
+```
+
+<Info>
+A guideline that throws during evaluation is recorded as a violation with a `reason` instead of failing the capture, so a single flaky check never blocks a snapshot.
+</Info>
+
+## Adapting a Flutter Guideline
+
+Flutter ships its own [`AccessibilityGuideline`](https://api.flutter.dev/flutter/flutter_test/AccessibilityGuideline-class.html)s. Wrap any of them — or your own — with `FlutterGuideline` to run it as part of your Widgetbook set:
+
+```dart
+import 'package:flutter_test/flutter_test.dart';
+import 'package:widgetbook/widgetbook.dart';
+
+final config = Config(
+  components: components,
+  accessibilityConfig: AccessibilityConfig(
+    guidelines: [
+      ...WidgetbookGuidelines.recommended,
+      FlutterGuideline(androidTapTargetGuideline, id: 'android-tap-target'), // [!code highlight]
+    ],
+  ),
+);
+```
+
+<Warning>
+**Caution:** Flutter's built-in guidelines only report a coarse text reason and merge all failing nodes into a single message, so an adapted `FlutterGuideline` cannot anchor violations to individual nodes. Use a native `WidgetbookGuideline` when you need per-node results.
+</Warning>

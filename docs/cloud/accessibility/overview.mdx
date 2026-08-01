@@ -1,0 +1,68 @@
+# Accessibility Regression Testing
+
+Accessibility regression testing catches changes to your app's **accessibility tree** — the structured information that assistive technologies like screen readers rely on — between two versions of your UI.
+
+Where [visual pull requests](/cloud/visual-pull-request/overview) compare *pixels*, accessibility regression testing compares *semantics*. Widgetbook Cloud diffs the semantics tree of each [scenario](/testing/overview) between the `base` and `head` [builds](/cloud/builds/overview) of a pull request, and surfaces the changes inside the same [review](/cloud/reviews) workflow.
+
+<Image src="/assets/cloud/accessibility/accessibility-changes.png" caption="Widgetbook Cloud - Accessibility Changes on a story diff" zoom />
+
+{/* TODO: replace with a real screenshot of the "Accessibility Changes" section on a story diff card (light + dark pair if available). */}
+
+## Why Accessibility Regressions Are Hard to Catch
+
+Accessibility regressions are especially easy to ship unnoticed:
+
+- A refactor removes a `Semantics` label from a button. The screen looks **identical**, but screen-reader users now hear nothing.
+- A widget's role changes from a button to plain text, or a heading loses its heading level.
+- Nodes are reordered, so assistive technologies traverse the screen in a confusing order.
+
+None of these change a single pixel, so a purely visual review — human or screenshot-based — cannot detect them. Accessibility regression testing makes them explicit.
+
+## Visual vs. Accessibility Regression
+
+Both run on the same builds and in the same review, and complement each other:
+
+|                | Visual regression                                                                 | Accessibility regression                                                                       |
+| -------------- | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Purpose**    | Find unintended **visual** differences between versions                           | Find unintended **accessibility** differences between versions                                 |
+| **Comparison** | **Screenshots** between `base` and `head` [builds](/cloud/builds/overview)        | **Semantics trees** between `base` and `head` [builds](/cloud/builds/overview)                  |
+| **Catches**    | Layout shifts, color changes, overflow, clipping                                  | Missing labels, changed roles, reordered nodes, dropped or added accessibility nodes           |
+| **Tool**       | Widgetbook Cloud                                                                   | Widgetbook Cloud                                                                                |
+
+## How It Works
+
+1. During testing, `testWidgetbook` captures the **semantics tree** of every scenario alongside its screenshot, and evaluates a set of [accessibility guidelines](/cloud/accessibility/guidelines).
+1. The [Widgetbook CLI](/cloud/builds/upload) uploads this data with the build's [snapshots](/cloud/snapshots/overview) — no extra step.
+1. When a pull request has builds for both the `base` and `head` commits, Widgetbook Cloud diffs the two semantics trees per scenario.
+1. Any differences appear as **Accessibility Changes** on the story diff, ready to be [reviewed](/cloud/accessibility/review) alongside visual changes.
+
+## Requirements
+
+<Info>
+Accessibility regression testing requires **Widgetbook 4** and the **Widgetbook CLI 4** (`{{ versions.cli }}`). Semantics data is only captured and uploaded by Widgetbook 4 builds — Widgetbook 3 builds are compared visually only.
+</Info>
+
+## Billing
+
+<Info>
+**Beta:** Accessibility regression testing is currently in beta. While in beta it is included at **no additional cost** — accessibility data rides along on your existing [snapshots](/cloud/snapshots/overview) and does not affect your [billing](/cloud/account/billing).
+
+This is expected to change after beta: accessibility data is planned to be captured as an **additional snapshot** per scenario, which would then count toward your snapshot usage like any other snapshot. This page will be updated before any billing change takes effect.
+</Info>
+
+## Next Steps
+
+<CardGroup>
+  <Card title="Accessibility guidelines" icon="universal-access" href="/cloud/accessibility/guidelines">
+    Configure the accessibility checks evaluated for every scenario.
+  </Card>
+  <Card title="Setup" icon="gear" href="/cloud/accessibility/setup">
+    Upload builds so Widgetbook Cloud can compare accessibility across a pull request.
+  </Card>
+  <Card title="Reviewing changes" icon="code-compare" href="/cloud/accessibility/review">
+    Read and review accessibility changes on a pull request.
+  </Card>
+  <Card title="Semantics Addon" icon="sitemap" href="/addons/semantics-addon">
+    Inspect the semantics tree interactively while developing.
+  </Card>
+</CardGroup>

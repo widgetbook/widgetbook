@@ -1,0 +1,70 @@
+# Setup
+
+Accessibility regression testing runs on the builds you already upload to Widgetbook Cloud — there is **nothing extra to enable**. Widgetbook 4 automatically captures each scenario's semantics tree and accessibility violations during testing, and the [Widgetbook CLI](/cloud/builds/upload) uploads them with the build's [snapshots](/cloud/snapshots/overview).
+
+If your project already produces [visual pull requests](/cloud/visual-pull-request/overview), accessibility regression testing is already working.
+
+<Info>
+**Prerequisite:** Make sure you have completed the setup of Widgetbook Cloud for
+[GitHub](/cloud/guides/github/upload),
+[GitLab](/cloud/guides/gitlab/upload),
+[Azure DevOps](/cloud/guides/azure/upload), or
+[Bitbucket](/cloud/guides/bitbucket/upload).
+</Info>
+
+## How Semantics Are Captured
+
+When you run `testWidgetbook`, the test runtime — for every scenario — captures a screenshot, **captures the semantics tree**, and **evaluates the [accessibility guidelines](/cloud/accessibility/guidelines)**, writing all of it to the local build cache.
+
+<Steps>
+  <Step title="Confirm your test entry point">
+    Your Widgetbook project should have a `test/widgetbook_test.dart` that runs your config:
+
+    ```dart title=test/widgetbook_test.dart
+    import 'package:my_app/widgetbook.config.dart';
+    import 'package:widgetbook/test.dart';
+
+    Future<void> main() async {
+      await testWidgetbook(config);
+    }
+    ```
+  </Step>
+
+  <Step title="Build and test">
+    Build Widgetbook for the web, then run the tests:
+
+    ```bash
+    flutter build web -t lib/main.dart
+    flutter test
+    ```
+
+    `flutter test` generates the build cache, including the screenshot, semantics tree, and violations for every scenario.
+  </Step>
+
+  <Step title="Push to Widgetbook Cloud">
+    ```bash
+    dart pub global activate widgetbook_cli {{ versions.cli }}
+    widgetbook cloud build push --api-key <YOUR_API_KEY>
+    ```
+  </Step>
+</Steps>
+
+## Comparing Across a Pull Request
+
+To diff accessibility between two versions, Widgetbook Cloud needs builds for **both** the `base` and `head` commits of the pull request — exactly the same requirement as [visual pull requests](/cloud/visual-pull-request/create). Once both builds are uploaded, the comparison is automatic.
+
+Your CI should push a build for both commits of every pull request, using `--allow-existing` on the base commit so the step succeeds if that build was already uploaded (for example by a push workflow on your default branch):
+
+```bash
+widgetbook cloud build push \
+  --api-key $WIDGETBOOK_API_KEY \
+  --branch $BRANCH \
+  --commit $COMMIT \
+  --allow-existing   # on the base commit only
+```
+
+<Info>
+Accessibility regression testing uses the exact same builds as visual pull requests. For the complete CI setup — the ready-to-use GitHub Actions workflow, the base/head commit model, and the merge-commit pitfall — follow [Create Visual Pull Requests](/cloud/visual-pull-request/create). No accessibility-specific CI changes are needed.
+</Info>
+
+Once both builds are uploaded, open the pull request in Widgetbook Cloud to [review the accessibility changes](/cloud/accessibility/review).

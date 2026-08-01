@@ -450,6 +450,27 @@
           ]
         },
         {
+          "group": "Accessibility Regression Testing",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/cloud/accessibility/overview"
+            },
+            {
+              "title": "Accessibility guidelines",
+              "href": "/cloud/accessibility/guidelines"
+            },
+            {
+              "title": "Setup",
+              "href": "/cloud/accessibility/setup"
+            },
+            {
+              "title": "Reviewing changes",
+              "href": "/cloud/accessibility/review"
+            }
+          ]
+        },
+        {
           "group": "Reviews",
           "pages": [
             {

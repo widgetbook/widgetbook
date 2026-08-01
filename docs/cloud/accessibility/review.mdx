@@ -1,0 +1,44 @@
+# Reviewing Changes
+
+When a pull request changes the accessibility tree of a scenario, Widgetbook Cloud shows an **Accessibility Changes** section on that scenario's story diff — right next to the visual diff. It appears whenever the semantics tree differs, **even if the screenshot is identical**.
+
+<Image src="/assets/cloud/accessibility/accessibility-changes-expanded.png" caption="An accessibility change with its property table expanded" zoom />
+
+{/* TODO: replace with a real screenshot of an expanded accessibility change (Property / Previous / Current table). Provide light + dark variants if available. */}
+
+## Reading a Change
+
+Each entry represents a node in the semantics tree that changed between the `base` and `head` builds. The header shows the node's path in the tree and the **type** of change:
+
+| Type        | Meaning                                                                                                   |
+| ----------- | --------------------------------------------------------------------------------------------------------- |
+| **Added**   | A node exists in the new version but not the old one — an element was added to the accessibility tree.     |
+| **Removed** | A node existed in the old version but not the new one — an element was dropped from the accessibility tree. |
+| **Changed** | A node's properties differ — for example, its `label` or `value` changed.                                  |
+| **Moved**   | A node's position among its siblings changed, altering the order assistive technologies traverse it in.    |
+
+Expanding a **changed** entry shows a table comparing the node's properties:
+
+| Property | Previous       | Current        |
+| -------- | -------------- | -------------- |
+| label    | `Basket: 0$`   | `Basket: 1$`   |
+
+Compared properties include `label`, `value`, `hint`, `tooltip`, `role`, `headingLevel`, `textDirection`, flags (such as `isButton`, `isHeader`, `isSelected`), and geometry (`rect`, `transform`).
+
+<Info>
+**Role changes appear as a removed + added pair.** A node's `role` is part of how Widgetbook matches nodes between versions, so changing a role (for example, from a button to plain text) is reported as the old node being **removed** and a new node being **added**, rather than a single change.
+</Info>
+
+## Reviewing Alongside Visual Changes
+
+Accessibility changes are part of the same [review](/cloud/reviews) as visual changes. On each story diff you can:
+
+- **Accept** or **reject** the change to record whether it was intentional.
+- **Comment** to discuss it with your team.
+- **Mark as viewed** to track review progress.
+
+A story appears in the pull request's change set when its screenshot changed **or** its accessibility tree changed — so an accessibility-only regression will still surface a story for review even when nothing looks different.
+
+<Info>
+For the end-to-end review workflow — commit statuses, required reviewers, and notifications — see [Widgetbook Cloud Reviews](/cloud/reviews).
+</Info>
