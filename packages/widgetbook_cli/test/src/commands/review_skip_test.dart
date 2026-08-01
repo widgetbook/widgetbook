@@ -16,85 +16,69 @@ void main() {
   group('$ReviewSkipCommand', () {
     const headSha = '832e76a9899f560a90ffd62ae2ce83bbeff58f54';
 
-    late Logger logger;
-    late Progress progress;
     late Context context;
     late ArgResults results;
+    late MockWidgetbookHttpClient client;
     late ReviewSkipCommand command;
 
     setUp(() {
-      logger = MockLogger();
-      progress = MockProgress();
+      final logger = MockLogger();
+      when(() => logger.progress(any<String>())).thenReturn(MockProgress());
+
       context = MockContext();
       results = MockArgResults();
-
-      when(() => logger.progress(any<String>())).thenReturn(progress);
-
-      command = ReviewSkipCommand(context: context, logger: logger);
+      client = MockWidgetbookHttpClient();
+      command = ReviewSkipCommand(
+        context: context,
+        logger: logger,
+        cloudClient: client,
+      );
 
       when(() => results['api-key']).thenReturn('key');
       when(() => results['pr']).thenReturn('123');
       when(() => results['sha']).thenReturn(headSha);
-      when(() => results['reason']).thenReturn(null);
+      when(() => results['reason']).thenReturn('No UI changes');
     });
 
-    group('parseResults', () {
-      test('uses explicitly passed options', () async {
-        when(() => results['pr']).thenReturn('123');
-        when(() => results['sha']).thenReturn(headSha);
-        when(() => results['reason']).thenReturn('No UI changes');
+    test('parses the passed options', () async {
+      final args = await command.parseResults(context, results);
 
-        final args = await command.parseResults(context, results);
-
-        expect(args.apiKey, equals('key'));
-        expect(args.prNumber, equals(123));
-        expect(args.sha, equals(headSha));
-        expect(args.reason, equals('No UI changes'));
-      });
-
-      test('throws when the pull request number is not a number', () async {
-        when(() => results['pr']).thenReturn('not-a-number');
-        when(() => results['sha']).thenReturn(headSha);
-
-        expect(
-          () => command.parseResults(context, results),
-          throwsA(isA<CliException>()),
-        );
-      });
+      expect(args.apiKey, equals('key'));
+      expect(args.prNumber, equals(123));
+      expect(args.sha, equals(headSha));
+      expect(args.reason, equals('No UI changes'));
     });
 
-    group('runWith', () {
-      test('posts the skip and reports the resulting status', () async {
-        final client = MockWidgetbookHttpClient();
-        final command = ReviewSkipCommand(
-          context: context,
-          logger: logger,
-          cloudClient: client,
-        );
+    test('throws when the pull request number is not a number', () {
+      when(() => results['pr']).thenReturn('not-a-number');
 
-        when(
-          () => client.skipReview(any(), any()),
-        ).thenAnswer(
-          (_) async => const SkipReviewResponse(
-            sha: headSha,
-            state: 'success',
-            prNumber: 123,
-          ),
-        );
+      expect(
+        () => command.parseResults(context, results),
+        throwsA(isA<CliException>()),
+      );
+    });
 
-        final exitCode = await command.runWith(
-          context,
-          const ReviewSkipArgs(
-            apiKey: 'key',
-            prNumber: 123,
-            sha: headSha,
-            reason: 'No UI changes',
-          ),
-        );
+    test('posts the skip and reports the resulting status', () async {
+      when(() => client.skipReview(any(), any())).thenAnswer(
+        (_) async => const SkipReviewResponse(
+          sha: headSha,
+          state: 'success',
+          prNumber: 123,
+        ),
+      );
 
-        expect(exitCode, equals(ExitCode.success.code));
-        verify(() => client.skipReview(123, any())).called(1);
-      });
+      final exitCode = await command.runWith(
+        context,
+        const ReviewSkipArgs(
+          apiKey: 'key',
+          prNumber: 123,
+          sha: headSha,
+          reason: 'No UI changes',
+        ),
+      );
+
+      expect(exitCode, equals(ExitCode.success.code));
+      verify(() => client.skipReview(123, any())).called(1);
     });
   });
 }
