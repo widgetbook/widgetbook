@@ -97,4 +97,10 @@ The matrix runs the job twice:
 - **Head build** — checks out and uploads the pull request's head commit `z` (not the merge commit `m`), so Widgetbook Cloud can match the build to the pull request's head. Passing `--branch` and `--commit` explicitly is required, because the checked-out head commit is in a detached `HEAD` state.
 - **Base build** — checks out and uploads the base commit `a`. `--allow-existing` makes the step succeed instead of failing if that build was already uploaded (for example by a push workflow on your default branch), so the pipeline stays green.
 
-Uploading both builds on the pull request guarantees the visual pull request is valid right away. Widgetbook Cloud reuses snapshots that already exist, so the additional base build is snapshot-efficient.
+Uploading both builds on the pull request guarantees the visual pull request is valid right away.
+
+<Info>
+Snapshots are billed for every build that is uploaded, even when identical snapshots already exist.
+When a build for the base commit already exists, `--allow-existing` skips the upload and Widgetbook Cloud reuses that build at no extra cost.
+To avoid paying for the base build on every pull request, upload builds for your base branch from a `push` workflow.
+</Info>
