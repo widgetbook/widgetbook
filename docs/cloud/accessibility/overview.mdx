@@ -2,15 +2,13 @@
 
 Accessibility regression testing compares the **accessibility tree** of your UI between two versions and flags what changed. The accessibility tree is the structured data that screen readers and other assistive technologies read, so a change to it is a change to how your app works for the people who depend on them.
 
-<Image src="/assets/cloud/accessibility/story-diff-accessibility.png" caption="A story diff in Widgetbook Cloud showing accessibility changes and new violations" zoom />
+<YouTube id="McJfLDKMqX0" />
 
 ## Why It Matters
 
 Accessibility bugs are invisible. Drop a button's label, change its role, or reorder the tree, and the screen looks exactly the same. Code review misses it because the widget diff looks harmless. Visual review misses it because no pixel moved. The only way to catch it is to read the accessibility tree, which nobody does by hand on every pull request.
 
 That is the gap this closes. Widgetbook Cloud diffs the accessibility tree of every [scenario](/testing/overview) between the `base` and `head` [builds](/cloud/builds/overview) of a pull request and shows the changes in your existing [review](/cloud/reviews). Regressions become visible before merge, with no extra tooling and no manual screen-reader passes.
-
-<YouTube id="McJfLDKMqX0" />
 
 It catches the changes visual testing cannot:
 
