@@ -13,16 +13,21 @@ import 'snapshot_runner.dart';
 const outputDir = 'build/.widgetbook';
 
 /// Generates a snapshot for every scenario in [config] headlessly under
-/// `flutter test`.
+/// `flutter test`, optionally narrowed to the components matching [where].
 ///
 /// Widgets backed by platform textures/views (e.g. `video_player`, `pdfrx`)
 /// render blank here because there is no real engine or GPU — only the Flutter
 /// layer tree is rasterized. For those, use `testWidgetbookOnDevice` from
 /// `package:widgetbook/integration_test.dart`, which runs on a device/simulator.
-Future<void> testWidgetbook(Config config) async {
+/// The two share the same `where` filter, so a project can partition its
+/// components between the fast headless run and the on-device run.
+Future<void> testWidgetbook(
+  Config config, {
+  bool Function(Component component)? where,
+}) async {
   TestWidgetsFlutterBinding.ensureInitialized();
   await loadFonts();
-  declareSnapshotTests(config, const _LayerStrategy());
+  declareSnapshotTests(config, const _LayerStrategy(), where: where);
 }
 
 /// Headless capture strategy: rasterizes the Flutter layer tree offscreen via

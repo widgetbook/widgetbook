@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **FEAT**: Add on-device snapshotting. `testWidgetbookOnDevice` (`package:widgetbook/integration_test.dart`) and `widgetbookIntegrationDriver` (`package:widgetbook/integration_test_driver.dart`) capture scenarios on a real device or simulator via `integration_test`, so widgets backed by platform textures/views (e.g. `video_player`, `pdfrx`) render instead of appearing blank under `flutter test`. Opt selected components in with the `where` filter; `testWidgetbook` (headless) remains the default.
+- **FEAT**: Add on-device snapshotting. `testWidgetbookOnDevice` (`package:widgetbook/integration_test.dart`) and `widgetbookIntegrationDriver` (`package:widgetbook/integration_test_driver.dart`) capture scenarios on a real device or simulator via `integration_test`, so widgets backed by platform textures/views (e.g. `video_player`, `pdfrx`) render instead of appearing blank under `flutter test`. `testWidgetbook` (headless) remains the default; both accept a `where` filter to partition components between the headless and on-device runs.
 - **BREAKING**: Remove the incidental `testComponent`/`testStory`/`testScenario` helpers from `package:widgetbook/test.dart`; use `testWidgetbook`.
 
 ## 4.0.0-beta.11
