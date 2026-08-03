@@ -221,14 +221,20 @@
         {
           "title": "Mock Widgets & Screens",
           "href": "/stories/mocking"
+        }
+      ]
+    },
+    {
+      "tab": "docs",
+      "group": "Testing",
+      "pages": [
+        {
+          "title": "Overview",
+          "href": "/testing/overview"
         },
         {
-          "group": "Testing",
+          "group": "Scenarios",
           "pages": [
-            {
-              "title": "Overview",
-              "href": "/testing/overview"
-            },
             {
               "title": "Default Scenarios",
               "href": "/testing/default-scenario"
@@ -240,20 +246,20 @@
             {
               "title": "Run Scenarios",
               "href": "/testing/run-scenarios"
-            },
-            {
-              "title": "Layout Constraining",
-              "href": "/testing/layout-constraining"
-            },
-            {
-              "title": "Accessibility Guidelines",
-              "href": "/testing/accessibility"
-            },
-            {
-              "title": "Visual Tests",
-              "href": "/testing/visual-tests"
             }
           ]
+        },
+        {
+          "title": "Layout Constraining",
+          "href": "/testing/layout-constraining"
+        },
+        {
+          "title": "Accessibility Guidelines",
+          "href": "/testing/accessibility"
+        },
+        {
+          "title": "Visual Tests",
+          "href": "/testing/visual-tests"
         }
       ]
     },
