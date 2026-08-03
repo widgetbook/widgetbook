@@ -52,7 +52,8 @@
     "/essentials/fonts": "/sharing/fonts",
     "/essentials/monorepo": "/configure/monorepo",
     "/essentials/fields": "/configure/fields",
-    "/glossary/visual-tests": "/testing/visual-tests"
+    "/glossary/visual-tests": "/testing/visual-tests",
+    "/glossary/design-system": "/stories/overview"
   },
   "tabs": [
     {
@@ -107,7 +108,7 @@
       "tab": "docs",
       "pages": [
         {
-          "title": "What are Stories?",
+          "title": "Overview",
           "href": "/stories/overview"
         },
         {
@@ -152,6 +153,68 @@
             {
               "title": "Custom Arg",
               "href": "/args/custom"
+            }
+          ]
+        },
+        {
+          "title": "Modes",
+          "href": "/addons/modes"
+        },
+        {
+          "group": "Addons",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/addons/overview"
+            },
+            {
+              "group": "Built-in",
+              "pages": [
+                {
+                  "title": "Theme Addon",
+                  "href": "/addons/theme-addon"
+                },
+                {
+                  "title": "Locale Addon",
+                  "href": "/addons/locale-addon"
+                },
+                {
+                  "title": "Text Scale Addon",
+                  "href": "/addons/text-scale-addon"
+                },
+                {
+                  "title": "Viewport Addon",
+                  "href": "/addons/viewport-addon"
+                },
+                {
+                  "title": "Alignment Addon",
+                  "href": "/addons/alignment-addon"
+                },
+                {
+                  "title": "Grid Addon",
+                  "href": "/addons/grid-addon"
+                },
+                {
+                  "title": "Zoom Addon",
+                  "href": "/addons/zoom-addon"
+                },
+                {
+                  "title": "Time Dilation Addon",
+                  "href": "/addons/time-dilation-addon"
+                },
+                {
+                  "title": "Builder Addon",
+                  "href": "/addons/builder-addon"
+                },
+                {
+                  "title": "Semantics Addon 🧪",
+                  "href": "/addons/semantics-addon"
+                }
+              ]
+            },
+            {
+              "title": "Custom Addon",
+              "href": "/addons/custom-addon"
             }
           ]
         },
@@ -243,63 +306,6 @@
       "tab": "docs",
       "pages": [
         {
-          "group": "Addons",
-          "pages": [
-            {
-              "title": "Overview",
-              "href": "/addons/overview"
-            },
-            {
-              "title": "Modes",
-              "href": "/addons/modes"
-            },
-            {
-              "title": "Alignment Addon",
-              "href": "/addons/alignment-addon"
-            },
-            {
-              "title": "Builder Addon",
-              "href": "/addons/builder-addon"
-            },
-            {
-              "title": "Grid Addon",
-              "href": "/addons/grid-addon"
-            },
-            {
-              "title": "Locale Addon",
-              "href": "/addons/locale-addon"
-            },
-            {
-              "title": "Text Scale Addon",
-              "href": "/addons/text-scale-addon"
-            },
-            {
-              "title": "Theme Addon",
-              "href": "/addons/theme-addon"
-            },
-            {
-              "title": "Time Dilation Addon",
-              "href": "/addons/time-dilation-addon"
-            },
-            {
-              "title": "Zoom Addon",
-              "href": "/addons/zoom-addon"
-            },
-            {
-              "title": "Semantics Addon 🧪",
-              "href": "/addons/semantics-addon"
-            },
-            {
-              "title": "Viewport Addon",
-              "href": "/addons/viewport-addon"
-            },
-            {
-              "title": "Custom Addon",
-              "href": "/addons/custom-addon"
-            }
-          ]
-        },
-        {
           "title": "Root Widget",
           "href": "/configure/root-widget"
         },
@@ -334,16 +340,6 @@
         {
           "title": "Telemetry",
           "href": "/telemetry"
-        }
-      ]
-    },
-    {
-      "tab": "docs",
-      "group": "Glossary",
-      "pages": [
-        {
-          "title": "Design System",
-          "href": "/glossary/design-system"
         }
       ]
     },
