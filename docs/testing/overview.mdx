@@ -18,6 +18,17 @@ Scenarios unify this by letting you model a state once and reuse it for:
 
 This reduces duplicate setup and keeps implementation and validation aligned.
 
+## Run by Humans and Agents
+
+Scenarios run through `flutter test`, and the same command serves both audiences.
+
+- **Developers** run it locally before pushing and inspect the snapshots in `build/.widgetbook`.
+- **Coding agents** run it as a self-correction loop. Every failure names the scenario, the assertion, and any accessibility violation, so an agent can fix the widget and rerun without a human in the middle.
+
+Nothing in the setup differs. Writing scenarios alongside a widget turns "the agent says it works" into a snapshot you can look at.
+
+See [Agentic Engineering](/agentic/overview) for the workflow.
+
 ## Better Control for Screenshot-Based Testing
 
 Scenarios improve control over screenshot testing in Widgetbook Cloud. Developers can define interactions before capture by using the scenario `run` method.

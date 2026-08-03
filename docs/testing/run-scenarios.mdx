@@ -31,6 +31,19 @@ Widgetbook testing is built on top of Flutter's `flutter_test` package. Scenario
   </Step>
 </Steps>
 
+## Who Runs Scenarios
+
+Both people and coding agents run the same `flutter test` command against the same setup.
+
+| Runner | Reads |
+| --- | --- |
+| Developer | Snapshots in `build/.widgetbook`, failures in the console |
+| Coding agent | The same failures, parsed as text: scenario name, assertion, overflow, accessibility violation |
+
+Every failure is anchored to a named scenario, so it points at one widget state instead of a screen. That makes the scenario set a feedback loop an agent can close on its own, then hand you the snapshots to judge.
+
+See [Agentic Engineering](/agentic/overview) for the workflow, and [GenUI](/genui/testing#self-heal-with-flutter-test) for using it as the quality gate on a model's widget catalog.
+
 ## What Happens During Execution
 
 `testWidgetbook` first expands the scenarios of every story: local scenarios

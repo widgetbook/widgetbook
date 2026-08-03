@@ -1,0 +1,188 @@
+# Build Your Catalog with Stories
+
+A catalog item binds model data to a widget. A story binds args to the same widget. Structure the widget so both can reach it.
+
+## Split the Widget from the Binding
+
+Write the catalog widget as a plain presentational widget. No `DataModel`, no schema.
+
+```dart title="design_system/lib/option_tiles.dart"
+class OptionTiles extends StatelessWidget {
+  const OptionTiles({
+    super.key,
+    required this.question,
+    required this.options,
+    required this.selectedId,
+    required this.onSelected,
+  });
+
+  final String question;
+  final List<TileOption> options;
+  final String? selectedId;
+  final ValueChanged<String> onSelected;
+
+  // ...
+}
+```
+
+Keep GenUI awareness in the `CatalogItem`:
+
+```dart title="app/lib/genui/option_tiles_item.dart"
+final optionTiles = CatalogItem(
+  name: 'OptionTiles',
+  dataSchema: _optionTilesSchema,
+  widgetBuilder: (context) {
+    final data = _OptionTilesData.fromMap(context.data! as Map<String, Object?>);
+
+    return BoundString(
+      dataContext: context.dataContext,
+      value: data.selection,
+      builder: (builderContext, selectedId) => OptionTiles(
+        question: data.question,
+        options: data.options,
+        selectedId: selectedId,
+        onSelected: (id) => context.dataContext.update(
+          DataPath(data.selectionPath),
+          id,
+        ),
+      ),
+    );
+  },
+);
+```
+
+Selections write to the local `DataModel`. Tapping a tile does not call the model again.
+
+## Hold State in a Host Widget
+
+`OptionTiles` is controlled: it renders `selectedId` and reports taps through `onSelected`. The `DataModel` holds that state in the app. Nothing holds it in a story, so taps would do nothing.
+
+Add a stateful host:
+
+```dart title="widgetbook/lib/option_tiles_host.dart"
+class OptionTilesHost extends StatefulWidget {
+  const OptionTilesHost({
+    super.key,
+    required this.question,
+    required this.options,
+    this.initialSelectionId,
+  });
+
+  final String question;
+  final List<TileOption> options;
+  final String? initialSelectionId;
+
+  @override
+  State<OptionTilesHost> createState() => _OptionTilesHostState();
+}
+
+class _OptionTilesHostState extends State<OptionTilesHost> {
+  late String? _selectedId = widget.initialSelectionId;
+
+  @override
+  Widget build(BuildContext context) {
+    return OptionTiles(
+      question: widget.question,
+      options: widget.options,
+      selectedId: _selectedId,
+      onSelected: (id) => setState(() => _selectedId = id),
+    );
+  }
+}
+```
+
+The host stands in for the `DataModel`, making selection testable in a [scenario](/testing/create-scenario#create-interaction-scenarios).
+
+Widgetbook rebuilds a story with a new key when an arg changes, so editing `initialSelectionId` resets the host. See [Stateful Widgets and Arg Updates](/args/overview#stateful-widgets-and-arg-updates).
+
+## Write the Story
+
+`Meta` points at the host, so args come from its constructor:
+
+```dart title="widgetbook/lib/option_tiles.stories.dart"
+import 'package:design_system/option_tiles.dart';
+import 'package:widgetbook/widgetbook.dart';
+
+import 'option_tiles_host.dart';
+
+part 'option_tiles.stories.g.dart';
+
+const meta = Meta(OptionTilesHost.new);
+
+const _seasons = [
+  TileOption(id: 'spring', label: 'Spring'),
+  TileOption(id: 'summer', label: 'Summer'),
+  TileOption(id: 'autumn', label: 'Autumn'),
+  TileOption(id: 'winter', label: 'Winter'),
+];
+
+final $Default = _Story(
+  args: _Args(
+    question: StringArg('Which season?'),
+    options: Arg.fixed(_seasons),
+    initialSelectionId: NullableStringArg(null),
+  ),
+);
+```
+
+`options` is not a primitive, so the generator produces `Arg<List<TileOption>>` and you supply it with `Arg.fixed`. For an editable control, write a [custom arg](/args/custom).
+
+### Callbacks Are Not Args
+
+`onSelected` never appears in the story. Functions are not model-authored data, so they are neither args nor schema properties.
+
+When the model should influence behavior, it emits data and the app maps it. A `variant` enum or `showsClearAction` boolean is model-authored. The callback it triggers is yours. See [Best Practices](/agentic/best-practices).
+
+## Derive the Schema from the Story
+
+No generator required. A `.stories.dart` file is a typed spec of the widget: every parameter, allowed enum value, default, and the states worth a scenario. Hand it to a coding agent and ask for the `dataSchema`.
+
+| Widgetbook | `json_schema_builder` |
+| --- | --- |
+| `StringArg` | `S.string()` |
+| `IntArg` / `DoubleArg` | `S.integer()` / `S.number()` |
+| `BoolArg` | `S.boolean()` |
+| `EnumArg<T>(values: T.values)` | `S.string(enumValues: [...])` |
+| `Arg.fixed(List<T>)` | `S.list(items: S.object(...))` |
+| Non-nullable arg | Listed in `required` |
+| `NullableStringArg` and friends | Omitted from `required` |
+| `Arg.fixed(callback)` | Nothing. App-owned |
+
+For the story above:
+
+```dart title="app/lib/genui/option_tiles_item.dart"
+final _optionTilesSchema = S.object(
+  description: 'A compact tile selector for a single choice along one axis.',
+  properties: {
+    'question': S.string(description: 'The question shown above the tiles.'),
+    'options': S.list(
+      description: 'Between two and six choices.',
+      items: S.object(
+        properties: {
+          'id': S.string(description: 'Stable identifier for the choice.'),
+          'label': S.string(description: 'Short display label, 1-3 words.'),
+        },
+        required: ['id', 'label'],
+      ),
+    ),
+    'selection': A2uiSchemas.stringReference(
+      description: 'Path under /scene/* where the selection is stored.',
+    ),
+  },
+  required: ['question', 'options', 'selection'],
+);
+```
+
+Two things an agent cannot infer from types:
+
+- **Descriptions are prompt text.** The model reads them to decide when to use the widget and what to put in it. `'Short display label, 1-3 words'` prevents overflow that no type signature could.
+- **Design constraints.** If the layout breaks past six tiles, the schema must say so. The Dart signature accepts any list length. Your design does not.
+
+<Warning>
+  Regeneration is the only thing keeping schema and widget aligned. Add a constructor parameter and no test fails, the model simply never emits it. Regenerate whenever a catalog widget's API changes.
+</Warning>
+
+## Next
+
+- [Test the Catalog](/genui/testing)
+- [Code Generation](/stories/code-generation)
