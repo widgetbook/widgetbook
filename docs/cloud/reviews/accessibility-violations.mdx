@@ -1,0 +1,40 @@
+# Accessibility Violations
+
+A violation is a broken [accessibility guideline](/testing/accessibility), such as a tap target below the minimum size or a button without a label.
+`testWidgetbook` evaluates the guidelines for every scenario and uploads the violations with the build, so a build shows the violations of each scenario as captured.
+
+In a pull request, Widgetbook Cloud compares the violations of a scenario between the `base` and the `head` build.
+
+## Violations and Regressions
+
+Violations and [accessibility regressions](/cloud/reviews/accessibility-regressions) answer two different questions:
+
+|              | Accessibility violations                                       | Accessibility regressions                                                        |
+| ------------ | -------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| **Question** | Which rules does the UI break?                                 | What changed in the accessibility tree?                                           |
+| **Input**    | The guidelines evaluated against a single build                | The accessibility trees of the `base` and `head` build                            |
+| **Example**  | A tap target of 24×24 is smaller than the required 48×48       | A button lost its label between the two builds                                    |
+
+A scenario can break no guideline and still contain a regression, for example when a label changed from "Add to basket" to "Button".
+
+## Reading Violations
+
+Violations of a scenario are grouped by how they compare to the `base` build:
+
+| Group            | Meaning                                                            |
+| ---------------- | ------------------------------------------------------------------- |
+| **New**          | Introduced by the pull request. Shown first and expanded.           |
+| **Pre-existing** | Present in both builds. Collapsed behind an expander.               |
+| **Resolved**     | Present in the `base` build and fixed by the pull request.          |
+
+Each violation shows a severity, the guideline that failed, a message with the specifics such as `Expected at least 48×48, found 358×24`, and a link to the documentation of the guideline.
+
+A violation is identified by its guideline and the element that broke it, independent of the element's position and the measured values.
+A tap target that moved on screen, or that grew but is still too small, therefore stays the same violation instead of appearing as a resolved and a new one.
+
+A scenario is part of the pull request's change set when the scenario introduces or resolves a violation, even when both the screenshot and the accessibility tree are unchanged.
+
+## Configuring Guidelines
+
+Which guidelines run is configured in your Widgetbook project, not in Widgetbook Cloud.
+See [Accessibility guidelines](/testing/accessibility) for the default set and for writing your own.

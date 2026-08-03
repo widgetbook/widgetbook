@@ -163,61 +163,12 @@ the fix.
 
 ## Accessibility Guideline Violations
 
-For every scenario, `testWidgetbook` evaluates a list of `WidgetbookGuideline`s
-against the rendered widget tree and records the failures in the metadata's
-`violations` field. Native guidelines report each offending node individually,
-including its on-screen `rect` (physical pixels, matching the screenshot):
+For every scenario, `testWidgetbook` evaluates the guidelines of
+`Config.accessibilityConfig` against the rendered widget tree and records the
+failures in the metadata's `violations` field.
 
-```jsonc
-"violations": [
-  {
-    "id": "tap-target-android",
-    "title": "Tap target too small",
-    "helpUrl": "https://support.google.com/accessibility/android/answer/7101858",
-    "nodes": [
-      {
-        "label": "Like",
-        "rect": [216.0, 126.0, 264.0, 174.0],
-        "message": "Expected at least 48×48, found 24×24"
-      }
-    ]
-  }
-]
-```
-
-### The default set
-
-When `guidelines` is omitted, `WidgetbookGuidelines.recommended` is used:
-native Android (48dp) and iOS (44dp) tap-target size, native labeled-tappable,
-and text contrast. Contrast is adapted from Flutter's built-in guideline — it
-samples the rendered image, is approximate, and reports a coarse text `reason`
-(no per-node `rect`), so treat it as advisory.
-
-### Custom guidelines
-
-Override the list to add your own. Implement `WidgetbookGuideline` for fully
-structured, per-node violations, or wrap any Flutter
-[`AccessibilityGuideline`](https://api.flutter.dev/flutter/flutter_test/AccessibilityGuideline-class.html)
-with `FlutterGuideline` (text-only):
-
-```dart
-import 'package:widgetbook/test.dart';
-
-import 'package:design-system/widgetbook.config.dart';
-
-Future<void> main() async {
-  await testWidgetbook(
-    config,
-    guidelines: [
-      ...WidgetbookGuidelines.recommended,
-      MyBrandGuideline(), // implements WidgetbookGuideline
-    ],
-  );
-}
-```
-
-A guideline that throws during evaluation is recorded as a violation with a
-`reason` rather than failing the snapshot.
+See [Accessibility Guidelines](/testing/accessibility) for the default set,
+for configuring the evaluated guidelines, and for writing your own.
 
 > The `violations` field is new. Builds captured by older Widgetbook versions
 > omit it; consumers should treat a missing `violations` field as "not

@@ -168,6 +168,10 @@
             {
               "title": "Layout Constraining",
               "href": "/testing/layout-constraining"
+            },
+            {
+              "title": "Accessibility Guidelines",
+              "href": "/testing/accessibility"
             }
           ]
         }
@@ -450,32 +454,19 @@
           ]
         },
         {
-          "group": "Accessibility Regression Testing",
-          "pages": [
-            {
-              "title": "Overview",
-              "href": "/cloud/accessibility/overview"
-            },
-            {
-              "title": "Accessibility guidelines",
-              "href": "/cloud/accessibility/guidelines"
-            },
-            {
-              "title": "Setup",
-              "href": "/cloud/accessibility/setup"
-            },
-            {
-              "title": "Reviewing changes",
-              "href": "/cloud/accessibility/review"
-            }
-          ]
-        },
-        {
           "group": "Reviews",
           "pages": [
             {
               "title": "Overview",
               "href": "/cloud/reviews"
+            },
+            {
+              "title": "Accessibility regressions",
+              "href": "/cloud/reviews/accessibility-regressions"
+            },
+            {
+              "title": "Accessibility violations",
+              "href": "/cloud/reviews/accessibility-violations"
             },
             {
               "title": "Submit a review",

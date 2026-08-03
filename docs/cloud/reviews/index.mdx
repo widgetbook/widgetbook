@@ -24,6 +24,14 @@ Both types of reviews are important to ensure the code is correct and the design
 | **Comparison** | **Code changes** between `base` and `head` commits | **Visual differences** between `base` and `head` [builds](/cloud/builds/overview) |
 | **Tool**       | Version Control Systems (e.g. GitHub, GitLab)      | Widgetbook Cloud                                                                  |
 
+## What a Review Shows
+
+A review compares the `base` and the `head` build of a pull request and reports three kinds of findings:
+
+1. [**Visual changes**](/cloud/visual-pull-request/overview): differences between the snapshots of a scenario.
+1. [**Accessibility regressions**](/cloud/reviews/accessibility-regressions): differences between the accessibility trees of a scenario, such as a dropped label or a changed role.
+1. [**Accessibility violations**](/cloud/reviews/accessibility-violations): broken [accessibility guidelines](/testing/accessibility), split into the ones introduced, kept and resolved by the pull request.
+
 ## UI Review Workflow
 
 <Info>
@@ -46,4 +54,4 @@ To give reviewers more power, you can use the following features:
 
 1. [**Figma Reviews**](/cloud/reviews/figma): Compare the implementation with the Figma design.
 1. [**Multi Snapshot Reviews**](/cloud/snapshots/overview): Generate snapshots for each story in multiple configurations (e.g., themes, locales, devices) to ensure UI consistency across all configurations.
-1. [**Accessibility Regression Testing**](/cloud/accessibility/overview): Catch changes to the accessibility tree — missing labels, changed roles, reordered nodes — that a visual review cannot see.
+1. [**Accessibility Regressions**](/cloud/reviews/accessibility-regressions): Catch changes to the accessibility tree, such as missing labels, changed roles and reordered elements, that a visual review cannot see.

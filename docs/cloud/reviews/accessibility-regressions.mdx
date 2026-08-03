@@ -1,0 +1,65 @@
+# Accessibility Regressions
+
+Widgetbook Cloud compares the accessibility tree of every scenario between the `base` and the `head` build of a pull request and reports each difference as an **accessibility change**.
+The accessibility tree is the data that screen readers and other assistive technologies read, so a change to the tree is a change to how the app works for the people relying on assistive technologies.
+
+<YouTube id="McJfLDKMqX0" />
+
+## Why Accessibility Changes Need a Diff
+
+A screenshot does not show the accessibility tree.
+Replacing an `IconButton` with a `GestureDetector` around an `Icon` renders the same pixels, but the button loses its label and its role, so a screen reader announces nothing where the previous version announced "Add to basket, button".
+Neither the visual comparison nor the code review flags the change, and reading the tree by hand on every pull request does not scale.
+
+The accessibility diff makes those changes visible before merge:
+
+- A `Semantics` label, hint or tooltip that disappeared.
+- A role that changed, for example from a button to plain text, or a heading that lost its level.
+- Elements that were added to or removed from the tree.
+- Elements that changed position among their siblings, which changes the order assistive technologies read.
+
+## Setup
+
+The accessibility tree is captured by `testWidgetbook` alongside the screenshot and uploaded with the build, so no accessibility-specific setup is required beyond [uploading builds](/cloud/builds/upload).
+
+The comparison needs a build for both the `base` and the `head` commit of the pull request, which is the same requirement as a visual comparison.
+See [Create Visual Pull Requests](/cloud/visual-pull-request/create) for the CI setup.
+
+Accessibility data is stored with the [snapshots](/cloud/snapshots/overview) you already upload and does not affect your [billing](/cloud/account/billing) during the beta.
+
+## Reading a Change
+
+Accessibility changes are shown in the **Accessibility Changes** section of a scenario's diff, next to the visual comparison.
+The section appears whenever the accessibility tree differs, even when both screenshots are identical.
+
+<Image src="/assets/cloud/accessibility/scenario-diff-accessibility.png" caption="Accessibility changes and violations on a scenario diff" zoom />
+
+Each row describes one element of the accessibility tree and shows the element's path in the tree, the type of the change, and the properties that differ.
+Hovering a row highlights the element's region on the baseline and the latest screenshot.
+
+| Type        | Meaning                                                                                       |
+| ----------- | --------------------------------------------------------------------------------------------- |
+| **Added**   | The element exists in the `head` build only.                                                   |
+| **Removed** | The element exists in the `base` build only.                                                   |
+| **Changed** | The element exists in both builds, but at least one property differs.                          |
+| **Moved**   | The element's position among its siblings changed, which changes the assistive reading order.  |
+
+Expanding a changed element shows the affected properties side by side:
+
+| Property | Previous     | Current      |
+| -------- | ------------ | ------------ |
+| label    | `Basket: 0$` | `Basket: 1$` |
+
+The compared properties are `label`, `value`, `hint`, `tooltip`, `role`, `headingLevel`, `textDirection`, `validationResult`, `inputType`, `identifier`, `actions` and the semantics flags, such as `isButton`, `isHeader` or `isSelected`.
+
+Geometry is used to match elements between the two builds, but never reported as a change.
+A component that only moved or resized therefore produces no accessibility changes, which keeps a layout shift out of the accessibility section.
+
+## Reviewing a Change
+
+A scenario is part of the pull request's change set when the screenshot changed **or** the accessibility tree changed, so an accessibility change surfaces for review even when both screenshots are identical.
+
+On each scenario you can leave a comment to discuss a change with your team and mark the scenario as viewed to track your progress.
+Approving the pull request or requesting changes happens for the review as a whole, see [Submit a review](/cloud/reviews/submit).
+
+Rules that grade a single build instead of comparing two builds are covered on [Accessibility violations](/cloud/reviews/accessibility-violations).
