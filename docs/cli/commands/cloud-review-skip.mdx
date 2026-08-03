@@ -30,7 +30,7 @@ The pull request and its head commit are passed explicitly because every CI prov
 <Warning>
   `--sha` must be the **head** commit of the pull request, not the merge commit.
   Widgetbook tracks the head commit, so a skip for any other commit is rejected.
-  In GitHub Actions this is `github.event.pull_request.head.sha` — not `github.sha`.
+  In GitHub Actions this is `github.event.pull_request.head.sha`, not `github.sha`.
 </Warning>
 
 ## Behavior

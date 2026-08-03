@@ -1,0 +1,17 @@
+# Glossary for Designers
+
+Developer vocabulary that shows up in a pull request, a review, or a Slack message.
+
+| Term | What it means |
+| --- | --- |
+| **Pull request** (PR) | A proposed set of changes to the app, waiting to be reviewed and merged. Each one produces one [review](/cloud/reviews). GitLab calls it a *merge request*. |
+| **Story** | One component in one specific state, for example a button when disabled. The unit under review and the target of a comment. Widgetbook v3 called this a *use case*. |
+| **Scenario** | A story frozen into a fixed state so it can be captured automatically. One story can have several. See [Scenarios](/testing/overview). |
+| **Snapshot** | A screenshot of one scenario in one configuration, for example dark mode with long text. See [Snapshots](/cloud/snapshots/overview). |
+| **Build** | The full set of stories and snapshots generated from one version of the code. A review compares two builds. See [Builds](/cloud/builds/overview). |
+| **Base / Head** | The two sides of the comparison. **Base** is the existing version, already merged. **Head** is the proposed version. The review labels these **Baseline** (left) and **Latest** (right). |
+| **Approve / Request changes** | The decision on a review. Approve lets the changes merge, request changes blocks them, comment does neither. See [Submit a review](/cloud/reviews/submit). |
+| **Merge** | Accepting a pull request so its changes become part of the app. The point of no return that the review protects. |
+| **Commit status** | The check Widgetbook Cloud reports back to GitHub, GitLab, Azure DevOps, or Bitbucket. A requested change turns it red and blocks the merge. |
+
+Next: [review a change](/cloud/for-designers/review-a-change).

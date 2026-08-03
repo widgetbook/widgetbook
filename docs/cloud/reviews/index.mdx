@@ -1,48 +1,72 @@
-# Widgetbook Cloud Reviews
+# Reviews
 
-> We are already saving 20% of our time.
-> – [1KOMMA5°](https://1komma5grad.com/de) _([source](https://youtu.be/Du5yVtnmNzg?t=1759))_
-
-Widgetbook Cloud Reviews not only help you introduce **UI Reviews** into your workflow, but also enable you to **automatically detect UI regressions** with zero configuration (i.e., without writing any golden tests). It provides a structured review process to ensure that all **UI changes are intentional** and match design expectations.
+A review is the sign-off surface on a [visual pull request](/cloud/visual-pull-request/overview). Reviewers inspect the changed scenarios in a browser, comment on them, and approve or request changes. The decision is reported back to your Git provider as a commit status.
 
 <Image theme="light" src="/assets/cloud/review.light.png" />
 <Image theme="dark" src="/assets/cloud/review.dark.png" />
 
-## Tutorial Video
+## What a Review Shows
+
+A review compares the `base` and the `head` build and reports three kinds of findings:
+
+| Finding | Compares |
+| --- | --- |
+| [**Visual changes**](/cloud/visual-tests/overview) | The snapshots of a scenario |
+| [**Accessibility regressions**](/cloud/accessibility/regressions) | The semantics trees of a scenario, such as a dropped label or a changed role |
+| [**Accessibility violations**](/cloud/accessibility/violations) | Broken [guidelines](/testing/accessibility), split into introduced, pre-existing, and resolved |
+
+## Workflow
+
+<Info>
+  **Prerequisite:** Widgetbook Cloud is set up for
+  [GitHub](/cloud/guides/github/upload),
+  [GitLab](/cloud/guides/gitlab/upload),
+  [Azure DevOps](/cloud/guides/azure/upload), or
+  [Bitbucket](/cloud/guides/bitbucket/upload).
+</Info>
+
+1. Open a pull request in your Git provider.
+2. Widgetbook Cloud creates the review automatically and posts its URL as a commit status.
+3. Reviewers inspect the changed scenarios and [submit a decision](/cloud/reviews/submit).
+4. The decision updates the commit status.
+5. Requested changes block the merge until they are addressed. This can be disabled in the project settings.
 
 <YouTube id="CalXXyThDi4" />
 
-## Code Review vs. UI Review
+## Case Study: 1KOMMA5°
 
-In a code review, you look for bugs, performance issues, and code quality. 
-In a UI review, you look for visual differences between the design and the implementation. 
-Both types of reviews are important to ensure the code is correct and the design is implemented as expected.
+Before Widgetbook Cloud, designers were not part of the review at all:
 
-|                | Code Review                                        | UI Review                                                                         |
-| -------------- | -------------------------------------------------- | --------------------------------------------------------------------------------- |
-| **Purpose**    | To find bugs, performance issues, and code quality | To find visual differences between the design and the implementation              |
-| **Comparison** | **Code changes** between `base` and `head` commits | **Visual differences** between `base` and `head` [builds](/cloud/builds/overview) |
-| **Tool**       | Version Control Systems (e.g. GitHub, GitLab)      | Widgetbook Cloud                                                                  |
+<Card
+  icon="bolt"
+  title="How 1KOMMA5º builds a custom design system and maintainable Flutter apps with Widgetbook"
+  href="https://www.widgetbook.io/blog/1komma5%C2%BA-custom-flutter-design-system-with-widgetbook"
+>
+  > As developers, we were not sure if we fully met the design requirements. Since designers were not involved in our review processes, it was hard to get their feedback. So, we had misalignment between design and code, and wrong implementations could be shipped to our customers.
+  >
+  > Widgetbook provides us with a process to build and maintain our design system, prevent visual bugs, and align design and development. We notice that our designers and developers save 20% of their time through this process.
+  >
+  > Anton Borries, Senior Software Engineer at 1KOMMA5º and Google Developer Expert for Flutter & Dart
+</Card>
 
-## UI Review Workflow
+Since adopting Widgetbook Cloud, 1KOMMA5° has shipped **0 visual bugs** to production across 3 Flutter apps.
 
-<Info>
-**Prerequisite:** Make sure you have completed the setup of Widgetbook Cloud for 
-[GitHub](/cloud/guides/github/upload),
-[GitLab](/cloud/guides/gitlab/upload), 
-[Azure DevOps](/cloud/guides/azure/upload), or
-[Bitbucket](/cloud/guides/bitbucket/upload).
-</Info>
+## Get More out of a Review
 
-1. Submit a pull request (PR) with your changes using your version control system (e.g., GitHub, GitLab).
-1. Widgetbook Cloud will **automatically** create a review for your PR and post the URL in your git PR as a **commit status**.
-1. Reviewers should review the visual differences (if any) and either **approve** the changes or **request changes**.
-1. The review status will be **reflected** in the commit status of your git PR.
-1. If changes are requested, the commit status will **block your PR from being merged** until the requested changes are applied. (You can disable this behavior in your project settings.)
+<CardGroup>
+  <Card title="Figma Reviews" icon="figma fa-brands" href="/cloud/reviews/figma">
+    Link a story to its Figma component and compare implementation against design.
+  </Card>
 
-## Empower UI Reviews
+  <Card title="Required reviewers" icon="user-shield" href="/cloud/reviews/required-reviewer">
+    Require a lead or designer to approve before a merge is allowed.
+  </Card>
 
-To give reviewers more power, you can use the following features:
+  <Card title="Notifications" icon="bell" href="/cloud/reviews/notifications/slack">
+    Email and Slack alerts so reviews do not sit unnoticed.
+  </Card>
 
-1. [**Figma Reviews**](/cloud/reviews/figma): Compare the implementation with the Figma design.
-1. [**Multi Snapshot Reviews**](/cloud/snapshots/overview): Generate snapshots for each story in multiple configurations (e.g., themes, locales, devices) to ensure UI consistency across all configurations.
+  <Card title="For Designers" icon="pen-ruler" href="/cloud/for-designers/overview">
+    A designer-facing guide to reviewing UI changes.
+  </Card>
+</CardGroup>

@@ -105,8 +105,8 @@
       ]
     },
     {
-      "group": "Stories",
       "tab": "docs",
+      "group": "Stories",
       "pages": [
         {
           "title": "Overview",
@@ -265,8 +265,8 @@
       ]
     },
     {
-      "group": "Documentation",
       "tab": "docs",
+      "group": "Documentation",
       "pages": [
         {
           "title": "Overview",
@@ -291,8 +291,40 @@
       ]
     },
     {
-      "group": "Sharing",
       "tab": "docs",
+      "group": "Agentic Engineering",
+      "pages": [
+        {
+          "title": "Overview",
+          "href": "/agentic/overview"
+        },
+        {
+          "title": "Best Practices",
+          "href": "/agentic/best-practices"
+        }
+      ]
+    },
+    {
+      "tab": "docs",
+      "group": "GenUI",
+      "pages": [
+        {
+          "title": "Overview",
+          "href": "/genui/overview"
+        },
+        {
+          "title": "Build Your Catalog",
+          "href": "/genui/catalog"
+        },
+        {
+          "title": "Test the Catalog",
+          "href": "/genui/testing"
+        }
+      ]
+    },
+    {
+      "tab": "docs",
+      "group": "Sharing",
       "pages": [
         {
           "title": "Embedding",
@@ -313,8 +345,8 @@
       ]
     },
     {
-      "group": "Configure",
       "tab": "docs",
+      "group": "Configure",
       "pages": [
         {
           "title": "Root Widget",
@@ -351,38 +383,6 @@
         {
           "title": "Telemetry",
           "href": "/telemetry"
-        }
-      ]
-    },
-    {
-      "tab": "docs",
-      "group": "Agentic Engineering",
-      "pages": [
-        {
-          "title": "Overview",
-          "href": "/agentic/overview"
-        },
-        {
-          "title": "Best Practices",
-          "href": "/agentic/best-practices"
-        }
-      ]
-    },
-    {
-      "tab": "docs",
-      "group": "GenUI",
-      "pages": [
-        {
-          "title": "Overview",
-          "href": "/genui/overview"
-        },
-        {
-          "title": "Build Your Catalog",
-          "href": "/genui/catalog"
-        },
-        {
-          "title": "Test the Catalog",
-          "href": "/genui/testing"
         }
       ]
     },
@@ -535,41 +535,6 @@
     },
     {
       "tab": "cloud",
-      "group": "Reviews",
-      "pages": [
-        {
-          "title": "Overview",
-          "href": "/cloud/reviews"
-        },
-        {
-          "title": "Submit a review",
-          "href": "/cloud/reviews/submit"
-        },
-        {
-          "title": "Request a reviewer",
-          "href": "/cloud/reviews/request-reviewer"
-        },
-        {
-          "title": "Required reviewers",
-          "href": "/cloud/reviews/required-reviewer"
-        },
-        {
-          "group": "Notifications",
-          "pages": [
-            {
-              "title": "Email",
-              "href": "/cloud/reviews/notifications/email"
-            },
-            {
-              "title": "Slack",
-              "href": "/cloud/reviews/notifications/slack"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "tab": "cloud",
       "group": "Accessibility Tests",
       "pages": [
         {
@@ -587,6 +552,75 @@
         {
           "title": "Guidelines",
           "href": "/testing/accessibility"
+        }
+      ]
+    },
+    {
+      "tab": "cloud",
+      "group": "Collaborate",
+      "pages": [
+        {
+          "group": "Reviews",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/cloud/reviews"
+            },
+            {
+              "title": "Submit a review",
+              "href": "/cloud/reviews/submit"
+            },
+            {
+              "title": "Request a reviewer",
+              "href": "/cloud/reviews/request-reviewer"
+            },
+            {
+              "title": "Required reviewers",
+              "href": "/cloud/reviews/required-reviewer"
+            }
+          ]
+        },
+        {
+          "group": "Notifications",
+          "pages": [
+            {
+              "title": "Email",
+              "href": "/cloud/reviews/notifications/email"
+            },
+            {
+              "title": "Slack",
+              "href": "/cloud/reviews/notifications/slack"
+            }
+          ]
+        },
+        {
+          "title": "Figma Reviews",
+          "href": "/cloud/reviews/figma"
+        },
+        {
+          "group": "For Designers",
+          "pages": [
+            {
+              "title": "Overview",
+              "href": "/cloud/for-designers/overview"
+            },
+            {
+              "title": "Decide when to review",
+              "href": "/cloud/for-designers/when-to-review"
+            },
+            {
+              "title": "Review a change",
+              "href": "/cloud/for-designers/review-a-change"
+            },
+            {
+              "title": "Compare against Figma",
+              "href": "/cloud/for-designers/figma"
+            },
+            {
+              "title": "Glossary",
+              "href": "/cloud/for-designers/glossary"
+            }
+          ]
         }
       ]
     },
@@ -610,7 +644,7 @@
     },
     {
       "tab": "cloud",
-      "group": "Guides",
+      "group": "CI",
       "pages": [
         {
           "group": "GitHub",
@@ -688,10 +722,6 @@
               "href": "/cloud/guides/codemagic/upload"
             }
           ]
-        },
-        {
-          "title": "Figma Reviews",
-          "href": "/cloud/reviews/figma"
         }
       ]
     },
@@ -704,22 +734,22 @@
           "href": "/cloud/account/billing"
         },
         {
+          "title": "Security",
+          "href": "/cloud/account/security"
+        },
+        {
           "title": "Privacy Policy",
           "href": "/cloud/account/privacy-policy"
         },
         {
           "title": "Terms of Service",
           "href": "/cloud/account/terms-of-service"
-        },
-        {
-          "title": "Security",
-          "href": "/cloud/account/security"
         }
       ]
     },
     {
       "tab": "cloud",
-      "group": "Help",
+      "group": "Support",
       "pages": [
         {
           "title": "Book a Call",
