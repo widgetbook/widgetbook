@@ -1,0 +1,142 @@
+# Accessibility Guidelines
+
+Accessibility guidelines are rules that `testWidgetbook` evaluates against every captured scenario.
+A scenario that breaks a rule produces a **violation**, such as a tap target below the minimum size or a button without a label.
+
+Guidelines cover a fixed set of mistakes.
+A scenario without violations means that none of the configured rules were broken, not that the component is accessible.
+
+For the wider practice around this, see our guide on [accessibility testing for Flutter](https://www.widgetbook.io/blog/accessibility-testing-for-flutter).
+
+## The Default Set
+
+`Config.accessibilityConfig` defaults to `AccessibilityConfig(guidelines: WidgetbookGuidelines.recommended)`, which holds four guidelines:
+
+| Guideline                                 | ID                   | Rule                                                                    |
+| ----------------------------------------- | -------------------- | ----------------------------------------------------------------------- |
+| `MinTapTargetGuideline` (Android)         | `tap-target-android` | Tappable elements are at least 48×48 logical pixels.                    |
+| `MinTapTargetGuideline` (iOS)             | `tap-target-ios`     | Tappable elements are at least 44×44 logical pixels.                    |
+| `LabeledTappableGuideline`                | `labeled-tappable`   | Elements with a tap or long-press action have a `label` or a `tooltip`. |
+| `FlutterGuideline(textContrastGuideline)` | `text-contrast`      | Text meets the minimum contrast ratios.                                 |
+
+The ID is the key a violation is reported under, both in the scenario metadata and in Widgetbook Cloud.
+
+The tap-target and labeled-tappable guidelines report every offending element individually, including the element's label, role and position on the screenshot.
+The contrast guideline wraps Flutter's [`textContrastGuideline`](https://api.flutter.dev/flutter/flutter_test/textContrastGuideline-constant.html) and reports a single coarse text reason for the whole scenario instead of individual elements, so treat the result as advisory.
+
+## Configuring Guidelines
+
+Set `accessibilityConfig` on your `Config` to extend or replace the default set:
+
+```dart title=widgetbook/lib/widgetbook.config.dart
+import 'package:widgetbook/widgetbook.dart';
+
+import 'components.g.dart';
+
+final config = Config(
+  components: components,
+  accessibilityConfig: AccessibilityConfig(
+    guidelines: [
+      ...WidgetbookGuidelines.recommended, // [!code highlight]
+      LabeledImageGuideline(),             // [!code highlight]
+    ],
+  ),
+);
+```
+
+An empty list skips the evaluation:
+
+```dart
+accessibilityConfig: AccessibilityConfig(
+  guidelines: const [], // [!code highlight]
+),
+```
+
+The semantics tree of every scenario is still captured with an empty list, so [accessibility regressions](/cloud/accessibility/regressions) keep working in Widgetbook Cloud.
+
+A guideline that throws during evaluation is recorded as a violation with a `reason` instead of failing the capture, so a single broken check never blocks a snapshot.
+
+## Reading Violations Locally
+
+`flutter test` writes the violations of a scenario into the scenario's metadata file, next to the screenshot:
+
+```jsonc title=build/.widgetbook/Button/Default/Loading.json
+"violations": [
+  {
+    "id": "tap-target-android",
+    "title": "Tap target too small",
+    "helpUrl": "https://support.google.com/accessibility/android/answer/7101858",
+    "nodes": [
+      {
+        "label": "Like",
+        "rect": [216.0, 126.0, 264.0, 174.0],
+        "message": "Expected at least 48×48, found 24×24"
+      }
+    ]
+  }
+]
+```
+
+The `rect` is given in physical pixels and matches the screenshot, so an offending element can be located in the image.
+
+To inspect the semantics tree of a component while developing, enable the [Semantics Addon](/addons/semantics-addon).
+To review violations and semantics changes across a pull request, see [Accessibility violations](/cloud/accessibility/violations) and [Accessibility regressions](/cloud/accessibility/regressions).
+
+## Writing a Custom Guideline
+
+Implement `WidgetbookGuideline` and return one `GuidelineViolation` per broken rule, with a `ViolationNode` per offending element.
+The guideline below fails every image without a label:
+
+```dart
+import 'package:flutter/rendering.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:widgetbook/widgetbook.dart';
+
+class LabeledImageGuideline extends WidgetbookGuideline {
+  const LabeledImageGuideline();
+
+  @override
+  String get id => 'labeled-image';
+
+  @override
+  Future<List<GuidelineViolation>> evaluate(WidgetTester tester) async {
+    final nodes = <ViolationNode>[];
+
+    for (final view in tester.binding.renderViews) {
+      final root = view.owner?.semanticsOwner?.rootSemanticsNode;
+      if (root != null) _visit(root, nodes);
+    }
+
+    if (nodes.isEmpty) return const [];
+
+    return [
+      GuidelineViolation(
+        guidelineId: id,
+        title: 'Image without a label',
+        helpUrl: 'https://example.com/guidelines/labeled-image',
+        nodes: nodes,
+      ),
+    ];
+  }
+
+  void _visit(SemanticsNode node, List<ViolationNode> out) {
+    node.visitChildren((child) {
+      _visit(child, out);
+      return true;
+    });
+
+    final data = node.getSemanticsData();
+    if (!data.flagsCollection.isImage || data.label.isNotEmpty) return;
+
+    out.add(
+      ViolationNode(
+        id: node.id,
+        message: 'Image has no semantic label.',
+      ),
+    );
+  }
+}
+```
+
+Keep `id` stable across runs, since a violation is tracked by its guideline ID.
+`helpUrl` is shown next to the violation in Widgetbook Cloud.

@@ -246,6 +246,10 @@
               "href": "/testing/layout-constraining"
             },
             {
+              "title": "Accessibility Guidelines",
+              "href": "/testing/accessibility"
+            },
+            {
               "title": "Visual Tests",
               "href": "/testing/visual-tests"
             }
@@ -514,6 +518,28 @@
         {
           "title": "Product Tour",
           "href": "https://app.arcade.software/share/KAUbnlpbFF26PJzIGrwG"
+        }
+      ]
+    },
+    {
+      "tab": "cloud",
+      "group": "Accessibility Tests",
+      "pages": [
+        {
+          "title": "Overview",
+          "href": "/cloud/accessibility/overview"
+        },
+        {
+          "title": "Accessibility Regressions",
+          "href": "/cloud/accessibility/regressions"
+        },
+        {
+          "title": "Accessibility Violations",
+          "href": "/cloud/accessibility/violations"
+        },
+        {
+          "title": "Accessibility Guidelines",
+          "href": "/testing/accessibility"
         }
       ]
     },
