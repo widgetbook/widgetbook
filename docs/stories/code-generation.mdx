@@ -17,7 +17,7 @@ const meta = Meta(Counter.new); // [!code highlight]
 
 The `part` directive is required since the generator writes all output into the corresponding `.stories.g.dart` file. `Meta` selects the constructor to inspect; the component widget is derived from the tear-off. Args are derived from that constructor's parameters, and the generator creates a type-safe `_Args` class, a `_Story` class with a default builder, and other generated declarations.
 
-`Meta` takes a single positional argument: a constructor tear-off such as `Counter.new` (the unnamed constructor) or `Counter.compact` (a named constructor). `Meta` variables must be declared as `const`. The name of the `meta` variable itself doesn't matter — the generator finds it by type.
+`Meta` takes a single positional argument: a constructor tear-off such as `Counter.new` (the unnamed constructor) or `Counter.compact` (a named constructor). `Meta` variables must be declared as `const`. The name of the `meta` variable itself doesn't matter, the generator finds it by type.
 
 ### Component Customization
 
@@ -42,7 +42,7 @@ final component = ComponentMeta(
 const meta = Meta(Counter.new);
 ```
 
-A `ComponentMeta` without parameters is redundant — omit it unless you need one of the customizations above.
+A `ComponentMeta` without parameters is redundant, so omit it unless you need one of the customizations above.
 
 ### Defining Stories
 
@@ -64,7 +64,7 @@ final $StartAtTen = _Story(
 
 ## Constructor Variants
 
-Widgets often have multiple constructors that represent distinct variants, like `MyButton()` and `MyButton.icon()`. A stories file can have any number of `Meta` variables — one per constructor, all targeting the same widget:
+Widgets often have multiple constructors that represent distinct variants, like `MyButton()` and `MyButton.icon()`. A stories file can have any number of `Meta` variables, one per constructor, all targeting the same widget:
 
 ```dart title="my_button.stories.dart"
 const meta = Meta(MyButton.new);
@@ -148,7 +148,7 @@ final defaults = _Defaults(
 );
 ```
 
-The generator matches a defaults variable to its variant by the variable's type, not its name — `_Defaults` applies to the unnamed constructor's stories, `_IconDefaults` to the `.icon` constructor's stories, and so on. Each variant can have at most one defaults variable.
+The generator matches a defaults variable to its variant by the variable's type, not its name. `_Defaults` applies to the unnamed constructor's stories, `_IconDefaults` to the `.icon` constructor's stories, and so on. Each variant can have at most one defaults variable.
 
 With defaults in place, stories only need to specify their args:
 
