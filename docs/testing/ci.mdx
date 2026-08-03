@@ -1,0 +1,72 @@
+# Continuous Integration
+
+Scenario tests run with plain `flutter test`, so they work on any CI provider without special setup. A large widgetbook renders hundreds of snapshots in one run, which has two consequences on CI: the test step can take several minutes, and on small runners the job can be terminated mid-run.
+
+## Job Terminations (Exit Code 143)
+
+If the test step fails with `Error: Process completed with exit code 143.`, the test process was killed with `SIGTERM` — it did not fail on its own. On GitHub-hosted runners this usually means the job was terminated because the runner ran out of CPU or memory during the run.
+
+To prevent this:
+
+- **Use a larger runner.** Standard GitHub-hosted runners for private repositories have 2 cores and 7 GB of RAM. A larger runner (e.g. `ubuntu-24.04-16core`) gives the job enough headroom.
+- **Limit parallelism.** If your test directory contains many test files, cap the number of concurrent suites with `flutter test --concurrency=N`, where `N` is below the runner's core count, and avoid running other heavy steps in the same job at the same time.
+- **Set an explicit `timeout-minutes`** on the job. This doesn't prevent the termination, but it turns silent kills into legible timeouts.
+
+## Reducing the Test Duration
+
+All scenarios started from a single `testWidgetbook(config)` call run sequentially in one test process — `flutter test` only parallelizes across test *files*. Splitting your components into multiple files lets the run use more of the machine's cores.
+
+Create a helper that builds a `Config` for a subset of your components:
+
+```dart
+// test/widgetbook/shard.dart
+import 'package:widgetbook/test.dart';
+import 'package:widgetbook/widgetbook.dart';
+import 'package:your_app/widgetbook.config.dart' as widgetbook;
+
+/// Runs every [shardCount]-th component, starting at [shardIndex] (1-based).
+Future<void> testShard(int shardIndex, int shardCount) {
+  final components = widgetbook.config.components;
+
+  return testWidgetbook(
+    Config(
+      components: [
+        for (var i = 0; i < components.length; i++)
+          if (i % shardCount == shardIndex - 1) components[i],
+      ],
+      addons: widgetbook.config.addons,
+      appBuilder: widgetbook.config.appBuilder,
+      scenarioConfig: widgetbook.config.scenarioConfig,
+    ),
+  );
+}
+```
+
+Then add one test file per shard:
+
+```dart
+// test/widgetbook/shard_1_of_4_test.dart
+import 'shard.dart';
+
+Future<void> main() => testShard(1, 4);
+```
+
+Running `flutter test test/widgetbook` now executes the shards concurrently.
+
+<Info>
+  All snapshots still end up in the same `build/.widgetbook` directory, so the
+  upload step is unchanged — `widgetbook cloud build push` picks up the
+  snapshots of all shards.
+</Info>
+
+<Warning>
+  More parallel suites means more CPU and memory usage. Keep the shard count
+  close to the runner's core count — on small runners, sharding without enough
+  cores only adds pressure.
+</Warning>
+
+Besides sharding, individual scenarios can be kept cheap:
+
+- **Avoid open-ended `pumpAndSettle` calls** in scenario `run` callbacks. Long or repeating animations make `pumpAndSettle` spend seconds per scenario. Prefer `pump` with explicit durations.
+- **Use device viewports deliberately.** Snapshot cost grows with the viewport's physical pixel count, so only cross stories with device-sized viewports where the layout depends on screen size.
+- **Cache dependencies.** The first `flutter test` invocation also compiles your widgetbook target. Caching the Flutter SDK and pub dependencies (e.g. `subosito/flutter-action@v2` with `cache: true`) keeps this step warm.
