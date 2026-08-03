@@ -1,50 +1,31 @@
 # Snapshots
 
-Snapshots is the billing unit of the builds in Widgetbook Cloud. A snapshot is a screenshot of a [`Scenario`](/testing/overview) for a story inside a build. For example a button story can have multiple scenarios based on the `modes` and `args` defined for it:
+A snapshot is the screenshot of one [scenario](/testing/overview) inside a [build](/cloud/builds/overview). It is the unit that gets diffed in a review, and the unit you are [billed](/cloud/account/billing) on.
 
-```dart
+One story produces one snapshot per scenario. A scenario pins the [args](/args/overview) and the [modes](/addons/modes), so the same inputs produce the same image on every run.
+
+```dart title="widgetbook/lib/button.stories.dart"
 final $Button = _Story(
   scenarios: [
-    _Scenario(
-      name: 'Dark x Short Text',
-      modes: [
-        MaterialThemeMode('Dark', ThemeData.dark()),
-      ],
-      args: _Args.fixed(
-        text: 'Click Me',
-      ),
-    ),
-    _Scenario(
-      name: 'Light x Short Text',
-      modes: [
-        MaterialThemeMode('Light', ThemeData.light()),
-      ],
-      args: _Args.fixed(
-        text: 'Click Me',
-      ),
-    ),
-    _Scenario(
-      name: 'Dark x Long Text',
-      modes: [
-        MaterialThemeMode('Dark', ThemeData.dark()),
-      ],
-      args: _Args.fixed(
-        text: 'Click Me',
-      ),
-    ),
-    _Scenario(
-      name: 'Light x Long Text',
-      modes: [
-        MaterialThemeMode('Light', ThemeData.light()),
-      ],
-      args: _Args.fixed(
-        text: 'Click Me, I am a button with a very long text',
-      ),
-    ),
+    for (final theme in {'Light': ThemeData.light(), 'Dark': ThemeData.dark()}.entries)
+      for (final text in ['Click Me', 'Click Me, I am a button with a very long text'])
+        _Scenario(
+          name: '${theme.key} x ${text.length > 10 ? 'Long' : 'Short'} Text',
+          modes: [MaterialThemeMode(theme.key, theme.value)],
+          args: _Args.fixed(text: text),
+        ),
   ],
 );
 ```
 
+Four scenarios, four snapshots:
+
 | <Image src="/assets/cloud/snapshots/button-dark-short-text.png" zoom caption="Dark x Short Text"  /> | <Image src="/assets/cloud/snapshots/button-light-short-text.png" zoom caption="Light x Short Text" /> |
 | ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
 | <Image src="/assets/cloud/snapshots/button-dark-long-text.png" zoom caption="Dark x Long Text" />    | <Image src="/assets/cloud/snapshots/button-light-long-text.png" zoom caption="Light x Long Text" />   |
+
+Snapshots are written to `build/.widgetbook` by `flutter test` and uploaded by `widgetbook cloud build push`. See [Run Scenarios](/testing/run-scenarios) and [Upload builds](/cloud/builds/upload).
+
+<Info>
+  Every uploaded build is billed for its snapshots, even when the images are identical to a previous build. [Turbo Builds](/cloud/builds/turbo) and [Optimize Builds](/cloud/configure/optimize-builds) cover how to avoid paying twice.
+</Info>

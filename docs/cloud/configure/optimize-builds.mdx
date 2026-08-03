@@ -1,0 +1,80 @@
+# Optimize Builds
+
+[Snapshots](/cloud/snapshots/overview) are the billing unit, and one build uploads every snapshot in your Widgetbook. Uploading a build that nobody reviews costs snapshots and CI minutes for nothing.
+
+Four levers, in the order they pay off.
+
+## 1. Only Upload What a Review Needs
+
+A review compares the `base` and the `head` build of a pull request. Builds for other commits are useful for browsing, not for testing.
+
+| Trigger | Upload? | Why |
+| --- | --- | --- |
+| Pull request opened or updated | Yes | The `head` build of the review |
+| Push to the default branch | Yes | The `base` build for the next pull requests |
+| Push to a branch without a pull request | No | Nothing compares against it |
+| Tag, release, or scheduled job | No | Duplicates a commit already uploaded |
+
+```yaml title=".github/workflows/widgetbook.yml"
+on:
+  pull_request:
+  push:
+    branches: [main] # [!code highlight]
+```
+
+Uploading the base commit from the pull request workflow with `--allow-existing` covers repositories where the default branch has no build yet. See [Create Visual Pull Requests](/cloud/visual-pull-request/create).
+
+## 2. Skip Builds That Cannot Change the UI
+
+A pull request that only touches CI config, docs, or backend code produces an identical build. Filter it out at the workflow level.
+
+```yaml title=".github/workflows/widgetbook.yml"
+on:
+  pull_request:
+    paths-ignore: # [!code highlight]
+      - "**.md" # [!code highlight]
+      - ".github/**" # [!code highlight]
+      - "docs/**" # [!code highlight]
+```
+
+<Warning>
+  A pull request skipped this way never gets a `head` build, so its review stays incomplete. Use `widgetbook cloud review skip` to resolve the commit status instead of leaving it pending. See [cloud review skip](/cli/commands/cloud-review-skip).
+</Warning>
+
+## 3. Let Turbo Builds Deduplicate
+
+[Turbo Builds](/cloud/builds/turbo) hash the build contents and reuse an existing build when the hash matches, so a commit that changed nothing relevant is instantly available and is not re-processed. This is on by default.
+
+## 4. Keep the Snapshot Count Deliberate
+
+Snapshots multiply per scenario and per [mode](/addons/modes) combination. Every theme times every locale times every viewport grows fast.
+
+```dart title="widgetbook/lib/button.stories.dart"
+final $Primary = _Story(
+  scenarios: [
+    _Scenario(name: 'Default'),
+    _Scenario(
+      name: 'Dark',
+      modes: [MaterialThemeMode('Dark', ThemeData.dark())],
+    ),
+  ],
+);
+```
+
+- Add a mode where the widget actually renders differently. A theme-independent icon does not need a dark variant.
+- Prefer one scenario covering an edge case, such as a long label, over one per locale.
+- Cover viewports on layouts and screens, not on every leaf component.
+
+See [Addons in Cloud](/cloud/configure/addons) for which addons produce snapshots.
+
+## Next
+
+<CardGroup>
+  <Card title="Turbo Builds" icon="bolt" href="/cloud/builds/turbo">
+    How build hashing works, and when to disable it.
+  </Card>
+
+  <Card title="Billing" icon="credit-card" href="/cloud/account/billing">
+    How snapshots map to your plan.
+  </Card>
+</CardGroup>

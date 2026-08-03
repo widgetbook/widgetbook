@@ -1,29 +1,40 @@
-# Overview
+# Builds
 
-With _Widgetbook Builds_ developers can host a Widgetbook for each Git commit and make the specific Widgetbook easily accessible for the whole team on Widgetbook Cloud.
-When setup with CI/CD, you consistantly upload builds for each commit, pull-request and branch and make those builds accessible from your favorite Git provider.
+A build is one hosted Widgetbook, tied to one Git commit. It contains the browsable web app plus every [snapshot](/cloud/snapshots/overview) and semantics tree captured by `flutter test`.
 
 <Image src="/assets/cloud/projects/overview.png" caption="List of builds with their corresponding commit SHA and branch" zoom />
 
-## Versioning Widgetbook
+Builds are what everything else reads from:
 
-Making adjustments to your Flutter frontend code means creating new versions of:
-- your components  
-- your app  
-- your Widgetbook  
-These updates are made by submitting new commits.
+- The team browses any commit's Widgetbook in a browser, on a stable URL.
+- A [visual pull request](/cloud/visual-pull-request/overview) diffs the `base` build against the `head` build.
+- The Git commit status links to the build. See [Access build from Git commit](/cloud/builds/access-from-commit).
 
-Developers often need to share specific versions with their team — including developers, designers, QA testers, and product managers.
+## Immutability
 
-Widgetbook Cloud supports **versioning with builds** by:
-- Uploading the Widgetbook build for every commit  
-- Hosting builds for each branch
+One build per commit SHA per project. Pushing a second build for the same SHA fails, unless you pass `--allow-existing`, which skips the upload and reuses the existing build.
 
 ## Status
 
-Widgetbook Cloud expects that builds are immutable, therefore only one build with a specific commit SHA can exist for each project.
-In the lifecycle of a build, a build transitions through the following statuses:
-- **Draft:** The upload of a new build has been requested and is in the process of uploading.
-- **In progress:** The build uploaded and we're processing the snapshots.
-- **Successful:** The build successfully uploaded and all snapshots are processed.
-- **Failed:** The build failed to upload or process snapshots.
+| Status | Meaning |
+| --- | --- |
+| **Draft** | The upload was requested and is in progress. |
+| **In progress** | The upload finished, snapshots are being processed. |
+| **Successful** | The upload finished and all snapshots are processed. |
+| **Failed** | The upload or the snapshot processing failed. |
+
+## Next
+
+<CardGroup>
+  <Card title="Upload builds" icon="upload" href="/cloud/builds/upload">
+    Push a build from CI or from your machine.
+  </Card>
+
+  <Card title="Access builds" icon="link" href="/cloud/builds/access-from-commit">
+    Open a build from a commit status in your Git provider.
+  </Card>
+
+  <Card title="Turbo Builds" icon="bolt" href="/cloud/builds/turbo">
+    Reuse a build when nothing relevant changed.
+  </Card>
+</CardGroup>

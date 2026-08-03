@@ -1,77 +1,119 @@
-# Overview
+# Why Widgetbook Cloud?
 
-Widgetbook Cloud is a managed hosting solution for Widgetbook that allows you to run visual tests on every commit so that you can catch UI regressions before they reach production.
+Widgetbook Cloud hosts a [build](/cloud/builds/overview) for every commit and turns the [scenarios](/testing/overview) you already wrote into automated checks on every pull request.
 
-<Info>
-  Get [free demo](https://meetings-eu1.hubspot.com/lucas-josefiak) or [direct
-  access](https://app.widgetbook.io/) to Widgetbook Cloud.
-</Info>
+Widgetbook itself stays [open source](https://github.com/widgetbook/widgetbook) and free. Cloud is optional.
 
 <YouTube id="l3tj9VvkjLs" />
 
-## The Problem
+<Image theme="light" src="/assets/cloud/review.light.png" />
+<Image theme="dark" src="/assets/cloud/review.dark.png" />
 
-After submitting a PR for review, both you and the reviewer have no idea which **UI changes** were made. The reviewer has to do the following to make sure that everything works as excepted:
+## What a Code Review Misses
 
-1. Check out the PR locally.
-2. Run the app in the simulator or on desktop.
-3. Execute the required flow (e.g. authentication) to reach the desired screen to review.
-4. Test out the screen in different states (e.g. empty, error, loading, etc.) or different configurations (e.g. dark mode, different locales, etc.).
+A code review shows a diff of the source, not the rendered UI. To judge a UI change, a reviewer has to check out the branch, run the app, navigate to the screen, and reproduce every state and configuration by hand. Most reviewers skip that and review only the code.
 
-That process is time-consuming that most reviewers skip it, and just settle down for only reviewing the code. By skipping the UI review process, the risk of introducing UI regressions increases significantly.
+|                 | Code review                             | Widgetbook Cloud                                                                                                    |
+| --------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Compares        | Source between `base` and `head` commits | [Snapshots](/cloud/snapshots/overview) and [semantics trees](/cloud/accessibility/overview) between `base` and `head` builds |
+| Setup per widget | None                                    | None, [scenarios](/testing/overview) are reused                                                                       |
+| Sign-off        | Git provider                            | [Reviews](/cloud/reviews) reported back as a commit status                                                            |
+| Reviewer needs  | The repo and a running app              | A browser                                                                                                             |
 
-<Image
-  src="/assets/cloud/code-review.png"
-  zoom
-  caption="Code review doesn't show how the changes look like"
-/>
-
-## The Solution: Widgetbook Cloud
-
-Widgetbook Cloud can help you doing **UI Reviews in your browser** without the need to check out the PR locally or the need to write any code to test the UI. You can easily see all the changes made in the PR and test them in different states or configurations.
+## What You Get
 
 <CardGroup>
   <Card title="Builds" icon="hammer" href="/cloud/builds/overview">
-    Host a Widgetbook build for each commit without all the hassle of self-hosting. Simple and optimized for Widgetbook.
+    A hosted Widgetbook per commit, linked to your Git commit status.
+  </Card>
+
+  <Card title="Visual Tests" icon="images" href="/cloud/visual-tests/overview">
+    Every scenario diffed between the base and head build of a pull request.
+  </Card>
+
+  <Card title="Accessibility Tests" icon="universal-access" href="/cloud/accessibility/overview">
+    Semantics tree diffs and guideline violations, per scenario.
   </Card>
 
   <Card title="Reviews" icon="code-compare" href="/cloud/reviews">
-    Review UI changes and detect UI regressions before you merge PRs into your main branch.
+    Comments, approvals, and required reviewers that block a merge.
   </Card>
 </CardGroup>
 
-<Image
-  src="/assets/cloud/ui-review.png"
-  zoom
-  caption="UI review gives your review workflow superpowers"
-/>
+## Get Started
 
-## Customer Showcases
+<CardGroup>
+  <Card title="Quickstart" icon="rocket" href="/cloud/quickstart">
+    Run the full workflow on a demo repository.
+  </Card>
 
-### Salto Systems
+  <Card title="Set up your project" icon="folder-plus" href="/cloud/projects/create">
+    Connect your own repository and upload the first build.
+  </Card>
 
-Salto Systems is a company that specializes in smart locks and access control systems. They use Widgetbook Cloud to simplify their UI reviews and speed up their development process.
+  <Card title="For designers" icon="pen-ruler" href="/cloud/for-designers/overview">
+    Review UI changes in the browser, without running Flutter.
+  </Card>
 
-<Card
-  icon="medium fa-brands"
-  title="How Salto prevents UI problems while saving 50% of their time"
-  href="https://medium.com/widgetbook/how-salto-prevents-ui-problems-while-saving-50-of-their-time-with-widgetbook-53194f79ee96"
->
-  > Widgetbook is integrated and running in our build CI pipelines. So, every
-  merge request triggers Widgetbook Builds to run the snapshot tests. If we made
-  changes in code, Widgetbook shows which components stayed the same and which
-  components had visual adjustments making it trivial to review visual changes
-  and get the code merged. — Arthur Schenk, Mobile Team Lead at Salto
-</Card>
+  <Card title="Product Tour" icon="play" href="https://app.arcade.software/share/KAUbnlpbFF26PJzIGrwG">
+    Click through the product without signing up.
+  </Card>
+</CardGroup>
+
+## Case Studies
 
 ### 1KOMMA5°
 
-1KOMMA5° creates an in-house design system which is used across 6 different projects.
+Cleantech company running 3 Flutter apps on a shared in-house design system.
+
+- **0 visual bugs shipped** since adopting Widgetbook Cloud.
+- **20% time saved** across designers and developers.
+
+<Card
+  icon="bolt"
+  title="How 1KOMMA5º builds a custom design system and maintainable Flutter apps with Widgetbook"
+  href="https://www.widgetbook.io/blog/1komma5%C2%BA-custom-flutter-design-system-with-widgetbook"
+>
+  > Widgetbook provides us with a process to build and maintain our design system, prevent visual bugs, and align design and development.
+  >
+  > Anton Borries, Senior Software Engineer at 1KOMMA5º and Google Developer Expert for Flutter & Dart
+</Card>
+
+### Salto Systems
+
+Smart access and IoT company serving over 40,000 clients in more than 40 countries, with seven production Flutter apps.
+
+- **50% time saved** for developers.
+- Every UI change surfaced in the merge request.
+
+<Card
+  icon="lock"
+  title="How Salto prevents UI problems while saving 50% of their time with Widgetbook"
+  href="https://www.widgetbook.io/blog/salto-widgetbook-case"
+>
+  > Widgetbook saves us a lot of time and provides valuable insight into which changes are made with each merge request.
+  >
+  > Arthur Schenk, Mobile Team Lead at Salto
+</Card>
+
+## Videos
+
+**Building UI in isolation**
+
+<YouTube id="5cNUX7eDZWE" />
+
+**Lotum** speeds up app development by building widgets in isolation.
+
+<YouTube id="0xV-OzfY2zg" />
+
+**1KOMMA5°** on an in-house design system used across 3 apps.
 
 <YouTube id="4xWseFS5Z38" />
 
-### LeanCode
-
-LeanCode is a software agency which creates a design system template that they share with every new client for the project start.
+**LeanCode** on a design system template shared with every new client.
 
 <YouTube id="rmQktvnyfPg" />
+
+<Info>
+  [Get started for free](https://app.widgetbook.io/sign-up).
+</Info>

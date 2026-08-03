@@ -1,0 +1,164 @@
+# Quickstart
+
+Run the full Widgetbook Cloud workflow on the [groceries-demo](https://github.com/widgetbook/groceries-demo) repository: upload a build, open a pull request, and review the visual changes.
+
+To set this up on your own repository instead, start at [Create project](/cloud/projects/create).
+
+## Prerequisites
+
+- A personal GitHub, GitLab, or Bitbucket account. Business accounts often lack the permission to connect repositories.
+- Access to [Widgetbook Cloud](https://app.widgetbook.io/).
+
+<Steps>
+  <Step title="Copy the demo repository">
+    <Tabs
+      groupId="git-provider"
+      values={[
+        { label: "GitHub", value: "github" },
+        { label: "GitLab", value: "gitlab" },
+        { label: "Bitbucket", value: "bitbucket" },
+      ]}
+    >
+      <TabItem value="github">
+        Open the [groceries-demo repository](https://github.com/widgetbook/groceries-demo), click **Fork**, and select your personal account.
+
+        ```bash
+        git clone https://github.com/YOUR_USERNAME/groceries-demo.git
+        cd groceries-demo
+        ```
+      </TabItem>
+
+      <TabItem value="gitlab">
+        Click **New project** > **Import project** > **Repository by URL**, enter `https://github.com/widgetbook/groceries-demo`, name it `groceries-demo`, and create it.
+
+        ```bash
+        git clone https://gitlab.com/YOUR_USERNAME/groceries-demo.git
+        cd groceries-demo
+        ```
+      </TabItem>
+
+      <TabItem value="bitbucket">
+        Click **Create repository** > **Import repository**, enter `https://github.com/widgetbook/groceries-demo`, and import it.
+
+        ```bash
+        git clone https://bitbucket.org/YOUR_USERNAME/groceries-demo.git
+        cd groceries-demo
+        ```
+      </TabItem>
+    </Tabs>
+  </Step>
+
+  <Step title="Create a workspace and a project">
+    In [Widgetbook Cloud](https://app.widgetbook.io/):
+
+    1. Create a workspace, or use an existing one. See [Workspaces](/cloud/workspaces).
+    2. Click **Create project** and pick your Git provider.
+    3. Authorize the provider if you have not connected it yet.
+    4. Select your `groceries-demo` repository and click **Import Project**.
+
+    <Info>
+      If the repository is not listed, search for it by name. The list only shows the 5 most recently accessed repositories.
+    </Info>
+  </Step>
+
+  <Step title="Add the API key to your repository">
+    Copy the API key from **Project > Settings > General**, then store it as a secret named `WIDGETBOOK_API_KEY`.
+
+    <Tabs
+      groupId="git-provider"
+      values={[
+        { label: "GitHub", value: "github" },
+        { label: "GitLab", value: "gitlab" },
+        { label: "Bitbucket", value: "bitbucket" },
+      ]}
+    >
+      <TabItem value="github">
+        **Settings** > **Secrets and variables** > **Actions** > **New repository secret**.
+      </TabItem>
+
+      <TabItem value="gitlab">
+        **Settings** > **CI/CD** > **Variables** > **Add variable**.
+
+        Uncheck **Protect variable**, so the variable is available on feature branches.
+      </TabItem>
+
+      <TabItem value="bitbucket">
+        **Repository settings** > **Pipelines** > **Repository variables** > **Add**.
+
+        Keep **Secured** checked.
+      </TabItem>
+    </Tabs>
+  </Step>
+
+  <Step title="Run the pipeline">
+    The demo repository ships with a Widgetbook Cloud workflow. Trigger it on the default branch:
+
+    <Tabs
+      groupId="git-provider"
+      values={[
+        { label: "GitHub", value: "github" },
+        { label: "GitLab", value: "gitlab" },
+        { label: "Bitbucket", value: "bitbucket" },
+      ]}
+    >
+      <TabItem value="github">
+        **Actions** > enable workflows for the fork > run the Widgetbook Cloud workflow.
+      </TabItem>
+
+      <TabItem value="gitlab">
+        **Build** > **Pipelines** > **Retry** on the most recent pipeline.
+      </TabItem>
+
+      <TabItem value="bitbucket">
+        **Pipelines** > **Rerun** on the most recent pipeline.
+      </TabItem>
+    </Tabs>
+
+    A build appears in your project's **Builds** tab once the pipeline finishes. This is the `base` build for the next step.
+  </Step>
+
+  <Step title="Open a pull request with a UI change">
+    ```bash
+    git checkout -b feature/update-border-radius
+    ```
+
+    Change `full` in `lib/ui/foundation/radius.dart`:
+
+    ```dart title="lib/ui/foundation/radius.dart"
+    class DesignSystemRadius {
+      // ...
+      static const double full = 999; // [!code --]
+      static const double full = 0; // [!code ++]
+    }
+    ```
+
+    ```bash
+    git commit -am "Update radius"
+    git push origin feature/update-border-radius
+    ```
+
+    Open a pull request against your own copy of the repository, not against `widgetbook/groceries-demo`.
+  </Step>
+
+  <Step title="Review the changes">
+    Once the pipeline finishes for the feature branch, open **Pull requests** in your Widgetbook Cloud project.
+
+    Every rounded component now shows a diff. Click **Show diff** to shade the changes, comment on a story, then approve or request changes. See [Submit a review](/cloud/reviews/submit).
+  </Step>
+</Steps>
+
+## Next
+
+<CardGroup>
+  <Card title="Set up your own project" icon="rocket" href="/cloud/projects/create">
+    Connect your repository and wire up CI.
+  </Card>
+
+  <Card title="Visual Tests" icon="images" href="/cloud/visual-tests/overview">
+    How scenarios become the diffs you just reviewed.
+  </Card>
+
+  <Card title="Optimize Builds" icon="gauge-high" href="/cloud/configure/optimize-builds">
+    Upload only the builds a review needs.
+  </Card>
+</CardGroup>
