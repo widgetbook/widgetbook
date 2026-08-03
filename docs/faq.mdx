@@ -1,0 +1,77 @@
+# FAQ
+
+## Is Widgetbook free?
+
+Yes. Widgetbook is [open source](https://github.com/widgetbook/widgetbook) and free.
+[Widgetbook Cloud](/cloud) is a separate, optional product for hosted builds and visual reviews.
+
+## Do I need a separate package for Widgetbook?
+
+Yes. Widgetbook lives in its own package that depends on your app or design system.
+[`widgetbook init`](/cli/commands/init) sets it up. To catalog several packages from one Widgetbook, see [Widgetbook in a Monorepo](/configure/monorepo).
+
+## What is the difference between an Arg and a Mode?
+
+[Args](/args/overview) control the widget's properties: text, color, state. They come from the widget's constructor.
+
+[Modes](/addons/modes) control the environment: theme, locale, viewport, text scale. They come from [Addons](/addons/overview).
+
+See [Core Concepts](/core-concepts).
+
+## `_Story` and `_Args` are undefined
+
+Both are generated. Check the stories file has a `part` directive and a `Meta` declaration, then run the generator.
+
+```dart title="widgetbook/lib/button.stories.dart"
+part 'button.stories.g.dart';
+
+const meta = Meta(Button.new);
+```
+
+```bash
+dart run build_runner build
+```
+
+Use `dart run build_runner watch` during development. See [Code Generation](/stories/code-generation).
+
+## Why does a bare `_Story()` not compile?
+
+Constructor parameters without a usable default must be passed through `args`. A required `onPressed` has no default, so the story needs `onPressed: Arg.fixed(() {})`.
+
+Widgets whose parameters are all optional or defaulted work with `_Story()`. See [Quick Start](/quick-start).
+
+## How do I catalog a screen that fetches data?
+
+Mock the dependency and inject it with the story's `setup` hook: a `ProviderScope`, a `BlocProvider`, a stubbed repository. See [Mocking](/stories/mocking).
+
+## Do I have to write visual tests?
+
+No. Write [Scenarios](/testing/overview). `flutter test` captures a screenshot of each one. With [Widgetbook Cloud](/sharing/publish-to-cloud) those snapshots are diffed on every pull request. See [What are Visual Tests?](/testing/visual-tests).
+
+## Where do snapshots go?
+
+`build/.widgetbook` in your Widgetbook package. See [Run Scenarios](/testing/run-scenarios).
+
+## Does Widgetbook work with Cupertino or a custom design system?
+
+Yes.
+
+| App type | Addon |
+| --- | --- |
+| `MaterialApp` | `MaterialThemeAddon` |
+| `CupertinoApp` | `CupertinoThemeAddon` |
+| Custom theme | `ThemeAddon` |
+
+See [Theme Addon](/addons/theme-addon).
+
+## Does Widgetbook collect data?
+
+It reports anonymous usage data after `build_runner build`, and no personal data. [Telemetry](/telemetry) lists what is sent and how to opt out.
+
+## How do I upgrade from v3?
+
+See the [v4 Migration Guide](/v4-migration). It recommends writing a few v4 stories by hand first, then using an agent primed with your conventions. A manual workflow is at the end of the page.
+
+## Where do I get help?
+
+[Discord](https://discord.gg/zT4AMStAJA), or [Resources](/resources) for talks, articles, and example projects.

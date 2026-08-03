@@ -75,7 +75,7 @@ final $Default = _Story(
 ```
 
 The generated `_Args` class holds one entry per widget parameter. Any parameter
-without a usable default — like `CustomButton`'s required `onPressed` callback —
+without a usable default, like `CustomButton`'s required `onPressed` callback,
 must be supplied through `args`, so a bare `_Story()` will not compile for this
 widget. Wrap a value in an [Arg](/args/overview) type such as `StringArg` to expose
 it as an adjustable knob in Widgetbook's UI, or in `Arg.fixed(...)` to pin it

@@ -1,0 +1,139 @@
+# Core Concepts
+
+Widgetbook has four building blocks.
+
+| Concept | Definition | Declared in |
+| --- | --- | --- |
+| [Story](/stories/overview) | One state of a widget | A `$`-prefixed variable in a `.stories.dart` file |
+| [Arg](/args/overview) | One widget property, exposed as a UI control | A story's `args` |
+| [Mode](/addons/modes) | One fixed value for an [Addon](/addons/overview) | A story's or scenario's `modes` |
+| [Scenario](/testing/overview) | A story frozen for automated testing | A story's `scenarios` |
+
+## Story
+
+A Story is one state of a widget. A button has `$Primary`, `$Secondary`, `$Disabled`. Each appears as its own entry in the navigation tree.
+
+`Meta` selects the widget constructor. Each `$` variable is a story.
+
+```dart title="widgetbook/lib/button.stories.dart"
+const meta = Meta(Button.new);
+
+final $Primary = _Story(/* ... */);
+final $Secondary = _Story(/* ... */);
+```
+
+`_Story` and `_Args` are generated from the constructor passed to `Meta`. See [Code Generation](/stories/code-generation).
+
+## Arg
+
+An Arg is one widget property, exposed as a control in the Widgetbook UI. Args are derived from the constructor parameters of the widget in `Meta`, so they are type-safe.
+
+```dart title="widgetbook/lib/button.stories.dart"
+final $Primary = _Story(
+  args: _Args(
+    label: StringArg('Primary'),   // editable control
+    onPressed: Arg.fixed(() {}),   // pinned, no control
+  ),
+);
+```
+
+- `StringArg`, `IntArg`, `EnumArg`, and other `Arg` types render a control.
+- `Arg.fixed` pins the value. Use it for callbacks and values that are not worth tweaking.
+
+## Mode
+
+Args change what the widget is. Modes change the environment it renders in: theme, locale, viewport, text scale.
+
+That environment comes from [Addons](/addons/overview). An addon wraps every story and accepts a range of values. A Mode is one of those values, pinned.
+
+```dart title="widgetbook/lib/widgetbook.config.dart"
+final config = Config(
+  // ...
+  addons: [
+    MaterialThemeAddon({
+      'Light': ThemeData.light(),
+      'Dark': ThemeData.dark(),
+    }),
+    ViewportAddon(Viewports.all),
+  ],
+);
+```
+
+```dart title="widgetbook/lib/button.stories.dart"
+final $Primary = _Story(
+  modes: [
+    MaterialThemeMode('Dark', ThemeData.dark()),
+    ViewportMode(IosViewports.iPhone13),
+  ],
+);
+```
+
+Story modes apply to all of the story's scenarios. See [Modes](/addons/modes).
+
+## Scenario
+
+A Scenario is a story frozen into a fixed state so it can be tested. Args in a scenario are hard-coded. Same inputs, same output, every run.
+
+```dart title="widgetbook/lib/button.stories.dart"
+final $Primary = _Story(
+  args: _Args(
+    label: StringArg('Primary'),
+    onPressed: Arg.fixed(() {}),
+  ),
+  scenarios: [
+    _Scenario(
+      name: 'Long Label',
+      args: _Args.fixed(
+        label: 'This is a very long label',
+        onPressed: () {},
+      ),
+      modes: [MaterialThemeMode('Light', ThemeData.light())],
+    ),
+  ],
+);
+```
+
+Scenarios run on `flutter_test`. The optional `run` callback receives a `WidgetTester` for taps, pumps, and assertions. `flutter test` captures a screenshot of every scenario into `build/.widgetbook`.
+
+## Composition
+
+One story uses all four:
+
+```dart title="widgetbook/lib/button.stories.dart"
+const meta = Meta(Button.new);
+
+final $Primary = _Story(
+  // Widget properties, adjustable while browsing.
+  args: _Args(
+    label: StringArg('Primary'),
+    onPressed: Arg.fixed(() {}),
+  ),
+  // Environment inherited by every scenario below.
+  modes: [
+    ViewportMode(IosViewports.iPhone13),
+  ],
+  // Fixed states captured during `flutter test`.
+  scenarios: [
+    _Scenario(name: 'Default'),
+    _Scenario(
+      name: 'Dark',
+      modes: [MaterialThemeMode('Dark', ThemeData.dark())],
+    ),
+  ],
+);
+```
+
+In the UI: one entry, `Primary`, with a live `label` control and the iPhone 13 viewport applied.
+
+From `flutter test`: two snapshots, `Default` on iPhone 13 and `Dark` on iPhone 13 with a dark theme.
+
+<Info>
+  Scenario modes override story modes of the same type. The `Dark` scenario keeps the story's viewport and replaces the theme. See [How Modes Are Merged](/testing/create-scenario#how-modes-are-merged).
+</Info>
+
+## Next
+
+- [Install & Quick Start](/quick-start)
+- [Code Generation](/stories/code-generation)
+- [Stories](/stories/overview)
+- [Testing](/testing/overview)

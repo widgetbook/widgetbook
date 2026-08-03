@@ -74,23 +74,27 @@
   "sidebar": [
     {
       "tab": "docs",
-      "group": "Getting Started",
+      "group": "Get Started",
       "pages": [
         {
           "title": "Why Widgetbook?",
           "href": "/index"
         },
         {
-          "title": "What's new in v4?",
-          "href": "/whats-new-in-v4"
+          "title": "Install & Quick Start",
+          "href": "/quick-start"
+        },
+        {
+          "title": "Core Concepts",
+          "href": "/core-concepts"
+        },
+        {
+          "title": "Code Generation",
+          "href": "/stories/code-generation"
         },
         {
           "title": "Migrating from v3",
           "href": "/v4-migration"
-        },
-        {
-          "title": "Quick Start",
-          "href": "/quick-start"
         },
         {
           "title": "Demo",
@@ -105,10 +109,6 @@
         {
           "title": "What are Stories?",
           "href": "/stories/overview"
-        },
-        {
-          "title": "Code Generation",
-          "href": "/stories/code-generation"
         },
         {
           "group": "Args",
@@ -231,6 +231,10 @@
         {
           "title": "Fonts",
           "href": "/sharing/fonts"
+        },
+        {
+          "title": "Publish to Widgetbook Cloud",
+          "href": "/sharing/publish-to-cloud"
         }
       ]
     },
@@ -345,48 +349,63 @@
     },
     {
       "tab": "docs",
-      "group": "Misc",
+      "group": "Releases",
+      "pages": [
+        {
+          "title": "What's new in v4",
+          "href": "/whats-new-in-v4"
+        }
+      ]
+    },
+    {
+      "tab": "docs",
+      "group": "Contribute",
+      "pages": [
+        {
+          "title": "Ways to Contribute",
+          "href": "/contribution/ways-to-contribute"
+        },
+        {
+          "title": "Getting Started",
+          "href": "/contribution/get-started"
+        },
+        {
+          "title": "Contribution Workflow",
+          "href": "/contribution/workflow"
+        },
+        {
+          "title": "Adding Example",
+          "href": "/contribution/adding-example"
+        },
+        {
+          "title": "PR Title Conventions",
+          "href": "/contribution/pr-conventions"
+        },
+        {
+          "title": "Code Review",
+          "href": "/contribution/code-reviews"
+        },
+        {
+          "title": "Sync Your Fork",
+          "href": "/contribution/sync-your-fork"
+        },
+        {
+          "title": "Quick Guide",
+          "href": "/contribution/quick-guide"
+        }
+      ]
+    },
+    {
+      "tab": "docs",
+      "group": "Resources",
       "pages": [
         {
           "title": "Resources",
           "href": "/resources"
         },
         {
-          "group": "Contribution",
-          "pages": [
-            {
-              "title": "Ways to Contribute",
-              "href": "/contribution/ways-to-contribute"
-            },
-            {
-              "title": "Getting Started",
-              "href": "/contribution/get-started"
-            },
-            {
-              "title": "Contribution Workflow",
-              "href": "/contribution/workflow"
-            },
-            {
-              "title": "Adding Example",
-              "href": "/contribution/adding-example"
-            },
-            {
-              "title": "PR Title Conventions",
-              "href": "/contribution/pr-conventions"
-            },
-            {
-              "title": "Code Review",
-              "href": "/contribution/code-reviews"
-            },
-            {
-              "title": "Sync Your Fork",
-              "href": "/contribution/sync-your-fork"
-            },
-            {
-              "title": "Quick Guide",
-              "href": "/contribution/quick-guide"
-            }
-          ]
+          "title": "FAQ",
+          "href": "/faq"
         }
       ]
     },
