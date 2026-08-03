@@ -9,7 +9,7 @@ every `TextStyle` naming them has to pass that package:
 TextStyle(fontFamily: 'My Custom Font', package: 'design_system')
 ```
 
-See [Assets](/essentials/assets) for how to set that package up so the same font
+See [Assets](/sharing/assets) for how to set that package up so the same font
 resolves in your app and in your Widgetbook.
 
 ## Fonts Loaded at Runtime
@@ -78,4 +78,4 @@ Check the family name against how it was declared:
 Both mistakes produce rectangles: omitting `package` for a font a dependency
 declares, and passing `package` for one the package you run tests from declares.
 Move shared fonts into their own package and name it at every call site, as
-described in [Assets](/essentials/assets).
+described in [Assets](/sharing/assets).

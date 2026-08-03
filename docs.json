@@ -41,6 +41,19 @@
       "widgetbook": "4.0.0-beta.11"
     }
   },
+  "redirects": {
+    "/docs/overview": "/documentation/overview",
+    "/docs/doc-blocks": "/documentation/doc-blocks",
+    "/docs/custom-blocks": "/documentation/custom-blocks",
+    "/docs/styling": "/documentation/styling",
+    "/docs/customize": "/documentation/customize",
+    "/essentials/embedding": "/sharing/embedding",
+    "/essentials/assets": "/sharing/assets",
+    "/essentials/fonts": "/sharing/fonts",
+    "/essentials/monorepo": "/configure/monorepo",
+    "/essentials/fields": "/configure/fields",
+    "/glossary/visual-tests": "/testing/visual-tests"
+  },
   "tabs": [
     {
       "id": "docs",
@@ -168,60 +181,56 @@
             {
               "title": "Layout Constraining",
               "href": "/testing/layout-constraining"
+            },
+            {
+              "title": "Visual Tests",
+              "href": "/testing/visual-tests"
             }
           ]
         }
       ]
     },
     {
-      "group": "Docs",
+      "group": "Documentation",
       "tab": "docs",
       "pages": [
         {
           "title": "Overview",
-          "href": "/docs/overview"
+          "href": "/documentation/overview"
         },
         {
           "title": "DocBlocks",
-          "href": "/docs/doc-blocks"
+          "href": "/documentation/doc-blocks"
         },
         {
           "title": "Custom Blocks",
-          "href": "/docs/custom-blocks"
+          "href": "/documentation/custom-blocks"
         },
         {
           "title": "Styling Documentation",
-          "href": "/docs/styling"
+          "href": "/documentation/styling"
         },
         {
           "title": "Customize",
-          "href": "/docs/customize"
+          "href": "/documentation/customize"
         }
       ]
     },
     {
-      "group": "Essentials",
+      "group": "Sharing",
       "tab": "docs",
       "pages": [
         {
-          "title": "Usage with Monorepo",
-          "href": "/essentials/monorepo"
-        },
-        {
           "title": "Embedding",
-          "href": "/essentials/embedding"
+          "href": "/sharing/embedding"
         },
         {
           "title": "Assets",
-          "href": "/essentials/assets"
+          "href": "/sharing/assets"
         },
         {
           "title": "Fonts",
-          "href": "/essentials/fonts"
-        },
-        {
-          "title": "Fields",
-          "href": "/essentials/fields"
+          "href": "/sharing/fonts"
         }
       ]
     },
@@ -311,6 +320,14 @@
           "href": "/configure/scroll-behavior"
         },
         {
+          "title": "Usage with Monorepo",
+          "href": "/configure/monorepo"
+        },
+        {
+          "title": "Fields",
+          "href": "/configure/fields"
+        },
+        {
           "title": "Telemetry",
           "href": "/telemetry"
         }
@@ -323,10 +340,6 @@
         {
           "title": "Design System",
           "href": "/glossary/design-system"
-        },
-        {
-          "title": "Visual Tests",
-          "href": "/glossary/visual-tests"
         }
       ]
     },
