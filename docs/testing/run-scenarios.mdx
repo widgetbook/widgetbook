@@ -2,7 +2,8 @@
 
 This page explains how scenarios are executed and which snapshot artifacts are created during tests.
 
-Widgetbook testing is built on top of Flutter's `flutter_test` package. Scenario execution runs in the same widget test environment you already use for regular Flutter tests.
+Widgetbook testing is built on top of Flutter's `flutter_test` package.
+Scenario execution runs in the same widget test environment you already use for regular Flutter tests.
 
 ## Setup
 
@@ -40,7 +41,8 @@ Both people and coding agents run the same `flutter test` command against the sa
 | Developer | Snapshots in `build/.widgetbook`, failures in the console |
 | Coding agent | The same failures, parsed as text: scenario name, assertion, overflow. Accessibility violations do not fail the run, so it reads those from the scenario metadata |
 
-Every failure is anchored to a named scenario, so it points at one widget state instead of a screen. That makes the scenario set a feedback loop an agent can close on its own, then hand you the snapshots to judge.
+Every failure is anchored to a named scenario, so it points at one widget state instead of a screen.
+That makes the scenario set a feedback loop an agent can close on its own, then hand you the snapshots to judge.
 
 See [Agentic Engineering](/agentic/overview) for the workflow, and [GenUI](/genui/testing#self-heal-with-flutter-test) for using it as the quality gate on a model's widget catalog.
 
@@ -61,16 +63,20 @@ For each scenario, the Widgetbook test runtime:
 - captures semantics data for accessibility inspection
 - evaluates accessibility guidelines and records any violations
 
-Because this flow uses `flutter_test`, your scenario `run` callback receives a `WidgetTester`. You can use familiar test APIs such as `tap`, `pump`, `pumpAndSettle`, and `expect` directly inside `run`.
+Because this flow uses `flutter_test`, your scenario `run` callback receives a `WidgetTester`.
+You can use familiar test APIs such as `tap`, `pump`, `pumpAndSettle`, and `expect` directly inside `run`.
 
 See [Creating Scenarios](/testing/create-scenario) for concrete `run` examples.
 
 ## Set Up and Tear Down Hooks
 
-`Config.scenarioConfig` accepts optional `setUp` and `tearDown` callbacks that run around every scenario. Both receive the active `WidgetTester` and the current `Scenario`, so they can pump frames, interact with the widget tree, or branch on scenario metadata.
+`Config.scenarioConfig` accepts optional `setUp` and `tearDown` callbacks that run around every scenario.
+Both receive the active `WidgetTester` and the current `Scenario`, so they can pump frames, interact with the widget tree, or branch on scenario metadata.
 
-- `setUp` runs after the scenario has been pumped but before its `run` callback executes. Use it to seed shared state, prime caches, or stub dependencies.
-- `tearDown` runs after the screenshot and semantics data have been written. Use it to reset state mutated during the scenario.
+- `setUp` runs after the scenario has been pumped but before its `run` callback executes.
+  Use it to seed shared state, prime caches, or stub dependencies.
+- `tearDown` runs after the screenshot and semantics data have been written.
+  Use it to reset state mutated during the scenario.
 
 ```dart
 import 'package:widgetbook/widgetbook.dart';
@@ -94,9 +100,11 @@ The hooks fire for every scenario across every component and story when run via 
 
 ## Wrapping Scenario Execution
 
-`Config.scenarioConfig` also accepts an optional `wrapper` callback that wraps the *entire* execution of every scenario: pumping the widget, `setUp`, the scenario's `run` callback, the snapshot capture, and `tearDown`. It receives the active `WidgetTester`, the current `Scenario`, and a `body` callback that performs all of the above; it must await `body` exactly once.
+`Config.scenarioConfig` also accepts an optional `wrapper` callback that wraps the *entire* execution of every scenario: pumping the widget, `setUp`, the scenario's `run` callback, the snapshot capture, and `tearDown`.
+It receives the active `WidgetTester`, the current `Scenario`, and a `body` callback that performs all of the above; it must await `body` exactly once.
 
-Unlike `setUp`, which runs after the scenario's widget has already been pumped, the `wrapper` is on the call stack *before* the first frame is built. This makes it the right place for `Zone`-scoped configuration that must be visible inside your widgets' `build` methods, such as faking time with [`package:clock`](https://pub.dev/packages/clock), overriding `HttpOverrides`, or setting `Intl.defaultLocale`.
+Unlike `setUp`, which runs after the scenario's widget has already been pumped, the `wrapper` is on the call stack *before* the first frame is built.
+This makes it the right place for `Zone`-scoped configuration that must be visible inside your widgets' `build` methods, such as faking time with [`package:clock`](https://pub.dev/packages/clock), overriding `HttpOverrides`, or setting `Intl.defaultLocale`.
 
 For example, to render every scenario at a fixed point in time (so widgets calling `clock.now()` produce deterministic snapshots):
 
@@ -115,12 +123,15 @@ final config = Config(
 );
 ```
 
-Note that wrapping `testWidgetbook(config)` itself in `withClock` does **not** work: the test framework executes each test body in its own `Zone`, which is not a child of the `Zone` that declared the tests. The `wrapper` hook exists precisely to re-apply your `Zone` setup inside each test body. For the same reason, addons cannot fake `clock.now()`, since they inject widgets into the tree, while `package:clock` reads from the call stack.
+Note that wrapping `testWidgetbook(config)` itself in `withClock` does **not** work: the test framework executes each test body in its own `Zone`, which is not a child of the `Zone` that declared the tests.
+The `wrapper` hook exists precisely to re-apply your `Zone` setup inside each test body.
+For the same reason, addons cannot fake `clock.now()`, since they inject widgets into the tree, while `package:clock` reads from the call stack.
 
 ## Excluding Stories and Scenarios from Testing
 
 Some stories cannot render under `flutter test`, for example widgets backed by
-a native plugin (video, PDF) or ones that must load a real network resource. You
+a native plugin (video, PDF) or ones that must load a real network resource.
+You
 can keep them **browsable in the Widgetbook app** while skipping them during
 testing by setting `excludeFromTests`.
 
@@ -153,7 +164,8 @@ still appears in the running Widgetbook app.
 <Info>
   Prefer mocking the missing dependency (see [Wrapping Scenario
   Execution](#wrapping-scenario-execution) for `HttpOverrides` and plugin fakes)
-  so you keep visual-regression coverage. Reach for `excludeFromTests` only when
+  so you keep visual-regression coverage.
+  Reach for `excludeFromTests` only when
   a scenario genuinely cannot render in a headless test.
 </Info>
 
@@ -168,10 +180,12 @@ Each scenario produces:
 - a PNG snapshot image
 - a JSON metadata file
 
-For example, a `Loading` scenario crossed with a `Dark Mode` definition is written as `build/.widgetbook/Button/Default/Loading • Dark Mode.png`. The metadata includes scenario details, image size, pixel ratio, semantics tree data, and accessibility guideline violations.
+For example, a `Loading` scenario crossed with a `Dark Mode` definition is written as `build/.widgetbook/Button/Default/Loading • Dark Mode.png`.
+The metadata includes scenario details, image size, pixel ratio, semantics tree data, and accessibility guideline violations.
 
 If text in these snapshots renders as solid black rectangles, a font family is not
-resolving in the test environment. See [Fonts](/sharing/fonts) for the cause and
+resolving in the test environment.
+See [Fonts](/sharing/fonts) for the cause and
 the fix.
 
 ## Accessibility Guideline Violations
@@ -180,6 +194,7 @@ For every scenario, `testWidgetbook` evaluates the guidelines of `Config.accessi
 
 See [Accessibility Guidelines](/testing/accessibility) for the default set, for configuring the evaluated guidelines, and for writing your own.
 
-> The `violations` field is new. Builds captured by older Widgetbook versions
+> The `violations` field is new.
+> Builds captured by older Widgetbook versions
 > omit it; consumers should treat a missing `violations` field as "not
 > evaluated" rather than "no violations".
