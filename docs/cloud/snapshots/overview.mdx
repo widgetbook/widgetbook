@@ -1,31 +1,57 @@
 # Snapshots
 
-A snapshot is the screenshot of one [scenario](/testing/overview) inside a [build](/cloud/builds/overview). It is the unit that gets diffed in a review, and the unit you are [billed](/cloud/account/billing) on.
+A snapshot is the screenshot of one [scenario](/testing/overview) inside a [build](/cloud/builds/overview).
+A review diffs snapshots, and Widgetbook Cloud [bills](/cloud/account/billing) snapshots.
 
-One story produces one snapshot per scenario. A scenario pins the [args](/args/overview) and the [modes](/addons/modes), so the same inputs produce the same image on every run.
+One story produces one snapshot per scenario.
+A scenario pins the [args](/args/overview) and the [modes](/addons/modes), so the same inputs produce the same image on every run.
+
+The story below fixes the button text in two scenarios:
 
 ```dart title="widgetbook/lib/button.stories.dart"
 final $Button = _Story(
   scenarios: [
-    for (final theme in {'Light': ThemeData.light(), 'Dark': ThemeData.dark()}.entries)
-      for (final text in ['Click Me', 'Click Me, I am a button with a very long text'])
-        _Scenario(
-          name: '${theme.key} x ${text.length > 10 ? 'Long' : 'Short'} Text',
-          modes: [MaterialThemeMode(theme.key, theme.value)],
-          args: _Args.fixed(text: text),
-        ),
+    _Scenario(
+      name: 'Short Text',
+      args: _Args.fixed(text: 'Click Me'),
+    ),
+    _Scenario(
+      name: 'Long Text',
+      args: _Args.fixed(text: 'Click Me, I am a button with a very long text'),
+    ),
   ],
 );
 ```
 
-Four scenarios, four snapshots:
+The [global scenario definitions](/testing/create-scenario#define-global-scenario-definitions) below cross every scenario with a theme:
 
-| <Image src="/assets/cloud/snapshots/button-dark-short-text.png" zoom caption="Dark x Short Text"  /> | <Image src="/assets/cloud/snapshots/button-light-short-text.png" zoom caption="Light x Short Text" /> |
+```dart title="widgetbook/lib/widgetbook.config.dart"
+final config = Config(
+  scenarioConfig: ScenarioConfig(
+    definitions: [
+      ScenarioDefinition(
+        name: 'Light',
+        modes: [MaterialThemeMode('Light', ThemeData.light())],
+      ),
+      ScenarioDefinition(
+        name: 'Dark',
+        modes: [MaterialThemeMode('Dark', ThemeData.dark())],
+      ),
+    ],
+  ),
+);
+```
+
+Two scenarios crossed with two definitions, four snapshots:
+
+| <Image src="/assets/cloud/snapshots/button-dark-short-text.png" zoom caption="Short Text • Dark"  /> | <Image src="/assets/cloud/snapshots/button-light-short-text.png" zoom caption="Short Text • Light" /> |
 | ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| <Image src="/assets/cloud/snapshots/button-dark-long-text.png" zoom caption="Dark x Long Text" />    | <Image src="/assets/cloud/snapshots/button-light-long-text.png" zoom caption="Light x Long Text" />   |
+| <Image src="/assets/cloud/snapshots/button-dark-long-text.png" zoom caption="Long Text • Dark" />    | <Image src="/assets/cloud/snapshots/button-light-long-text.png" zoom caption="Long Text • Light" />   |
 
-Snapshots are written to `build/.widgetbook` by `flutter test` and uploaded by `widgetbook cloud build push`. See [Run Scenarios](/testing/run-scenarios) and [Upload builds](/cloud/builds/upload).
+`flutter test` writes snapshots to `build/.widgetbook`, and `widgetbook cloud build push` uploads them.
+See [Run Scenarios](/testing/run-scenarios) and [Upload builds](/cloud/builds/upload).
 
 <Info>
-  Every uploaded build is billed for its snapshots, even when the images are identical to a previous build. [Turbo Builds](/cloud/builds/turbo) and [Optimize Builds](/cloud/configure/optimize-builds) cover how to avoid paying twice.
+Every uploaded build is billed for its snapshots, even when the images are identical to a previous build.
+[Turbo Builds](/cloud/builds/turbo) and [Optimize Builds](/cloud/configure/optimize-builds) cover how to avoid paying twice.
 </Info>

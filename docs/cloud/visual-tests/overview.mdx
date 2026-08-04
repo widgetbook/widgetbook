@@ -1,8 +1,11 @@
 # Visual Tests
 
-A visual test compares the [snapshot](/cloud/snapshots/overview) of a [scenario](/testing/overview) in the `head` build against the snapshot of the same scenario in the `base` build. Any pixel difference is reported on the pull request for review.
+A visual test compares the [snapshot](/cloud/snapshots/overview) of a [scenario](/testing/overview) in the `head` build against the snapshot of the same scenario in the `base` build.
+Any pixel difference is reported on the pull request for review.
 
-There are no visual tests to write. Every scenario in your Widgetbook is snapshotted by `flutter test` and diffed automatically. See [What are Visual Tests?](/testing/visual-tests) for the concept.
+There are no visual tests to write.
+`flutter test` snapshots every scenario in your Widgetbook, and Widgetbook Cloud diffs them automatically.
+See [What are Visual Tests?](/testing/visual-tests) for the concept.
 
 ## Pipeline
 
@@ -20,34 +23,43 @@ There are no visual tests to write. Every scenario in your Widgetbook is snapsho
 
 ## Coverage
 
-One scenario produces one snapshot per [mode](/addons/modes) combination. To cover a widget in dark mode, at a large text scale, or on a specific viewport, add the mode to the scenario rather than a new test.
+One scenario produces one snapshot per [mode](/addons/modes) combination.
+To cover a widget in dark mode, at a large text scale, or on a specific viewport, add the mode rather than a new test.
 
-```dart title="widgetbook/lib/button.stories.dart"
-final $Primary = _Story(
+A dimension that every story should be tested in belongs in a [global scenario definition](/testing/create-scenario#define-global-scenario-definitions):
+
+```dart title="widgetbook/lib/widgetbook.config.dart"
+final config = Config(
+  scenarioConfig: ScenarioConfig(
+    definitions: [
+      ScenarioDefinition(
+        name: 'Dark Mode',
+        modes: [MaterialThemeMode('Dark', ThemeData.dark())],
+      ),
+    ],
+  ),
+);
+```
+
+A dimension that only matters for one widget belongs on its scenarios:
+
+```dart title="widgetbook/lib/data_table.stories.dart"
+final $DataTable = _Story(
   scenarios: [
-    _Scenario(name: 'Light'),
+    _Scenario(name: 'Default'),
     _Scenario(
-      name: 'Dark',
-      modes: [MaterialThemeMode('Dark', ThemeData.dark())],
+      name: 'Large Text Scale',
+      modes: [TextScaleMode(2.0)],
     ),
   ],
 );
 ```
 
-Snapshots are the [billing unit](/cloud/account/billing). See [Optimize Builds](/cloud/configure/optimize-builds) to keep the count under control.
+Snapshots are the [billed unit](/cloud/account/billing).
+See [Optimize Builds](/cloud/configure/optimize-builds) to keep the count under control.
 
 ## Next
 
-<CardGroup>
-  <Card title="Snapshots" icon="camera" href="/cloud/snapshots/overview">
-    What a snapshot is and how scenarios map to snapshots.
-  </Card>
-
-  <Card title="Visual Pull Requests" icon="code-pull-request" href="/cloud/visual-pull-request/overview">
-    How base and head builds are matched to a pull request.
-  </Card>
-
-  <Card title="Accessibility Tests" icon="universal-access" href="/cloud/accessibility/overview">
-    Checks a screenshot comparison cannot catch.
-  </Card>
-</CardGroup>
+- [Snapshots](/cloud/snapshots/overview) for what a snapshot is and how scenarios map to snapshots.
+- [Visual Pull Requests](/cloud/visual-pull-request/overview) for how base and head builds are matched to a pull request.
+- [Accessibility Tests](/cloud/accessibility/overview) for checks a screenshot comparison cannot catch.

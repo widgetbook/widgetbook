@@ -1,12 +1,21 @@
 # Addons in Cloud
 
-[Addons](/addons/overview) are configured in your Widgetbook project, not in Widgetbook Cloud. Cloud reads the result: every [mode](/addons/modes) you pin on a scenario becomes one [snapshot](/cloud/snapshots/overview) in the build.
+[Addons](/addons/overview) are configured in your Widgetbook project, not in Widgetbook Cloud.
+Cloud reads the result: every [mode](/addons/modes) pinned for a scenario becomes one [snapshot](/cloud/snapshots/overview) in the build.
 
-```
-snapshots = scenarios × pinned mode combinations
-```
+An addon on its own costs nothing.
+Only a pinned mode produces a snapshot.
 
-An addon on its own costs nothing. Only a mode pinned on a story or a scenario produces a snapshot.
+## Where Pinned Modes Come From
+
+| Source | Applies to |
+| --- | --- |
+| [`ScenarioDefinition`](/testing/create-scenario#define-global-scenario-definitions) | Every story in the Widgetbook |
+| [`modes` on a story](/testing/create-scenario) | Every scenario of that story |
+| [`modes` on a scenario](/testing/create-scenario) | That scenario only |
+
+A `ScenarioDefinition` drives the snapshot count the most, because it applies to every story.
+The more specific source wins when two of them pin the same mode type, see [How Modes Are Merged](/testing/create-scenario#how-modes-are-merged).
 
 ## What Each Addon Covers
 
@@ -19,50 +28,11 @@ An addon on its own costs nothing. Only a mode pinned on a story or a scenario p
 | [Alignment](/addons/alignment-addon) | `AlignmentMode` | Intrinsic sizing bugs on unconstrained widgets |
 | [Semantics](/addons/semantics-addon) | `SemanticsMode` | Nothing extra in Cloud, the semantics tree is captured for every scenario regardless |
 
-[Zoom](/addons/zoom-addon), [Grid](/addons/grid-addon), and [Time Dilation](/addons/time-dilation-addon) are browsing aids. Pinning them as modes produces snapshots that are rarely worth reviewing.
-
-## Story Modes vs Scenario Modes
-
-A mode on a story applies to all of its scenarios. A scenario mode overrides a story mode of the same type.
-
-```dart title="widgetbook/lib/button.stories.dart"
-final $Primary = _Story(
-  // Every scenario below renders on an iPhone 13.
-  modes: [ViewportMode(IosViewports.iPhone13)],
-  scenarios: [
-    _Scenario(name: 'Light'),
-    _Scenario(
-      name: 'Dark',
-      // Keeps the viewport, adds the theme.
-      modes: [MaterialThemeMode('Dark', ThemeData.dark())],
-    ),
-  ],
-);
-```
-
-Two scenarios, two snapshots. See [How Modes Are Merged](/testing/create-scenario#how-modes-are-merged).
-
-## Building a Matrix
-
-To cover a component across a set of configurations, generate the scenarios instead of writing them out:
-
-```dart title="widgetbook/lib/button.stories.dart"
-final themes = {
-  'Light': ThemeData.light(),
-  'Dark': ThemeData.dark(),
-};
-
-final $Primary = _Story(
-  scenarios: [
-    for (final entry in themes.entries)
-      _Scenario(
-        name: entry.key,
-        modes: [MaterialThemeMode(entry.key, entry.value)],
-      ),
-  ],
-);
-```
+[Zoom](/addons/zoom-addon), [Grid](/addons/grid-addon), and [Time Dilation](/addons/time-dilation-addon) are browsing aids.
+Pinning them as modes produces snapshots that are rarely worth reviewing.
 
 <Warning>
-  A full cross product grows multiplicatively. 3 themes × 4 locales × 3 viewports is 36 snapshots for a single story. Pick the combinations that can actually break. See [Optimize Builds](/cloud/configure/optimize-builds).
+A full cross product grows multiplicatively.
+3 themes × 4 locales × 3 viewports is 36 snapshots for a single story.
+Pick the combinations that can actually break, see [Optimize Builds](/cloud/configure/optimize-builds).
 </Warning>
