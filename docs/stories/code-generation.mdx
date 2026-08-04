@@ -1,6 +1,9 @@
 # Code Generation
 
-Widgetbook uses Dart's `build_runner` to generate the boilerplate needed for [Stories](/stories/overview), [Args](/args/overview), and [Scenarios](/testing/overview). At the core of this system is `Meta`, a declaration that selects a widget constructor to generate stories for. From a `Meta` declaration and a `part` directive, the generator produces type-safe args, story classes, and a component registry. This lets you focus on writing stories rather than wiring up boilerplate.
+Widgetbook uses Dart's `build_runner` to generate the boilerplate needed for [Stories](/stories/overview), [Args](/args/overview), and [Scenarios](/testing/overview).
+At the core of this system is `Meta`, a declaration that selects a widget constructor to generate stories for.
+From a `Meta` declaration and a `part` directive, the generator produces type-safe args, story classes, and a component registry.
+This lets you focus on writing stories rather than wiring up boilerplate.
 
 ## Usage
 
@@ -15,13 +18,16 @@ part 'counter.stories.g.dart'; // [!code highlight]
 const meta = Meta(Counter.new); // [!code highlight]
 ```
 
-The `part` directive is required since the generator writes all output into the corresponding `.stories.g.dart` file. `Meta` selects the constructor to inspect; the component widget is derived from the tear-off. Args are derived from that constructor's parameters, and the generator creates a type-safe `_Args` class, a `_Story` class with a default builder, and other generated declarations.
+The `part` directive is required since the generator writes all output into the corresponding `.stories.g.dart` file. `Meta` selects the constructor to inspect; the component widget is derived from the tear-off.
+Args are derived from that constructor's parameters, and the generator creates a type-safe `_Args` class, a `_Story` class with a default builder, and other generated declarations.
 
-`Meta` takes a single positional argument: a constructor tear-off such as `Counter.new` (the unnamed constructor) or `Counter.compact` (a named constructor). `Meta` variables must be declared as `const`. The name of the `meta` variable itself doesn't matter, the generator finds it by type.
+`Meta` takes a single positional argument: a constructor tear-off such as `Counter.new` (the unnamed constructor) or `Counter.compact` (a named constructor). `Meta` variables must be declared as `const`.
+The name of the `meta` variable itself doesn't matter, the generator finds it by type.
 
 ### Component Customization
 
-To customize the component as a whole, declare an optional `ComponentMeta` variable (at most one per stories file). All its parameters are optional:
+To customize the component as a whole, declare an optional `ComponentMeta` variable (at most one per stories file).
+All its parameters are optional:
 
 | Parameter | Type | Description |
 | --- | --- | --- |
@@ -46,7 +52,9 @@ A `ComponentMeta` without parameters is redundant, so omit it unless you need on
 
 ### Defining Stories
 
-Once the generator has run, you can define stories using the generated types. Each story variable must start with `$`. The variable name (without the `$`) becomes the story's display name in the Widgetbook UI:
+Once the generator has run, you can define stories using the generated types.
+Each story variable must start with `$`.
+The variable name (without the `$`) becomes the story's display name in the Widgetbook UI:
 
 ```dart title="counter.stories.dart"
 final $Default = _Story(
@@ -64,7 +72,8 @@ final $StartAtTen = _Story(
 
 ## Constructor Variants
 
-Widgets often have multiple constructors that represent distinct variants, like `MyButton()` and `MyButton.icon()`. A stories file can have any number of `Meta` variables, one per constructor, all targeting the same widget:
+Widgets often have multiple constructors that represent distinct variants, like `MyButton()` and `MyButton.icon()`.
+A stories file can have any number of `Meta` variables, one per constructor, all targeting the same widget:
 
 ```dart title="my_button.stories.dart"
 const meta = Meta(MyButton.new);
@@ -72,7 +81,8 @@ const meta = Meta(MyButton.new);
 const iconMeta = Meta(MyButton.icon); // [!code highlight]
 ```
 
-For each `Meta`, the generator emits a full set of types. Types for named constructors are prefixed with the PascalCase constructor name:
+For each `Meta`, the generator emits a full set of types.
+Types for named constructors are prefixed with the PascalCase constructor name:
 
 ```dart title="my_button.stories.dart"
 // Stories for MyButton(...)
@@ -86,11 +96,13 @@ final $IconLarge = _IconStory(
 );
 ```
 
-All stories appear in a flat list under the same component, with the story variable's name as the display name. Factory constructors work the same way as named constructors.
+All stories appear in a flat list under the same component, with the story variable's name as the display name.
+Factory constructors work the same way as named constructors.
 
 ## Custom Args
 
-For cases where you need a different args shape, provide `Meta.argsType` with a constructor tear-off of a plain Dart class. The generated args are then derived from that constructor's parameters instead of the widget's:
+For cases where you need a different args shape, provide `Meta.argsType` with a constructor tear-off of a plain Dart class.
+The generated args are then derived from that constructor's parameters instead of the widget's:
 
 Since the generator can no longer infer how to construct the widget from these custom args, you must provide a `builder`, either per story or via a shared `defaults` variable.
 
@@ -129,7 +141,8 @@ final $Primary = _Story(
 
 ### Defaults
 
-To avoid repeating the same `builder` and `setup` in every story, define a variable of the generated `_Defaults` type. The generated `_Story` class picks it up automatically:
+To avoid repeating the same `builder` and `setup` in every story, define a variable of the generated `_Defaults` type.
+The generated `_Story` class picks it up automatically:
 
 ```dart title="label_badge.stories.dart"
 final defaults = _Defaults(
@@ -148,7 +161,8 @@ final defaults = _Defaults(
 );
 ```
 
-The generator matches a defaults variable to its variant by the variable's type, not its name. `_Defaults` applies to the unnamed constructor's stories, `_IconDefaults` to the `.icon` constructor's stories, and so on. Each variant can have at most one defaults variable.
+The generator matches a defaults variable to its variant by the variable's type, not its name. `_Defaults` applies to the unnamed constructor's stories, `_IconDefaults` to the `.icon` constructor's stories, and so on.
+Each variant can have at most one defaults variable.
 
 With defaults in place, stories only need to specify their args:
 
@@ -173,7 +187,9 @@ Individual stories can still override `builder` or `setup` when needed.
 - The widget constructor has parameters that don't work well as args (callbacks, controllers, complex objects).
 - You want to expose a simplified or curated set of interactive controls.
 - Multiple widget parameters should be derived from a single arg value.
-- The widget depends on a provider and you want args to mirror the provider's properties instead of the widget's constructor. This lets you mock the provider in `setup` using the arg values. See the [Mocking guide](/stories/mocking) for more details.
+- The widget depends on a provider and you want args to mirror the provider's properties instead of the widget's constructor.
+  This lets you mock the provider in `setup` using the arg values.
+  See the [Mocking guide](/stories/mocking) for more details.
 
 ## Generated Output
 
@@ -184,7 +200,8 @@ Running the generator produces two kinds of output:
 
 ### Per-Story File
 
-For each `.stories.dart` file, a `.stories.g.dart` part file is generated containing one set of declarations per `Meta` variable. For named constructors, the PascalCase constructor name is inserted after the underscore (e.g. `_IconStory`) and after the widget name (e.g. `MyButtonIconStory`):
+For each `.stories.dart` file, a `.stories.g.dart` part file is generated containing one set of declarations per `Meta` variable.
+For named constructors, the PascalCase constructor name is inserted after the underscore (e.g. `_IconStory`) and after the widget name (e.g. `MyButtonIconStory`):
 
 | Declaration | Full Name | Description |
 | --- | --- | --- |
@@ -196,7 +213,8 @@ For each `.stories.dart` file, a `.stories.g.dart` part file is generated contai
 
 #### Syntactic Sugar
 
-The underscore-prefixed names (`_Story`, `_Args`, etc.) are private typedefs that point to the fully qualified generated classes. They exist so you don't have to repeat the widget name everywhere:
+The underscore-prefixed names (`_Story`, `_Args`, etc.) are private typedefs that point to the fully qualified generated classes.
+They exist so you don't have to repeat the widget name everywhere:
 
 ```dart
 // Without syntactic sugar, using the full generated names:
@@ -214,15 +232,18 @@ final $Primary = _Story(
 );
 ```
 
-Both forms are equivalent. The underscore aliases keep story files concise and consistent regardless of the widget name.
+Both forms are equivalent.
+The underscore aliases keep story files concise and consistent regardless of the widget name.
 
 #### The Args Class
 
-The generated `_Args` class wraps each constructor parameter in a typed `Arg<T>`. It provides three ways to interact with each parameter:
+The generated `_Args` class wraps each constructor parameter in a typed `Arg<T>`.
+It provides three ways to interact with each parameter:
 
 - **Arg fields** (e.g. `initialValueArg`): the full `Arg<T>` object, useful when you need to customize the arg's behavior.
 - **Value getters** (e.g. `initialValue`): convenience getters that return the resolved value directly.
-- **`.fixed()` constructor**: creates args with constant values that won't be interactive in the Widgetbook UI. Useful for [Scenarios](/testing/overview).
+- **`.fixed()` constructor**: creates args with constant values that won't be interactive in the Widgetbook UI.
+  Useful for [Scenarios](/testing/overview).
 
 ```dart
 // Interactive args with UI controls:
@@ -243,7 +264,8 @@ _Scenario(
 
 ### Component Registry
 
-A single `components.g.dart` file is generated at the library root. It collects every `{Widget}Component` variable into a list that Widgetbook uses to build the navigation tree:
+A single `components.g.dart` file is generated at the library root.
+It collects every `{Widget}Component` variable into a list that Widgetbook uses to build the navigation tree:
 
 ```dart title="components.g.dart"
 final components = <Component>[
@@ -265,19 +287,23 @@ dart run build_runner build
 
 ### Watch Mode
 
-For a smoother workflow, run the generator in **watch mode**. It re-generates automatically on every file save, so the generated types (`_Story`, `_Args`, etc.) stay up to date and your IDE autocompletion always works:
+For a smoother workflow, run the generator in **watch mode**.
+It re-generates automatically on every file save, so the generated types (`_Story`, `_Args`, etc.) stay up to date and your IDE autocompletion always works:
 
 ```bash
 dart run build_runner watch
 ```
 
 <Info>
-  Watch mode is strongly recommended during development. It removes the need to manually re-run the build command every time you add a story, change args, or modify your widget's constructor.
+  Watch mode is strongly recommended during development.
+  It removes the need to manually re-run the build command every time you add a story, change args, or modify your widget's constructor.
 </Info>
 
 ## Best Practices
 
 1. **Use watch mode during development.** Running `dart run build_runner watch` keeps generated code in sync with your source files automatically.
-2. **Set up `Meta` before writing stories.** Create the `meta` variable and `part` directive first, run the generator once, and then start writing stories. This ensures `_Story`, `_Args`, and other generated types are available for autocompletion in your IDE.
-3. **Prefer widget-derived args over custom args.** Without `argsType`, you get an auto-generated `builder`, so you don't need to manually map args to widget parameters. Only provide `argsType` when the widget's constructor doesn't fit your needs.
+2. **Set up `Meta` before writing stories.** Create the `meta` variable and `part` directive first, run the generator once, and then start writing stories.
+   This ensures `_Story`, `_Args`, and other generated types are available for autocompletion in your IDE.
+3. **Prefer widget-derived args over custom args.** Without `argsType`, you get an auto-generated `builder`, so you don't need to manually map args to widget parameters.
+   Only provide `argsType` when the widget's constructor doesn't fit your needs.
 4. **Prefix story variables with `$`.** The generator requires this prefix (e.g. `$Default`, `$Primary`) and strips the `$` to derive the display name shown in the Widgetbook UI.
