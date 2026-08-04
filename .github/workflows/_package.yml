@@ -155,7 +155,7 @@ jobs:
 
       # Sets the GitHub-signed OIDC token
       - name: Setup Dart
-        uses: dart-lang/setup-dart@v1
+        uses: dart-lang/setup-dart@v1.7.2
         with:
           sdk: stable
 
