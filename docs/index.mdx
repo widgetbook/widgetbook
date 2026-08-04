@@ -19,8 +19,7 @@ While developing widgets or screens, you have probably faced one of the followin
 ## The Solution
 
 Widgetbook covers four jobs: build, test, document, share.
-Together they give a custom design system a place to live: every component visible, every state pinned, every change reviewed.
-See our guide on [building and maintaining high-quality Flutter UIs with a design system](https://www.widgetbook.io/blog/building-and-maintaining-high-quality-flutter-uis-with-a-design-system).
+Every component gets a page in the catalog, a screenshot per state, and a diff on every pull request.
 
 ### Build in Isolation
 
@@ -35,45 +34,40 @@ See [Core Concepts](/core-concepts) for how these fit together.
 
 ### Test
 
-[Scenarios](/testing/overview) freeze a story into a fixed state. `flutter test` captures a screenshot of each one.
+A [scenario](/testing/create-scenario) pins a story to a fixed state so it renders the same way every time.
 
-- One definition serves development, review, and automated testing.
-- Scenarios run on `flutter_test`, so a `run` callback can tap, pump frames, and assert.
-- [Accessibility guidelines](/testing/accessibility) are evaluated on every captured scenario, covering tap-target size, missing labels, and text contrast.
-- [Widgetbook Cloud](/sharing/publish-to-cloud) diffs those snapshots on every pull request, so [visual tests](/testing/visual-tests) need no separate suite.
+- Write that state once and reuse it while developing, while reviewing, and in [automated tests](/testing/run-scenarios).
+- `flutter test` renders every scenario and saves a screenshot.
+- [Accessibility guidelines](/testing/accessibility) check each screenshot for tap-target size, missing labels, and text contrast.
+- [Visual tests](/testing/visual-tests) in [Widgetbook Cloud](/sharing/publish-to-cloud) compare the screenshots against the previous build and show what changed in the pull request.
 
 ### Document
 
-[DocBlocks](/documentation/overview) generate component documentation from the code you already wrote: doc comments, the args table, and the story list. Blocks are [customizable](/documentation/customize) globally or per component.
+[DocBlocks](/documentation/overview) generate component documentation from the code you already wrote.
+Blocks are [customizable](/documentation/customize) globally or per component.
 
 ### Share
 
-Publish the catalog so the whole team can use it.
+Publish the catalog so the whole team has access without running Flutter code.
 
-- [Embed](/sharing/embedding) a single story in your own docs site.
+- [Embed a single story](/sharing/embedding) in your own docs site.
 - [Publish to Widgetbook Cloud](/sharing/publish-to-cloud) for a hosted build per commit and [reviews](/cloud/reviews) with sign-off from designers and QA.
 
 ### Serve as a GenUI Catalog
 
-In a generative UI app, the model composes screens at runtime from a fixed set of approved widgets. That catalog is a design system handed to a model, and its quality caps the quality of every generated screen.
+In a generative UI app, the model composes screens at runtime from a fixed set of approved widgets.
+Those screens are only as good as the widgets you hand the model.
 
-- A `CatalogItem` and a [Story](/stories/overview) describe the same widget: `dataSchema` maps to typed [args](/args/overview), `widgetBuilder` to the widget the story renders.
-- Generated screens cannot be snapshotted, but the catalog can. Covering each widget across its schema's range bounds every screen the model can produce.
-- Cached A2UI payloads replay as [scenarios](/testing/overview), turning real model output into permanent regression tests.
-- `flutter test` gives an agent a self-heal loop: every scenario is rendered, asserted, and checked against accessibility rules, so failures name the widget to fix.
+- A catalog entry and a [story](/stories/overview) describe the same widget, so one definition covers both.
+- Generated screens cannot be captured up front, but every widget the model picks from can.
+- Real model output replays as a [scenario](/testing/create-scenario) and becomes a regression test.
 
 See [GenUI](/genui/overview).
 
-New in v4: generated, type-safe declarations replace v3's annotations and knobs. See [What's new in v4](/whats-new-in-v4).
+New in v4: generated, type-safe declarations replace v3's annotations and knobs.
+See [What's new in v4](/whats-new-in-v4).
 
 ## Case Studies
-
-### 1KOMMA5°
-
-Cleantech company running 3 Flutter apps on a shared in-house design system.
-
-- **0 visual bugs shipped** since adopting Widgetbook Cloud.
-- **20% time saved** across designers and developers.
 
 <Card
   icon="bolt"
@@ -84,13 +78,6 @@ Cleantech company running 3 Flutter apps on a shared in-house design system.
   >
   > Anton Borries, Senior Software Engineer at 1KOMMA5º and Google Developer Expert for Flutter & Dart
 </Card>
-
-### Salto Systems
-
-Smart access and IoT company serving over 40,000 clients in more than 40 countries, with seven production Flutter apps.
-
-- **50% time saved** for developers.
-- Every UI change surfaced in the merge request.
 
 <Card
   icon="lock"
@@ -119,3 +106,10 @@ Smart access and IoT company serving over 40,000 clients in more than 40 countri
 **LeanCode** on a design system template shared with every new client.
 
 <YouTube id="rmQktvnyfPg" />
+
+## Next
+
+- [Install & Quick Start](/quick-start)
+- [Core Concepts](/core-concepts)
+- [Stories](/stories/overview)
+- [Testing](/testing/overview)
