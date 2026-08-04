@@ -2,7 +2,7 @@
 
 - **FIX**: Load images before capturing a snapshot in `testWidgetbook`, so they are no longer missing from generated snapshots. ([#2019](https://github.com/widgetbook/widgetbook/pull/2019))
 - **FIX**: Keep the workbench preview's state across rebuilds.
-  Any story with at least one non-fixed arg was torn down and rebuilt from scratch on every rebuild, so animations restarted and `StatefulWidget` state was lost.
+  Any story with at least one non-fixed arg was torn down and rebuilt from scratch on every rebuild, so animations restarted and `StatefulWidget` state was lost. ([#2012](https://github.com/widgetbook/widgetbook/pull/2012))
 
 ## 4.0.0-beta.11
 
