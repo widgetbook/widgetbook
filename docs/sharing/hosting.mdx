@@ -21,25 +21,22 @@ It takes the snapshots with it.
 On every pull request it diffs each [Scenario](/testing/overview) against the base branch.
 The differences become a [review](/cloud/reviews) that reviewers approve or request changes on, with the result posted back as a commit status.
 
-## Side by side
+## Hosting option comparison
 
 | | Self-hosted | Widgetbook Cloud |
 | --- | --- | --- |
 | Browse the catalog | Build and host it yourself | Hosted build per commit |
 | Share a story | Deep link plus [`preview`](/sharing/embedding) | Same, on a stable URL |
-| Catch visual regressions | Golden tests you write and maintain | Every Scenario diffed per pull request |
+| Catch visual regressions | Golden tests you write per widget | Every Scenario diffed, nothing to write |
+| Where baselines live | Committed to your repository, growing with it | In Cloud, nothing added to your repository |
+| Reading a visual change in review | A diff of binary files | Before, after, and the difference as images |
+| Platform rendering differences | Absorbed by a percentage tolerance you tune | No threshold to tune |
+| Updating a baseline | Rerun with `--update-goldens` and commit the images | The base branch build is the baseline |
 | Review UI changes | Check out the branch and run the app | [Reviews](/cloud/reviews) with approval and commit status |
 
-Golden tests are the usual self-hosted answer to visual regressions.
-The cost is in living with them:
-
-- The baseline images sit in your repository and grow with it.
-- A pull request that touches them shows a wall of binary files no reviewer can read.
-- Rendering varies between machines and platforms, so teams allow a percentage tolerance to keep CI green.
-- A threshold wide enough to absorb a font rasterisation difference is wide enough to let a real regression through.
-
-Cloud works from the snapshots [`flutter test` already produced](/testing/run-scenarios).
-There are no baselines in your repository and no separate visual tests to maintain.
+Golden tests are the usual self-hosted answer to visual regressions, and the cost is in living with them rather than writing them.
+A tolerance wide enough to absorb a font rasterisation difference is also wide enough to let a real regression through.
+Cloud works from the snapshots [`flutter test` already produced](/testing/run-scenarios), so there is nothing to commit and no threshold to tune.
 [What are Visual Tests?](/testing/visual-tests) goes through the trade-off in full.
 
 ## Get started with Cloud
