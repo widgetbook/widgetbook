@@ -105,10 +105,14 @@ class QueryGroup {
     return '${isNullified ? nullabilitySymbol : ''}{${pairs.join(',')}}';
   }
 
+  // `MapEntry` does not override `hashCode`, so hashing the entries directly
+  // would hash them by identity and return a different value on every call.
   @override
   int get hashCode => Object.hash(
     isNullified,
-    Object.hashAll(fields.entries),
+    Object.hashAllUnordered(
+      fields.entries.map((entry) => Object.hash(entry.key, entry.value)),
+    ),
   );
 
   @override
