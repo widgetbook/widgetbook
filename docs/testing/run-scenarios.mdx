@@ -38,7 +38,7 @@ Both people and coding agents run the same `flutter test` command against the sa
 | Runner | Reads |
 | --- | --- |
 | Developer | Snapshots in `build/.widgetbook`, failures in the console |
-| Coding agent | The same failures, parsed as text: scenario name, assertion, overflow, accessibility violation |
+| Coding agent | The same failures, parsed as text: scenario name, assertion, overflow. Accessibility violations do not fail the run, so it reads those from the scenario metadata |
 
 Every failure is anchored to a named scenario, so it points at one widget state instead of a screen. That makes the scenario set a feedback loop an agent can close on its own, then hand you the snapshots to judge.
 

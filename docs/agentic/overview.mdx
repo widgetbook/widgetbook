@@ -1,38 +1,51 @@
 # Agentic Engineering
 
-Coding agents write Flutter UI quickly. Quality is the bottleneck, not speed.
+Coding agents write Flutter UI quickly.
+Quality is the bottleneck, not speed.
 
-The agent has no idea what your design system looks like at the rendering level, so it guesses. Three failures follow:
+The agent has no idea what your design system looks like at the rendering level, so it guesses.
+Three failures follow:
 
-- **Design and code drift apart.** The agent reaches for `ElevatedButton` instead of your `AppButton`, hardcodes `Color(0xFFFF0000)` instead of resolving `theme.colorScheme.error`, or drops a `SizedBox(height: 16)` where `AppSpacing.medium` belongs. The screen looks roughly right and ships roughly wrong.
-- **Visual bugs slip through.** UI review is visual review. Catching a regression by hand means running the app and navigating to every state, theme, breakpoint, and locale.
-- **Accessibility violations.** A reject button at 32x32 is below the minimum touch target. An icon button with no label is invisible to a screen reader. The screen can look identical while these properties change.
+- **Design and code drift apart.** The agent reaches for `ElevatedButton` instead of your `AppButton`, hardcodes `Color(0xFFFF0000)` instead of resolving `theme.colorScheme.error`, or drops a `SizedBox(height: 16)` where `AppSpacing.medium` belongs.
+  The screen looks roughly right and ships roughly wrong.
+- **Visual bugs slip through.** UI review is visual review.
+  Catching a regression by hand means running the app and navigating to every state, theme, breakpoint, and locale.
+- **Accessibility violations.** A reject button at 32x32 is below the minimum touch target.
+  An icon button with no label is invisible to a screen reader.
+  The screen can look identical while these properties change.
 
-Our guide on [agentic UI engineering for Flutter](https://www.widgetbook.io/blog/agentic-ui-engineering-for-flutter) lays out a workflow in three phases. The summary below covers the parts Widgetbook supports today.
+Our guide on [agentic UI engineering for Flutter](https://www.widgetbook.io/blog/agentic-ui-engineering-for-flutter) lays out a workflow in three phases.
+The summary below covers the parts Widgetbook supports today.
 
 ## Prevent
 
-Give the agent the rules before it generates anything. Fixing drift afterwards costs more than preventing it.
+Give the agent the rules before it generates anything.
+Fixing drift afterwards costs more than preventing it.
 
 - Write down your design system rules, naming conventions, and component catalog as a plain text file the agent reads.
-- Point the agent at your existing `.stories.dart` files. They show valid components, valid args, and the states each component supports.
+- Point the agent at your existing `.stories.dart` files.
+  They show valid components, valid args, and the states each component supports.
 - Enforce design system usage with custom lint rules, so violations surface as analyzer warnings.
 
 ## Self-Correct
 
 Give the agent a feedback loop it can read without a human in the middle.
 
-`flutter test` runs three checks, in this order:
+`flutter test` gives the agent two things to read:
 
 1. **Scenario and interaction tests.** [Scenarios](/testing/overview) assert real behavior, so a failure is a concrete error rather than a guess.
-2. **Figma diff.** The [Figma MCP server](https://developers.figma.com/docs/figma-mcp-server/) lets the agent check its render against the design itself. This catches a hardcoded value that looks correct but bypasses your tokens.
-3. **Accessibility rules.** [Accessibility guidelines](/testing/accessibility) are evaluated on every captured scenario and written into the scenario metadata, including which element broke which rule.
+2. **Accessibility results.** [Accessibility guidelines](/testing/accessibility) are evaluated on every captured scenario and written into the scenario metadata, including which element broke which rule.
+   They do not fail the run, so the agent reads them from the metadata file rather than the console.
 
-The agent reads those failures and iterates on its own.
+The agent reads both and iterates on its own.
+
+Alongside that loop, the [Figma MCP server](https://developers.figma.com/docs/figma-mcp-server/) lets the agent check its render against the design itself.
+That is a separate step the agent runs, not part of `flutter test`, and it catches a hardcoded value that looks correct but bypasses your tokens.
 
 ## Review
 
-Agents own coverage. Humans own judgment.
+Agents own coverage.
+Humans own judgment.
 
 - [Widgetbook Cloud](/sharing/publish-to-cloud) shows a visual diff per scenario across every mode, so themes, locales, and viewports are all covered.
 - [Accessibility regressions](/cloud/accessibility/regressions) compare the semantics tree against the base build.

@@ -1,10 +1,13 @@
 # Build Your Catalog with Stories
 
-A catalog item binds model data to a widget. A story binds args to the same widget. Structure the widget so both can reach it.
+A catalog item binds model data to a widget.
+A story binds args to the same widget.
+Structure the widget so both can reach it.
 
 ## Split the Widget from the Binding
 
-Write the catalog widget as a plain presentational widget. No `DataModel`, no schema.
+Write the catalog widget as a plain presentational widget.
+No `DataModel`, no schema.
 
 ```dart title="design_system/lib/option_tiles.dart"
 class OptionTiles extends StatelessWidget {
@@ -32,7 +35,7 @@ final optionTiles = CatalogItem(
   name: 'OptionTiles',
   dataSchema: _optionTilesSchema,
   widgetBuilder: (context) {
-    final data = _OptionTilesData.fromMap(context.data! as Map<String, Object?>);
+    final data = _OptionTilesData.fromMap(context.data as Map<String, Object?>);
 
     return BoundString(
       dataContext: context.dataContext,
@@ -51,11 +54,13 @@ final optionTiles = CatalogItem(
 );
 ```
 
-Selections write to the local `DataModel`. Tapping a tile does not call the model again.
+Selections write to the local `DataModel`.
+Tapping a tile does not call the model again.
 
 ## Hold State in a Host Widget
 
-`OptionTiles` is controlled: it renders `selectedId` and reports taps through `onSelected`. The `DataModel` holds that state in the app. Nothing holds it in a story, so taps would do nothing.
+`OptionTiles` is controlled: it renders `selectedId` and reports taps through `onSelected`.
+The `DataModel` holds that state in the app. Nothing holds it in a story, so taps would do nothing.
 
 Add a stateful host:
 
@@ -93,7 +98,8 @@ class _OptionTilesHostState extends State<OptionTilesHost> {
 
 The host stands in for the `DataModel`, making selection testable in a [scenario](/testing/create-scenario#create-interaction-scenarios).
 
-Widgetbook rebuilds a story with a new key when an arg changes, so editing `initialSelectionId` resets the host. See [Stateful Widgets and Arg Updates](/args/overview#stateful-widgets-and-arg-updates).
+Widgetbook rebuilds a story with a new key when an arg changes, so editing `initialSelectionId` resets the host.
+See [Stateful Widgets and Arg Updates](/args/overview#stateful-widgets-and-arg-updates).
 
 ## Write the Story
 
@@ -125,24 +131,31 @@ final $Default = _Story(
 );
 ```
 
-`options` is not a primitive, so the generator produces `Arg<List<TileOption>>` and you supply it with `Arg.fixed`. For an editable control, write a [custom arg](/args/custom).
+`options` is not a primitive, so the generator produces `Arg<List<TileOption>>` and you supply it with `Arg.fixed`.
+For an editable control, write a [custom arg](/args/custom).
 
 ### Callbacks Are Not Args
 
-`onSelected` never appears in the story. Functions are not model-authored data, so they are neither args nor schema properties.
+`onSelected` never appears in the story.
+Functions are not model-authored data, so they are neither args nor schema properties.
 
-When the model should influence behavior, it emits data and the app maps it. A `variant` enum or `showsClearAction` boolean is model-authored. The callback it triggers is yours. See [Best Practices](/agentic/best-practices).
+When the model should influence behavior, it emits data and the app maps it.
+A `variant` enum or `showsClearAction` boolean is model-authored.
+The callback it triggers is yours.
+See [Best Practices](/agentic/best-practices).
 
 ## Derive the Schema from the Story
 
-No generator required. A `.stories.dart` file is a typed spec of the widget: every parameter, allowed enum value, default, and the states worth a scenario. Hand it to a coding agent and ask for the `dataSchema`.
+No generator required.
+A `.stories.dart` file is a typed spec of the widget: every parameter, allowed enum value, default, and the states worth a scenario.
+Hand it to a coding agent and ask for the `dataSchema`.
 
 | Widgetbook | `json_schema_builder` |
 | --- | --- |
 | `StringArg` | `S.string()` |
 | `IntArg` / `DoubleArg` | `S.integer()` / `S.number()` |
 | `BoolArg` | `S.boolean()` |
-| `EnumArg<T>(values: T.values)` | `S.string(enumValues: [...])` |
+| `EnumArg<T>(T.someValue, values: T.values)` | `S.string(enumValues: [...])` |
 | `Arg.fixed(List<T>)` | `S.list(items: S.object(...))` |
 | Non-nullable arg | Listed in `required` |
 | `NullableStringArg` and friends | Omitted from `required` |
@@ -176,10 +189,14 @@ final _optionTilesSchema = S.object(
 Two things an agent cannot infer from types:
 
 - **Descriptions are prompt text.** The model reads them to decide when to use the widget and what to put in it. `'Short display label, 1-3 words'` prevents overflow that no type signature could.
-- **Design constraints.** If the layout breaks past six tiles, the schema must say so. The Dart signature accepts any list length. Your design does not.
+- **Design constraints.** If the layout breaks past six tiles, the schema must say so.
+  The Dart signature accepts any list length.
+  Your design does not.
 
 <Warning>
-  Regeneration is the only thing keeping schema and widget aligned. Add a constructor parameter and no test fails, the model simply never emits it. Regenerate whenever a catalog widget's API changes.
+  Regeneration is the only thing keeping schema and widget aligned.
+  Add a constructor parameter and no test fails, the model simply never emits it.
+  Regenerate whenever a catalog widget's API changes.
 </Warning>
 
 ## Next

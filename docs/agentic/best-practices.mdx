@@ -1,14 +1,16 @@
 # Best Practices
 
 <Warning>
-  Early guidance. These are conventions that hold up in practice, not a stable API contract.
+  Early guidance.
+  These are conventions that hold up in practice, not a stable API contract.
 </Warning>
 
 How to get useful results when an agent writes stories in your project.
 
 ## Run the Generator in Watch Mode
 
-`_Story`, `_Args`, and `_Scenario` only exist after code generation. An agent writing against missing types produces code that does not compile, then guesses at fixes.
+`_Story`, `_Args`, and `_Scenario` only exist after code generation.
+An agent writing against missing types produces code that does not compile, then guesses at fixes.
 
 ```bash
 dart run build_runner watch
@@ -18,9 +20,11 @@ See [Code Generation](/stories/code-generation).
 
 ## Give the Agent Examples First
 
-Write three to five stories by hand covering your real patterns: a widget with a callback, one with an enum, one screen with a mocked dependency. Point the agent at them.
+Write three to five stories by hand covering your real patterns: a widget with a callback, one with an enum, one screen with a mocked dependency.
+Point the agent at them.
 
-Generic instructions produce generic stories. Your own files carry the conventions no prompt can state.
+Generic instructions produce generic stories.
+Your own files carry the conventions no prompt can state.
 
 This is the same workflow the [v4 Migration Guide](/v4-migration) uses.
 
@@ -28,7 +32,8 @@ This is the same workflow the [v4 Migration Guide](/v4-migration) uses.
 
 Agents get these wrong without being told:
 
-- Story variables start with `$`. The name minus `$` becomes the display name.
+- Story variables start with `$`.
+  The name minus `$` becomes the display name.
 - Every stories file needs a `part 'name.stories.g.dart';` directive.
 - `Meta` variables must be `const`. `ComponentMeta` with a `docsBuilder` must be `final`.
 - Constructor parameters without a usable default must be passed in `args`.
@@ -36,9 +41,11 @@ Agents get these wrong without being told:
 
 ## Prefer Widget-Derived Args
 
-Without `Meta.argsType`, the generator writes the `builder` for you. Custom args require a hand-written `builder` mapping args to the widget, which is more surface for an agent to get wrong.
+Without `Meta.argsType`, the generator writes the `builder` for you.
+Custom args require a hand-written `builder` mapping args to the widget, which is more surface for an agent to get wrong.
 
-Use custom args only when the constructor genuinely does not fit. See [When to Use Custom Args](/stories/code-generation#when-to-use-custom-args).
+Use custom args only when the constructor genuinely does not fit.
+See [When to Use Custom Args](/stories/code-generation#when-to-use-custom-args).
 
 ## Let Scenarios Do the Verification
 
@@ -48,4 +55,5 @@ This turns "the agent says it works" into an artifact you can look at.
 
 ## Review the Story Set, Not Just the Code
 
-Agents produce plausible stories for states that do not exist and skip the states that break. Check coverage against the widget's actual API: every enum value, every nullable path, empty and overflow content.
+Agents produce plausible stories for states that do not exist and skip the states that break.
+Check coverage against the widget's actual API: every enum value, every nullable path, empty and overflow content.

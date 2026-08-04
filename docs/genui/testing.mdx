@@ -1,12 +1,15 @@
 # Test the Catalog, Not the Screen
 
-The same prompt produces a different screen on every run. There is no fixed output to snapshot and no meaningful diff between two runs.
+The same prompt produces a different screen on every run.
+There is no fixed output to snapshot and no meaningful diff between two runs.
 
-Test the parts instead. The catalog is closed, each widget is deterministic given its data, and the schema states which data is possible.
+Test the parts instead.
+The catalog is closed, each widget is deterministic given its data, and the schema states which data is possible.
 
 ## Self-Heal with `flutter test`
 
-Model-composed screens skip design review. The catalog is the only quality gate, so run it as a loop the agent closes on its own.
+Model-composed screens skip design review.
+The catalog is the only quality gate, so run it as a loop the agent closes on its own.
 
 ```bash
 flutter test
@@ -18,11 +21,17 @@ One command renders every scenario, runs its assertions, evaluates [accessibilit
 | --- | --- |
 | Assertion | Which scenario, which expectation, actual value |
 | Overflow | Which scenario overflowed and by how much |
-| Accessibility | Which element broke which rule |
 
-Each failure names a scenario, and each scenario names a schema edge. The agent fixes the widget, reruns, and repeats until green. No human in the loop until the snapshots are worth looking at.
+Each failure names a scenario, and each scenario names a schema edge.
+The agent fixes the widget, reruns, and repeats until green.
+No human in the loop until the snapshots are worth looking at.
 
-Ask for the scenarios in the same prompt as the widget. A catalog widget without scenarios has nothing to self-heal against. See [Agentic Engineering](/agentic/overview).
+Accessibility violations never fail the run.
+They are written into `build/.widgetbook/<Component>/<Story>/<Scenario>.json`, so the agent reads them from the metadata rather than the exit code.
+
+Ask for the scenarios in the same prompt as the widget.
+A catalog widget without scenarios has nothing to self-heal against.
+See [Agentic Engineering](/agentic/overview).
 
 ## Scenarios at the Schema's Edges
 
@@ -79,12 +88,14 @@ Checklist per property:
 | Optional | Present and absent |
 
 <Info>
-  A scenario you cannot write sensibly is a signal about the schema. If `Empty options` renders broken, require at least one option in the schema instead of covering the breakage in a test.
+  A scenario you cannot write sensibly is a signal about the schema.
+  If `Empty options` renders broken, require at least one option in the schema instead of covering the breakage in a test.
 </Info>
 
 ## Test the Binding
 
-A widget that renders correctly but never reports its selection leaves the `DataModel` empty and the app unable to advance. The [host widget](/genui/catalog#hold-state-in-a-host-widget) makes that path testable:
+A widget that renders correctly but never reports its selection leaves the `DataModel` empty and the app unable to advance.
+The [host widget](/genui/catalog#hold-state-in-a-host-widget) makes that path testable:
 
 ```dart title="widgetbook/lib/option_tiles.stories.dart"
 _Scenario(
@@ -105,7 +116,7 @@ _Scenario(
 ## Test Cached A2UI Surfaces
 
 <Card
-  icon="medium"
+  icon="medium fa-brands"
   title="From Structured Outputs to A2UI Surfaces: Migrating to Flutter GenUI SDK"
   href="https://medium.com/flutter-community/from-structured-outputs-to-a2ui-surfaces-migrating-to-flutter-genui-sdk-4f09aeacee80"
 >
@@ -113,9 +124,12 @@ _Scenario(
 The workflow below is his, and the article is the reference implementation for everything it replays.
 </Card>
 
-Catalog coverage bounds what the model can emit. It does not tell you whether a real composition holds up: the model may stack four widgets in a `Column` that overflows, or pick a framing meter where tiles were intended.
+Catalog coverage bounds what the model can emit.
+It does not tell you whether a real composition holds up: the model may stack four widgets in a `Column` that overflows, or pick a framing meter where tiles were intended.
 
-An A2UI surface is JSON. Once captured it is deterministic, so it replays identically every run. Cagatay caches the surfaces his app produced, brings them back into Widgetbook to test them there, and uploads the reviewed set again.
+An A2UI surface is JSON.
+Once captured it is deterministic, so it replays identically every run.
+Cagatay caches the surfaces his app produced, brings them back into Widgetbook to test them there, and uploads the reviewed set again.
 
 Round trip:
 
@@ -131,11 +145,11 @@ Replay through a host that takes a payload:
 class CachedSurface extends StatelessWidget {
   const CachedSurface({super.key, required this.payload});
 
-  final A2uiPayload payload;
+  final A2uiMessage payload;
 
   @override
   Widget build(BuildContext context) {
-    // Render the payload through the app's catalog.
+    // ...
   }
 }
 ```
@@ -159,15 +173,18 @@ final $Surfaces = _Story(
 );
 ```
 
-Every payload the model produced in production becomes a permanent regression test. Change a catalog widget and you see which real screens moved.
+Every payload the model produced in production becomes a permanent regression test.
+Change a catalog widget and you see which real screens moved.
 
 <Info>
-  Capture payloads that broke as well as payloads that worked. A composition that overflowed once is the highest-value fixture you have.
+  Capture payloads that broke as well as payloads that worked.
+  A composition that overflowed once is the highest-value fixture you have.
 </Info>
 
 ## Cover Locale and Text Scale
 
-The model authors strings at runtime, so labels cannot be reviewed ahead of time the way a localization file can. A model asked for Finnish produces Finnish of whatever length it likes.
+The model authors strings at runtime, so labels cannot be reviewed ahead of time the way a localization file can.
+A model asked for Finnish produces Finnish of whatever length it likes.
 
 Cross every catalog scenario with a [global scenario definition](/testing/create-scenario#define-global-scenario-definitions) instead of duplicating cases:
 
@@ -191,7 +208,8 @@ Same applies to [locale](/addons/locale-addon) and [viewport](/addons/viewport-a
 
 [Publish the build](/sharing/publish-to-cloud) and Widgetbook Cloud diffs every snapshot against the base branch.
 
-This catches changes that quietly narrow what the model can safely emit: a padding tweak that overflows six tiles, a font change that clips the longest label. The widget still compiles and the schema still permits the input.
+This catches changes that quietly narrow what the model can safely emit: a padding tweak that overflows six tiles, a font change that clips the longest label.
+The widget still compiles and the schema still permits the input.
 
 [Accessibility regressions](/cloud/accessibility/regressions) compare the semantics tree against the base build.
 
