@@ -1,6 +1,8 @@
 # v4 Migration Guide
 
-Migrating to Widgetbook v4 involves breaking changes. The recommended approach is to use an AI agent for the migration but to get reliable results, **don't just throw the prompt at the agent cold**. Follow the workflow below.
+Migrating to Widgetbook v4 involves breaking changes.
+The recommended approach is to use an AI agent for the migration but to get reliable results, **don't just throw the prompt at the agent cold**.
+Follow the workflow below.
 
 If you do not want to use AI agents, check out the Manual Migration workflow at the end of the page.
 
@@ -8,9 +10,12 @@ If you do not want to use AI agents, check out the Manual Migration workflow at 
 
 ### 1. Understand v4 first (~30 min)
 
-Before touching any agent, manually create **3–5 Stories** in v4 yourself. Pick simple, representative widgets from your project. This gives you a concrete feel for the new model and surfaces any project-specific conventions early.
+Before touching any agent, manually create **3–5 Stories** in v4 yourself.
+Pick simple, representative widgets from your project.
+This gives you a concrete feel for the new model and surfaces any project-specific conventions early.
 
-→ Not sure where to start? Use [`widgetbook init`](https://docs.widgetbook.io/~v4/cli/commands/init) to bootstrap a fresh v4 project.
+→ Not sure where to start?
+Use [`widgetbook init`](https://docs.widgetbook.io/~v4/cli/commands/init) to bootstrap a fresh v4 project.
 
 ### 2. Prime the agent with your conventions (~5–10 min)
 
@@ -19,11 +24,14 @@ This teaches the agent your project's specific patterns and conventions, the thi
 
 ### 3. Let the agent migrate
 
-With a well-primed prompt, the agent should be able to one-shot most of your components. Run it and review the output.
+With a well-primed prompt, the agent should be able to one-shot most of your components.
+Run it and review the output.
 
 ### 4. Fix edge cases by example
 
-When the agent gets something wrong (usually because of a custom convention), **fix that one case manually**. Then re-run the agent with the corrected example included. The agent now knows exactly what to do for the remaining cases.
+When the agent gets something wrong (usually because of a custom convention), **fix that one case manually**.
+Then re-run the agent with the corrected example included.
+The agent now knows exactly what to do for the remaining cases.
 
 ## Tips
 
