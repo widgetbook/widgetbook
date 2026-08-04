@@ -1,0 +1,37 @@
+# Hosting your Widgetbook
+
+`flutter build web` compiles your Widgetbook into a static web app — the catalog your team opens in a browser. Where that build lives is up to you: serve it yourself, or let [Widgetbook Cloud](/cloud) host it.
+
+## Self-hosting
+
+`flutter build web` writes a static site to `build/web/`. Serve that directory from any static host — Netlify, Vercel, S3, GitHub Pages, or your own nginx — and your team has a Widgetbook to browse. You own the build step, the hosting, and whatever CI wiring publishes a fresh build when your main branch moves.
+
+Self-hosting covers the web app and nothing else. `flutter test` still writes snapshots to `build/.widgetbook`, but nothing on the self-hosted side compares them between commits, so catching visual regressions stays your problem.
+
+## Widgetbook Cloud
+
+[Widgetbook Cloud](/cloud) hosts the same `flutter build web` output — one build per commit, on a stable URL — and takes the snapshots with it. On every pull request it diffs each [Scenario](/testing/overview) against the base branch and turns the differences into a [review](/cloud/reviews) that reviewers approve or request changes on, with the result posted back as a commit status.
+
+## Side by side
+
+| | Self-hosted | Widgetbook Cloud |
+| --- | --- | --- |
+| Browse the catalog | Build and host it yourself | Hosted build per commit |
+| Share a story | Deep link plus [`preview`](/sharing/embedding) | Same, on a stable URL |
+| Catch visual regressions | Golden tests you write and maintain | Every Scenario diffed per pull request |
+| Review UI changes | Check out the branch and run the app | [Reviews](/cloud/reviews) with approval and commit status |
+
+Golden tests are the usual self-hosted answer to visual regressions, and the cost is in living with them rather than writing them. The baseline images sit in your repository and grow with it, and a pull request that touches them shows a wall of binary files no reviewer can meaningfully read. Rendering also varies between machines and platforms, so teams end up allowing a percentage tolerance to keep CI green — and a threshold wide enough to absorb a font rasterisation difference is wide enough to let a real regression through.
+
+Cloud works from the snapshots [`flutter test` already produced](/testing/run-scenarios), so there are no baselines in your repository and no separate visual tests to maintain. [What are Visual Tests?](/testing/visual-tests) goes through the trade-off in full.
+
+## Get started with Cloud
+
+<CardGroup>
+  <Card title="Why Widgetbook Cloud?" href="/cloud">
+    What Cloud adds on top of open-source Widgetbook.
+  </Card>
+  <Card title="Upload a build" href="/cloud/builds/upload">
+    Push your first build by hand, then move it to CI.
+  </Card>
+</CardGroup>
