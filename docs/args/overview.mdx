@@ -63,13 +63,16 @@ Use this only when keeping local state is intentional.
 
 ## Programmatic Arg Updates
 
-You can programmatically update an arg's value from within a story using `arg.update(context, newValue)`. This syncs the new value with the arg panel UI and URL query parameters, creating a two-way binding between widget interactions and arg controls.
+You can programmatically update an arg's value from within a story using `arg.update(context, newValue)`.
+This syncs the new value with the arg panel UI and URL query parameters, creating a two-way binding between widget interactions and arg controls.
 
 A common use case is keeping the arg panel in sync when a user interacts with the widget itself, for example pressing a button that changes state.
 
 ### `BuilderArg`
 
-Callback parameters (like `onChanged`, `onPressed`) need access to `BuildContext` to update args. Use `BuilderArg` for this. It takes a builder function that receives the context and returns the callback value:
+Callback parameters (like `onChanged`, `onPressed`) need access to `BuildContext` to update args.
+Use `BuilderArg` for this.
+It takes a builder function that receives the context and returns the callback value:
 
 ```dart title="counter.stories.dart"
 final $Default = _Story(
@@ -93,12 +96,14 @@ In this example, when the user taps the increment/decrement buttons in the `Coun
 The result is that the arg panel stays in sync with widget interactions without any manual wiring.
 
 <Info>
-  `BuilderArg` values do not appear as interactive controls in the arg panel. They are context-dependent values that are resolved at build time.
+  `BuilderArg` values do not appear as interactive controls in the arg panel.
+  They are context-dependent values that are resolved at build time.
 </Info>
 
 ## Custom Args Source
 
-The default source for args generation is the widget's constructor. However, you can customize this behavior by providing a custom args class via `Meta.argsType` as follows:
+The default source for args generation is the widget's constructor.
+However, you can customize this behavior by providing a custom args class via `Meta.argsType` as follows:
 
 ```dart title="my_widget.stories.dart"
 import 'package:widgetbook/widgetbook.dart';
@@ -117,7 +122,8 @@ class MyArgs {
 }
 ```
 
-After running the build runner, a custom `_Args` class will be generated based on your `MyArgs` class. However, you will need to manually map the args in your story using the `builder` parameter:
+After running the build runner, a custom `_Args` class will be generated based on your `MyArgs` class.
+However, you will need to manually map the args in your story using the `builder` parameter:
 
 ```dart title="my_widget.stories.dart"
 final $Custom = _Story(
@@ -153,7 +159,8 @@ Widgetbook offers first-class support for all primitive and common data types th
 
 ## Fixed Args
 
-In cases where you want to use a constant value that shouldn't be changeable in the Widgetbook UI, you can use the `Arg.fixed<T>` constructor. This is useful for parameters that are not relevant for interactive tweaking.
+In cases where you want to use a constant value that shouldn't be changeable in the Widgetbook UI, you can use the `Arg.fixed<T>` constructor.
+This is useful for parameters that are not relevant for interactive tweaking.
 
 ```dart title="my_widget.stories.dart"
 final $FixedExample = _Story(

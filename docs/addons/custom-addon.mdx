@@ -1,6 +1,7 @@
 # Custom Addon
 
-If the built-in addons do not meet your needs, you can create your own custom Addons. This
+If the built-in addons do not meet your needs, you can create your own custom Addons.
+This
 allows you to extend the functionality of Widgetbook and tailor it to your specific requirements.
 
 ## Guide
@@ -101,7 +102,8 @@ List<Field> get fields {
 
 ### 2. `valueFromQueryGroup` method
 
-This method is responsible for parsing the query parameters back to the addon setting (i.e. `BorderSetting`). This can be done by using the `valueOf` helper method to extract the values from the query group by giving it **the field's name**.
+This method is responsible for parsing the query parameters back to the addon setting (i.e. `BorderSetting`).
+This can be done by using the `valueOf` helper method to extract the values from the query group by giving it **the field's name**.
 
 ```dart
 @override
@@ -117,7 +119,8 @@ BorderSetting valueFromQueryGroup(QueryGroup? group) {
 
 ### 3. `valueToQueryGroup` method
 
-This method is used to be able to convert `Modes` to a serializable `QueryGroup`, so that it can be stored in the URL. To use the same encoding technique used in the fields, you can use the `paramOf` helper method.
+This method is used to be able to convert `Modes` to a serializable `QueryGroup`, so that it can be stored in the URL.
+To use the same encoding technique used in the fields, you can use the `paramOf` helper method.
 
 ```dart
 @override
@@ -131,7 +134,8 @@ QueryGroup valueToQueryGroup(BorderSetting value) {
 
 ### 4. `apply` method
 
-This method is responsible for building the story widget with the addon applied. In this case, we will wrap the child widget with a `Container` that has a border with the given width and color.
+This method is responsible for building the story widget with the addon applied.
+In this case, we will wrap the child widget with a `Container` that has a border with the given width and color.
 
 ```dart
 @override
@@ -154,7 +158,8 @@ Widget apply(
 
 ### 5. Using the Addon
 
-Now that we have implemented the `BorderAddon`, we can use it in our Widgetbook project. To do this, we need to add it to the `addons` list in the `Widgetbook` widget.
+Now that we have implemented the `BorderAddon`, we can use it in our Widgetbook project.
+To do this, we need to add it to the `addons` list in the `Widgetbook` widget.
 
 ```dart title=widgetbook/lib/widgetbook.config.dart
 import 'package:flutter/widgets.dart';
@@ -169,7 +174,8 @@ final config = Config(
 
 ## Mode
 
-Each addon has a corresponding [Mode](/addons/modes) to lock its value in scenarios. For a custom addon, create your own Mode subclass:
+Each addon has a corresponding [Mode](/addons/modes) to lock its value in scenarios.
+For a custom addon, create your own Mode subclass:
 
 ```dart
 class BorderMode extends Mode<BorderSetting> {
