@@ -4,14 +4,17 @@ Developer vocabulary that shows up in a pull request, a review, or a Slack messa
 
 | Term | What it means |
 | --- | --- |
-| **Pull request** (PR) | A proposed set of changes to the app, waiting to be reviewed and merged. Each one produces one [review](/cloud/reviews). GitLab calls it a *merge request*. |
-| **Story** | One component in one specific state, for example a button when disabled. The unit under review and the target of a comment. Widgetbook v3 called this a *use case*. |
-| **Scenario** | A story frozen into a fixed state so it can be captured automatically. One story can have several. See [Scenarios](/testing/overview). |
-| **Snapshot** | A screenshot of one scenario in one configuration, for example dark mode with long text. See [Snapshots](/cloud/snapshots/overview). |
-| **Build** | The full set of stories and snapshots generated from one version of the code. A review compares two builds. See [Builds](/cloud/builds/overview). |
+| [**Pull request**](/cloud/visual-pull-request/overview) (PR) | A proposed set of changes to the app, waiting to be reviewed and merged. Every reviewer submits their own review on it. GitLab calls it a *merge request*. |
+| [**Story**](/stories/overview) | One component in one specific state, for example a button when disabled. It stays interactive in Widgetbook, so args and addon values can be changed while looking at it. |
+| [**Scenario**](/testing/overview) | A story frozen into a fixed state so it can be captured automatically. One story can have several scenarios. |
+| [**Snapshot**](/cloud/snapshots/overview) | The screenshot of one scenario. One scenario produces one snapshot per build. |
+| [**Build**](/cloud/builds/overview) | One version of the code, hosted as a browsable Widgetbook and captured as snapshots. A review compares two builds. |
 | **Base / Head** | The two sides of the comparison. **Base** is the existing version, already merged. **Head** is the proposed version. The review labels these **Baseline** (left) and **Latest** (right). |
-| **Approve / Request changes** | The decision on a review. Approve lets the changes merge, request changes blocks them, comment does neither. See [Submit a review](/cloud/reviews/submit). |
-| **Merge** | Accepting a pull request so its changes become part of the app. The point of no return that the review protects. |
+| [**Approve / Request changes**](/cloud/reviews/submit) | The decision on a review. Approve marks the pull request as accepted, request changes marks it as rejected until revised, and comment records feedback without either. |
+| **Merge** | Accepting a pull request so its changes become part of the app. |
 | **Commit status** | The check Widgetbook Cloud reports back to GitHub, GitLab, Azure DevOps, or Bitbucket. A requested change turns it red and blocks the merge. |
 
-Next: [review a change](/cloud/for-designers/review-a-change).
+## Next
+
+- [Review a change](/cloud/for-designers/review-a-change): open a review, comment, approve or request changes.
+- [Compare against Figma](/cloud/for-designers/figma): open the Figma design from a story.

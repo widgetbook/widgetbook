@@ -571,6 +571,10 @@
               "href": "/cloud/reviews/submit"
             },
             {
+              "title": "Decide when to review",
+              "href": "/cloud/reviews/when-to-review"
+            },
+            {
               "title": "Request a reviewer",
               "href": "/cloud/reviews/request-reviewer"
             },
@@ -603,10 +607,6 @@
             {
               "title": "Overview",
               "href": "/cloud/for-designers/overview"
-            },
-            {
-              "title": "Decide when to review",
-              "href": "/cloud/for-designers/when-to-review"
             },
             {
               "title": "Review a change",

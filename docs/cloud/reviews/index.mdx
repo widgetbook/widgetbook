@@ -1,6 +1,9 @@
 # Reviews
 
-A review is the sign-off surface on a [visual pull request](/cloud/visual-pull-request/overview). Reviewers inspect the changed scenarios in a browser, comment on them, and approve or request changes. The decision is reported back to your Git provider as a commit status.
+A review is the sign-off surface on a [visual pull request](/cloud/visual-pull-request/overview).
+Reviewers inspect the changed scenarios in a browser, comment on them, and approve or request changes.
+The decision is reported back to your Git provider as a commit status.
+A pull request collects one review per reviewer.
 
 <Image theme="light" src="/assets/cloud/review.light.png" />
 <Image theme="dark" src="/assets/cloud/review.dark.png" />
@@ -29,13 +32,13 @@ A review compares the `base` and the `head` build and reports three kinds of fin
 2. Widgetbook Cloud creates the review automatically and posts its URL as a commit status.
 3. Reviewers inspect the changed scenarios and [submit a decision](/cloud/reviews/submit).
 4. The decision updates the commit status.
-5. Requested changes block the merge until they are addressed. This can be disabled in the project settings.
+5. Requested changes block the merge until they are addressed, which can be disabled in the project settings.
 
 <YouTube id="CalXXyThDi4" />
 
 ## Case Study: 1KOMMA5°
 
-Before Widgetbook Cloud, designers were not part of the review at all:
+Before Widgetbook Cloud, designers were not part of the review at all.
 
 <Card
   icon="bolt"
@@ -51,22 +54,10 @@ Before Widgetbook Cloud, designers were not part of the review at all:
 
 Since adopting Widgetbook Cloud, 1KOMMA5° has shipped **0 visual bugs** to production across 3 Flutter apps.
 
-## Get More out of a Review
+## Next
 
-<CardGroup>
-  <Card title="Figma Reviews" icon="figma fa-brands" href="/cloud/reviews/figma">
-    Link a story to its Figma component and compare implementation against design.
-  </Card>
-
-  <Card title="Required reviewers" icon="user-shield" href="/cloud/reviews/required-reviewer">
-    Require a lead or designer to approve before a merge is allowed.
-  </Card>
-
-  <Card title="Notifications" icon="bell" href="/cloud/reviews/notifications/slack">
-    Email and Slack alerts so reviews do not sit unnoticed.
-  </Card>
-
-  <Card title="For Designers" icon="pen-ruler" href="/cloud/for-designers/overview">
-    A designer-facing guide to reviewing UI changes.
-  </Card>
-</CardGroup>
+- [Submit a review](/cloud/reviews/submit): inspect a diff, comment, and publish a decision.
+- [Decide when to review](/cloud/reviews/when-to-review): three policies for pulling a designer in.
+- [Figma Reviews](/cloud/reviews/figma): link a story to its Figma component.
+- [Notifications](/cloud/reviews/notifications/slack): email and Slack alerts so reviews do not sit unnoticed.
+- [For Designers](/cloud/for-designers/overview): the guide for reviewers who do not read Dart.

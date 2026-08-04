@@ -4,30 +4,45 @@ The diff view shows the `base` version on the left and the `head` version on the
 
 <Image src="/assets/cloud/visual-pull-request/example.png" zoom />
 
-## Inspect a Change
+## Show Diff
 
-| Action | Where | Effect |
-| --- | --- | --- |
-| **Show diff** | Top-right of a story diff | Highlights the changed pixels in pink |
-| **Mark as viewed** | Top-right of a story diff | Tracks progress. Resets when the story changes again |
-| **Comment** | Comment section of a story diff | Ties feedback to that exact scenario |
+Shades the changed pixels in pink, so a small shift is visible without hunting for it.
+The control sits in the top-right of a story diff, on the `d` shortcut.
 
-<Image src="/assets/cloud/reviews/show-diff.png" zoom caption="Show diff highlights the changed pixels" />
-<Image src="/assets/cloud/reviews/mark-as-viewed.png" zoom caption="Mark as viewed tracks which stories you already checked" />
+<Image src="/assets/cloud/reviews/show-diff.png" zoom caption="Show diff shades the changed pixels in pink" />
+
+## Mark as Viewed
+
+Tracks how far you got through the changed scenarios.
+The counter in the header shows the progress.
+A scenario resets to unviewed when a later build changes it again.
+The control sits next to **Show diff**, on the `v` shortcut.
+
+## Comment
+
+Ties feedback to one scenario, so it names the exact component and state to fix.
+Use the comment section below the story diff.
+
 <Image src="/assets/cloud/reviews/add-comment.png" zoom caption="Comment on a story diff" />
 
 ## Publish a Decision
 
-Click **Review changes** in the top-right corner and pick a status.
+Click **Review changes** in the top-right corner, pick a status, and click **Submit Review**.
 
-<Image src="/assets/cloud/reviews/example.png" zoom />
+<Image src="/assets/cloud/reviews/submit-review.png" zoom />
 
 | Status | Commit status | Merge |
 | --- | --- | --- |
 | **Approved** | Successful | Allowed |
-| **Comment** | Pending, unless another status overrides it | Not affected |
+| **Comment** | Pending, unless another status overrides it | Unchanged |
 | **Changes requested** | Failed | Blocked until revised |
 
 <Info>
   With [required reviewers](/cloud/reviews/required-reviewer) configured, at least one required reviewer must approve before the visual pull request counts as approved.
+  Where the review check is [enforced](/cloud/guides/github/enforce-reviews), a missing approval blocks the merge on its own, so a comment leaves the pull request blocked.
 </Info>
+
+## Next
+
+- [Request a reviewer](/cloud/reviews/request-reviewer): pull a teammate into a pull request.
+- [Notifications](/cloud/reviews/notifications/slack): email and Slack alerts so reviews do not sit unnoticed.
