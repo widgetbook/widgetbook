@@ -1,6 +1,7 @@
 # Accessibility Tests
 
-Alongside the screenshot, `testWidgetbook` captures the semantics tree of every [scenario](/testing/overview) and evaluates the configured [accessibility guidelines](/testing/accessibility) against it. Both are uploaded with the build, and both are compared between the `base` and the `head` build of a pull request.
+Alongside the screenshot, `testWidgetbook` captures the semantics tree of every [scenario](/testing/overview) and evaluates the configured [accessibility guidelines](/testing/accessibility) against the tree.
+Both are uploaded with the build, and both are compared between the `base` and the `head` build of a pull request.
 
 <Image src="/assets/cloud/accessibility/scenario-diff-accessibility.png" caption="Accessibility changes and violations on a scenario diff" zoom />
 
@@ -8,15 +9,16 @@ Alongside the screenshot, `testWidgetbook` captures the semantics tree of every 
 
 |              | [Accessibility regressions](/cloud/accessibility/regressions) | [Accessibility violations](/cloud/accessibility/violations) |
 | ------------ | ------------------------------------------------------------- | ------------------------------------------------------------ |
-| **Question** | What changed in the semantics tree?                           | Which guidelines does the UI break?                          |
+| **Question** | What changed in the semantics tree?                           | Which guidelines does the UI violate?                        |
 | **Input**    | The semantics trees of both builds                            | The guidelines evaluated against a single build              |
 | **Example**  | A button lost its label between the two builds                | A tap target of 24×24 is below the required 48×48            |
 
-A scenario can break no guideline and still contain a regression, and the other way around.
+A scenario can violate no guideline and still contain a regression, and the other way around.
 
 ## Why a Screenshot Is Not Enough
 
-Replacing an `IconButton` with a `GestureDetector` around an `Icon` renders identical pixels, but the element loses its label and its button role. A visual diff reports nothing, and reading the tree by hand on every pull request does not scale.
+Replacing an `IconButton` with a `GestureDetector` around an `Icon` renders identical pixels, but the element loses its label and its button role.
+A visual diff reports nothing, and reading the tree by hand on every pull request does not scale.
 
 <YouTube id="McJfLDKMqX0" />
 
@@ -31,7 +33,8 @@ Replacing an `IconButton` with a `GestureDetector` around an `Icon` renders iden
 Semantics data is stored with the [snapshots](/cloud/snapshots/overview) you already upload.
 
 <Info>
-  Accessibility testing is free during the beta. Pricing for the additional data is planned after the beta, and will be announced before it applies.
+  Accessibility testing is free during the beta.
+  Pricing for the additional data is planned after the beta, and will be announced before it applies.
 </Info>
 
 ## Next

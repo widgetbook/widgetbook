@@ -530,15 +530,15 @@
           "href": "/cloud/accessibility/overview"
         },
         {
-          "title": "Accessibility Regressions",
+          "title": "Regressions",
           "href": "/cloud/accessibility/regressions"
         },
         {
-          "title": "Accessibility Violations",
+          "title": "Violations",
           "href": "/cloud/accessibility/violations"
         },
         {
-          "title": "Accessibility Guidelines",
+          "title": "Guidelines",
           "href": "/testing/accessibility"
         }
       ]

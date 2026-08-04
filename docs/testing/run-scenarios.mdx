@@ -163,12 +163,9 @@ the fix.
 
 ## Accessibility Guideline Violations
 
-For every scenario, `testWidgetbook` evaluates the guidelines of
-`Config.accessibilityConfig` against the rendered widget tree and records the
-failures in the metadata's `violations` field.
+For every scenario, `testWidgetbook` evaluates the guidelines of `Config.accessibilityConfig` against the rendered widget tree and records the failures in the metadata's `violations` field.
 
-See [Accessibility Guidelines](/testing/accessibility) for the default set,
-for configuring the evaluated guidelines, and for writing your own.
+See [Accessibility Guidelines](/testing/accessibility) for the default set, for configuring the evaluated guidelines, and for writing your own.
 
 > The `violations` field is new. Builds captured by older Widgetbook versions
 > omit it; consumers should treat a missing `violations` field as "not

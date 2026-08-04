@@ -1,6 +1,7 @@
 # Accessibility Regressions
 
-Widgetbook Cloud compares the semantics tree of every scenario between the `base` and the `head` build and reports each difference as an **accessibility change**. The semantics tree is what screen readers read, so a change to the tree is a change to how the app works for people relying on assistive technologies.
+Widgetbook Cloud compares the semantics tree of every scenario between the `base` and the `head` build and reports each difference as an **accessibility change**.
+The semantics tree is what screen readers read, so a change to the tree is a change to how the app works for people relying on assistive technologies.
 
 Changes reported:
 
@@ -11,11 +12,13 @@ Changes reported:
 
 ## Reading a Change
 
-The **Accessibility Changes** section sits next to the visual comparison on a scenario's diff. It appears whenever the semantics tree differs, even when both screenshots are identical.
+The **Accessibility Changes** section sits below the visual comparison on a scenario's diff.
+It appears whenever the semantics tree differs, even when both screenshots are identical.
 
 <Image src="/assets/cloud/accessibility/scenario-diff-accessibility.png" caption="Accessibility changes and violations on a scenario diff" zoom />
 
-Each row is one element, showing its path in the tree, the type of change, and the properties that differ. Hovering a row highlights the element's region on both screenshots.
+Each row is one element, showing its path in the tree, the type of change, and the properties that differ.
+Hovering a row highlights the element's region on both screenshots.
 
 | Type        | Meaning                                                                                      |
 | ----------- | -------------------------------------------------------------------------------------------- |
@@ -34,12 +37,14 @@ Compared properties: `label`, `value`, `hint`, `tooltip`, `role`, `headingLevel`
 
 A role change is reported as a removed element plus an added one, because the element's identity in the tree is derived from its role.
 
-Geometry is used to match elements between the two builds, but never reported as a change. A component that only moved or resized produces no accessibility changes, which keeps layout shifts out of this section.
+Geometry is used to match elements between the two builds, but never reported as a change.
+A component that only moved or resized produces no accessibility changes, which keeps layout shifts out of this section.
 
 ## Reviewing a Change
 
 A scenario joins the pull request's change set when the screenshot changed **or** the semantics tree changed, so an accessibility change surfaces even when both screenshots are identical.
 
-Comment on a scenario to discuss a change, and mark it as viewed to track progress. Approving or requesting changes happens for the review as a whole. See [Submit a review](/cloud/reviews/submit).
+Accessibility changes are reviewed like any other change on a scenario.
+See [Reviews](/cloud/reviews).
 
 Rules that grade a single build instead of comparing two are covered on [Accessibility Violations](/cloud/accessibility/violations).

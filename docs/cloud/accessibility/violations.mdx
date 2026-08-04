@@ -1,10 +1,15 @@
 # Accessibility Violations
 
-A violation is a broken [accessibility guideline](/testing/accessibility), such as a tap target below the minimum size or a button without a label. `testWidgetbook` evaluates the guidelines for every scenario and uploads the result with the build.
+A violation is an [accessibility guideline](/testing/accessibility) violated by a scenario, such as a tap target below the minimum size or a button without a label.
+`testWidgetbook` evaluates the guidelines for every scenario and uploads the result with the build.
 
 In a pull request, Widgetbook Cloud compares the violations of a scenario between the `base` and the `head` build.
 
 ## Reading Violations
+
+The **Accessibility Violations** section sits below the visual comparison on a scenario's diff.
+
+<Image src="/assets/cloud/accessibility/scenario-diff-accessibility.png" caption="Accessibility changes and violations on a scenario diff" zoom />
 
 Violations of a scenario are grouped by how they compare to the `base` build:
 
@@ -16,13 +21,15 @@ Violations of a scenario are grouped by how they compare to the `base` build:
 
 Each violation shows a severity, the guideline that failed, a message with the specifics such as `Expected at least 48×48, found 358×24`, and a link to that guideline's documentation.
 
-A violation is identified by its guideline and the element that broke it, independent of the element's position and the measured values. A tap target that moved, or that grew but is still too small, stays the same violation instead of showing up as one resolved plus one new.
+A violation is identified by its guideline and the element that violated it, independent of the element's position and the measured values.
+A tap target that moved, or that grew but is still too small, stays the same violation instead of showing up as one resolved plus one new.
 
 A scenario joins the pull request's change set when it introduces or resolves a violation, even when the screenshot and the semantics tree are unchanged.
 
 ## Configuring Guidelines
 
-Which guidelines run is configured in your Widgetbook project, not in Widgetbook Cloud. See [Accessibility Guidelines](/testing/accessibility) for the default set and for writing your own.
+Which guidelines run is configured in your Widgetbook project, not in Widgetbook Cloud.
+See [Accessibility Guidelines](/testing/accessibility) for the default set and for writing your own.
 
 ```dart title="widgetbook/lib/widgetbook.config.dart"
 final config = Config(
