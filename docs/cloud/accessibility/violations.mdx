@@ -21,8 +21,9 @@ Violations of a scenario are grouped by how they compare to the `base` build:
 
 Each violation shows a severity, the guideline that failed, a message with the specifics such as `Expected at least 48×48, found 358×24`, and a link to that guideline's documentation.
 
-A violation is identified by its guideline and the element that violated it, independent of the element's position and the measured values.
+A violation is identified by its guideline and the set of elements that violated it, independent of their position and the measured values.
 A tap target that moved, or that grew but is still too small, stays the same violation instead of showing up as one resolved plus one new.
+Fixing one element out of several changes the set, so the violation is reported as resolved and a new one is raised for the elements that remain.
 
 A scenario joins the pull request's change set when it introduces or resolves a violation, even when the screenshot and the semantics tree are unchanged.
 

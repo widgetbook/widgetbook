@@ -33,9 +33,9 @@ Expanding a changed element shows the affected properties side by side:
 | -------- | ------------ | ------------ |
 | label    | `Basket: 0$` | `Basket: 1$` |
 
-Compared properties: `label`, `value`, `hint`, `tooltip`, `role`, `headingLevel`, `textDirection`, `validationResult`, `inputType`, `identifier`, `actions`, and the semantics flags such as `isButton`, `isHeader`, or `isSelected`.
+Compared properties: `label`, `value`, `hint`, `tooltip`, `role`, `headingLevel`, `textDirection`, `validationResult`, `inputType`, `identifier`, `actions`, and `flagsCollection`, which carries the semantics flags such as `isButton`, `isHeader`, or `isSelected`.
 
-A role change is reported as a removed element plus an added one, because the element's identity in the tree is derived from its role.
+Role is weighted when matching elements rather than required, so an element whose role changed is reported as a single **Changed** row with a `role` property.
 
 Geometry is used to match elements between the two builds, but never reported as a change.
 A component that only moved or resized produces no accessibility changes, which keeps layout shifts out of this section.

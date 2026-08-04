@@ -21,7 +21,7 @@ For the wider practice around this, see our guide on [accessibility testing for 
 
 The ID is the key a violation is reported under, both in the scenario metadata and in Widgetbook Cloud.
 
-The tap-target and labeled-tappable guidelines report every offending element individually, including the element's label, role and position on the screenshot.
+The tap-target and labeled-tappable guidelines report every offending element individually, including the element's role and position on the screenshot, and its label where there is one.
 The contrast guideline wraps Flutter's [`textContrastGuideline`](https://api.flutter.dev/flutter/flutter_test/textContrastGuideline-constant.html) and reports a single coarse text reason for the whole scenario instead of individual elements, so treat the result as advisory.
 
 ## Configuring Guidelines
@@ -68,6 +68,7 @@ A guideline that throws during evaluation is recorded as a violation with a `rea
     "helpUrl": "https://support.google.com/accessibility/android/answer/7101858",
     "nodes": [
       {
+        "id": 42,
         "label": "Like",
         "rect": [216.0, 126.0, 264.0, 174.0],
         "message": "Expected at least 48×48, found 24×24"
@@ -140,3 +141,23 @@ class LabeledImageGuideline extends WidgetbookGuideline {
 
 Keep `id` stable across runs, since a violation is tracked by its guideline ID.
 `helpUrl` is shown next to the violation in Widgetbook Cloud.
+
+## Wrapping a Flutter Guideline
+
+To run an existing Flutter `AccessibilityGuideline` as-is, wrap it with `FlutterGuideline` and give it an `id`:
+
+```dart
+accessibilityConfig: AccessibilityConfig(
+  guidelines: [
+    ...WidgetbookGuidelines.recommended,
+    FlutterGuideline(                            // [!code highlight]
+      androidTapTargetGuideline,                 // [!code highlight]
+      id: 'android-tap-target',                  // [!code highlight]
+      helpUrl: 'https://example.com/tap-target', // [!code highlight]
+    ),
+  ],
+),
+```
+
+Flutter's guidelines merge every failing node into one text reason, so the violation carries a `reason` instead of per-element nodes.
+Implement `WidgetbookGuideline` directly when you need an element anchored on the screenshot.
