@@ -30,7 +30,7 @@ The differences become a [review](/cloud/reviews) that reviewers approve or requ
 | Catch visual regressions | Golden tests you write per widget | Every Scenario diffed, nothing to write |
 | Where baselines live | Committed to your repository, growing with it | In Cloud, nothing added to your repository |
 | Reading a visual change in review | A diff of binary files | Before, after, and the difference as images |
-| Platform rendering differences | Absorbed by a percentage tolerance you tune | No threshold to tune |
+| Approach to platform rendering differences | Absorbed by a percentage tolerance you tune | Not an issue on Widgetbook Cloud |
 | Updating a baseline | Rerun with `--update-goldens` and commit the images | The base branch build is the baseline |
 | Review UI changes | Check out the branch and run the app | [Reviews](/cloud/reviews) with approval and commit status |
 
@@ -39,13 +39,7 @@ A tolerance wide enough to absorb a font rasterisation difference is also wide e
 Cloud works from the snapshots [`flutter test` already produced](/testing/run-scenarios), so there is nothing to commit and no threshold to tune.
 [What are Visual Tests?](/testing/visual-tests) goes through the trade-off in full.
 
-## Get started with Cloud
+## Next
 
-<CardGroup>
-  <Card title="Why Widgetbook Cloud?" href="/cloud">
-    What Cloud adds on top of open-source Widgetbook.
-  </Card>
-  <Card title="Upload a build" href="/cloud/builds/upload">
-    Push your first build by hand, then move it to CI.
-  </Card>
-</CardGroup>
+- [Why Widgetbook Cloud?](/cloud) for what Cloud adds on top of open-source Widgetbook.
+- [Upload a build](/cloud/builds/upload) for pushing your first build by hand, then moving it to CI.
