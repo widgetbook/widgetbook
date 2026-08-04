@@ -59,9 +59,9 @@ Now let's start by implementing each of the class members step by step.
 
 ### 1. `fields` getter
 
-This is a list of [fields](/configure/fields) that describe how the addon addon will be represented in both:
+This is a list of [fields](/configure/fields) that describe how the addon will be represented in both:
 
-- The Widgetbook UI – the "Addons" panel.
+- The Widgetbook UI, in the "Addons" panel.
 - The URL query parameters.
 
 In this case we just need **two fields** to represent the `BorderSetting`:
@@ -173,11 +173,14 @@ Each addon has a corresponding [Mode](/addons/modes) to lock its value in scenar
 
 ```dart
 class BorderMode extends Mode<BorderSetting> {
-  BorderMode(double width, Color color)
+  BorderMode(int width, Color color)
     : super(
         BorderSetting(width, color),
         BorderAddon(),
     );
+
+  @override
+  String get formattedValue => '${value.width}px';
 }
 ```
 
