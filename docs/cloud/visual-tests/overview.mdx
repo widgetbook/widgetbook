@@ -19,11 +19,12 @@ See [What are Visual Tests?](/testing/visual-tests) for the concept.
 ## Requirements
 
 - The project is [connected to a Git repository](/cloud/projects/connect#connect-project).
-- A build exists for **both** the `base` and the `head` commit. See [Create Visual Pull Requests](/cloud/visual-pull-request/create).
+- A build exists for **both** the `base` and the `head` commit.
+  See [Create Visual Pull Requests](/cloud/visual-pull-request/create).
 
 ## Coverage
 
-One scenario produces one snapshot per [mode](/addons/modes) combination.
+One scenario produces one snapshot, rendered with the [modes](/addons/modes) pinned for it, so a mode combination is a scenario.
 To cover a widget in dark mode, at a large text scale, or on a specific viewport, add the mode rather than a new test.
 
 A dimension that every story should be tested in belongs in a [global scenario definition](/testing/create-scenario#define-global-scenario-definitions):

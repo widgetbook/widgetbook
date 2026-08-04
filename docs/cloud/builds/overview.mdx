@@ -1,6 +1,7 @@
 # Builds
 
-A build is one hosted Widgetbook, tied to one Git commit. It contains the browsable web app plus every [snapshot](/cloud/snapshots/overview) and semantics tree captured by `flutter test`.
+A build is one hosted Widgetbook, tied to one Git commit.
+It contains the browsable web app plus every [snapshot](/cloud/snapshots/overview) and semantics tree captured by `flutter test`.
 
 <Image src="/assets/cloud/projects/overview.png" caption="List of builds with their corresponding commit SHA and branch" zoom />
 
@@ -8,17 +9,20 @@ Builds are what everything else reads from:
 
 - The team browses any commit's Widgetbook in a browser, on a stable URL.
 - A [visual pull request](/cloud/visual-pull-request/overview) diffs the `base` build against the `head` build.
-- The Git commit status links to the build. See [Access build from Git commit](/cloud/builds/access-from-commit).
+- The Git commit status links to the build.
+  See [Access build from Git commit](/cloud/builds/access-from-commit).
 
 ## Immutability
 
-One build per commit SHA per project. Pushing a second build for the same SHA fails, unless you pass `--allow-existing`, which skips the upload and reuses the existing build.
+One build per commit SHA per branch per project.
+Pushing a second build for the same SHA and branch fails once the first has uploaded and processed successfully, unless you pass `--allow-existing`, which skips the upload and reuses the existing build.
+A build that failed or never finished does not block a retry.
 
 ## Status
 
 | Status | Meaning |
 | --- | --- |
-| **Draft** | The upload was requested and is in progress. |
+| **None** | No build has been uploaded, so there is no preview. |
 | **In progress** | The upload finished, snapshots are being processed. |
 | **Successful** | The upload finished and all snapshots are processed. |
 | **Failed** | The upload or the snapshot processing failed. |

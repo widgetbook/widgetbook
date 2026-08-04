@@ -1,10 +1,10 @@
 # Addons in Cloud
 
 [Addons](/addons/overview) are configured in your Widgetbook project, not in Widgetbook Cloud.
-Cloud reads the result: every [mode](/addons/modes) pinned for a scenario becomes one [snapshot](/cloud/snapshots/overview) in the build.
+Cloud reads the result: every scenario becomes one [snapshot](/cloud/snapshots/overview) in the build, rendered with the [modes](/addons/modes) pinned for it.
 
 An addon on its own costs nothing.
-Only a pinned mode produces a snapshot.
+A scenario that pins a theme, a locale, and a viewport is still one snapshot.
 
 ## Where Pinned Modes Come From
 
@@ -15,7 +15,8 @@ Only a pinned mode produces a snapshot.
 | [`modes` on a scenario](/testing/create-scenario) | That scenario only |
 
 A `ScenarioDefinition` drives the snapshot count the most, because it applies to every story.
-The more specific source wins when two of them pin the same mode type, see [How Modes Are Merged](/testing/create-scenario#how-modes-are-merged).
+When two sources pin the same mode type, the precedence is scenario, then definition, then story, so a `ScenarioDefinition` beats a mode set on the story.
+See [How Modes Are Merged](/testing/create-scenario#how-modes-are-merged).
 
 ## What Each Addon Covers
 
@@ -28,11 +29,13 @@ The more specific source wins when two of them pin the same mode type, see [How 
 | [Alignment](/addons/alignment-addon) | `AlignmentMode` | Intrinsic sizing bugs on unconstrained widgets |
 | [Semantics](/addons/semantics-addon) | `SemanticsMode` | Nothing extra in Cloud, the semantics tree is captured for every scenario regardless |
 
-[Zoom](/addons/zoom-addon), [Grid](/addons/grid-addon), and [Time Dilation](/addons/time-dilation-addon) are browsing aids.
+[Zoom](/addons/zoom-addon) and [Time Dilation](/addons/time-dilation-addon) are browsing aids.
 Pinning them as modes produces snapshots that are rarely worth reviewing.
+[Grid](/addons/grid-addon) has no mode and cannot be pinned at all.
 
 <Warning>
-A full cross product grows multiplicatively.
-3 themes × 4 locales × 3 viewports is 36 snapshots for a single story.
+Snapshots grow with the number of definitions, not as a cross product.
+3 theme, 4 locale, and 3 viewport definitions are 10 definitions, so a story with one scenario produces 10 snapshots.
+Widgetbook never combines definitions with each other, so pinning a theme *and* a locale together needs one definition that pins both.
 Pick the combinations that can actually break, see [Optimize Builds](/cloud/configure/optimize-builds).
 </Warning>

@@ -6,7 +6,8 @@ To set this up on your own repository instead, start at [Create project](/cloud/
 
 ## Prerequisites
 
-- A personal GitHub, GitLab, or Bitbucket account. Business accounts often lack the permission to connect repositories.
+- A personal GitHub, GitLab, or Bitbucket account.
+  Business accounts often lack the permission to connect repositories.
 - Access to [Widgetbook Cloud](https://app.widgetbook.io/).
 
 <Steps>
@@ -51,18 +52,20 @@ To set this up on your own repository instead, start at [Create project](/cloud/
   <Step title="Create a workspace and a project">
     In [Widgetbook Cloud](https://app.widgetbook.io/):
 
-    1. Create a workspace, or use an existing one. See [Workspaces](/cloud/workspaces).
+    1. Create a workspace, or use an existing one.
+       See [Workspaces](/cloud/workspaces).
     2. Click **Create project** and pick your Git provider.
     3. Authorize the provider if you have not connected it yet.
-    4. Select your `groceries-demo` repository and click **Import Project**.
+    4. Select your `groceries-demo` repository and click **Import**.
 
     <Info>
-      If the repository is not listed, search for it by name. The list only shows the 5 most recently accessed repositories.
+      If the repository is not listed, search for it by name.
+      The list only shows the 5 most recently accessed repositories.
     </Info>
   </Step>
 
   <Step title="Add the API key to your repository">
-    Copy the API key from **Project > Settings > General**, then store it as a secret named `WIDGETBOOK_API_KEY`.
+    Copy the API key from **Project > Settings > General**, then store it as a secret named `WIDGETBOOK_CLOUD_API_KEY`.
 
     <Tabs
       groupId="git-provider"
@@ -91,7 +94,8 @@ To set this up on your own repository instead, start at [Create project](/cloud/
   </Step>
 
   <Step title="Run the pipeline">
-    The demo repository ships with a Widgetbook Cloud workflow. Trigger it on the default branch:
+    The demo repository ships with a Widgetbook Cloud workflow.
+    Trigger it on the default branch:
 
     <Tabs
       groupId="git-provider"
@@ -102,7 +106,11 @@ To set this up on your own repository instead, start at [Create project](/cloud/
       ]}
     >
       <TabItem value="github">
-        **Actions** > enable workflows for the fork > run the Widgetbook Cloud workflow.
+        **Actions** > enable workflows for the fork, then push an empty commit to trigger the run:
+
+        ```bash
+        git commit --allow-empty -m "Trigger CI" && git push
+        ```
       </TabItem>
 
       <TabItem value="gitlab">
@@ -114,7 +122,8 @@ To set this up on your own repository instead, start at [Create project](/cloud/
       </TabItem>
     </Tabs>
 
-    A build appears in your project's **Builds** tab once the pipeline finishes. This is the `base` build for the next step.
+    A build appears in your project's **Builds** tab once the pipeline finishes.
+    This is the `base` build for the next step.
   </Step>
 
   <Step title="Open a pull request with a UI change">
@@ -143,7 +152,9 @@ To set this up on your own repository instead, start at [Create project](/cloud/
   <Step title="Review the changes">
     Once the pipeline finishes for the feature branch, open **Pull requests** in your Widgetbook Cloud project.
 
-    Every rounded component now shows a diff. Click **Show diff** to shade the changes, comment on a story, then approve or request changes. See [Submit a review](/cloud/reviews/submit).
+    Every rounded component now shows a diff.
+    Click **Show diff** to shade the changes, comment on a story, then approve or request changes.
+    See [Submit a review](/cloud/reviews/submit).
   </Step>
 </Steps>
 

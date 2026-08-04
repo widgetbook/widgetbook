@@ -3,9 +3,9 @@
 [Snapshots](/cloud/snapshots/overview) are the billed unit.
 One build uploads every snapshot in your Widgetbook, so a build that nobody reviews costs snapshots and CI minutes for nothing.
 
-Three levers, in the order they pay off.
+Two levers reduce the snapshots you are billed for, and one reduces the time you wait for them.
 
-## 1. Only Upload What a Review Needs
+## Only Upload What a Review Needs
 
 A review compares the `base` and the `head` build of a pull request.
 Builds for other commits are useful for browsing, not for testing.
@@ -21,17 +21,18 @@ Run `widgetbook cloud review skip` to resolve the commit status instead of leavi
 See [cloud review skip](/cli/commands/cloud-review-skip).
 </Warning>
 
-## 2. Let Turbo Builds Deduplicate
+## Let Turbo Builds Skip Reprocessing
 
 [Turbo Builds](/cloud/builds/turbo) hash the build contents and reuse an existing build when the hash matches.
 A commit that changed nothing relevant is available instantly and is not processed again.
+This saves upload and processing time rather than snapshots: the reused build's snapshots are copied onto the new build and billed again.
 Turbo Builds are on by default.
 
-## 3. Keep the Snapshot Count Deliberate
+## Keep the Snapshot Count Deliberate
 
-Snapshots multiply per scenario and per [mode](/addons/modes) combination.
+Snapshots multiply per scenario: every [`ScenarioDefinition`](/testing/create-scenario#define-global-scenario-definitions) applies to every scenario of every story, so N scenarios and D definitions produce N × D snapshots.
 
-The largest lever is `ScenarioConfig`, because every [`ScenarioDefinition`](/testing/create-scenario#define-global-scenario-definitions) applies to every story.
+That makes `ScenarioConfig` the largest lever.
 Two theme definitions double the snapshot count of the entire Widgetbook.
 
 ```dart title="widgetbook/lib/widgetbook.config.dart"
@@ -54,7 +55,8 @@ final config = Config(
 ```
 
 - Use `ScenarioStrategy.perStory` for dimensions where one snapshot per story is enough, such as viewports.
-- Define a dimension globally only when every story renders differently in it. A theme-independent icon does not need a dark variant.
+- Define a dimension globally only when every story renders differently in it.
+  A theme-independent icon does not need a dark variant.
 - Keep the rest local, on the scenarios of the stories that need it.
 - Prefer one scenario covering an edge case, such as a long label, over one scenario per locale.
 

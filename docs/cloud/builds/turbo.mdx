@@ -1,8 +1,10 @@
 # Turbo Builds ⚡
 
-`widgetbook cloud build push` hashes the build contents before uploading. When the hash matches an existing build, Widgetbook Cloud reuses that build instead of uploading and processing it again, and the new commit gets its build instantly.
+`widgetbook cloud build push` hashes the build contents before uploading.
+When the hash matches an existing build, Widgetbook Cloud reuses that build instead of uploading and processing it again, and the new commit gets its build instantly.
 
-This means a commit that only touched build-irrelevant files, such as tests, a README, or CI config, costs no upload time and no extra [snapshots](/cloud/account/billing).
+This means a commit that only touched build-irrelevant files, such as tests, a README, or CI config, costs no upload time and no processing time.
+The build is still billed for its [snapshots](/cloud/account/billing), because the snapshots of the reused build are copied onto it.
 
 Turbo Builds are enabled by default.
 
