@@ -69,6 +69,7 @@ final config = Config(
 
 ```dart title="widgetbook/lib/button.stories.dart"
 final $Primary = _Story(
+  // ...
   modes: [
     MaterialThemeMode('Dark', ThemeData.dark()),
     ViewportMode(IosViewports.iPhone13),
@@ -136,7 +137,8 @@ final $Primary = _Story(
 );
 ```
 
-In the UI: one entry, `Primary`, with a live `label` control and the iPhone 13 viewport applied.
+In the UI: one entry, `Primary`, with a live `label` control.
+Story modes are not applied while browsing, so the viewport stays on whatever the addon is set to.
 
 From `flutter test`: two snapshots, `Default` on iPhone 13 and `Dark` on iPhone 13 with a dark theme.
 
