@@ -12,7 +12,8 @@ widgetbook init
 
 ## Create your first Component
 
-A `Component` is a representation of a Widget you want to showcase in Widgetbook. Each `Component` can have multiple stories.
+A `Component` is a representation of a Widget you want to showcase in Widgetbook.
+Each `Component` can have multiple stories.
 Let's start by cataloging a simple widget.
 
 1. Create a new widget in your app, e.g. `lib/widgets/custom_button.dart`:
@@ -55,8 +56,10 @@ Let's start by cataloging a simple widget.
 
 ## Create your first Story
 
-A story is a variant of a `Component`. For example, if the component is a button, its stories can be "primary button", "secondary button", "disabled button", etc.
-Now you can start writing stories for the `CustomButton` component. A story must start with `$`.
+A story is a variant of a `Component`.
+For example, if the component is a button, its stories can be "primary button", "secondary button", "disabled button", etc.
+Now you can start writing stories for the `CustomButton` component.
+A story must start with `$`.
 
 ```dart
 import 'package:widgetbook/widgetbook.dart';
@@ -74,13 +77,10 @@ final $Default = _Story(
 );
 ```
 
-The generated `_Args` class holds one entry per widget parameter. Any parameter
-without a usable default — like `CustomButton`'s required `onPressed` callback —
-must be supplied through `args`, so a bare `_Story()` will not compile for this
-widget. Wrap a value in an [Arg](/args/overview) type such as `StringArg` to expose
-it as an adjustable knob in Widgetbook's UI, or in `Arg.fixed(...)` to pin it
-(handy for callbacks). Widgets whose parameters are all optional or have defaults
-can still use `_Story()` with no `args`.
+The generated `_Args` class holds one entry per widget parameter.
+Any parameter without a usable default, like `CustomButton`'s required `onPressed` callback, must be supplied through `args`, so a bare `_Story()` will not compile for this widget.
+Wrap a value in an [Arg](/args/overview) type such as `StringArg` to expose it as an adjustable knob in Widgetbook's UI, or in `Arg.fixed(...)` to pin it (handy for callbacks).
+Widgets whose parameters are all optional or have defaults can still use `_Story()` with no `args`.
 
 ## Create your first Scenario
 
@@ -108,12 +108,10 @@ final $Default = _Story(
         onPressed: () {},
       ),
       run: (tester, args) async {
-        // You can simulate interactions here
-        // For example, tap the button
-        // await tester.tap(find.text(args.label));
+        await tester.tap(find.text(args.label));
+        await tester.pumpAndSettle();
 
-        // Or you can also expect certain behaviors
-        // expect(...);
+        expect(find.text(args.label), findsOneWidget);
       },
     ),
   ],

@@ -1,0 +1,45 @@
+# Hosting your Widgetbook
+
+`flutter build web` compiles your Widgetbook into a static web app.
+That build is the catalog your team opens in a browser.
+Where it lives is up to you: serve it yourself, or let [Widgetbook Cloud](/cloud) host it.
+
+## Self-hosting
+
+`flutter build web` writes a static site to `build/web/`.
+Serve that directory from any static host: Netlify, Vercel, S3, GitHub Pages, or your own nginx.
+You own the build step, the hosting, and the CI wiring that publishes a fresh build when your main branch moves.
+
+Self-hosting covers the web app and nothing else.
+`flutter test` still writes snapshots to `build/.widgetbook`.
+Nothing on the self-hosted side compares them between commits, so catching visual regressions stays your problem.
+
+## Widgetbook Cloud
+
+[Widgetbook Cloud](/cloud) hosts the same `flutter build web` output, one build per commit, on a stable URL.
+It takes the snapshots with it.
+On every pull request it diffs each [Scenario](/testing/overview) against the base branch.
+The differences become a [review](/cloud/reviews) that reviewers approve or request changes on, with the result posted back as a commit status.
+
+## Hosting option comparison
+
+| | Self-hosted | Widgetbook Cloud |
+| --- | --- | --- |
+| Browse the catalog | Build and host it yourself | Hosted build per commit |
+| Share a story | Deep link plus [`preview`](/sharing/embedding) | Same, on a stable URL |
+| Catch visual regressions | Golden tests you write per widget | Every Scenario diffed, nothing to write |
+| Where baselines live | Committed to your repository, growing with it | In Cloud, nothing added to your repository |
+| Reading a visual change in review | A diff of binary files | Before, after, and the difference as images |
+| Approach to platform rendering differences | Absorbed by a percentage tolerance you tune | Not an issue on Widgetbook Cloud |
+| Updating a baseline | Rerun with `--update-goldens` and commit the images | The base branch build is the baseline |
+| Review UI changes | Check out the branch and run the app | [Reviews](/cloud/reviews) with approval and commit status |
+
+Golden tests are the usual self-hosted answer to visual regressions, and the cost is in living with them rather than writing them.
+A tolerance wide enough to absorb a font rasterisation difference is also wide enough to let a real regression through.
+Cloud works from the snapshots [`flutter test` already produced](/testing/run-scenarios), so there is nothing to commit and no threshold to tune.
+[What are Visual Tests?](/testing/visual-tests) goes through the trade-off in full.
+
+## Next
+
+- [Why Widgetbook Cloud?](/cloud) for what Cloud adds on top of open-source Widgetbook.
+- [Upload a build](/cloud/builds/upload) for pushing your first build by hand, then moving it to CI.
