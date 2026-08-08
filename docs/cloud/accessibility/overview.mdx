@@ -1,0 +1,44 @@
+# Accessibility Tests
+
+Alongside the screenshot, `testWidgetbook` captures the semantics tree of every [scenario](/testing/overview) and evaluates the configured [accessibility guidelines](/testing/accessibility) against the tree.
+Both are uploaded with the build, and both are compared between the `base` and the `head` build of a pull request.
+
+<Image src="/assets/cloud/accessibility/scenario-diff-accessibility.png" caption="Accessibility changes and violations on a scenario diff" zoom />
+
+## Two Checks
+
+|              | [Accessibility regressions](/cloud/accessibility/regressions) | [Accessibility violations](/cloud/accessibility/violations) |
+| ------------ | ------------------------------------------------------------- | ------------------------------------------------------------ |
+| **Question** | What changed in the semantics tree?                           | Which guidelines does the UI violate?                        |
+| **Input**    | The semantics trees of both builds                            | The guidelines evaluated against a single build              |
+| **Example**  | A button lost its label between the two builds                | A tap target of 24×24 is below the required 48×48            |
+
+A scenario can violate no guideline and still contain a regression, and the other way around.
+
+## Why a Screenshot Is Not Enough
+
+Replacing an `IconButton` with a `GestureDetector` around an `Icon` renders identical pixels, but the element loses its label and its button role.
+A visual diff reports nothing, and reading the tree by hand on every pull request does not scale.
+
+<YouTube id="McJfLDKMqX0" />
+
+## Requirements
+
+| | |
+| --- | --- |
+| `widgetbook` | `>= 4.0.0-beta.9` |
+| `widgetbook_cli` | `>= 4.0.0-beta.9` |
+| Setup | None beyond [uploading builds](/cloud/builds/upload) |
+
+Semantics data is stored with the [snapshots](/cloud/snapshots/overview) you already upload.
+
+<Info>
+  Accessibility testing is free during the beta.
+  Pricing for the additional data is planned after the beta, and will be announced before it applies.
+</Info>
+
+## Next
+
+- [Accessibility Regressions](/cloud/accessibility/regressions) for reading a semantics tree diff on a scenario.
+- [Accessibility Violations](/cloud/accessibility/violations) for new, pre-existing, and resolved guideline failures.
+- [Accessibility Guidelines](/testing/accessibility) for configuring which guidelines run in your Widgetbook project.

@@ -1,0 +1,50 @@
+# Accessibility Regressions
+
+Widgetbook Cloud compares the semantics tree of every scenario between the `base` and the `head` build and reports each difference as an **accessibility change**.
+The semantics tree is what screen readers read, so a change to the tree is a change to how the app works for people relying on assistive technologies.
+
+Changes reported:
+
+- A `Semantics` label, hint, or tooltip that disappeared.
+- A role that changed, for example from a button to plain text, or a heading that lost its level.
+- Elements added to or removed from the tree.
+- Elements that changed position among their siblings, which changes the reading order.
+
+## Reading a Change
+
+The **Accessibility Changes** section sits below the visual comparison on a scenario's diff.
+It appears whenever the semantics tree differs, even when both screenshots are identical.
+
+<Image src="/assets/cloud/accessibility/scenario-diff-accessibility.png" caption="Accessibility changes and violations on a scenario diff" zoom />
+
+Each row is one element, showing its path in the tree, the type of change, and the properties that differ.
+Hovering a row highlights the element's region on both screenshots.
+
+| Type        | Meaning                                                                                      |
+| ----------- | -------------------------------------------------------------------------------------------- |
+| **Added**   | The element exists in the `head` build only.                                                  |
+| **Removed** | The element exists in the `base` build only.                                                  |
+| **Changed** | The element exists in both builds, but at least one property differs.                         |
+| **Moved**   | The element's position among its siblings changed, which changes the assistive reading order. |
+
+Expanding a changed element shows the affected properties side by side:
+
+| Property | Previous     | Current      |
+| -------- | ------------ | ------------ |
+| label    | `Basket: 0$` | `Basket: 1$` |
+
+Compared properties: `label`, `value`, `hint`, `tooltip`, `role`, `headingLevel`, `textDirection`, `validationResult`, `inputType`, `identifier`, `actions`, and `flagsCollection`, which carries the semantics flags such as `isButton`, `isHeader`, or `isSelected`.
+
+Role is weighted when matching elements rather than required, so an element whose role changed is reported as a single **Changed** row with a `role` property.
+
+Geometry is used to match elements between the two builds, but never reported as a change.
+A component that only moved or resized produces no accessibility changes, which keeps layout shifts out of this section.
+
+## Reviewing a Change
+
+A scenario joins the pull request's change set when the screenshot changed **or** the semantics tree changed, so an accessibility change surfaces even when both screenshots are identical.
+
+Accessibility changes are reviewed like any other change on a scenario.
+See [Reviews](/cloud/reviews).
+
+Rules that grade a single build instead of comparing two are covered on [Accessibility Violations](/cloud/accessibility/violations).

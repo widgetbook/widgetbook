@@ -5,9 +5,15 @@
   introduced at any minor version.
 </Warning>
 
-The Semantics Addon is a powerful tool that allows you to visualize the semantics tree of your widget. This is particularly useful for debugging accessibility issues and ensuring that your app is accessible to all users.
+The Semantics Addon is a powerful tool that allows you to visualize the semantics tree of your widget.
+This is particularly useful for debugging accessibility issues and ensuring that your app is accessible to all users.
 
 The addon is based on a minimal variant of Flutter's [`SemanticsDebugger`](https://api.flutter.dev/flutter/widgets/SemanticsDebugger-class.html) widget.
+
+<Info>
+The addon inspects the tree while developing.
+To evaluate rules against a scenario, see [Accessibility Guidelines](/testing/accessibility); to compare the tree across a pull request, see [Accessibility regressions](/cloud/accessibility/regressions) in Widgetbook Cloud.
+</Info>
 
 ## Usage
 
@@ -26,7 +32,8 @@ Since the [order of addons](/addons/overview#order-of-addons) matters, the `Sema
 
 ## Mode
 
-Each addon has a corresponding [Mode](/addons/modes) to lock its value in scenarios. For this addon, use `SemanticsMode`:
+Each addon has a corresponding [Mode](/addons/modes) to lock its value in scenarios.
+For this addon, use `SemanticsMode`:
 
 ```dart
 final $Default = _Story(
