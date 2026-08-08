@@ -1,12 +1,16 @@
 # Modes
 
-A Mode is a specific value for an [Addon](/addons/overview). Every addon accepts a range of values. The [Theme Addon](/addons/theme-addon), for example, accepts multiple themes. When you select "Light" or "Dark" in the Widgetbook UI, you are switching the theme mode, and the story re-renders with that theme applied.
+A Mode is a specific value for an [Addon](/addons/overview).
+Every addon accepts a range of values.
+The [Theme Addon](/addons/theme-addon), for example, accepts multiple themes.
+When you select "Light" or "Dark" in the Widgetbook UI, you are switching the theme mode, and the story re-renders with that theme applied.
 
 In [scenarios](/testing/create-scenario), modes are set explicitly so that each test run uses the same fixed configuration.
 
 ## Modes vs Args
 
-[Args](/args/overview) control widget properties like text, color, or state. Modes control the environment the widget renders in, such as theme, locale, or viewport.
+[Args](/args/overview) control widget properties like text, color, or state.
+Modes control the environment the widget renders in, such as theme, locale, or viewport.
 
 ## Usage in Scenarios
 
@@ -26,11 +30,13 @@ final $Default = _Story(
 );
 ```
 
-Each built-in addon has a corresponding Mode class. See the individual [addon pages](/addons/overview) for which Mode to use.
+Each built-in addon has a corresponding Mode class.
+See the individual [addon pages](/addons/overview) for which Mode to use.
 
 ## Story-level Modes
 
-Modes defined on a story apply to all its scenarios. In the following example, both scenarios inherit the `Dark` theme and `iPhone 13` viewport:
+Modes defined on a story apply to all its scenarios.
+In the following example, both scenarios inherit the `Dark` theme and `iPhone 13` viewport:
 
 ```dart
 final $Button = _Story(
@@ -47,7 +53,8 @@ final $Button = _Story(
 
 ## Mode Merging
 
-When both a story and a scenario define modes, they are merged. Scenario-level modes take precedence for the same mode type:
+When both a story and a scenario define modes, they are merged.
+Scenario-level modes take precedence for the same mode type:
 
 ```dart
 final $Button = _Story(
@@ -76,11 +83,14 @@ To create a Mode for a [custom addon](/addons/custom-addon), extend the `Mode` c
 
 ```dart
 class BorderMode extends Mode<BorderSetting> {
-  BorderMode(double width, Color color)
+  BorderMode(int width, Color color)
     : super(
         BorderSetting(width, color),
         BorderAddon(),
     );
+
+  @override
+  String get formattedValue => '${value.width}px';
 }
 ```
 

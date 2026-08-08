@@ -1,10 +1,12 @@
 # What are Stories?
 
-A Story is a specific state or variant of a design component _(or a Flutter widget)_. It is a way to showcase a component in different scenarios.
+A Story is a specific state or variant of a design component _(or a Flutter widget)_.
+It is a way to showcase a component in different scenarios.
 
 ## Stories for Components
 
-Your design system will usually have multiple components, and each component will have multiple stories. For example, a button component might have stories for different states like `Primary`, `Secondary`, `Disabled` etc.
+Your [design system](https://www.widgetbook.io/blog/building-and-maintaining-high-quality-flutter-uis-with-a-design-system) will usually have multiple components, and each component will have multiple stories.
+For example, a button component might have stories for different states like `Primary`, `Secondary`, `Disabled` etc.
 
 ```dart title="components/lib/button.dart"
 import 'package:flutter/material.dart';
@@ -27,7 +29,7 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Implementation of the button based on state
+    // ...
   }
 }
 ```
@@ -64,12 +66,15 @@ final $Disabled = _Story(
 
 ## Stories for Screens
 
-A screen is a composition of multiple components but as you move up the component hierarchy toward the screen level, you deal with more complexity. That's why it is **recommended** to catalog your screens in Widgetbook to be able to test them in isolation.
+A screen is a composition of multiple components but as you move up the component hierarchy toward the screen level, you deal with more complexity.
+That's why it is **recommended** to catalog your screens in Widgetbook to be able to test them in isolation.
 
 There are two common patterns for building screens:
 
-1. **Pure Screens**: Screens that are fully presentational and don't depend on external data or services. You can create a story for them like any other component.
-2. **Contained Screens**: Screens that depend on external data or services. Check out our [mocking guide](/stories/mocking) to know how to handle such screens.
+1. **Pure Screens**: Screens that are fully presentational and don't depend on external data or services.
+   You can create a story for them like any other component.
+2. **Contained Screens**: Screens that depend on external data or services.
+   Check out our [mocking guide](/stories/mocking) to know how to handle such screens.
 
 ## Builder vs Setup
 
@@ -85,7 +90,8 @@ When using `Meta`, a default `builder` is generated automatically. `setup` defau
 
 ### When to use `setup`
 
-Use `setup` whenever your story needs a parent widget injected above it in the widget tree. This is common when your widget depends on something provided by an ancestor, e.g. a `ProviderScope` for Riverpod, a `BlocProvider` for Bloc, a custom `Theme`, or a mocked router.
+Use `setup` whenever your story needs a parent widget injected above it in the widget tree.
+This is common when your widget depends on something provided by an ancestor, e.g. a `ProviderScope` for Riverpod, a `BlocProvider` for Bloc, a custom `Theme`, or a mocked router.
 
 ```dart title="widgetbook/lib/user_tile.stories.dart"
 final $Default = _Story(
@@ -98,11 +104,13 @@ final $Default = _Story(
 
 You cannot do this in `builder` because it must return the exact widget type (`TWidget`), so wrapping it in another widget would cause a type error.
 
-This is especially useful when cataloging [screens](/stories/overview#stories-for-screens) that depend on external services. See the [Mocking guide](/stories/mocking) for more examples of using `setup` with mocked dependencies.
+This is especially useful when cataloging [screens](/stories/overview#stories-for-screens) that depend on external services.
+See the [Mocking guide](/stories/mocking) for more examples of using `setup` with mocked dependencies.
 
 ## Story Order
 
-Stories are displayed in the navigation panel in the order they are defined in the `.stories.dart` file. For example, the stories below will appear as `Primary`, `Secondary`, `Disabled` in the sidebar and are not alphabetically sorted.
+Stories are displayed in the navigation panel in the order they are defined in the `.stories.dart` file.
+For example, the stories below will appear as `Primary`, `Secondary`, `Disabled` in the sidebar and are not alphabetically sorted.
 
 ```dart title="widgetbook/lib/button.stories.dart"
 final $Primary = _Story(...);

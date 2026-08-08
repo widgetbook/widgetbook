@@ -1,7 +1,7 @@
 # Custom Addon
 
-If the built-in addons do not meet your needs, you can create your own custom Addons. This
-allows you to extend the functionality of Widgetbook and tailor it to your specific requirements.
+If the built-in addons do not meet your needs, you can create your own custom Addons.
+This allows you to extend the functionality of Widgetbook and tailor it to your specific requirements.
 
 ## Guide
 
@@ -61,7 +61,7 @@ Now let's start by implementing each of the class members step by step.
 
 The `fields` getter is a list of [fields](/configure/fields) that describe how the addon will be represented in both:
 
-- The Widgetbook UI – the "Addons" panel.
+- The Widgetbook UI, in the "Addons" panel.
 - The URL query parameters.
 
 In this case we just need **two fields** to represent the `BorderSetting`:
@@ -157,7 +157,8 @@ Widget apply(
 
 ### 5. Using the Addon
 
-Now that we have implemented the `BorderAddon`, we can use it in our Widgetbook project. To do this, we need to add it to the `addons` list in the `Widgetbook` widget.
+Now that we have implemented the `BorderAddon`, we can use it in our Widgetbook project.
+To do this, we need to add it to the `addons` list in the `Widgetbook` widget.
 
 ```dart title=widgetbook/lib/widgetbook.config.dart
 import 'package:flutter/widgets.dart';
@@ -172,15 +173,19 @@ final config = Config(
 
 ## Mode
 
-Each addon has a corresponding [Mode](/addons/modes) to lock its value in scenarios. For a custom addon, create your own Mode subclass:
+Each addon has a corresponding [Mode](/addons/modes) to lock its value in scenarios.
+For a custom addon, create your own Mode subclass:
 
 ```dart
 class BorderMode extends Mode<BorderSetting> {
-  BorderMode(double width, Color color)
+  BorderMode(int width, Color color)
     : super(
         BorderSetting(width, color),
         BorderAddon(),
     );
+
+  @override
+  String get formattedValue => '${value.width}px';
 }
 ```
 
