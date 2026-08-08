@@ -1,0 +1,71 @@
+# GenUI
+
+In a generative UI app, the model emits a description of an interface assembled from a fixed set of approved widgets.
+That set is the **catalog**, and it is the model's entire vocabulary.
+
+Catalog quality caps generated UI quality.
+A catalog is a design system handed to a model.
+
+## Mapping
+
+A `CatalogItem` in the [Flutter GenUI SDK](https://github.com/flutter/genui) and a Widgetbook [Story](/stories/overview) describe the same widget from two directions.
+
+| Flutter GenUI SDK | Widgetbook |
+| --- | --- |
+| `CatalogItem.name` | Component in the navigation tree |
+| `dataSchema` | Typed [args](/args/overview) |
+| `widgetBuilder` | The widget the story renders |
+
+<Info>
+  Widgetbook has no GenUI-specific API.
+  This section uses the same stories, args, scenarios, and modes as the rest of the docs.
+</Info>
+
+## Self-Healing Components
+
+Model-composed screens have no design review step.
+The catalog is the only place quality is enforced, so enforce it in a loop the agent can run without you.
+
+1. The agent writes the catalog widget, its [stories](/stories/overview), and a [scenario](/testing/overview) per schema edge.
+2. `flutter test` renders every scenario, runs assertions, evaluates [accessibility guidelines](/testing/accessibility), and writes a snapshot per scenario.
+3. Failures are concrete: which scenario, which assertion, which accessibility rule, which element.
+4. The agent reads the failures and fixes the widget.
+
+Repeat until green.
+The agent owns coverage across the schema's range, you own judgment on the result.
+See [Agentic Engineering](/agentic/overview).
+
+## Two Layers of Coverage
+
+Generated screens are not testable in the general case.
+The model composes them at runtime, so there is no fixed output to snapshot.
+Two layers cover it instead.
+
+| Layer | What it tests | Why it works |
+| --- | --- | --- |
+| [Catalog widgets](/genui/testing#scenarios-at-the-schemas-edges) | Every widget across its schema's range | The catalog is closed and each widget is deterministic given its data |
+| [Cached surfaces](/genui/testing#test-cached-a2ui-surfaces) | Real compositions the model produced | An A2UI payload is JSON, so a captured one replays identically |
+
+The first bounds what the model can emit.
+The second checks what it actually did.
+
+## Catalog Rules
+
+Catalog widgets are stricter than ordinary design system widgets, because a model picks them without judgment.
+
+- **Small and composable.** One layout primitive plus a few answer components, not one widget with fifteen optional parameters.
+- **Theme-aware.** No hardcoded colors or spacing.
+  The model supplies data, never styling.
+- **Data in, data out.** Report selections into the surface's `DataModel`.
+  Do not navigate, call an API, or own app state.
+- **Complete at every input.** The model will emit the longest label and largest list the schema permits.
+
+Behavior stays app-owned.
+The schema describes model-authored data; what happens on user action is yours.
+
+## Next
+
+- [Build Your Catalog](/genui/catalog)
+- [Test the Catalog](/genui/testing)
+- [Using Widgetbook as your GenUI catalog](https://www.widgetbook.io/blog/genui-catalog)
+- [From structured outputs to A2UI surfaces](https://medium.com/flutter-community/from-structured-outputs-to-a2ui-surfaces-migrating-to-flutter-genui-sdk-4f09aeacee80)

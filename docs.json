@@ -349,6 +349,38 @@
     },
     {
       "tab": "docs",
+      "group": "Agentic Engineering",
+      "pages": [
+        {
+          "title": "Overview",
+          "href": "/agentic/overview"
+        },
+        {
+          "title": "Best Practices",
+          "href": "/agentic/best-practices"
+        }
+      ]
+    },
+    {
+      "tab": "docs",
+      "group": "GenUI",
+      "pages": [
+        {
+          "title": "Overview",
+          "href": "/genui/overview"
+        },
+        {
+          "title": "Build Your Catalog",
+          "href": "/genui/catalog"
+        },
+        {
+          "title": "Test the Catalog",
+          "href": "/genui/testing"
+        }
+      ]
+    },
+    {
+      "tab": "docs",
       "group": "Releases",
       "pages": [
         {

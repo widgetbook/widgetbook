@@ -1,0 +1,219 @@
+# Test the Catalog, Not the Screen
+
+The same prompt produces a different screen on every run.
+There is no fixed output to snapshot and no meaningful diff between two runs.
+
+Test the parts instead.
+The catalog is closed, each widget is deterministic given its data, and the schema states which data is possible.
+
+## Self-Heal with `flutter test`
+
+Model-composed screens skip design review.
+The catalog is the only quality gate, so run it as a loop the agent closes on its own.
+
+```bash
+flutter test
+```
+
+One command renders every scenario, runs its assertions, evaluates [accessibility guidelines](/testing/accessibility), and writes a snapshot per scenario into `build/.widgetbook`.
+
+| Failure | What the agent reads |
+| --- | --- |
+| Assertion | Which scenario, which expectation, actual value |
+| Overflow | Which scenario overflowed and by how much |
+
+Each failure names a scenario, and each scenario names a schema edge.
+The agent fixes the widget, reruns, and repeats until green.
+No human in the loop until the snapshots are worth looking at.
+
+Accessibility violations never fail the run.
+They are written into `build/.widgetbook/<Component>/<Story>/<Scenario>.json`, so the agent reads them from the metadata rather than the exit code.
+
+Ask for the scenarios in the same prompt as the widget.
+A catalog widget without scenarios has nothing to self-heal against.
+See [Agentic Engineering](/agentic/overview).
+
+## Scenarios at the Schema's Edges
+
+Read each schema property and write scenarios for its extremes.
+
+```dart title="widgetbook/lib/option_tiles.stories.dart"
+final $Default = _Story(
+  args: _Args(
+    question: StringArg('Which season?'),
+    options: Arg.fixed(_seasons),
+    initialSelectionId: NullableStringArg(null),
+  ),
+  scenarios: [
+    _Scenario(
+      name: 'Two options',
+      args: _Args.fixed(
+        question: 'Indoors or outdoors?',
+        options: _twoOptions,
+      ),
+    ),
+    _Scenario(
+      name: 'Maximum options',
+      args: _Args.fixed(
+        question: 'Which season?',
+        options: _sixOptions,
+      ),
+    ),
+    _Scenario(
+      name: 'Long localized label',
+      args: _Args.fixed(
+        question: 'Missä vuodenaikana kuva on otettu?',
+        options: _longFinnishLabels,
+      ),
+    ),
+    _Scenario(
+      name: 'Preselected',
+      args: _Args.fixed(
+        question: 'Which season?',
+        options: _seasons,
+        initialSelectionId: 'winter',
+      ),
+    ),
+  ],
+);
+```
+
+Checklist per property:
+
+| Property type | Scenarios |
+| --- | --- |
+| String | Longest the description allows, in your longest-running locale |
+| List | Smallest and largest count the schema permits |
+| Enum | Every value |
+| Optional | Present and absent |
+
+<Info>
+  A scenario you cannot write sensibly is a signal about the schema.
+  If `Empty options` renders broken, require at least one option in the schema instead of covering the breakage in a test.
+</Info>
+
+## Test the Binding
+
+A widget that renders correctly but never reports its selection leaves the `DataModel` empty and the app unable to advance.
+The [host widget](/genui/catalog#hold-state-in-a-host-widget) makes that path testable:
+
+```dart title="widgetbook/lib/option_tiles.stories.dart"
+_Scenario(
+  name: 'Selects a tile',
+  args: _Args.fixed(
+    question: 'Which season?',
+    options: _seasons,
+  ),
+  run: (tester, args) async {
+    await tester.tap(find.text('Winter'));
+    await tester.pumpAndSettle();
+
+    expect(find.bySemanticsLabel('Winter, selected'), findsOneWidget);
+  },
+),
+```
+
+## Test Cached A2UI Surfaces
+
+<Card
+  icon="newspaper"
+  title="From Structured Outputs to A2UI Surfaces: Migrating to Flutter GenUI SDK"
+  href="https://medium.com/flutter-community/from-structured-outputs-to-a2ui-surfaces-migrating-to-flutter-genui-sdk-4f09aeacee80"
+>
+[Cagatay Ulusoy](https://x.com/ulusoyapps) builds the *Finnish It* language-learning app on the Flutter GenUI SDK: catalogs, surfaces, `DataModel` binding, and the streaming transport.
+The workflow below is his, and the article is the reference implementation for everything it replays.
+</Card>
+
+Catalog coverage bounds what the model can emit.
+It does not tell you whether a real composition holds up: the model may stack four widgets in a `Column` that overflows, or pick a framing meter where tiles were intended.
+
+An A2UI surface is JSON.
+Once captured it is deterministic, so it replays identically every run.
+Cagatay caches the surfaces his app produced, brings them back into Widgetbook to test them there, and uploads the reviewed set again.
+
+Round trip:
+
+1. Persist the A2UI payloads the app receives, for example in Firestore.
+2. Pull the cached payloads into your Widgetbook project.
+3. Replay each one through the same catalog the app uses.
+4. `flutter test` snapshots each surface, so real compositions get the same [self-heal loop](/genui/testing#self-heal-with-flutter-test) and Cloud diff as catalog widgets.
+5. Upload the reviewed payload set back to Firestore, so the app and the test suite share one source.
+
+Replay through a host that takes a payload:
+
+```dart title="widgetbook/lib/cached_surface.dart"
+class CachedSurface extends StatelessWidget {
+  const CachedSurface({super.key, required this.payload});
+
+  final A2uiMessage payload;
+
+  @override
+  Widget build(BuildContext context) {
+    // ...
+  }
+}
+```
+
+One scenario per cached payload:
+
+```dart title="widgetbook/lib/cached_surface.stories.dart"
+const meta = Meta(CachedSurface.new);
+
+final $Surfaces = _Story(
+  args: _Args(
+    payload: Arg.fixed(cachedSurfaces.first),
+  ),
+  scenarios: [
+    for (final payload in cachedSurfaces)
+      _Scenario(
+        name: payload.id,
+        args: _Args.fixed(payload: payload),
+      ),
+  ],
+);
+```
+
+Every payload the model produced in production becomes a permanent regression test.
+Change a catalog widget and you see which real screens moved.
+
+<Info>
+  Capture payloads that broke as well as payloads that worked.
+  A composition that overflowed once is the highest-value fixture you have.
+</Info>
+
+## Cover Locale and Text Scale
+
+The model authors strings at runtime, so labels cannot be reviewed ahead of time the way a localization file can.
+A model asked for Finnish produces Finnish of whatever length it likes.
+
+Cross every catalog scenario with a [global scenario definition](/testing/create-scenario#define-global-scenario-definitions) instead of duplicating cases:
+
+```dart title="widgetbook/lib/widgetbook.config.dart"
+final config = Config(
+  // ...
+  scenarioConfig: ScenarioConfig(
+    definitions: [
+      ScenarioDefinition(
+        name: 'Large Text',
+        modes: [TextScaleMode(2.0)],
+      ),
+    ],
+  ),
+);
+```
+
+Same applies to [locale](/addons/locale-addon) and [viewport](/addons/viewport-addon).
+
+## Catch Regressions in CI
+
+[Publish the build](/sharing/hosting) and Widgetbook Cloud diffs every snapshot against the base branch.
+
+This catches changes that quietly narrow what the model can safely emit: a padding tweak that overflows six tiles, a font change that clips the longest label.
+The widget still compiles and the schema still permits the input.
+
+[Accessibility regressions](/cloud/accessibility/regressions) compare the semantics tree against the base build.
+
+## Next
+
+- [Testing Overview](/testing/overview)
+- [Agentic Engineering](/agentic/overview)
