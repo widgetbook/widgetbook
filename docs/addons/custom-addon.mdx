@@ -59,7 +59,7 @@ Now let's start by implementing each of the class members step by step.
 
 ### 1. `fields` getter
 
-This is a list of [fields](/essentials/fields) that describe how the addon addon will be represented in both:
+The `fields` getter is a list of [fields](/configure/fields) that describe how the addon will be represented in both:
 
 - The Widgetbook UI – the "Addons" panel.
 - The URL query parameters.
@@ -101,7 +101,8 @@ List<Field> get fields {
 
 ### 2. `valueFromQueryGroup` method
 
-This method is responsible for parsing the query parameters back to the addon setting (i.e. `BorderSetting`). This can be done by using the `valueOf` helper method to extract the values from the query group by giving it **the field's name**.
+The `valueFromQueryGroup` method is responsible for parsing the query parameters back to the addon setting (i.e. `BorderSetting`).
+Use the `valueOf` helper method to extract the values from the query group by giving it **the field's name**.
 
 ```dart
 @override
@@ -117,7 +118,8 @@ BorderSetting valueFromQueryGroup(QueryGroup? group) {
 
 ### 3. `valueToQueryGroup` method
 
-This method is used to be able to convert `Modes` to a serializable `QueryGroup`, so that it can be stored in the URL. To use the same encoding technique used in the fields, you can use the `paramOf` helper method.
+The `valueToQueryGroup` method is used to be able to convert `Modes` to a serializable `QueryGroup`, so that it can be stored in the URL.
+To use the same encoding technique used in the fields, you can use the `paramOf` helper method.
 
 ```dart
 @override
@@ -131,7 +133,8 @@ QueryGroup valueToQueryGroup(BorderSetting value) {
 
 ### 4. `apply` method
 
-This method is responsible for building the story widget with the addon applied. In this case, we will wrap the child widget with a `Container` that has a border with the given width and color.
+The `apply` method is responsible for building the story widget with the addon applied.
+In this case, we will wrap the child widget with a `Container` that has a border with the given width and color.
 
 ```dart
 @override

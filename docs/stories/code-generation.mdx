@@ -27,7 +27,7 @@ To customize the component as a whole, declare an optional `ComponentMeta` varia
 | --- | --- | --- |
 | `name` | `String` | Override the display name shown in the Widgetbook UI. Defaults to the widget class name. |
 | `path` | `String` | Set the navigation path in the Widgetbook UI. By default, the path is derived from the file's directory structure. Wrap folder names in square brackets to create categories (e.g. `[components]/counter`). |
-| `docsBuilder` | `DocsBuilderFunction` | Customize the [documentation blocks](/docs/overview) shown for this component. |
+| `docsBuilder` | `DocsBuilderFunction` | Customize the [documentation blocks](/documentation/overview) shown for this component. |
 
 ```dart title="counter.stories.dart"
 // Must be `final` instead of `const` since `docsBuilder` holds a closure.
