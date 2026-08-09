@@ -1,18 +1,24 @@
 # Turbo Builds ⚡
 
-Turbo Builds is a feature that can **save you a lot of time** when pushing builds to Widgetbook Cloud. It works by creating a unique hash for each build depending on it's contents. So if you changed build-irrelevant files (e.g. test files, README, CI/CD configs, etc.) the build will be **instantly** available in Widgetbook Cloud without having to wait for the build to process.
+`widgetbook cloud build push` hashes the build contents before uploading.
+When the hash matches an existing build, Widgetbook Cloud reuses that build instead of uploading and processing it again, and the new commit gets its build instantly.
+
+This means a commit that only touched build-irrelevant files, such as tests, a README, or CI config, costs no upload time and no processing time.
+The build is still billed for its [snapshots](/cloud/account/billing), because the snapshots of the reused build are copied onto it.
+
+Turbo Builds are enabled by default.
 
 ## Caveats
 
-Turbo Builds might misbehave in some cases like:
+The hash only covers the build contents, so it cannot detect a change in something the build fetches at runtime:
 
-1. If you use external URLs (e.g. image sources) in your build, and the content of those URLs change but the URL remains the same.
-1. You use any network requests that might change the story behavior.
+- External URLs, such as remote images, whose content changed while the URL stayed the same.
+- Network requests that change how a story renders.
 
-## Disable Turbo Builds
-
-If you would like to disable Turbo Builds, you can do so by specifying the `--no-turbo` flag when running the `widgetbook cloud build push` command:
+## Disable
 
 ```bash
 widgetbook cloud build push --no-turbo --api-key <API_KEY>
 ```
+
+See [Optimize Builds](/cloud/configure/optimize-builds) for the other ways to cut unnecessary uploads.

@@ -1,0 +1,68 @@
+# Optimize Builds
+
+[Snapshots](/cloud/snapshots/overview) are the billed unit.
+One build uploads every snapshot in your Widgetbook, so a build that nobody reviews costs snapshots and CI minutes for nothing.
+
+Two levers reduce the snapshots you are billed for, and one reduces the time you wait for them.
+
+## Only Upload What a Review Needs
+
+A review compares the `base` and the `head` build of a pull request.
+Builds for other commits are useful for browsing, not for testing.
+
+The [GitHub Actions workflow](/cloud/visual-pull-request/create#github-actions-for-visual-pull-requests) uploads exactly those two builds and nothing else.
+
+Narrow it further where it fits your team, for example with `paths-ignore` for pull requests that cannot touch the UI, or a condition that skips draft pull requests.
+Widgetbook makes no assumption about when a pull request is ready for visual review.
+
+<Warning>
+A pull request filtered out this way never gets a `head` build, so its review stays incomplete.
+Run `widgetbook cloud review skip` to resolve the commit status instead of leaving it pending.
+See [cloud review skip](/cli/commands/cloud-review-skip).
+</Warning>
+
+## Let Turbo Builds Skip Reprocessing
+
+[Turbo Builds](/cloud/builds/turbo) hash the build contents and reuse an existing build when the hash matches.
+A commit that changed nothing relevant is available instantly and is not processed again.
+This saves upload and processing time rather than snapshots: the reused build's snapshots are copied onto the new build and billed again.
+Turbo Builds are on by default.
+
+## Keep the Snapshot Count Deliberate
+
+Snapshots multiply per scenario: every [`ScenarioDefinition`](/testing/create-scenario#define-global-scenario-definitions) applies to every scenario of every story, so N scenarios and D definitions produce N × D snapshots.
+
+That makes `ScenarioConfig` the largest lever.
+Two theme definitions double the snapshot count of the entire Widgetbook.
+
+```dart title="widgetbook/lib/widgetbook.config.dart"
+final config = Config(
+  scenarioConfig: ScenarioConfig(
+    definitions: [
+      ScenarioDefinition(
+        name: 'Dark Mode',
+        modes: [MaterialThemeMode('Dark', ThemeData.dark())],
+      ),
+      ScenarioDefinition(
+        name: 'iPhone 13',
+        modes: [ViewportMode(IosViewports.iPhone13)],
+        // One snapshot per story instead of one per scenario.
+        strategy: ScenarioStrategy.perStory, // [!code highlight]
+      ),
+    ],
+  ),
+);
+```
+
+- Use `ScenarioStrategy.perStory` for dimensions where one snapshot per story is enough, such as viewports.
+- Define a dimension globally only when every story renders differently in it.
+  A theme-independent icon does not need a dark variant.
+- Keep the rest local, on the scenarios of the stories that need it.
+- Prefer one scenario covering an edge case, such as a long label, over one scenario per locale.
+
+See [Addons in Cloud](/cloud/configure/addons) for which addons produce snapshots.
+
+## Next
+
+- [Turbo Builds](/cloud/builds/turbo) for how build hashing works, and when to disable it.
+- [Billing](/cloud/account/billing) for how snapshots map to your plan.

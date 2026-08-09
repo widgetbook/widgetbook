@@ -1,0 +1,41 @@
+# Addons in Cloud
+
+[Addons](/addons/overview) are configured in your Widgetbook project, not in Widgetbook Cloud.
+Cloud reads the result: every scenario becomes one [snapshot](/cloud/snapshots/overview) in the build, rendered with the [modes](/addons/modes) pinned for it.
+
+An addon on its own costs nothing.
+A scenario that pins a theme, a locale, and a viewport is still one snapshot.
+
+## Where Pinned Modes Come From
+
+| Source | Applies to |
+| --- | --- |
+| [`ScenarioDefinition`](/testing/create-scenario#define-global-scenario-definitions) | Every story in the Widgetbook |
+| [`modes` on a story](/testing/create-scenario) | Every scenario of that story |
+| [`modes` on a scenario](/testing/create-scenario) | That scenario only |
+
+A `ScenarioDefinition` drives the snapshot count the most, because it applies to every story.
+When two sources pin the same mode type, the precedence is scenario, then definition, then story, so a `ScenarioDefinition` beats a mode set on the story.
+See [How Modes Are Merged](/testing/create-scenario#how-modes-are-merged).
+
+## What Each Addon Covers
+
+| Addon | Mode | Catches |
+| --- | --- | --- |
+| [Theme](/addons/theme-addon) | `MaterialThemeMode`, `CupertinoThemeMode`, `ThemeMode` | Hardcoded colors, unreadable contrast in the other brightness |
+| [Locale](/addons/locale-addon) | `LocaleMode` | Untranslated strings, overflow from longer translations, RTL layout |
+| [Viewport](/addons/viewport-addon) | `ViewportMode` | Layout breaking on small phones or wide tablets |
+| [Text Scale](/addons/text-scale-addon) | `TextScaleMode` | Clipping and overlap at accessibility text sizes |
+| [Alignment](/addons/alignment-addon) | `AlignmentMode` | Intrinsic sizing bugs on unconstrained widgets |
+| [Semantics](/addons/semantics-addon) | `SemanticsMode` | Nothing extra in Cloud, the semantics tree is captured for every scenario regardless |
+
+[Zoom](/addons/zoom-addon) and [Time Dilation](/addons/time-dilation-addon) are browsing aids.
+Pinning them as modes produces snapshots that are rarely worth reviewing.
+[Grid](/addons/grid-addon) has no mode and cannot be pinned at all.
+
+<Warning>
+Snapshots grow with the number of definitions, not as a cross product.
+3 theme, 4 locale, and 3 viewport definitions are 10 definitions, so a story with one scenario produces 10 snapshots.
+Widgetbook never combines definitions with each other, so pinning a theme *and* a locale together needs one definition that pins both.
+Pick the combinations that can actually break, see [Optimize Builds](/cloud/configure/optimize-builds).
+</Warning>

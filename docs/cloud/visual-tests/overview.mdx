@@ -1,0 +1,66 @@
+# Visual Tests
+
+A visual test compares the [snapshot](/cloud/snapshots/overview) of a [scenario](/testing/overview) in the `head` build against the snapshot of the same scenario in the `base` build.
+Any pixel difference is reported on the pull request for review.
+
+There are no visual tests to write.
+`flutter test` snapshots every scenario in your Widgetbook, and Widgetbook Cloud diffs them automatically.
+See [What are Visual Tests?](/testing/visual-tests) for the concept.
+
+## Pipeline
+
+| Step | Where | Output |
+| --- | --- | --- |
+| 1. Generate snapshots | `flutter test` in CI | `build/.widgetbook` |
+| 2. [Upload the build](/cloud/builds/upload) | `widgetbook cloud build push` | A build per commit |
+| 3. Match base and head | Widgetbook Cloud | A [visual pull request](/cloud/visual-pull-request/overview) |
+| 4. Diff and report | Widgetbook Cloud | Changed scenarios plus a commit status |
+
+## Requirements
+
+- The project is [connected to a Git repository](/cloud/projects/connect#connect-project).
+- A build exists for **both** the `base` and the `head` commit.
+  See [Create Visual Pull Requests](/cloud/visual-pull-request/create).
+
+## Coverage
+
+One scenario produces one snapshot, rendered with the [modes](/addons/modes) pinned for it, so a mode combination is a scenario.
+To cover a widget in dark mode, at a large text scale, or on a specific viewport, add the mode rather than a new test.
+
+A dimension that every story should be tested in belongs in a [global scenario definition](/testing/create-scenario#define-global-scenario-definitions):
+
+```dart title="widgetbook/lib/widgetbook.config.dart"
+final config = Config(
+  scenarioConfig: ScenarioConfig(
+    definitions: [
+      ScenarioDefinition(
+        name: 'Dark Mode',
+        modes: [MaterialThemeMode('Dark', ThemeData.dark())],
+      ),
+    ],
+  ),
+);
+```
+
+A dimension that only matters for one widget belongs on its scenarios:
+
+```dart title="widgetbook/lib/data_table.stories.dart"
+final $DataTable = _Story(
+  scenarios: [
+    _Scenario(name: 'Default'),
+    _Scenario(
+      name: 'Large Text Scale',
+      modes: [TextScaleMode(2.0)],
+    ),
+  ],
+);
+```
+
+Snapshots are the [billed unit](/cloud/account/billing).
+See [Optimize Builds](/cloud/configure/optimize-builds) to keep the count under control.
+
+## Next
+
+- [Snapshots](/cloud/snapshots/overview) for what a snapshot is and how scenarios map to snapshots.
+- [Visual Pull Requests](/cloud/visual-pull-request/overview) for how base and head builds are matched to a pull request.
+- [Accessibility Tests](/cloud/accessibility/overview) for checks a screenshot comparison cannot catch.

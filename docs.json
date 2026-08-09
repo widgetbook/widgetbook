@@ -53,7 +53,8 @@
     "/essentials/monorepo": "/configure/monorepo",
     "/essentials/fields": "/configure/fields",
     "/glossary/visual-tests": "/testing/visual-tests",
-    "/glossary/design-system": "/stories/overview"
+    "/glossary/design-system": "/stories/overview",
+    "/cloud/guides/demo-project": "/cloud/quickstart"
   },
   "tabs": [
     {
@@ -449,12 +450,26 @@
     },
     {
       "tab": "cloud",
-      "group": "Introduction",
+      "group": "Overview",
       "pages": [
         {
-          "title": "Overview",
+          "title": "Why Widgetbook Cloud?",
           "href": "/cloud"
         },
+        {
+          "title": "Quickstart",
+          "href": "/cloud/quickstart"
+        },
+        {
+          "title": "Product Tour",
+          "href": "https://app.arcade.software/share/KAUbnlpbFF26PJzIGrwG"
+        }
+      ]
+    },
+    {
+      "tab": "cloud",
+      "group": "Fundamentals",
+      "pages": [
         {
           "title": "Workspaces",
           "href": "/cloud/workspaces"
@@ -490,21 +505,22 @@
             {
               "title": "Access builds",
               "href": "/cloud/builds/access-from-commit"
-            },
-            {
-              "title": "Turbo Builds",
-              "href": "/cloud/builds/turbo"
             }
           ]
+        }
+      ]
+    },
+    {
+      "tab": "cloud",
+      "group": "Visual Tests",
+      "pages": [
+        {
+          "title": "Overview",
+          "href": "/cloud/visual-tests/overview"
         },
         {
-          "group": "Snapshots",
-          "pages": [
-            {
-              "title": "Overview",
-              "href": "/cloud/snapshots/overview"
-            }
-          ]
+          "title": "Snapshots",
+          "href": "/cloud/snapshots/overview"
         },
         {
           "group": "Visual Pull Requests",
@@ -518,44 +534,41 @@
               "href": "/cloud/visual-pull-request/create"
             }
           ]
+        }
+      ]
+    },
+    {
+      "tab": "cloud",
+      "group": "Reviews",
+      "pages": [
+        {
+          "title": "Overview",
+          "href": "/cloud/reviews"
         },
         {
-          "group": "Reviews",
+          "title": "Submit a review",
+          "href": "/cloud/reviews/submit"
+        },
+        {
+          "title": "Request a reviewer",
+          "href": "/cloud/reviews/request-reviewer"
+        },
+        {
+          "title": "Required reviewers",
+          "href": "/cloud/reviews/required-reviewer"
+        },
+        {
+          "group": "Notifications",
           "pages": [
             {
-              "title": "Overview",
-              "href": "/cloud/reviews"
+              "title": "Email",
+              "href": "/cloud/reviews/notifications/email"
             },
             {
-              "title": "Submit a review",
-              "href": "/cloud/reviews/submit"
-            },
-            {
-              "title": "Request a reviewer",
-              "href": "/cloud/reviews/request-reviewer"
-            },
-            {
-              "title": "Required reviewers",
-              "href": "/cloud/reviews/required-reviewer"
-            },
-            {
-              "group": "Notifications",
-              "pages": [
-                {
-                  "title": "Email",
-                  "href": "/cloud/reviews/notifications/email"
-                },
-                {
-                  "title": "Slack",
-                  "href": "/cloud/reviews/notifications/slack"
-                }
-              ]
+              "title": "Slack",
+              "href": "/cloud/reviews/notifications/slack"
             }
           ]
-        },
-        {
-          "title": "Product Tour",
-          "href": "https://app.arcade.software/share/KAUbnlpbFF26PJzIGrwG"
         }
       ]
     },
@@ -578,6 +591,24 @@
         {
           "title": "Guidelines",
           "href": "/testing/accessibility"
+        }
+      ]
+    },
+    {
+      "tab": "cloud",
+      "group": "Configuration",
+      "pages": [
+        {
+          "title": "Optimize Builds",
+          "href": "/cloud/configure/optimize-builds"
+        },
+        {
+          "title": "Turbo Builds",
+          "href": "/cloud/builds/turbo"
+        },
+        {
+          "title": "Addons in Cloud",
+          "href": "/cloud/configure/addons"
         }
       ]
     },
@@ -665,10 +696,6 @@
         {
           "title": "Figma Reviews",
           "href": "/cloud/reviews/figma"
-        },
-        {
-          "title": "Setup with Demo Project",
-          "href": "/cloud/guides/demo-project"
         }
       ]
     },
