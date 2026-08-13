@@ -1,0 +1,31 @@
+# Compare against Figma
+
+The comparison runs between Widgetbook Cloud and Figma, side by side.
+
+The developer sets a design link on a story, pointing at the matching component in the Figma file.
+In the review the link shows as a **View in Figma** button.
+
+<Image src="/assets/cloud/reviews/view-in-figma.png" zoom caption="Click View in Figma on the story" />
+<Image src="/assets/cloud/reviews/figma-design.png" zoom caption="The matching component opens in the Figma file" />
+
+The developer setup lives in [Figma Reviews](/cloud/reviews/figma).
+
+## Keep the Comparison Reliable
+
+| Habit in Figma | Why |
+| --- | --- |
+| Keep component naming and structure stable | The link targets a component by URL. Renaming or replacing it points the review at the wrong place. |
+| Design the states that will be built | A developer can only link to a state that exists in Figma. Empty, loading, error, and edge states included. |
+| Specify tokens, not raw values | A named token gets implemented as that token and stays consistent. Raw values in the design invite raw values in the code. |
+
+<Info>
+  **Coming soon.**
+  Today a review compares two Flutter builds, so it catches regressions against the previous version but not deviations from the design.
+  Widgetbook Cloud will show the Figma design next to the implementation and diff the two directly.
+  Email [contact@widgetbook.io](mailto:contact@widgetbook.io) to be notified when it lands.
+</Info>
+
+## Next
+
+- [Figma Reviews](/cloud/reviews/figma): how a developer adds the design link.
+- [Glossary](/cloud/for-designers/glossary): pull request, story, scenario, snapshot, build, base, head.

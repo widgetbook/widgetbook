@@ -1,0 +1,39 @@
+# For Designers
+
+Widgetbook Cloud has two audiences: the developers who build the UI, and the designers who own how the UI should look.
+The rest of these docs are written for developers.
+This section is for designers.
+
+Every pull request produces a [visual pull request](/cloud/visual-pull-request/overview) to review, and it opens in a browser.
+A designer needs no Flutter installation and no checkout of the repository.
+
+<Image theme="light" src="/assets/cloud/review.light.png" />
+<Image theme="dark" src="/assets/cloud/review.dark.png" />
+
+## How a Review Reaches a Designer
+
+<Steps>
+  <Step title="The developer opens a pull request">
+    Widgetbook Cloud builds the changed stories and creates the review.
+  </Step>
+
+  <Step title="The developer reviews their own changes">
+    The developer removes every change they did not intend.
+    What reaches a designer is deliberate.
+  </Step>
+
+  <Step title="The designer reviews the UI">
+    The designer judges whether the deliberate changes match the design, then approves or requests changes.
+  </Step>
+
+  <Step title="The developer fixes and reviews their own changes again">
+    Requested changes send the pull request back to step 2.
+    The loop repeats until the designer approves.
+  </Step>
+</Steps>
+
+## Next
+
+- [Review a change](/cloud/for-designers/review-a-change): open a review, comment, approve or request changes.
+- [Compare against Figma](/cloud/for-designers/figma): open the Figma design from a story.
+- [Glossary](/cloud/for-designers/glossary): pull request, story, scenario, snapshot, build, base, head.

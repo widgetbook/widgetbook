@@ -1,0 +1,83 @@
+# Review a Change
+
+<Steps>
+  <Step title="Open the review">
+    Every pull request gets a visual pull request to review automatically.
+    Open it from the link in the pull request, from an [email](/cloud/reviews/notifications/email) or [Slack](/cloud/reviews/notifications/slack) notification, or from the project in Widgetbook Cloud.
+  </Step>
+
+  <Step title="Look at each changed story">
+    A [story](/cloud/for-designers/glossary) is one component in one state.
+    The review lists every changed story, **Baseline** on the left and **Latest** on the right.
+    Click **Show diff** to shade the change in pink.
+
+    <Image src="/assets/cloud/reviews/show-diff.png" zoom caption="Show diff shades every change in pink" />
+  </Step>
+
+  <Step title="Interact with the story">
+    A snapshot is a still image.
+    Click **View Build** to open the story in Widgetbook and change args and addon values live.
+
+    <YouTube id="0YGbkE5qITE" />
+  </Step>
+
+  <Step title="Compare against Figma">
+    When the developer set a design link on the story, click **View in Figma** to open the matching component.
+    See [Compare against Figma](/cloud/for-designers/figma).
+
+    <Image src="/assets/cloud/reviews/view-in-figma.png" zoom caption="Click View in Figma on the story" />
+  </Step>
+
+  <Step title="Comment on the specific change">
+    Use the comment section on a story diff, so the feedback names the exact component and state to fix.
+    Click **Single comment** to post it on its own, or **Start a review** to collect several comments and publish them together.
+
+    <Image src="/assets/cloud/reviews/add-comment.png" zoom caption="Comment on a story to point at the exact change" />
+  </Step>
+
+  <Step title="Submit a decision">
+    Click **Review changes** in the top-right corner, pick an option, and click **Submit Review**.
+    If you chose **Start a review** above, that button reads **Finish your review** instead.
+
+    | Decision | Effect |
+    | --- | --- |
+    | **Approve** | Marks the pull request as accepted |
+    | **Comment** | Records feedback without accepting or rejecting |
+    | **Request changes** | Blocks the merge until revised |
+
+    <Image src="/assets/cloud/reviews/submit-review.png" zoom />
+
+    With [required reviewers](/cloud/reviews/required-reviewer) configured, a designer's approval is what unblocks the merge.
+  </Step>
+
+  <Step title="Re-review after a push">
+    The developer revises and pushes again, which updates the review.
+    Re-check the stories that changed and update the decision.
+  </Step>
+</Steps>
+
+## Checklist
+
+A review that reaches a designer contains only intentional changes.
+Judge whether they meet the design.
+
+| Check | Look for |
+| --- | --- |
+| **States** | Empty, loading, error, selected, and disabled, not just the default |
+| **Content extremes** | Very long text, very short text, missing values, large numbers |
+| **Theming** | Correct in every theme the app ships, not only the one the change was built in |
+| **Text scaling** | No clipping or overlap at larger accessibility text sizes |
+
+A state that is missing from the diff is itself a finding.
+Ask for the [scenario](/testing/create-scenario) to be added, since a snapshot is the only way to review a state.
+
+<Info>
+  **Coming soon.**
+  A review will also show the widget tree, so designers can inspect each widget's properties and check spacing, colors, tokens, and component reuse in Widgetbook Cloud.
+  Email [contact@widgetbook.io](mailto:contact@widgetbook.io) to be notified when it lands.
+</Info>
+
+## Next
+
+- [Compare against Figma](/cloud/for-designers/figma): open the Figma design from a story.
+- [Glossary](/cloud/for-designers/glossary): pull request, story, scenario, snapshot, build, base, head.

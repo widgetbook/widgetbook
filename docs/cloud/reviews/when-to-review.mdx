@@ -1,0 +1,55 @@
+# Decide When to Review
+
+Every pull request gets a review, and the developer who opened it goes through the changed stories first.
+Whether a designer is pulled in on top of that is a team decision.
+Pick one of three policies, based on how often a design review actually surfaces problems.
+
+| Policy | When it applies | Cloud feature |
+| --- | --- | --- |
+| **On demand** (default) | The developer flags a change that needs a designer | [Request a reviewer](/cloud/reviews/request-reviewer) |
+| **Trust-based** | Reviews of this developer's work rarely surface problems | None, the developer merges after code and UI review |
+| **Always** | Deviations keep reaching production | [Required reviewers](/cloud/reviews/required-reviewer) |
+
+## On Demand
+
+Request a designer when:
+
+- The implementation of the design was hard to get right.
+- The design did not specify a state, so the developer guessed.
+- There is an open question to settle before merging.
+
+Review time is the cheap moment to correct a deviation.
+The work is real enough to judge, and nothing is built on top of it yet.
+The same correction after the component ships and gets reused touches many pull requests instead of one.
+
+## Always
+
+Enforce with [required reviewers](/cloud/reviews/required-reviewer): a designated designer must approve before the pull request counts as approved.
+
+<Warning>
+  Treat "always" as a temporary correction.
+  It stops deviations from shipping while the team fixes why they keep happening.
+  Move back to on demand once the cause is addressed.
+</Warning>
+
+## A Deviation Is Usually a Specification Gap
+
+A recurring finding across many reviews points at the design, not at carelessness.
+Common sources:
+
+| Source | Fix |
+| --- | --- |
+| An undesigned state (empty, loading, error, edge) | Design the state |
+| A design system component that does not exist yet | Add it to the system |
+| Unspecified responsive behavior | Define narrow and wide layouts |
+| Unspecified accessibility behavior | Specify focus order, semantics, contrast |
+| Raw values instead of tokens | Specify the token |
+
+A review gate catches the deviation every time.
+A fixed specification leaves nothing to catch.
+
+## Next
+
+- [Request a reviewer](/cloud/reviews/request-reviewer): pull a designer into a single pull request.
+- [Required reviewers](/cloud/reviews/required-reviewer): require an approval before every merge.
+- [For Designers](/cloud/for-designers/overview): the guide to hand to the designer you request.
