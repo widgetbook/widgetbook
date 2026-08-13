@@ -1,7 +1,7 @@
 # Why Widgetbook?
 
-Widgetbook is a sandbox for building **widgets and screens in isolation**. 
-It helps you develop and share hard-to-reach states and edge cases without needing to run your whole app. 
+Widgetbook is a sandbox for building and cataloging **widgets and screens in isolation**.
+It helps you develop and share hard-to-reach states and edge cases without running your whole app.
 Widgetbook is [open-source](https://github.com/widgetbook/widgetbook) and **free** to use.
 
 <YouTube id="sGRetvJ-zZI" />
@@ -10,58 +10,106 @@ Widgetbook is [open-source](https://github.com/widgetbook/widgetbook) and **free
 
 While developing widgets or screens, you have probably faced one of the following problems:
 
-- **Hard-to-reach states:** You need to test a widget in a specific state (e.g. error, loading, etc.) but it is hard to reach that state in your app.
-- **Time consuming:** You need to run your whole app to test a single widget or screen, and even spend more time to test in different configurations (e.g. dark mode, different locales, etc.).
-- **API/Datasource dependencies:** You need to mock data or APIs to test your screens, which is time-consuming and error-prone, and it is even not always possible to do that.
-- **Collaboration:** You need to share your widgets with your design team or other developers, but it is hard to do that without a proper documentation or cataloging system.
+- **Hard-to-reach states:** A widget needs to be checked in a specific state (error, loading, empty) that is hard to reach in the running app.
+- **Time consuming:** Testing a single widget means running the whole app, then running it again for every configuration such as dark mode or a different locale.
+- **API and datasource dependencies:** Screens need mocked data to render, which is slow to set up and sometimes not possible at all.
+- **Collaboration:** Sharing UI with designers, QA, and other developers has no obvious home without a catalog.
+- **Custom design systems are hard to maintain:** Components drift from the design over time, edge cases go undocumented, and nobody can tell what already exists, so the same button gets built twice.
 
-## The Solution: Widgetbook
+## The Solution
 
-With Widgetbook you can **build UI in isolation** without depending on any external data source or API. This allows you to:
+Widgetbook covers four jobs: build, test, document, share.
+Every component gets a page in the catalog, a screenshot per state, and a diff on every pull request.
 
-- **Easily test your widgets** in different **states** (e.g. error, loading, etc.) via [Args](/args/overview), and **configurations** (e.g. dark mode, different locales, etc.) via [Addons](/addons/overview).
-- **Mock your data** so you can test your widgets without the need to run your whole app (learn more about [Mocking](/stories/mocking)).
-- **Catalog your widgets and screens** in a single place, so you can easily share them with all your team members (e.g. developers, designers, product managers, QA testers).
+### Build in Isolation
+
+Catalog every state of a widget without an API or a datasource behind it.
+
+- [Stories](/stories/overview) declare each state of a component.
+- [Args](/args/overview) are generated from your widget's constructor, so every property is a type-safe control in the UI.
+- [Modes](/addons/modes) and [Addons](/addons/overview) render the same story under a different theme, locale, viewport, or text scale.
+- [Mocking](/stories/mocking) injects fake dependencies so screens render standalone.
+
+See [Core Concepts](/core-concepts) for how these fit together.
+
+### Test
+
+A [scenario](/testing/create-scenario) pins a story to a fixed state so it renders the same way every time.
+
+- Write that state once and reuse it while developing, while reviewing, and in [automated tests](/testing/run-scenarios).
+- `flutter test` renders every scenario and saves a screenshot.
+- [Accessibility guidelines](/testing/accessibility) check each screenshot for tap-target size, missing labels, and text contrast.
+- [Visual tests](/testing/visual-tests) in [Widgetbook Cloud](/cloud) compare the screenshots against the previous build and show what changed in the pull request.
+
+### Document
+
+[DocBlocks](/documentation/overview) generate component documentation from the code you already wrote.
+Blocks are [customizable](/documentation/customize) globally or per component.
+
+### Share
+
+Publish the catalog so the whole team has access without running Flutter code.
+
+- [Embed a single story](/sharing/embedding) in your own docs site.
+- [Publish to Widgetbook Cloud](/sharing/hosting) for a hosted build per commit and [reviews](/cloud/reviews) with sign-off from designers and QA.
+
+### Serve as a GenUI Catalog
+
+In a generative UI app, the model composes screens at runtime from a fixed set of approved widgets.
+Those screens are only as good as the widgets you hand the model.
+
+- A catalog entry and a [story](/stories/overview) describe the same widget, so one definition covers both.
+- Generated screens cannot be captured up front, but every widget the model picks from can.
+- Real model output replays as a [scenario](/testing/create-scenario) and becomes a regression test.
+
+See [GenUI](/genui/overview).
+
+New in v4: generated, type-safe declarations replace v3's annotations and knobs.
+See [What's new in v4](/whats-new-in-v4).
+
+## Case Studies
+
+<Card
+  icon="bolt"
+  title="How 1KOMMA5º builds a custom design system and maintainable Flutter apps with Widgetbook"
+  href="https://www.widgetbook.io/blog/1komma5%C2%BA-custom-flutter-design-system-with-widgetbook"
+>
+  > Widgetbook provides us with a process to build and maintain our design system, prevent visual bugs, and align design and development.
+  >
+  > Anton Borries, Senior Software Engineer at 1KOMMA5º and Google Developer Expert for Flutter & Dart
+</Card>
+
+<Card
+  icon="lock"
+  title="How Salto prevents UI problems while saving 50% of their time with Widgetbook"
+  href="https://www.widgetbook.io/blog/salto-widgetbook-case"
+>
+  > Widgetbook saves us a lot of time and provides valuable insight into which changes are made with each merge request.
+  >
+  > Arthur Schenk, Mobile Team Lead at Salto
+</Card>
+
+## Videos
+
+**Building UI in isolation**
 
 <YouTube id="5cNUX7eDZWE" />
 
-## Customer Showcases
-
-### Salto Systems
-
-Salto Systems is a company that specializes in smart locks and access control systems. They use Widgetbook to build their widgets in isolation, which allows them to speed up their development process.
-
-<Card
-  icon="medium fa-brands"
-  title="How Salto prevents UI problems while saving 50% of their time"
-  href="https://medium.com/widgetbook/how-salto-prevents-ui-problems-while-saving-50-of-their-time-with-widgetbook-53194f79ee96"
->
-  > We build new features by starting with Widgetbook, allowing us to
-  immediately develop the UI in isolation and see how new components behave.
-  Building in isolation is especially helpful for larger components and screens
-  that handle various data states — like loading, loaded, or error. Before
-  Widgetbook, testing error states was time-consuming because they’re naturally
-  hard to reproduce; the data often comes from sources we can’t easily control.
-  But with Widgetbook’s isolation-first approach, we can inject mocked data and
-  test all component states. Once a component is ready, other developers can
-  easily explore its different variations. — Arthur Schenk, Mobile Team Lead at
-  Salto
-</Card>
-
-### Lotum
-
-Lotum speeds up their app development by building their widgets in isolation with Widgetbook.
+**Lotum** speeds up app development by building widgets in isolation.
 
 <YouTube id="0xV-OzfY2zg" />
 
-### 1KOMMA5°
-
-1KOMMA5° creates an in-house design system which is used across 6 different projects.
+**1KOMMA5°** on an in-house design system used across 3 apps.
 
 <YouTube id="4xWseFS5Z38" />
 
-### LeanCode
-
-LeanCode is a software agency which creates a design system template that they share with every new client for the project start.
+**LeanCode** on a design system template shared with every new client.
 
 <YouTube id="rmQktvnyfPg" />
+
+## Next
+
+- [Install & Quick Start](/quick-start)
+- [Core Concepts](/core-concepts)
+- [Stories](/stories/overview)
+- [Testing](/testing/overview)
