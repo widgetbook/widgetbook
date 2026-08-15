@@ -7,149 +7,89 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../widgetbook.dart';
 import 'font_loader.dart';
-import 'scenario_metadata.dart';
-import 'semantics/semantics_tree_serializer.dart';
+import 'snapshot_runner.dart';
 
 /// The default location is already an ignored path by default.
 const outputDir = 'build/.widgetbook';
 
-Future<void> testWidgetbook(Config config) async {
+/// Generates a snapshot for every scenario in [config] headlessly under
+/// `flutter test`, optionally narrowed to the components matching [where].
+///
+/// Platform-backed widgets (e.g. `video_player`, `pdfrx`) render blank here;
+/// capture those with `testWidgetbookOnDevice` (they share the `where` filter).
+Future<void> testWidgetbook(
+  Config config, {
+  bool Function(Component component)? where,
+}) async {
   TestWidgetsFlutterBinding.ensureInitialized();
   await loadFonts();
+  declareSnapshotTests(config, const _LayerStrategy(), where: where);
+}
 
-  for (final component in config.components) {
-    testComponent(config, component);
+void testComponent(Config config, Component component) =>
+    declareComponentTests(config, component, const _LayerStrategy());
+
+void testStory(Config config, Story story) =>
+    declareStoryTests(config, story, const _LayerStrategy());
+
+void testScenario(Config config, Scenario scenario) =>
+    declareScenarioTest(config, scenario, const _LayerStrategy());
+
+/// Headless capture: rasterizes the layer tree offscreen and writes to disk.
+class _LayerStrategy extends SnapshotStrategy {
+  const _LayerStrategy();
+
+  @override
+  void applyViewport(WidgetTester tester, ViewportData viewport) {
+    tester.view.physicalConstraints = viewport.viewConstraints;
+    tester.view.devicePixelRatio = viewport.pixelRatio;
+  }
+
+  @override
+  Future<void> captureAndPersist({
+    required WidgetTester tester,
+    required Scenario scenario,
+    required Key key,
+    required ViewportData viewport,
+    required Map<String, dynamic> semantics,
+    required List<Map<String, dynamic>> violations,
+  }) async {
+    final element = tester.element(find.byKey(key));
+    final imageFuture = captureImage(element, 1);
+
+    // Async image encoding + file I/O can't run inside testWidgets directly.
+    await TestWidgetsFlutterBinding.instance.runAsync(() async {
+      final image = await imageFuture;
+      final byteData = await image.toByteData(format: ImageByteFormat.png);
+      final bytes = byteData!.buffer.asUint8List();
+
+      final metadata = buildScenarioMetadata(
+        scenario,
+        CapturedSnapshot(
+          bytes: bytes,
+          width: image.width,
+          height: image.height,
+          pixelRatio: viewport.pixelRatio,
+        ),
+        semantics,
+        violations,
+      );
+
+      await metadata.directory.create(recursive: true);
+      await Future.wait([
+        metadata.imageFile.writeAsBytes(bytes, flush: true),
+        metadata.jsonFile.writeAsString(
+          const JsonEncoder.withIndent('  ').convert(metadata),
+          flush: true,
+        ),
+      ]);
+
+      image.dispose();
+    });
   }
 }
 
-void testComponent(
-  Config config,
-  Component component,
-) {
-  group('${component.name}', () {
-    for (final story in component.stories) {
-      testStory(config, story);
-    }
-  });
-}
-
-void testStory(
-  Config config,
-  Story story,
-) {
-  group(
-    story.name,
-    () {
-      final scenarios = story.allScenarios(config);
-      for (final scenario in scenarios) {
-        testScenario(config, scenario);
-      }
-    },
-    skip: story.excludeFromTests ? 'Excluded from snapshots' : null,
-  );
-}
-
-void testScenario(
-  Config config,
-  Scenario scenario,
-) {
-  final defaultViewport = Viewports.none;
-  final targetViewport = scenario.viewport ?? defaultViewport;
-
-  testWidgets(
-    scenario.name,
-    (tester) async {
-      // Reset the shared image cache so it doesn't leak between scenarios.
-      addTearDown(() {
-        final imageCache = PaintingBinding.instance.imageCache;
-        imageCache.clear();
-        imageCache.clearLiveImages();
-      });
-
-      tester.view.physicalConstraints = targetViewport.viewConstraints;
-      tester.view.devicePixelRatio = targetViewport.pixelRatio;
-
-      final semanticsHandle = tester.binding.ensureSemantics();
-
-      Future<void> body() async {
-        final key = UniqueKey();
-        await tester.pumpWidget(
-          Builder(
-            key: key,
-            builder: (context) => scenario.buildWithConfig(context, config),
-          ),
-        );
-
-        await config.scenarioConfig.setUp?.call(tester, scenario);
-
-        await scenario.execute(tester);
-
-        final violations = (await evaluateGuidelines(
-          tester,
-          config.accessibilityConfig.guidelines,
-        )).map((violation) => violation.toJson()).toList();
-
-        final element = tester.element(find.byKey(key));
-        final imageFuture = captureImage(element, 1);
-
-        final semanticsNode = tester.getSemantics(find.byKey(key));
-
-        // Run on separate isolate as async operations cannot be run inside
-        // testWidgets directly.
-        final binding = TestWidgetsFlutterBinding.instance;
-        await binding.runAsync(() async {
-          final image = await imageFuture;
-          final byteData = await image.toByteData(format: ImageByteFormat.png);
-          final imageBytes = byteData!.buffer.asUint8List();
-
-          final jsonEncoder = const JsonEncoder.withIndent('  ');
-
-          final semanticsData = SemanticsTreeSerializer.toJson(
-            semanticsNode,
-          );
-
-          final metadata = ScenarioMetadata(
-            scenario: scenario,
-            imageBytes: imageBytes,
-            imageWidth: image.width,
-            imageHeight: image.height,
-            pixelRatio: targetViewport.pixelRatio,
-            semanticsData: semanticsData,
-            violations: violations,
-          );
-
-          await metadata.directory.create(recursive: true);
-
-          await Future.wait([
-            metadata.imageFile.writeAsBytes(imageBytes, flush: true),
-            metadata.jsonFile.writeAsString(
-              jsonEncoder.convert(metadata),
-              flush: true,
-            ),
-          ]);
-
-          image.dispose();
-        });
-
-        await config.scenarioConfig.tearDown?.call(tester, scenario);
-      }
-
-      // The wrapper must already be on the call stack when the widget is
-      // pumped, so that Zone values (e.g. package:clock's clock) are visible
-      // to the build methods of the scenario's widget tree.
-      final wrapper = config.scenarioConfig.wrapper;
-      await (wrapper == null ? body() : wrapper(tester, scenario, body));
-
-      semanticsHandle.dispose();
-      addTearDown(tester.view.reset);
-    },
-    // `null` (not `false`) so a non-excluded scenario inside an excluded story
-    // still inherits the story group's `skip`.
-    skip: scenario.excludeFromTests ? true : null,
-  );
-}
-
-/// Same as [captureImage] from `flutter_test` but has [pixelRatio] parameter.
+/// Same as `captureImage` from `flutter_test` but has [pixelRatio] parameter.
 Future<Image> captureImage(
   Element element,
   double pixelRatio,

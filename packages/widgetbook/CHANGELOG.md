@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Add `testWidgetbookOnDevice` to snapshot scenarios on a device/simulator, so platform-backed widgets render instead of appearing blank. ([#2001](https://github.com/widgetbook/widgetbook/pull/2001))
+
 ## 4.0.0-beta.11
 
 - **FIX**: Rebuild the workbench preview when switching between stories of the same component, instead of keeping the previously selected story's state. ([#1994](https://github.com/widgetbook/widgetbook/pull/1994))

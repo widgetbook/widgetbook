@@ -29,6 +29,8 @@ dependencies:
   flutter_test:
     sdk: flutter
   glob: ^2.0.2
+  integration_test:
+    sdk: flutter
   meta: ^1.8.0
   nested: ^1.0.0
   path: ^1.8.0
