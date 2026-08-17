@@ -188,6 +188,15 @@ resolving in the test environment.
 See [Fonts](/sharing/fonts) for the cause and
 the fix.
 
+Images are loaded and decoded before each scenario is captured, for `Image`,
+`FadeInImage`, `Ink`, and the `BoxDecoration` and `ShapeDecoration` images of a
+`DecoratedBox` or `DecoratedSliver`.
+An image a widget keeps to itself, such as one a `CustomPainter` draws through
+`paintImage`, cannot be reached this way and stays absent from the snapshot.
+A `FadeInImage` is loaded, but its fade needs time to elapse, so it is captured
+early in that animation unless the scenario pumps for the fade duration.
+An image that fails to load leaves an empty box instead of failing the test.
+
 ## Accessibility Guideline Violations
 
 For every scenario, `testWidgetbook` evaluates the guidelines of `Config.accessibilityConfig` against the rendered widget tree and records the failures in the metadata's `violations` field.

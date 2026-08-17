@@ -19,14 +19,21 @@ final _greenBytes = base64Decode(
   'iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEElEQVR42mNgOMHwH4xhDAA7pAcd'
   'ZabKyQAAAABJRU5ErkJggg==',
 );
-final _blueBytes = base64Decode(
-  'iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEElEQVR42mNgYPj/H4KhDAA/0gf5'
-  'XBPgQgAAAABJRU5ErkJggg==',
-);
 final _transparentBytes = base64Decode(
   'iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAC0lEQVR42mNgQAcAABIAAeRVjecA'
   'AAAASUVORK5CYII=',
 );
+
+/// A separate byte list per image kind, since [MemoryImage] keys on the
+/// identity of its bytes. Keeping them out of [_Images] leaves the two tests
+/// with disjoint cache keys.
+final _kinds = {
+  'Image': Uint8List.fromList(_magentaBytes),
+  'BoxDecoration': Uint8List.fromList(_magentaBytes),
+  'ShapeDecoration': Uint8List.fromList(_magentaBytes),
+  'Ink': Uint8List.fromList(_magentaBytes),
+  'FadeInImage': Uint8List.fromList(_magentaBytes),
+};
 
 const _magenta = (255, 0, 255);
 const _green = (0, 200, 0);
@@ -59,26 +66,51 @@ class _Images extends StatelessWidget {
   }
 }
 
-/// Adds a [FadeInImage], whose target image is decoded like the others, but
-/// cannot be asserted on in a snapshot since its fade needs time to advance.
+/// One widget per kind of image that [loadImages] is expected to reach.
+///
+/// A [FadeInImage]'s target is decoded like the others, but cannot be asserted
+/// on in a snapshot since its fade needs time to advance.
 class _AllImageKinds extends StatelessWidget {
   const _AllImageKinds();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const _Images(),
-          FadeInImage(
-            placeholder: MemoryImage(_transparentBytes),
-            image: MemoryImage(_blueBytes),
-            width: 20,
-            height: 20,
-            fit: BoxFit.fill,
-          ),
-        ],
+      home: Material(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.memory(_kinds['Image']!, width: 20, height: 20),
+            DecoratedBox(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: MemoryImage(_kinds['BoxDecoration']!),
+                ),
+              ),
+              child: const SizedBox.square(dimension: 20),
+            ),
+            DecoratedBox(
+              decoration: ShapeDecoration(
+                shape: const CircleBorder(),
+                image: DecorationImage(
+                  image: MemoryImage(_kinds['ShapeDecoration']!),
+                ),
+              ),
+              child: const SizedBox.square(dimension: 20),
+            ),
+            Ink.image(
+              image: MemoryImage(_kinds['Ink']!),
+              width: 20,
+              height: 20,
+            ),
+            FadeInImage(
+              placeholder: MemoryImage(_transparentBytes),
+              image: MemoryImage(_kinds['FadeInImage']!),
+              width: 20,
+              height: 20,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -156,16 +188,17 @@ Future<void> main() async {
     await tester.pumpWidget(const _AllImageKinds());
 
     expect(
-      [_magentaBytes, _greenBytes, _blueBytes].map(_isDecoded),
-      everyElement(isFalse),
+      _kinds.map((kind, bytes) => MapEntry(kind, _isDecoded(bytes))),
+      _kinds.map((kind, _) => MapEntry(kind, false)),
       reason: 'pumping alone cannot decode images',
     );
 
     await loadImages(tester);
 
-    expect(_isDecoded(_magentaBytes), isTrue, reason: 'Image');
-    expect(_isDecoded(_greenBytes), isTrue, reason: 'DecorationImage');
-    expect(_isDecoded(_blueBytes), isTrue, reason: 'FadeInImage');
+    expect(
+      _kinds.map((kind, bytes) => MapEntry(kind, _isDecoded(bytes))),
+      _kinds.map((kind, _) => MapEntry(kind, true)),
+    );
   });
 }
 

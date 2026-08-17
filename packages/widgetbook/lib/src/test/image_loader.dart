@@ -1,8 +1,11 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// Loads the images of every mounted [Image], [FadeInImage] and
-/// [DecorationImage], and waits until they are decoded.
+/// Bounds a single load, so that a provider which never completes nor fails
+/// cannot stall snapshot generation.
+const _loadTimeout = Duration(seconds: 5);
+
+/// Loads the images that mounted widgets expose, and waits until they decode.
 ///
 /// Resolving an [ImageProvider] reads bytes and instantiates a codec, both of
 /// which complete on the real event loop that [WidgetTester.pump] does not
@@ -12,22 +15,11 @@ import 'package:flutter_test/flutter_test.dart';
 Future<void> loadImages(WidgetTester tester) async {
   final targets = <(ImageProvider, Element)>[];
 
-  for (final element in find.byType(Image).evaluate()) {
-    final widget = element.widget as Image;
-    targets.add((widget.image, element));
-  }
+  for (final element in tester.allElements) {
+    final provider = _providerOf(element.widget);
 
-  for (final element in find.byType(FadeInImage).evaluate()) {
-    final widget = element.widget as FadeInImage;
-    targets.add((widget.image, element));
-  }
-
-  for (final element in find.byType(DecoratedBox).evaluate()) {
-    final widget = element.widget as DecoratedBox;
-    final decoration = widget.decoration;
-
-    if (decoration is BoxDecoration && decoration.image != null) {
-      targets.add((decoration.image!.image, element));
+    if (provider != null) {
+      targets.add((provider, element));
     }
   }
 
@@ -40,10 +32,29 @@ Future<void> loadImages(WidgetTester tester) async {
           provider,
           context,
           onError: (_, _) {},
-        ),
+        ).timeout(_loadTimeout, onTimeout: () {}),
     ]);
   });
 
   // Repaints with the decoded images, without advancing time.
   await tester.pump();
 }
+
+/// The image a widget paints, if it exposes one.
+///
+/// [FadeInImage] needs no case of its own, as it builds an [Image] for both its
+/// target and its placeholder. Images that a widget keeps private, e.g. a
+/// [CustomPainter] calling [paintImage], cannot be reached this way.
+ImageProvider? _providerOf(Widget widget) => switch (widget) {
+  Image(:final image) => image,
+  DecoratedBox(:final decoration) => _decorationImage(decoration),
+  DecoratedSliver(:final decoration) => _decorationImage(decoration),
+  Ink(:final decoration) => _decorationImage(decoration),
+  _ => null,
+};
+
+ImageProvider? _decorationImage(Decoration? decoration) => switch (decoration) {
+  BoxDecoration(:final image) => image?.image,
+  ShapeDecoration(:final image) => image?.image,
+  _ => null,
+};
