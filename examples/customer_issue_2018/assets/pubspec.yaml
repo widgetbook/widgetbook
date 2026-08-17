@@ -1,0 +1,16 @@
+name: assets
+description: Shared assets package, consumed by the app and by Widgetbook.
+publish_to: none
+version: 1.0.0
+
+environment:
+  sdk: ^3.11.0
+  flutter: ^3.41.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+flutter:
+  assets:
+    - images/knob.png

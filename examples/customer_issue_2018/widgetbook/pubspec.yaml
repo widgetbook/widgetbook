@@ -1,0 +1,25 @@
+name: customer_issue_2018
+description: Reproduction for widgetbook#2018 (assets missing in snapshots).
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.0
+  flutter: ^3.41.0
+
+dependencies:
+  assets:
+    path: ../assets
+  flutter:
+    sdk: flutter
+  widgetbook: ^4.0.0-beta.11
+
+dev_dependencies:
+  build_runner: ^2.10.1
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - images/local_knob.png

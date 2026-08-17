@@ -1,0 +1,5 @@
+targets:
+  $default:
+    builders:
+      widgetbook:telemetry:
+        enabled: false
