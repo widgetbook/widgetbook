@@ -2,6 +2,7 @@
 
 Reproduction for [#2018](https://github.com/widgetbook/widgetbook/issues/2018):
 images are missing from generated snapshots.
+Fixed by [#2019](https://github.com/widgetbook/widgetbook/pull/2019).
 
 ## Layout
 
@@ -15,7 +16,7 @@ Mirrors the setup from the issue:
   same widget but loads `images/local_knob.png`, a solid green 40x40 image
   declared by the Widgetbook project itself.
 
-## Reproduce
+## Run it
 
 ```sh
 cd widgetbook
@@ -24,30 +25,28 @@ dart run build_runner build
 flutter test
 ```
 
-The snapshots under `build/.widgetbook/**/Default.png` have the expected size,
-layout and text, but no knob: the 40x40 box where the image belongs stays
-background-colored.
+`test/widgetbook_test.dart` generates the snapshots and then reads them back,
+asserting that each knob's color is actually present in the written PNG.
 
-## What it shows
+Which Widgetbook the demo runs against is decided by the `widgetbook` path in
+`pubspec_overrides.yaml`:
 
-`flutter test test/asset_snapshot_test.dart` rasterizes the same way
-`testWidgetbook` does and counts the knob's pixels:
+| Path                                            | Result                                       |
+| :---------------------------------------------- | :------------------------------------------- |
+| `../../../../fix-2018-images/packages/widgetbook` | passes, both knobs are painted             |
+| `../../../packages/widgetbook`                  | fails, both snapshots have a blank 40x40 box |
 
-| Scenario                                            | Result                     |
-| :-------------------------------------------------- | :------------------------- |
-| asset from a dependency package, no async gap        | fails, 0 knob pixels       |
-| asset owned by the Widgetbook project, no async gap  | fails, 0 knob pixels       |
-| both assets precached inside `tester.runAsync`       | passes, both knobs painted |
+Re-run `flutter pub get` after switching.
 
-Two conclusions: the problem is not specific to package assets (any
-`Image.asset` is blank in snapshots), and the assets are declared and bundled
-correctly, since precaching them makes them appear.
+## What the bug was
 
-`testWidgetbook` pumps the scenario and rasterizes it without ever giving image
+Neither the package asset nor the project-owned one was painted, so the problem
+was never about the package boundary: any `Image.asset` was blank.
+`testWidgetbook` pumped and rasterized the scenario without giving image
 providers a real async gap, so `AssetImage` resolution (file I/O plus
-`instantiateImageCodec`) cannot complete before the capture.
-Fonts are loaded up front by `loadFonts()`, images have no equivalent.
+`instantiateImageCodec`) could not complete before the capture.
+Fonts were already loaded up front by `loadFonts()`, images had no equivalent.
 
-The web build is unaffected, which is why the widget looks correct in the
+The web build was unaffected, which is why the widget looked correct in the
 browser: `flutter build web --target lib/widgetbook.dart` ships both
 `assets/images/local_knob.png` and `assets/packages/assets/images/knob.png`.
