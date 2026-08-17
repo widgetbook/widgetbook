@@ -3,8 +3,9 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:widgetbook/src/test/image_loader.dart';
 import 'package:widgetbook/test.dart';
 import 'package:widgetbook/widgetbook.dart';
 
@@ -21,6 +22,10 @@ final _greenBytes = base64Decode(
 final _blueBytes = base64Decode(
   'iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEElEQVR42mNgYPj/H4KhDAA/0gf5'
   'XBPgQgAAAABJRU5ErkJggg==',
+);
+final _transparentBytes = base64Decode(
+  'iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAC0lEQVR42mNgQAcAABIAAeRVjecA'
+  'AAAASUVORK5CYII=',
 );
 
 const _magenta = (255, 0, 255);
@@ -49,14 +54,32 @@ class _Images extends StatelessWidget {
           ),
           child: const SizedBox.square(dimension: 20),
         ),
-        FadeInImage(
-          placeholder: MemoryImage(_magentaBytes),
-          image: MemoryImage(_blueBytes),
-          width: 20,
-          height: 20,
-          fit: BoxFit.fill,
-        ),
       ],
+    );
+  }
+}
+
+/// Adds a [FadeInImage], whose target image is decoded like the others, but
+/// cannot be asserted on in a snapshot since its fade needs time to advance.
+class _AllImageKinds extends StatelessWidget {
+  const _AllImageKinds();
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const _Images(),
+          FadeInImage(
+            placeholder: MemoryImage(_transparentBytes),
+            image: MemoryImage(_blueBytes),
+            width: 20,
+            height: 20,
+            fit: BoxFit.fill,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -77,50 +100,32 @@ class _ImagesStory extends Story<_Images, _ImagesArgs> {
       );
 }
 
-ImageCache get _imageCache => PaintingBinding.instance.imageCache;
-
 /// Whether the provider's image finished decoding, as opposed to merely having
 /// been requested, which already adds a pending entry to the cache.
-bool _isDecoded(Uint8List bytes) =>
-    _imageCache.statusForKey(MemoryImage(bytes)).keepAlive;
+bool _isDecoded(Uint8List bytes) => PaintingBinding.instance.imageCache
+    .statusForKey(MemoryImage(bytes))
+    .keepAlive;
 
 Future<void> main() async {
   final snapshot = File('build/.widgetbook/Images/Default/Loaded.png');
   if (snapshot.existsSync()) snapshot.deleteSync();
-
-  final decodedBeforeScenarioRuns = <String, bool>{};
-
-  final scenario = Scenario<_Images, _ImagesArgs>(
-    name: 'Loaded',
-    run: (tester, args) async {
-      decodedBeforeScenarioRuns.addAll({
-        'Image': _isDecoded(_magentaBytes),
-        'DecorationImage': _isDecoded(_greenBytes),
-        'FadeInImage': _isDecoded(_blueBytes),
-      });
-    },
-  );
 
   final config = Config(
     components: [
       Component<_Images, _ImagesArgs>(
         name: 'Images',
         stories: [
-          _ImagesStory(scenarios: [scenario]),
+          _ImagesStory(
+            scenarios: [
+              Scenario<_Images, _ImagesArgs>(name: 'Loaded'),
+            ],
+          ),
         ],
       ),
     ],
   );
 
   await testWidgetbook(config);
-
-  test('testWidgetbook loads images before running a scenario', () {
-    expect(decodedBeforeScenarioRuns, {
-      'Image': true,
-      'DecorationImage': true,
-      'FadeInImage': true,
-    });
-  });
 
   test('testWidgetbook captures images into the snapshot', () async {
     expect(snapshot.existsSync(), isTrue, reason: 'no snapshot was written');
@@ -137,6 +142,30 @@ Future<void> main() async {
       isNotNull,
       reason: "the DecorationImage's pixels are missing from the snapshot",
     );
+  });
+
+  testWidgets('loadImages decodes every kind of mounted provider', (
+    tester,
+  ) async {
+    addTearDown(() {
+      final imageCache = PaintingBinding.instance.imageCache;
+      imageCache.clear();
+      imageCache.clearLiveImages();
+    });
+
+    await tester.pumpWidget(const _AllImageKinds());
+
+    expect(
+      [_magentaBytes, _greenBytes, _blueBytes].map(_isDecoded),
+      everyElement(isFalse),
+      reason: 'pumping alone cannot decode images',
+    );
+
+    await loadImages(tester);
+
+    expect(_isDecoded(_magentaBytes), isTrue, reason: 'Image');
+    expect(_isDecoded(_greenBytes), isTrue, reason: 'DecorationImage');
+    expect(_isDecoded(_blueBytes), isTrue, reason: 'FadeInImage');
   });
 }
 
