@@ -1,6 +1,9 @@
 ## Unreleased
 
 - **FIX**: Load images before capturing a snapshot in `testWidgetbook`, so they are no longer missing from generated snapshots. ([#2019](https://github.com/widgetbook/widgetbook/pull/2019))
+- **FIX**: Remount the workbench preview when switching stories so custom
+  `setup` state (e.g. providers created in `create`) is not reused from the
+  previous sibling story.
 - **FIX**: Keep the workbench preview's state across rebuilds.
   Any story with at least one non-fixed arg was torn down and rebuilt from scratch on every rebuild, so animations restarted and `StatefulWidget` state was lost. ([#2012](https://github.com/widgetbook/widgetbook/pull/2012))
 
