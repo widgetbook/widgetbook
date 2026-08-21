@@ -1,12 +1,11 @@
 # Figma Reviews
 
-Widgetbook Cloud Review helps verify that developers meet **design requirements** by comparing **Flutter widgets** to their corresponding **Figma designs**.
+Widgetbook Cloud renders the Figma design behind a story next to its implementation, so a review catches deviations from the design and not only regressions against the previous build.
 
-<Image src="/assets/cloud/figma-review.png" zoom />
+Setup is three steps: link a story to its design, connect a Figma account, and connect the file to your workspace.
+Do them in that order, because the file list is populated from the design links your stories already carry.
 
-## Guide
-
-To display a "View in Figma" button in your reviews, add the Figma URL to your stories:
+## 1. Link a Story to Its Design
 
 1. In your Figma design file, navigate to the component that matches your widget.
 1. Copy the link to the component by right-clicking and selecting `Copy/Paste as` > `Copy Link`.
@@ -15,7 +14,7 @@ To display a "View in Figma" button in your reviews, add the Figma URL to your s
    ```dart
    final $Default = _Story(
      // ...
-     designLink: 'https://www.figma.com/file/EXuEpwiyksLAejYX1qr1v4/Fluttercon-Berlin-2023-Demo?type=design&node-id=277-3056&mode=design&t=nVL8hLmc1jlcilZL-4',
+     designLink: 'https://www.figma.com/design/EXuEpwiyksLAejYX1qr1v4/Demo?node-id=277-3056',
    )
    ```
 
@@ -27,5 +26,83 @@ To display a "View in Figma" button in your reviews, add the Figma URL to your s
 
 1. Commit your changes and push them to your repository to create a new build.
 
-The button then shows on every review of that story.
+The link must point at a specific node.
+A link to a whole file has nothing to render, and shows only as a **View in Figma** button.
+
+<Image src="/assets/cloud/figma-review.png" zoom caption="A linked story offers View in Figma on both sides of the diff" />
+
+<Info>
+  Design comparison requires a Widgetbook 4 build.
+  On an older build the design controls stay disabled and the diff falls back to **Baseline**.
+</Info>
+
+## 2. Connect a Figma Account
+
+Rendering borrows a connected member's Figma credentials, because Figma rate-limits per account rather than per organization.
+
+<Steps>
+  <Step title="Open workspace settings">
+    Go to **Settings** > **General** and find the **Figma Integration** card.
+  </Step>
+  <Step title="Connect your account">
+    Under **Your account**, click **Connect** and approve Widgetbook in Figma.
+    The badge on the card shows how many connected accounts can currently render.
+  </Step>
+</Steps>
+
+You can also connect from your own profile page, but the Figma card sits below the entire account section, so you have to scroll to the bottom of the page to reach it.
+Workspace settings is the shorter route, and it puts the connection next to the file list you need in step 3.
+
+<Warning>
+  Figma limits **View** and **Collab** seats to a handful of renders per month.
+  Connect an account on a **Dev** or **Full** seat, or the designs will stop rendering almost immediately.
+  Widgetbook flags a seat as soon as Figma tells it the seat cannot render.
+</Warning>
+
+Every member who connects adds capacity, since the limit is per account rather than per workspace.
+Only the member who connected an account can disconnect it.
+
+## 3. Connect the Figma File
+
+Widgetbook only renders designs from files connected to the workspace.
+Anything else a design link points at is ignored: design links come from your source code, and rendering one spends a colleague's Figma credentials.
+
+<Steps>
+  <Step title="Find the file">
+    Once a build carries design links, the files they reference appear under **Referenced by your stories** in the **Figma Files** card.
+  </Step>
+  <Step title="Connect it">
+    Click **Connect** next to the file.
+    You can also paste a file URL into the field at the bottom of the card.
+  </Step>
+</Steps>
+
+Connecting validates the file against your own Figma access, so you can only add files you can already open.
+Changing this list is restricted to workspace owners.
+
+## Review the Design
+
+Open a story diff in a review.
+The view switcher in the top-right offers three modes, and `f` cycles between them.
+
+| Mode | Shows |
+| --- | --- |
+| **Baseline** | The `base` and `head` implementations side by side |
+| **Design** | The Figma design beside the `head` implementation |
+| **Overlay** | The design drawn on top of the `head` implementation |
+
+In **Overlay**, the **Design** slider sets how strongly the design shows through.
+When the design and the implementation are different sizes, the anchor picker next to it aligns them on a shared edge or corner, so you compare the part you care about instead of two images centered against each other.
+
+Designs are rendered when a review's change set is computed, so they appear shortly after the build finishes rather than instantly.
+
+## Troubleshooting
+
+| Symptom | Cause |
+| --- | --- |
+| The design controls are disabled | The story has no `designLink`, or the build predates Widgetbook 4. |
+| The design never appears | The file is not connected to the workspace, or no connected account can render. Check both cards in **Settings** > **General**. |
+| Designs stopped rendering | The connected accounts are on **View** or **Collab** Figma seats, or a connection was revoked in Figma. |
+| The design is out of date | Renders are cached per change set. Push a new build to refresh them. |
+
 For the designer-facing side of this workflow, see [Compare against Figma](/cloud/for-designers/figma).

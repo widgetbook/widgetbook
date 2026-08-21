@@ -3,7 +3,7 @@
 The comparison runs between Widgetbook Cloud and Figma, side by side.
 
 The developer sets a design link on a story, pointing at the matching component in the Figma file.
-In the review the link shows as a **View in Figma** button.
+The review then renders that component next to the implementation, and the link also shows as a **View in Figma** button for opening the real file.
 
 <Image src="/assets/cloud/reviews/view-in-figma.png" zoom caption="Click View in Figma on the story" />
 <Image src="/assets/cloud/reviews/figma-design.png" zoom caption="The matching component opens in the Figma file" />
@@ -18,14 +18,15 @@ The developer setup lives in [Figma Reviews](/cloud/reviews/figma).
 | Design the states that will be built | A developer can only link to a state that exists in Figma. Empty, loading, error, and edge states included. |
 | Specify tokens, not raw values | A named token gets implemented as that token and stays consistent. Raw values in the design invite raw values in the code. |
 
-<Info>
-  **Coming soon.**
-  Today a review compares two Flutter builds, so it catches regressions against the previous version but not deviations from the design.
-  Widgetbook Cloud will show the Figma design next to the implementation and diff the two directly.
-  Email [contact@widgetbook.io](mailto:contact@widgetbook.io) to be notified when it lands.
-</Info>
+## See the Design in the Review
+
+A review no longer only compares two Flutter builds.
+Once a developer has linked the story and connected the Figma file, the review shows the design itself: beside the implementation, or drawn over it at an opacity the reviewer controls.
+
+That means a review catches deviations from the design, not only regressions against the previous version.
+Nothing changes in how you work in Figma, but it does raise the value of the habits above: the review renders the exact node the link points at.
 
 ## Next
 
-- [Figma Reviews](/cloud/reviews/figma): how a developer adds the design link.
+- [Figma Reviews](/cloud/reviews/figma): how a developer links the story and connects the Figma file.
 - [Glossary](/cloud/for-designers/glossary): pull request, story, scenario, snapshot, build, base, head.
