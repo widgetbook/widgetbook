@@ -1,6 +1,10 @@
 # Figma Reviews
 
-Widgetbook Cloud renders the Figma design behind a story next to its implementation, so a review catches deviations from the design and not only regressions against the previous build.
+Widgetbook Cloud renders the Figma design behind a story next to its implementation, so you can check a change against the design without leaving the review.
+
+The design is shown, not diffed.
+Widgetbook still detects changes by comparing the `base` and `head` builds, and it makes no judgement about whether an implementation matches its design.
+Putting the two side by side is what lets you make that judgement yourself.
 
 Setup is three steps: link a story to its design, connect a Figma account, and connect the file to your workspace.
 Do them in that order, because the file list is populated from the design links your stories already carry.
@@ -32,7 +36,7 @@ A link to a whole file has nothing to render, and shows only as a **View in Figm
 <Image src="/assets/cloud/figma-review.png" zoom caption="A linked story offers View in Figma on both sides of the diff" />
 
 <Info>
-  Design comparison requires a Widgetbook 4 build.
+  Showing the design requires a Widgetbook 4 build.
   On an older build the design controls stay disabled and the diff falls back to **Baseline**.
 </Info>
 
