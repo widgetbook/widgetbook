@@ -7,12 +7,3 @@ linter:
   rules:
     # API docs disabled for now until beta version
     public_member_api_docs: false
-analyzer:
-  exclude:
-    - build/**
-    - android/**
-    - ios/**
-    - web/**
-    - windows/**
-    - macos/**
-    - linux/**
