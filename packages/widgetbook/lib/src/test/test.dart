@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../widgetbook.dart';
 import 'font_loader.dart';
+import 'image_loader.dart';
 import 'scenario_metadata.dart';
 import 'semantics/semantics_tree_serializer.dart';
 
@@ -82,7 +83,11 @@ void testScenario(
 
         await config.scenarioConfig.setUp?.call(tester, scenario);
 
+        await loadImages(tester);
+
         await scenario.execute(tester);
+
+        await loadImages(tester);
 
         final violations = (await evaluateGuidelines(
           tester,
