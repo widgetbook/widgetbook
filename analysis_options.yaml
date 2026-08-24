@@ -5,9 +5,6 @@ analyzer:
     strict-raw-types: true
   exclude:
     - "**/*.g.dart"
-    # Kept in sync with flutter_tools' AnalysisOptionsMigration: if any of these
-    # is missing here, `flutter pub get` re-injects the whole list into every
-    # package's own analysis_options.yaml.
     - build/**
     - android/**
     - ios/**
