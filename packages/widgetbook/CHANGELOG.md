@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **FIX**: Load and decode images before capturing a snapshot in `testWidgetbook`, so an `Image`, an `Ink` or a decoration image is no longer missing from generated snapshots. ([#2019](https://github.com/widgetbook/widgetbook/pull/2019))
+- **FIX**: Load images before capturing a snapshot in `testWidgetbook`, so they are no longer missing from generated snapshots. ([#2019](https://github.com/widgetbook/widgetbook/pull/2019))
 
 ## 4.0.0-beta.11
 
