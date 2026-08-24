@@ -138,6 +138,47 @@ bool _isDecoded(Uint8List bytes) => PaintingBinding.instance.imageCache
     .statusForKey(MemoryImage(bytes))
     .keepAlive;
 
+/// Scales the 2x2 source to 40 logical pixels, so an unloaded image collapses
+/// the column it sits in and a loaded one does not.
+const _shiftScale = 0.05;
+const _shiftKey = ValueKey('shifting');
+
+final _shiftBytes = Uint8List.fromList(_magentaBytes);
+
+/// The height the image occupied while the scenario's `run` callback executed.
+double? _heightDuringRun;
+
+class _ShiftingImage extends StatelessWidget {
+  const _ShiftingImage();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Image.memory(_shiftBytes, scale: _shiftScale, key: _shiftKey),
+        const SizedBox.square(dimension: 10),
+      ],
+    );
+  }
+}
+
+class _ShiftingImageArgs extends StoryArgs<_ShiftingImage> {
+  const _ShiftingImageArgs();
+
+  @override
+  List<Arg?> get list => const [];
+}
+
+class _ShiftingImageStory extends Story<_ShiftingImage, _ShiftingImageArgs> {
+  _ShiftingImageStory({super.scenarios})
+    : super(
+        name: 'Default',
+        args: const _ShiftingImageArgs(),
+        builder: (context, args) => const _ShiftingImage(),
+      );
+}
+
 Future<void> main() async {
   final snapshot = File('build/.widgetbook/Images/Default/Loaded.png');
   if (snapshot.existsSync()) snapshot.deleteSync();
@@ -150,6 +191,23 @@ Future<void> main() async {
           _ImagesStory(
             scenarios: [
               Scenario<_Images, _ImagesArgs>(name: 'Loaded'),
+            ],
+          ),
+        ],
+      ),
+      Component<_ShiftingImage, _ShiftingImageArgs>(
+        name: 'Shifting Image',
+        stories: [
+          _ShiftingImageStory(
+            scenarios: [
+              Scenario<_ShiftingImage, _ShiftingImageArgs>(
+                name: 'Interacted',
+                run: (tester, args) async {
+                  _heightDuringRun = tester
+                      .getSize(find.byKey(_shiftKey))
+                      .height;
+                },
+              ),
             ],
           ),
         ],
@@ -173,6 +231,16 @@ Future<void> main() async {
       colors[_green],
       isNotNull,
       reason: "the DecorationImage's pixels are missing from the snapshot",
+    );
+  });
+
+  test('a scenario interaction runs against the loaded layout', () {
+    expect(
+      _heightDuringRun,
+      40.0,
+      reason:
+          'the interaction ran before the images were loaded, so it acted '
+          'on a layout that is not the one being captured',
     );
   });
 

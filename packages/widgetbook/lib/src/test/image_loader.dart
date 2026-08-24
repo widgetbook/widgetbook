@@ -7,11 +7,12 @@ const _loadTimeout = Duration(seconds: 5);
 
 /// Loads the images that mounted widgets expose, and waits until they decode.
 ///
-/// Resolving an [ImageProvider] reads bytes and instantiates a codec, both of
-/// which complete on the real event loop that [WidgetTester.pump] does not
-/// advance. Without [TestWidgetsFlutterBinding.runAsync], images never produce
-/// a frame and stay absent from snapshots. Load failures are swallowed, since a
-/// single unreachable image must not fail a snapshot.
+/// Resolving an [ImageProvider] completes on the real event loop that
+/// [WidgetTester.pump] does not advance, hence the runAsync below.
+/// Call once before the scenario's interaction so it acts on the loaded layout,
+/// and once after, for images the interaction mounted itself.
+/// A failing provider reports through the widget's own stream and fails the
+/// scenario, rather than being captured as an empty box.
 Future<void> loadImages(WidgetTester tester) async {
   final targets = <(ImageProvider, Element)>[];
 

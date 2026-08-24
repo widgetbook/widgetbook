@@ -83,6 +83,8 @@ void testScenario(
 
         await config.scenarioConfig.setUp?.call(tester, scenario);
 
+        await loadImages(tester);
+
         await scenario.execute(tester);
 
         await loadImages(tester);
