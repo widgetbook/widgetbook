@@ -1,7 +1,8 @@
-## Unreleased
+## 4.0.0-beta.12
 
 - **FEAT**: Add `--allow-existing` to `cloud build push`, which exits successfully instead of failing when a build for the commit already exists. ([#1986](https://github.com/widgetbook/widgetbook/pull/1986))
 - **REFACTOR**: Bump `analyzer` to 14.x. ([#1998](https://github.com/widgetbook/widgetbook/pull/1998))
+- **CHORE**: Update the `widgetbook` version installed by `widgetbook init` to `4.0.0-beta.12`.
 
 ## 4.0.0-beta.11
 
