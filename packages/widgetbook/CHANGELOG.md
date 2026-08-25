@@ -1,4 +1,4 @@
-## Unreleased
+## 4.0.0-beta.12
 
 - **FIX**: Load images before capturing a snapshot in `testWidgetbook`, so they are no longer missing from generated snapshots. ([#2019](https://github.com/widgetbook/widgetbook/pull/2019))
 - **FIX**: Keep the workbench preview's state across rebuilds and remount it when the selected story changes. ([#2012](https://github.com/widgetbook/widgetbook/pull/2012))
