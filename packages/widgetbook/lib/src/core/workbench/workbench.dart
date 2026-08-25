@@ -24,6 +24,7 @@ class Workbench extends StatelessWidget {
     final scenario = state.scenario;
     if (scenario != null) {
       return _WorkbenchWrapper(
+        key: ValueKey('scenario:${state.path}'),
         child: scenario.buildWithConfig(
           context,
           state.config,
@@ -34,6 +35,7 @@ class Workbench extends StatelessWidget {
     final story = state.story;
     if (story != null) {
       return _WorkbenchWrapper(
+        key: ValueKey('story:${state.path}'),
         child: story.buildWithConfig(
           context,
           state.config,
@@ -47,6 +49,7 @@ class Workbench extends StatelessWidget {
 
 class _WorkbenchWrapper extends StatelessWidget {
   const _WorkbenchWrapper({
+    super.key,
     required this.child,
   });
 

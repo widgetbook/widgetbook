@@ -100,6 +100,42 @@ void main() {
           );
         },
       );
+
+      test(
+        'given a query group with fields, '
+        'when [hashCode] is read more than once, '
+        'then it returns the same value',
+        () {
+          const group = QueryGroup({'value': '42'});
+
+          expect(group.hashCode, equals(group.hashCode));
+        },
+      );
+
+      test(
+        'given two equal query groups, '
+        'when their [hashCode]s are compared, '
+        'then they are equal',
+        () {
+          const group = QueryGroup({'first': '1', 'second': '2'});
+          final copy = QueryGroup.fromParam(group.toParam());
+
+          expect(copy, equals(group));
+          expect(copy.hashCode, equals(group.hashCode));
+        },
+      );
+
+      test(
+        'given two query groups that differ only in their field values, '
+        'when their [hashCode]s are compared, '
+        'then they are different',
+        () {
+          const group = QueryGroup({'value': '1'});
+          const other = QueryGroup({'value': '2'});
+
+          expect(other.hashCode, isNot(equals(group.hashCode)));
+        },
+      );
     },
   );
 }
