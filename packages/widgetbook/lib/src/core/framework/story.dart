@@ -103,10 +103,10 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
     final path = WidgetbookState.maybeOf(context)?.path;
     final argValues = args.safeList
         .map((arg) => '${arg.name}=${arg.toQueryGroup()?.toParam()}')
-        .join(',');
+        .join(':');
 
     return KeyedSubtree(
-      key: ValueKey('$path::$argValues'),
+      key: ValueKey('$path:$argValues'),
       child: widget,
     );
   }
