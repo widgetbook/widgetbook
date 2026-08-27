@@ -250,13 +250,23 @@ class StoryGenerator extends Generator {
     }
 
     final match = matches.single;
+    // `NamedExpression` (analyzer <13) and its replacement `NamedArgument`
+    // (analyzer >=13) have incompatible APIs, so named arguments are read
+    // via their version-agnostic syntax structure `name ':' expression`,
+    // where the expression is the node's last child entity.
     final arguments = match.value.arguments.arguments
-        .whereType<NamedExpression>()
+        .cast<AstNode>()
+        .where((node) => node.beginToken.next?.lexeme == ':')
+        .map(
+          (node) => (
+            name: node.beginToken.lexeme,
+            expression: node.childEntities.last as AstNode,
+          ),
+        )
         .where((arg) => arg.expression is! NullLiteral);
 
     final args = {
-      for (final arg in arguments)
-        arg.name.label.name: Code(arg.expression.toString()),
+      for (final arg in arguments) arg.name: Code(arg.expression.toString()),
     };
 
     return (

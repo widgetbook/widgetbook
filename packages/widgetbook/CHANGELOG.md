@@ -1,3 +1,7 @@
+## Unreleased
+
+- **REFACTOR**: Allow `analyzer` 13.x.
+
 ## 4.0.0-beta.12
 
 - **FIX**: Load images before capturing a snapshot in `testWidgetbook`, so they are no longer missing from generated snapshots. ([#2019](https://github.com/widgetbook/widgetbook/pull/2019))
