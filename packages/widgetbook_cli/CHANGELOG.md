@@ -1,3 +1,8 @@
+## 4.0.0-beta.13
+
+- **CHORE**: Align version with `widgetbook` so both packages share `4.0.0-beta.13`.
+- **CHORE**: Update the `widgetbook` version installed by `widgetbook init` to `4.0.0-beta.13`.
+
 ## 4.0.0-beta.12
 
 - **FEAT**: Add `--allow-existing` to `cloud build push`, which exits successfully instead of failing when a build for the commit already exists. ([#1986](https://github.com/widgetbook/widgetbook/pull/1986))
