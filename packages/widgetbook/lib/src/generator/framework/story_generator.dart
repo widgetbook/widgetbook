@@ -255,7 +255,6 @@ class StoryGenerator extends Generator {
     // via their version-agnostic syntax structure `name ':' expression`,
     // where the expression is the node's last child entity.
     final arguments = match.value.arguments.arguments
-        .cast<AstNode>()
         .where((node) => node.beginToken.next?.lexeme == ':')
         .map(
           (node) => (
