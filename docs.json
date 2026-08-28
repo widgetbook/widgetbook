@@ -38,7 +38,7 @@
   "variables": {
     "versions": {
       "cli": "4.0.0-beta.12",
-      "widgetbook": "4.0.0-beta.12"
+      "widgetbook": "4.0.0-beta.13"
     }
   },
   "redirects": {
