@@ -65,6 +65,7 @@ class Config {
     this.scenarioConfig = const ScenarioConfig(),
     this.accessibilityConfig = const AccessibilityConfig(),
     this.docsBuilder = defaultDocsBuilder,
+    this.foldersExpandedByDefault = true,
   });
 
   /// The initial route for that will be used on first startup.
@@ -141,4 +142,11 @@ class Config {
   ///
   /// If not provided, defaults to [defaultDocsBuilder].
   final List<DocBlock> Function()? docsBuilder;
+
+  /// Whether folder and component nodes in the navigation tree start expanded.
+  ///
+  /// When `false`, only the root level is visible until the user expands a
+  /// folder. Story nodes are always collapsed by default regardless of this
+  /// setting.
+  final bool foldersExpandedByDefault;
 }

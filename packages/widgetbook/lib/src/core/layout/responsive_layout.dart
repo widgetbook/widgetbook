@@ -26,6 +26,7 @@ class ResponsiveLayout extends StatelessWidget {
       initialPath: state.path,
       root: state.root,
       header: state.config.header,
+      foldersExpandedByDefault: state.config.foldersExpandedByDefault,
       onLeafNodeTap: (node) {
         WidgetbookState.of(context).updatePath(node.path);
 

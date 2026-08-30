@@ -20,12 +20,14 @@ class NavigationPanel extends StatefulWidget {
     this.onLeafNodeTap,
     required this.root,
     this.header,
+    this.foldersExpandedByDefault = true,
   });
 
   final String? initialPath;
   final ValueChanged<TreeNode<dynamic>>? onLeafNodeTap;
   final TreeNode<Null> root;
   final Widget? header;
+  final bool foldersExpandedByDefault;
 
   @override
   State<NavigationPanel> createState() => _NavigationPanelState();
@@ -35,7 +37,10 @@ class _NavigationPanelState extends State<NavigationPanel> {
   Timer? _debounce;
   final Set<String> _toggled = {};
 
-  static bool _isExpandedByDefault(TreeNode node) => node is! TreeNode<Story>;
+  bool _isExpandedByDefault(TreeNode node) {
+    if (node is TreeNode<Story>) return false;
+    return widget.foldersExpandedByDefault;
+  }
 
   bool _filterNode(TreeNode node, String query) {
     final escapedQuery = RegExp.escape(query);

@@ -84,5 +84,43 @@ void main() {
         expect(componentInSidebar, findsNothing);
       },
     );
+    testWidgets(
+      'given foldersExpandedByDefault is false, '
+      'when the navigation panel is shown, '
+      'then nested entries are hidden until expanded',
+      (tester) async {
+        tester.view.physicalSize = const Size(1200, 800);
+        tester.view.devicePixelRatio = 1.0;
+
+        await tester.pumpWidget(
+          WidgetbookApp(
+            config: Config(
+              foldersExpandedByDefault: false,
+              components: [
+                Component(
+                  name: 'NestedComponent',
+                  path: 'Catalog/Group',
+                  stories: [TestStory(name: 'Primary')],
+                ),
+              ],
+            ),
+          ),
+        );
+
+        expect(find.text('NestedComponent'), findsNothing);
+        expect(find.text('Catalog'), findsOneWidget);
+
+        await tester.tap(find.text('Catalog'));
+        await tester.pumpAndSettle();
+
+        expect(find.text('Group'), findsOneWidget);
+        expect(find.text('NestedComponent'), findsNothing);
+
+        await tester.tap(find.text('Group'));
+        await tester.pumpAndSettle();
+
+        expect(find.text('NestedComponent'), findsOneWidget);
+      },
+    );
   });
 }
