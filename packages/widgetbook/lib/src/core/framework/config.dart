@@ -147,6 +147,7 @@ class Config {
   ///
   /// When `false`, only the root level is visible until the user expands a
   /// folder. Story nodes are always collapsed by default regardless of this
-  /// setting.
+  /// setting. Ancestors of a node that is deep-linked via the `path` query
+  /// parameter are still expanded on startup, so that the node is visible.
   final bool foldersExpandedByDefault;
 }

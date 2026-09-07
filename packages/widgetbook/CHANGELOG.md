@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Add `foldersExpandedByDefault` to `Config` to start the navigation tree collapsed, while still expanding the ancestors of a deep-linked node on startup. ([#2028](https://github.com/widgetbook/widgetbook/pull/2028))
+
 ## 4.0.0-beta.13
 
 - **REFACTOR**: Allow `analyzer` 13.x and 14.x. ([#2025](https://github.com/widgetbook/widgetbook/pull/2025))
