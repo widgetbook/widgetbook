@@ -1,4 +1,5 @@
 import 'package:mocktail/mocktail.dart';
+import 'package:platform/testing.dart';
 import 'package:test/test.dart';
 import 'package:widgetbook_cli/widgetbook_cli.dart';
 
@@ -10,17 +11,20 @@ void main() {
   const sha = '832e76a9899f560a90ffd62ae2ce83bbeff58f54';
 
   final ciManager = MockCiManager();
-  final platform = MockPlatform();
-  final contextManager = ContextManager(
-    ciManager: ciManager,
-    platform: platform,
-  );
+
+  ContextManager buildContextManager([Map<String, String>? environment]) {
+    return ContextManager(
+      ciManager: ciManager,
+      platform: TestNativePlatform(environment: environment),
+    );
+  }
 
   group('$ContextManager', () {
     final repository = MockRepository();
 
     test('Local', () async {
       ciManager.mock();
+      final contextManager = buildContextManager();
       when(() => repository.name).thenReturn(repoName);
       when(() => repository.user).thenAnswer((_) async => userName);
 
@@ -39,7 +43,7 @@ void main() {
 
     test('Azure', () {
       ciManager.mock(isAzure: true);
-      when(() => platform.environment).thenReturn({
+      final contextManager = buildContextManager({
         'BUILD_SOURCEVERSIONAUTHOR': userName,
         'BUILD_REPOSITORY_NAME': repoName,
       });
@@ -59,7 +63,7 @@ void main() {
 
     test('Bitbucket', () {
       ciManager.mock(isBitbucket: true);
-      when(() => platform.environment).thenReturn({
+      final contextManager = buildContextManager({
         'BITBUCKET_STEP_TRIGGERER_UUID': userName,
         'BITBUCKET_REPO_FULL_NAME': repoName,
       });
@@ -79,7 +83,7 @@ void main() {
 
     test('Codemagic', () {
       ciManager.mock(isCodemagic: true);
-      when(() => platform.environment).thenReturn({
+      final contextManager = buildContextManager({
         'CM_REPO_SLUG': repoName,
         'CM_COMMIT': userName,
       });
@@ -100,7 +104,7 @@ void main() {
 
     test('GitHub', () {
       ciManager.mock(isGitHub: true);
-      when(() => platform.environment).thenReturn({
+      final contextManager = buildContextManager({
         'GITHUB_ACTOR': userName,
         'GITHUB_REPOSITORY': repoName,
         'GITHUB_SHA': sha,
@@ -122,7 +126,7 @@ void main() {
 
     test('GitLab', () {
       ciManager.mock(isGitLab: true);
-      when(() => platform.environment).thenReturn({
+      final contextManager = buildContextManager({
         'GITLAB_USER_LOGIN': userName,
         'CI_PROJECT_PATH': repoName,
         'CI_COMMIT_BRANCH': 'main',

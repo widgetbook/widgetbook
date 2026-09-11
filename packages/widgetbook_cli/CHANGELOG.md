@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: Migrate to the `platform` package's 3.2 `NativePlatform` API.
+
 ## 4.0.0-beta.13
 
 - **CHORE**: Align version with `widgetbook` so both packages share `4.0.0-beta.13`.
