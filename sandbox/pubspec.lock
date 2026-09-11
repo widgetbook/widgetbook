@@ -579,7 +579,7 @@ packages:
       path: "../packages/widgetbook"
       relative: true
     source: path
-    version: "4.0.0-beta.13"
+    version: "4.0.0-beta.14"
   yaml:
     dependency: transitive
     description:
