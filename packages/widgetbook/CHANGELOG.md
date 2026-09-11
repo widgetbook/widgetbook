@@ -1,4 +1,4 @@
-## Unreleased
+## 4.0.0-beta.14
 
 - **FEAT**: Add `foldersExpandedByDefault` to `Config` to start the navigation tree collapsed, while still expanding the ancestors of a deep-linked node on startup. ([#2028](https://github.com/widgetbook/widgetbook/pull/2028))
 
