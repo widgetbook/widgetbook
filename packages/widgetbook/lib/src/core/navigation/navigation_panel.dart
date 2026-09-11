@@ -20,12 +20,14 @@ class NavigationPanel extends StatefulWidget {
     this.onLeafNodeTap,
     required this.root,
     this.header,
+    this.foldersExpandedByDefault = true,
   });
 
   final String? initialPath;
   final ValueChanged<TreeNode<dynamic>>? onLeafNodeTap;
   final TreeNode<Null> root;
   final Widget? header;
+  final bool foldersExpandedByDefault;
 
   @override
   State<NavigationPanel> createState() => _NavigationPanelState();
@@ -35,7 +37,31 @@ class _NavigationPanelState extends State<NavigationPanel> {
   Timer? _debounce;
   final Set<String> _toggled = {};
 
-  static bool _isExpandedByDefault(TreeNode node) => node is! TreeNode<Story>;
+  @override
+  void initState() {
+    super.initState();
+    _revealInitialPath();
+  }
+
+  /// Expands all ancestors of [NavigationPanel.initialPath], so that the
+  /// deep-linked node is visible on startup.
+  void _revealInitialPath() {
+    final initialPath = widget.initialPath;
+    if (initialPath == null) return;
+
+    var node = widget.root.findByPath(initialPath)?.parent;
+    while (node != null && !node.isRoot) {
+      if (!_isExpanded(node)) {
+        _toggled.add(node.path);
+      }
+      node = node.parent;
+    }
+  }
+
+  bool _isExpandedByDefault(TreeNode node) {
+    if (node is TreeNode<Story>) return false;
+    return widget.foldersExpandedByDefault;
+  }
 
   bool _filterNode(TreeNode node, String query) {
     final escapedQuery = RegExp.escape(query);
