@@ -5,12 +5,12 @@ import '../utils/utils.dart';
 import 'context.dart';
 
 class ContextManager {
-  const ContextManager({
-    this.platform = const LocalPlatform(),
+  ContextManager({
+    NativePlatform? platform,
     this.ciManager = const CiManager(),
-  });
+  }) : platform = platform ?? NativePlatform.current!;
 
-  final Platform platform;
+  final NativePlatform platform;
   final CiManager ciManager;
 
   /// Returns the relevant [Context] for the current environment.

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:widgetbook_cli/widgetbook_cli.dart';
 
 void main(List<String> args) async {
-  const contextManager = ContextManager();
+  final contextManager = ContextManager();
   final repository = await Repository.load(
     Directory.current.path,
   );
