@@ -10,12 +10,17 @@ class NavigationTreeNode extends StatefulWidget {
     super.key,
     required this.node,
     this.selectedNode,
+    this.selectedItemKey,
     this.onNodeSelected,
     this.enableLeafComponents = true,
   });
 
   final WidgetbookNode node;
   final WidgetbookNode? selectedNode;
+
+  /// Forwarded to the descendant tile matching [selectedNode], so the panel
+  /// can locate and scroll to it. `null` on every other tile.
+  final Key? selectedItemKey;
   final ValueChanged<WidgetbookNode>? onNodeSelected;
   final bool enableLeafComponents;
 
@@ -51,12 +56,16 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
         ? widget.node.children!.first
         : widget.node;
 
+    final isSelected = targetNode.path == widget.selectedNode?.path;
+
     return Column(
       children: [
         NavigationTreeTile(
+          // A path is unique, so at most one tile carries this key.
+          key: isSelected ? widget.selectedItemKey : null,
           node: widget.node,
           isExpanded: isExpanded,
-          isSelected: targetNode.path == widget.selectedNode?.path,
+          isSelected: isSelected,
           enableLeafComponents: widget.enableLeafComponents,
           onTap: () {
             setState(() => isExpanded = !isExpanded);
@@ -81,6 +90,7 @@ class _NavigationTreeNodeState extends State<NavigationTreeNode> {
                   itemBuilder: (context, index) => NavigationTreeNode(
                     node: widget.node.children![index],
                     selectedNode: widget.selectedNode,
+                    selectedItemKey: widget.selectedItemKey,
                     onNodeSelected: widget.onNodeSelected,
                     enableLeafComponents: widget.enableLeafComponents,
                   ),
