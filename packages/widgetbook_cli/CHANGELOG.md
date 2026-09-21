@@ -1,3 +1,9 @@
+## Unreleased
+
+- **FEAT**: Accept workspace API keys (`widgetbook_ws_...`) in `cloud build push` and `cloud review skip`, together with a new `--project` option that names the project. ([#2040](https://github.com/widgetbook/widgetbook/pull/2040))
+- **FEAT**: Add `cloud project create`, which creates a project in a Widgetbook Cloud workspace using a workspace API key. ([#2040](https://github.com/widgetbook/widgetbook/pull/2040))
+- **FEAT**: Show `--api-url` in the usage of `cloud build push`, `cloud review skip` and `cloud project create`. ([#2040](https://github.com/widgetbook/widgetbook/pull/2040))
+
 ## 4.0.0-beta.14
 
 - **FIX**: Migrate to the `platform` package's 3.2 `NativePlatform` API. ([#2033](https://github.com/widgetbook/widgetbook/pull/2033))

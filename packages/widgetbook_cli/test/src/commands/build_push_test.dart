@@ -1,4 +1,5 @@
 import 'package:args/args.dart';
+import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
@@ -25,6 +26,13 @@ void main() {
     });
 
     group('api-url', () {
+      test('is shown in the usage', () {
+        final command = BuildPushCommand(context: context);
+
+        expect(command.argParser.options['api-url']!.hide, isFalse);
+        expect(command.argParser.usage, contains('--api-url'));
+      });
+
       test('appends missing trailing slash to baseUrl', () {
         final command = BuildPushCommand(context: context);
 
@@ -105,8 +113,56 @@ void main() {
 
         final args = await command.parseResults(context, results);
 
-        expect(args.apiKey, equals(apiKey));
+        expect(
+          args.apiKey,
+          isA<ProjectApiKey>().having((key) => key.value, 'value', apiKey),
+        );
+        expect(args.project, isNull);
       });
+
+      test('project with a project key', () async {
+        when(() => results['project']).thenReturn('my-app');
+
+        final args = await command.parseResults(context, results);
+
+        expect(args.apiKey, isA<ProjectApiKey>());
+        expect(args.project, equals('my-app'));
+      });
+
+      test('project with a workspace key', () async {
+        when(() => results['api-key']).thenReturn('widgetbook_ws_secret');
+        when(() => results['project']).thenReturn('my-app');
+
+        final args = await command.parseResults(context, results);
+
+        expect(
+          args.apiKey,
+          isA<WorkspaceApiKey>().having(
+            (key) => key.value,
+            'value',
+            'widgetbook_ws_secret',
+          ),
+        );
+        expect(args.project, equals('my-app'));
+      });
+
+      for (final project in [null, '', '  ']) {
+        test('throws for a workspace key with project "$project"', () {
+          when(() => results['api-key']).thenReturn('widgetbook_ws_secret');
+          when(() => results['project']).thenReturn(project);
+
+          expect(
+            () => command.parseResults(context, results),
+            throwsA(
+              isA<CliException>().having(
+                (e) => e.message,
+                'message',
+                equals('A workspace API key needs --project <name>.'),
+              ),
+            ),
+          );
+        });
+      }
 
       group('actor', () {
         test('from $ArgResults', () async {
@@ -250,5 +306,33 @@ void main() {
         });
       });
     });
+
+    test(
+      'fails before any request for a workspace key without project',
+      () async {
+        final cloudClient = MockWidgetbookHttpClient();
+        final runner = CommandRunner<int>('widgetbook', 'CLI')
+          ..addCommand(
+            BuildPushCommand(
+              context: context,
+              logger: logger,
+              cloudClient: cloudClient,
+            ),
+          );
+
+        await expectLater(
+          runner.run(['push', '--api-key', 'widgetbook_ws_secret']),
+          throwsA(
+            isA<CliException>().having(
+              (e) => e.message,
+              'message',
+              equals('A workspace API key needs --project <name>.'),
+            ),
+          ),
+        );
+
+        verifyZeroInteractions(cloudClient);
+      },
+    );
   });
 }

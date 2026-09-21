@@ -5,12 +5,16 @@ import 'package:mason_logger/mason_logger.dart';
 import '../core/core.dart';
 
 class CloudException extends CliException {
-  CloudException(String message, {this.statusCode})
+  CloudException(this.detail, {this.statusCode})
     : super(
         'Something went wrong while communicating with the Widgetbook Cloud:\n'
-        '$message\n',
+        '$detail\n',
         ExitCode.software.code,
       );
+
+  /// The error reported by Widgetbook Cloud, or by the HTTP client when the
+  /// server did not respond.
+  final String detail;
 
   /// HTTP status code of the failed response, or `null` when the server did
   /// not respond (e.g. timeout, connection or handshake errors).
