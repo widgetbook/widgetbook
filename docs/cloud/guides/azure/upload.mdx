@@ -8,7 +8,13 @@ If you want to use Widgetbook Cloud with your existing Azure DevOps project, her
   </Step>
   
   <Step title="Add API Key as a Secret">
-    Add `WIDGETBOOK_API_KEY` to your [Azure DevOps project's secrets](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables). You can find the API key in the Widgetbook Cloud's **project settings page**.
+    Create a workspace API key in your Widgetbook Cloud **workspace settings**.
+    The key is shown only once, so add it as `WIDGETBOOK_API_KEY` to your [Azure DevOps project's secrets](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables) right away.
+
+    <Info>
+      Project API keys from the **project settings page** still work.
+      With a project API key, `--project` is optional.
+    </Info>
   </Step>
 
   <Step title="Create Azure DevOps Pipeline">
@@ -76,8 +82,11 @@ If you want to use Widgetbook Cloud with your existing Azure DevOps project, her
                   workingDirectory: "widgetbook"
                   targetType: "inline"
                   script: |
-                    $HOME/.pub-cache/bin/widgetbook cloud build push --api-key $(WIDGETBOOK_API_KEY)
+                    $HOME/.pub-cache/bin/widgetbook cloud build push --api-key $(WIDGETBOOK_API_KEY) --project my-app
     ```
+
+    Replace `my-app` with the name of your project in Widgetbook Cloud.
+    If you rename the project, update `--project` as well.
 
   </Step>
 

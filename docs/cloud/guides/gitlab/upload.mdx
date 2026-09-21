@@ -9,7 +9,14 @@ If you want to use Widgetbook Cloud with your existing GitLab repository, here's
   </Step>
   
   <Step title="Add API Key as a Variable">
-    Add `WIDGETBOOK_API_KEY` to your [GitLab's CI/CD Variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project). You can find the API key in the Widgetbook Cloud's **project settings page**. Make sure you **uncheck "Protect variable" checkbox**, to allow the variable to be accessible from feature branches.
+    Create a workspace API key in your Widgetbook Cloud **workspace settings**.
+    The key is shown only once, so add it as `WIDGETBOOK_API_KEY` to your [GitLab's CI/CD Variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project) right away.
+    Make sure you **uncheck "Protect variable" checkbox**, to allow the variable to be accessible from feature branches.
+
+    <Info>
+      Project API keys from the **project settings page** still work.
+      With a project API key, `--project` is optional.
+    </Info>
   </Step>
 
   <Step title="Create GitLab CI/CD Pipeline">
@@ -44,8 +51,11 @@ If you want to use Widgetbook Cloud with your existing GitLab repository, here's
         # Upload to Widgetbook Cloud
         - dart pub global activate widgetbook_cli {{ versions.cli }}
         - export PATH="$PATH":"$HOME/.pub-cache/bin"
-        - widgetbook cloud build push --api-key "$WIDGETBOOK_API_KEY"
+        - widgetbook cloud build push --api-key "$WIDGETBOOK_API_KEY" --project my-app
     ```
+
+    Replace `my-app` with the name of your project in Widgetbook Cloud.
+    If you rename the project, update `--project` as well.
 
   </Step>
   
@@ -76,17 +86,18 @@ To achieve this, replace the `cloud build push` command as follows:
 widgetbook:
   script:
     - # Previous scripts...
-    - widgetbook cloud build push --api-key "$WIDGETBOOK_API_KEY" // [!code --]
+    - widgetbook cloud build push --api-key "$WIDGETBOOK_API_KEY" --project my-app // [!code --]
     - | // [!code ++]
       if [ "$CI_PIPELINE_SOURCE" == "merge_request_event" ]; then // [!code ++]
         # Upload a merged result build // [!code ++]
         widgetbook cloud build push \ // [!code ++]
           --api-key "$WIDGETBOOK_API_KEY" \ // [!code ++]
+          --project my-app \ // [!code ++]
           --commit "$CI_MERGE_REQUEST_SOURCE_BRANCH_SHA" \ // [!code ++]
           --branch "$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME" \ // [!code ++]
           --merged-result-commit "$CI_COMMIT_SHA" // [!code ++]
       else // [!code ++]
         # Upload a regular build // [!code ++]
-        widgetbook cloud build push --api-key "$WIDGETBOOK_API_KEY"  // [!code ++]
+        widgetbook cloud build push --api-key "$WIDGETBOOK_API_KEY" --project my-app // [!code ++]
       fi // [!code ++]
 ```

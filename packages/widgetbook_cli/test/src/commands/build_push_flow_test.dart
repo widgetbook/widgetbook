@@ -40,11 +40,11 @@ ScenarioRecord _scenario({
 void main() {
   setUpAll(() {
     registerFallbackValue(
-      const SubmitBuildRequest(apiKey: 'k', buildId: 'b'),
+      const SubmitBuildRequest(apiKey: ProjectApiKey('k'), buildId: 'b'),
     );
     registerFallbackValue(
       const CreateBuildRequest(
-        apiKey: 'k',
+        apiKey: ProjectApiKey('k'),
         versionControlProvider: 'github',
         repository: 'r',
         actor: 'a',
@@ -58,7 +58,7 @@ void main() {
       ),
     );
     registerFallbackValue(
-      const AppendSnapshotsRequest(apiKey: 'k', snapshots: []),
+      const AppendSnapshotsRequest(apiKey: ProjectApiKey('k'), snapshots: []),
     );
   });
 
@@ -85,8 +85,12 @@ void main() {
 
     late List<ScenarioRecord> scenarios;
 
-    BuildPushArgs makeArgs() => const BuildPushArgs(
-      apiKey: 'api-key',
+    BuildPushArgs makeArgs({
+      ApiKey apiKey = const ProjectApiKey('api-key'),
+      String? project,
+    }) => BuildPushArgs(
+      apiKey: apiKey,
+      project: project,
       path: '/project',
       branch: 'main',
       commit: 'sha-1',
@@ -281,7 +285,8 @@ void main() {
         final exitCode = await command.runWith(
           context,
           const BuildPushArgs(
-            apiKey: 'api-key',
+            apiKey: ProjectApiKey('api-key'),
+            project: null,
             path: '/project',
             branch: 'main',
             commit: 'sha-1',
@@ -311,6 +316,111 @@ void main() {
       await expectLater(
         command.runWith(context, makeArgs()),
         throwsA(isA<CloudException>()),
+      );
+    });
+
+    test('a project key without --project names no project', () async {
+      await command.runWith(context, makeArgs());
+
+      final createRequest =
+          verify(
+                () => cloudClient.createBuild(any(), captureAny()),
+              ).captured.single
+              as CreateBuildRequest;
+
+      expect(createRequest.apiKey, isA<ProjectApiKey>());
+      expect(createRequest.projectName, isNull);
+    });
+
+    test('a project key with --project names the project', () async {
+      await command.runWith(context, makeArgs(project: 'my-app'));
+
+      final createRequest =
+          verify(
+                () => cloudClient.createBuild(any(), captureAny()),
+              ).captured.single
+              as CreateBuildRequest;
+
+      expect(createRequest.apiKey, isA<ProjectApiKey>());
+      expect(createRequest.projectName, equals('my-app'));
+    });
+
+    test(
+      'a workspace key names the project on create only',
+      () async {
+        const apiKey = WorkspaceApiKey('widgetbook_ws_secret');
+
+        await command.runWith(
+          context,
+          makeArgs(apiKey: apiKey, project: 'my-app'),
+        );
+
+        final createRequest =
+            verify(
+                  () => cloudClient.createBuild(any(), captureAny()),
+                ).captured.single
+                as CreateBuildRequest;
+        expect(createRequest.apiKey, same(apiKey));
+        expect(createRequest.projectName, equals('my-app'));
+
+        final appendRequests = verify(
+          () => cloudClient.appendSnapshots(any(), any<String>(), captureAny()),
+        ).captured.cast<AppendSnapshotsRequest>();
+        for (final request in appendRequests) {
+          expect(request.apiKey, same(apiKey));
+          expect(request.toJson().keys, equals(['snapshots']));
+        }
+
+        final submitRequest =
+            verify(
+                  () => cloudClient.submitBuild(captureAny()),
+                ).captured.single
+                as SubmitBuildRequest;
+        expect(submitRequest.apiKey, same(apiKey));
+        expect(submitRequest.toJson().keys, equals(['buildId']));
+      },
+    );
+
+    test('points to project create when the project is unknown', () async {
+      when(() => cloudClient.createBuild(any(), any())).thenThrow(
+        CloudException(
+          "No project named 'my-app' in this workspace.",
+          statusCode: 422,
+        ),
+      );
+
+      await expectLater(
+        command.runWith(
+          context,
+          makeArgs(
+            apiKey: const WorkspaceApiKey('widgetbook_ws_secret'),
+            project: 'my-app',
+          ),
+        ),
+        throwsA(
+          isA<CliException>().having(
+            (e) => e.message,
+            'message',
+            equals(
+              "No project named 'my-app'. "
+              'Create it with: '
+              'widgetbook cloud project create --project my-app',
+            ),
+          ),
+        ),
+      );
+    });
+
+    test('passes other 422 errors through', () async {
+      final error = CloudException(
+        "This API key does not belong to project 'my-app'.",
+        statusCode: 422,
+      );
+      when(() => cloudClient.createBuild(any(), any())).thenThrow(error);
+
+      await expectLater(
+        command.runWith(context, makeArgs(project: 'my-app')),
+        throwsA(same(error)),
       );
     });
   });
@@ -386,7 +496,8 @@ void main() {
       final exitCode = await command.runWith(
         context,
         const BuildPushArgs(
-          apiKey: 'api-key',
+          apiKey: ProjectApiKey('api-key'),
+          project: null,
           path: '/project',
           branch: 'main',
           commit: 'sha-1',

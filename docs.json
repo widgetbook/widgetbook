@@ -776,6 +776,10 @@
               "href": "/cli/commands/init"
             },
             {
+              "title": "cloud project create",
+              "href": "/cli/commands/cloud-project-create"
+            },
+            {
               "title": "cloud build push",
               "href": "/cli/commands/cloud-build-push"
             },

@@ -1,0 +1,48 @@
+# `cloud project create`
+
+Creates a project in your Widgetbook Cloud workspace.
+
+Creating a project is a one-time setup step.
+Run the command once when you onboard a project, or run it in your CI pipeline with `--allow-existing`, so that every run after the first one succeeds as well.
+
+## Usage
+
+```bash
+widgetbook cloud project create --api-key <WORKSPACE_API_KEY> --project my-app
+```
+
+## Arguments
+
+The CLI accepts the following arguments.
+
+| Argument           | Mandatory | Default                      | Description                                                                                         |
+| ------------------ | --------- | ---------------------------- | --------------------------------------------------------------------------------------------------- |
+| `--api-key`        | ✅        | -                            | A workspace API key for Widgetbook Cloud.                                                           |
+| `--project`        | ✅        | -                            | The name of the project to create.                                                                  |
+| `--allow-existing` | ➖        | `false`                      | Exit successfully instead of failing when a project with this name already exists in the workspace. |
+| `--api-url`        | ➖        | `https://api.widgetbook.io/` | Base URL of the Widgetbook Cloud API.                                                               |
+
+## Workspace API key
+
+Creating a project requires a workspace API key, which starts with `widgetbook_ws_`.
+You create it in your Widgetbook Cloud workspace settings.
+The key is shown only once, so store it as a secret in your CI provider right away.
+
+A project API key cannot create projects.
+If you pass one, the command fails before it sends any request.
+
+## Project name
+
+Project names are unique within a workspace.
+A name must not be empty and can be up to 100 characters long.
+
+[`cloud build push`](/cli/commands/cloud-build-push) and [`cloud review skip`](/cli/commands/cloud-review-skip) refer to the project by this name through their `--project` argument.
+If you rename the project in Widgetbook Cloud, update `--project` in your CI pipelines as well.
+
+## Behavior
+
+If a project with the same name already exists in the workspace, the command fails.
+With `--allow-existing`, it exits successfully instead and leaves the existing project unchanged.
+
+The command creates the project without a Git connection.
+To synchronize pull requests and get reviews, [connect the project to your repository](/cloud/projects/connect#connect-project).
