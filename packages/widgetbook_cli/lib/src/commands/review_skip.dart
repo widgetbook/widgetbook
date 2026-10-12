@@ -4,7 +4,9 @@ import 'package:args/args.dart';
 import 'package:mason_logger/mason_logger.dart';
 
 import '../api/api.dart';
+import '../api/cloud_exception.dart';
 import '../core/core.dart';
+import 'cloud_options.dart';
 import 'review_skip_args.dart';
 
 class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
@@ -22,8 +24,14 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
     argParser
       ..addOption(
         'api-key',
-        help: "Project's API key from setting page on Widgetbook Cloud",
+        help: 'Workspace or project API key from Widgetbook Cloud',
         mandatory: true,
+      )
+      ..addOption(
+        'project',
+        help:
+            'Name of the project on Widgetbook Cloud. '
+            'Required with a workspace API key.',
       )
       ..addOption(
         'pr',
@@ -41,16 +49,7 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
         'reason',
         help: 'Shown in the commit status (e.g. "No UI changes")',
       )
-      ..addOption(
-        'api-url',
-        hide: true,
-        callback: (url) {
-          if (url == null) return;
-          this.cloudClient.client.options.baseUrl = url.endsWith('/')
-              ? url
-              : '$url/';
-        },
-      );
+      ..addApiUrlOption(this.cloudClient);
   }
 
   final WidgetbookHttpClient cloudClient;
@@ -60,7 +59,11 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
     Context context,
     ArgResults results,
   ) {
-    final apiKey = results['api-key'] as String;
+    final project = results['project'] as String?;
+    final apiKey = parseApiKey(
+      results['api-key'] as String,
+      project: project,
+    );
     final prOption = results['pr'] as String;
     final prNumber = int.tryParse(prOption);
 
@@ -73,6 +76,7 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
 
     return ReviewSkipArgs(
       apiKey: apiKey,
+      project: project,
       prNumber: prNumber,
       sha: results['sha'] as String,
       reason: results['reason'] as String?,
@@ -92,6 +96,7 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
           apiKey: args.apiKey,
           sha: args.sha,
           reason: args.reason,
+          projectName: args.project,
         ),
       );
 
@@ -103,6 +108,7 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
       return ExitCode.success.code;
     } catch (e) {
       progress.fail('Could not skip the Widgetbook review');
+      if (e is CloudException) throw e.withProjectHint(args.project);
       rethrow;
     }
   }

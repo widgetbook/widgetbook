@@ -17,6 +17,7 @@ import '../storage/storage.dart';
 import '../utils/build_hasher.dart';
 import '../utils/executable_manager.dart';
 import 'build_push_args.dart';
+import 'cloud_options.dart';
 
 /// Target byte budget for a single append batch (~1 MB of JSON-encoded
 /// snapshot records). Keeps each append request small.
@@ -49,8 +50,14 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     argParser
       ..addOption(
         'api-key',
-        help: "Project's API key from setting page on Widgetbook Cloud",
+        help: 'Workspace or project API key from Widgetbook Cloud',
         mandatory: true,
+      )
+      ..addOption(
+        'project',
+        help:
+            'Name of the project on Widgetbook Cloud. '
+            'Required with a workspace API key.',
       )
       ..addOption(
         'path',
@@ -86,16 +93,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
             'commit already exists on Widgetbook Cloud.',
         negatable: false,
       )
-      ..addOption(
-        'api-url',
-        hide: true,
-        callback: (url) {
-          if (url == null) return;
-          this.cloudClient.client.options.baseUrl = url.endsWith('/')
-              ? url
-              : '$url/';
-        },
-      )
+      ..addApiUrlOption(this.cloudClient)
       ..addFlag(
         'no-turbo',
         hide: true,
@@ -115,7 +113,11 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     ArgResults results,
   ) async {
     final path = results['path'] as String;
-    final apiKey = results['api-key'] as String;
+    final project = results['project'] as String?;
+    final apiKey = parseApiKey(
+      results['api-key'] as String,
+      project: project,
+    );
 
     final repository = context.repository;
 
@@ -169,6 +171,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
     return BuildPushArgs(
       apiKey: apiKey,
+      project: project,
       branch: branch,
       commit: commit,
       mergedResultCommit: mergedResultCommit,
@@ -275,6 +278,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
           expectedSnapshotCount: cache.scenarios.length,
           size: dirSize + cache.totalSnapshotSize,
           hash: hash,
+          projectName: args.project,
         ),
       );
     } on CloudException catch (e) {
@@ -289,7 +293,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         return 0;
       }
 
-      rethrow;
+      throw e.withProjectHint(args.project);
     }
 
     if (createResponse.isTurbo) {
@@ -403,7 +407,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
   /// `v4/builds/{buildId}/snapshots` with bounded parallelism.
   Future<void> _appendSnapshots({
     required VersionsMetadata? versions,
-    required String apiKey,
+    required ApiKey apiKey,
     required String buildId,
     required List<ScenarioRecord> scenarios,
   }) async {

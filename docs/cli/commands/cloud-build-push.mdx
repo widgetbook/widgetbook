@@ -5,22 +5,43 @@ Pushes a [Widgetbook build](/cloud/builds/overview) to Widgetbook Cloud.
 ## Usage
 
 ```bash
-widgetbook cloud build push --api-key <API_KEY>
+widgetbook cloud build push --api-key <WORKSPACE_API_KEY> --project my-app
 ```
 
 ## Arguments
 
 The CLI accepts the following arguments.
 
-| Argument       | Mandatory | Default\*                     | Description                                                      |
-| -------------- | --------- | ----------------------------- | ---------------------------------------------------------------- |
-| `--path`       | ➖        | `./`                          | The path to your project.                                        |
-| `--api-key`    | ✅        | -                             | The project specific API key for Widgetbook Cloud.               |
-| `--branch`     | ➖        | Current git branch            | The name of the branch for which the Widgetbook is uploaded.     |
-| `--commit`     | ➖        | HEAD commit of current branch | The SHA hash of the commit for which the Widgetbook is uploaded. |
-| `--repository` | ➖        | Repository top-level name     | The name of the repository for which the Widgetbook is uploaded. |
-| `--actor`      | ➖        | Git config `user.name`        | The username of the actor which triggered the build.             |
-| `--allow-existing` | ➖    | `false`                       | Exit successfully instead of failing when a build for this commit already exists on Widgetbook Cloud. Useful when a CI workflow re-uploads a pull request's base build. |
+| Argument           | Mandatory | Default\*                     | Description                                                                                                                                                             |
+| ------------------ | --------- | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--path`           | ➖        | `./`                          | The path to your project.                                                                                                                                               |
+| `--api-key`        | ✅        | -                             | A workspace API key, or the API key of the project. See [API keys](#api-keys).                                                                                          |
+| `--project`        | ➖        | -                             | The name of the project on Widgetbook Cloud. Mandatory with a workspace API key.                                                                                        |
+| `--branch`         | ➖        | Current git branch            | The name of the branch for which the Widgetbook is uploaded.                                                                                                            |
+| `--commit`         | ➖        | HEAD commit of current branch | The SHA hash of the commit for which the Widgetbook is uploaded.                                                                                                        |
+| `--repository`     | ➖        | Repository top-level name     | The name of the repository for which the Widgetbook is uploaded.                                                                                                        |
+| `--actor`          | ➖        | Git config `user.name`        | The username of the actor which triggered the build.                                                                                                                    |
+| `--allow-existing` | ➖        | `false`                       | Exit successfully instead of failing when a build for this commit already exists on Widgetbook Cloud. Useful when a CI workflow re-uploads a pull request's base build. |
+| `--api-url`        | ➖        | `https://api.widgetbook.io/`  | Base URL of the Widgetbook Cloud API.                                                                                                                                   |
 
 _\* These defaults are used when the CLI is used locally.
 If the CLI is used in a CI/CD environment, the defaults have different respective values._
+
+## API keys
+
+`--api-key` accepts two kinds of keys:
+
+- A **workspace API key** starts with `widgetbook_ws_` and works for every project in the workspace.
+  You create it in your Widgetbook Cloud workspace settings.
+  The key is shown only once, so store it as a secret right away.
+  As the key does not identify a project on its own, pass the project's name with `--project`.
+- A **project API key** works for a single project and is shown in the project settings.
+  `--project` is optional with a project API key.
+  If you pass it, it must match the name of the key's project.
+
+With a workspace API key, the project must exist before you push a build.
+Create it once with [`cloud project create`](/cli/commands/cloud-project-create).
+If no project with the given name exists, the command fails and shows how to create it.
+
+`--project` refers to the project by its name.
+If you rename the project in Widgetbook Cloud, update `--project` in your CI pipelines as well.

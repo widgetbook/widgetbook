@@ -5,6 +5,8 @@ import 'models/append_snapshots_request.dart';
 import 'models/append_snapshots_response.dart';
 import 'models/create_build_request.dart';
 import 'models/create_build_response.dart';
+import 'models/create_project_request.dart';
+import 'models/create_project_response.dart';
 import 'models/skip_review_request.dart';
 import 'models/skip_review_response.dart';
 import 'models/submit_build_request.dart';
@@ -47,7 +49,10 @@ class WidgetbookHttpClient {
         'v4/builds',
         data: request.toJson(),
         options: Options(
-          headers: versions?.toHeaders(),
+          headers: {
+            ...?versions?.toHeaders(),
+            ...request.apiKey.toHeaders(),
+          },
         ),
       );
 
@@ -69,7 +74,10 @@ class WidgetbookHttpClient {
         'v4/builds/$buildId/snapshots',
         data: request.toJson(),
         options: Options(
-          headers: versions?.toHeaders(),
+          headers: {
+            ...?versions?.toHeaders(),
+            ...request.apiKey.toHeaders(),
+          },
         ),
       );
 
@@ -88,6 +96,9 @@ class WidgetbookHttpClient {
       final response = await client.post<Map<String, dynamic>>(
         'v4/builds/submit',
         data: request.toJson(),
+        options: Options(
+          headers: request.apiKey.toHeaders(),
+        ),
       );
 
       return SubmitBuildResponse.fromJson(response.data!);
@@ -108,6 +119,9 @@ class WidgetbookHttpClient {
         final response = await client.post<Map<String, dynamic>>(
           'v4/pull-requests/$prNumber/review-skip',
           data: request.toJson(),
+          options: Options(
+            headers: request.apiKey.toHeaders(),
+          ),
         );
 
         return SkipReviewResponse.fromJson(response.data!);
@@ -121,6 +135,25 @@ class WidgetbookHttpClient {
 
         await Future<void>.delayed(retryDelays[attempt]);
       }
+    }
+  }
+
+  /// Creates a project in the workspace of the [CreateProjectRequest.apiKey].
+  Future<CreateProjectResponse> createProject(
+    CreateProjectRequest request,
+  ) async {
+    try {
+      final response = await client.post<Map<String, dynamic>>(
+        'v4/projects',
+        data: request.toJson(),
+        options: Options(
+          headers: request.apiKey.toHeaders(),
+        ),
+      );
+
+      return CreateProjectResponse.fromJson(response.data!);
+    } catch (e, stackTrace) {
+      throw CloudException.parse(e, stackTrace);
     }
   }
 }

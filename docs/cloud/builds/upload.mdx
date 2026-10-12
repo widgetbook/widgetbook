@@ -70,15 +70,39 @@ To create a Widgetbook Build, follow these steps inside your Widgetbook project:
   </Step>
 
   <Step title="Get your API key">
-    Copy your **API key** from the Widgetbook Cloud **project settings page**.
+    Create a **workspace API key** in your Widgetbook Cloud **workspace settings**.
+    The key is shown only once, so store it somewhere safe.
+  </Step>
+
+  <Step title="Create the project">
+    Creating the project is a one-time setup step, so skip it if the project already exists in Widgetbook Cloud.
+
+    ```bash
+    widgetbook cloud project create --api-key WORKSPACE_API_KEY --project my-app
+    ```
+
+    See [`cloud project create`](/cli/commands/cloud-project-create) for details.
   </Step>
 
   <Step title="Push the build to Widgetbook Cloud">
     ```bash
-    widgetbook cloud build push --api-key PROJECT_API_KEY
+    widgetbook cloud build push --api-key WORKSPACE_API_KEY --project my-app
     ```
+
+    `--project` refers to the project by its name.
+    If you rename the project in Widgetbook Cloud, update `--project` as well.
   </Step>
 </Steps>
+
+<Info>
+Project API keys from the Widgetbook Cloud **project settings page** still work.
+With a project API key, `--project` is optional:
+
+```bash
+widgetbook cloud build push --api-key PROJECT_API_KEY
+```
+
+</Info>
 
 <Info>
 The `cloud build push` command uploads the following directories:

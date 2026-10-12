@@ -1,3 +1,4 @@
+import 'api_key.dart';
 import 'snapshot_record.dart';
 
 class AppendSnapshotsRequest {
@@ -6,12 +7,12 @@ class AppendSnapshotsRequest {
     required this.snapshots,
   });
 
-  final String apiKey;
+  final ApiKey apiKey;
   final List<SnapshotRecord> snapshots;
 
   Map<String, dynamic> toJson() {
     return {
-      'apiKey': apiKey,
+      ...apiKey.toJson(),
       'snapshots': snapshots.map((snapshot) => snapshot.toJson()).toList(),
     };
   }

@@ -1,7 +1,10 @@
+import '../api/api.dart';
+
 /// Typed representation of the arguments passed to the push command.
 class BuildPushArgs {
   const BuildPushArgs({
     required this.apiKey,
+    required this.project,
     required this.path,
     required this.branch,
     required this.commit,
@@ -13,7 +16,11 @@ class BuildPushArgs {
     required this.allowExisting,
   });
 
-  final String apiKey;
+  final ApiKey apiKey;
+
+  /// Name of the Widgetbook Cloud project, required with a [WorkspaceApiKey].
+  final String? project;
+
   final String path;
   final String branch;
   final String commit;

@@ -11,19 +11,21 @@ Requires *Allow CI to skip the review check* to be enabled in the project's gene
 ## Usage
 
 ```bash
-widgetbook cloud review skip --api-key <API_KEY> --pr 123 --sha <HEAD_SHA> --reason "No UI changes"
+widgetbook cloud review skip --api-key <WORKSPACE_API_KEY> --project my-app --pr 123 --sha <HEAD_SHA> --reason "No UI changes"
 ```
 
 ## Arguments
 
 The CLI accepts the following arguments.
 
-| Argument    | Mandatory | Description                                            |
-| ----------- | --------- | ------------------------------------------------------ |
-| `--api-key` | ✅        | The project specific API key for Widgetbook Cloud.     |
-| `--pr`      | ✅        | The number of the pull request to skip the review for. |
-| `--sha`     | ✅        | The head commit SHA of the pull request.               |
-| `--reason`  | ➖        | Shown in the commit status. Up to 500 characters.      |
+| Argument    | Mandatory | Description                                                                      |
+| ----------- | --------- | -------------------------------------------------------------------------------- |
+| `--api-key` | ✅        | A workspace API key, or the API key of the project. See [API keys](#api-keys).   |
+| `--project` | ➖        | The name of the project on Widgetbook Cloud. Mandatory with a workspace API key. |
+| `--pr`      | ✅        | The number of the pull request to skip the review for.                           |
+| `--sha`     | ✅        | The head commit SHA of the pull request.                                         |
+| `--reason`  | ➖        | Shown in the commit status. Up to 500 characters.                                |
+| `--api-url` | ➖        | Base URL of the Widgetbook Cloud API. Defaults to `https://api.widgetbook.io/`.  |
 
 The pull request and its head commit are passed explicitly because every CI provider exposes them under different variables, and several expose a merge commit where the head commit is expected.
 
@@ -32,6 +34,16 @@ The pull request and its head commit are passed explicitly because every CI prov
   Widgetbook tracks the head commit, so a skip for any other commit is rejected.
   In GitHub Actions this is `github.event.pull_request.head.sha`, not `github.sha`.
 </Warning>
+
+## API keys
+
+Like [`cloud build push`](/cli/commands/cloud-build-push#api-keys), the command accepts two kinds of keys:
+
+- A **workspace API key**, which starts with `widgetbook_ws_`, together with the project's name in `--project`.
+- A **project API key**, for which `--project` is optional.
+  If you pass it, it must match the name of the key's project.
+
+If no project with the given name exists, the command fails and shows how to create it with [`cloud project create`](/cli/commands/cloud-project-create).
 
 ## Behavior
 
@@ -46,4 +58,4 @@ A skip only applies to the commit it was issued for.
 Pushing a new commit leaves the review check unreported again, so the pull request is blocked until a build is uploaded or the commit is skipped in turn.
 
 One skip covers one Widgetbook project.
-If a repository holds several projects, call the command once per project with that project's API key.
+If a repository holds several projects, call the command once per project, passing that project's name in `--project` or that project's API key.

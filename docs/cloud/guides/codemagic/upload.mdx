@@ -4,10 +4,13 @@ Codemagic is just a CI/CD platform, which means it needs to be accompanied by a 
 
 <Steps>
   <Step title="Add API Key as a Secret">
-    Add `WIDGETBOOK_API_KEY` under `widgetbook_credentials` group in your
-    [Codemagic project's environment
-    variables](https://docs.codemagic.io/yaml-basic-configuration/configuring-environment-variables/#configuring-environment-variables).
-    You can find the API key in the Widgetbook Cloud's **project settings page**.
+    Create a workspace API key in your Widgetbook Cloud **workspace settings**.
+    The key is shown only once, so add it as `WIDGETBOOK_API_KEY` under the `widgetbook_credentials` group in your [Codemagic project's environment variables](https://docs.codemagic.io/yaml-basic-configuration/configuring-environment-variables/#configuring-environment-variables) right away.
+
+    <Info>
+      Project API keys from the **project settings page** still work.
+      With a project API key, `--project` is optional.
+    </Info>
   </Step>
 
   <Step title="Setup Workflow">
@@ -47,8 +50,11 @@ Codemagic is just a CI/CD platform, which means it needs to be accompanied by a 
 
           - name: Push Widgetbook Build
             working_directory: widgetbook
-            script: widgetbook cloud build push --api-key $WIDGETBOOK_API_KEY
+            script: widgetbook cloud build push --api-key $WIDGETBOOK_API_KEY --project my-app
     ```
+
+    Replace `my-app` with the name of your project in Widgetbook Cloud.
+    If you rename the project, update `--project` as well.
 
   </Step>
 
