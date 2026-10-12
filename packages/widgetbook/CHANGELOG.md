@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FIX**: Scroll the navigation tree to the selected node and expand its ancestors when the path changes, including on deep links. ([#2042](https://github.com/widgetbook/widgetbook/pull/2042))
+
 ## 4.0.0-beta.14
 
 - **FEAT**: Add `foldersExpandedByDefault` to `Config` to start the navigation tree collapsed, while still expanding the ancestors of a deep-linked node on startup. ([#2028](https://github.com/widgetbook/widgetbook/pull/2028))

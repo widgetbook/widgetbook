@@ -26,6 +26,7 @@ class FolderTreeTile extends StatelessWidget {
   });
 
   static const indentation = 24.0;
+  static const height = indentation;
 
   final TreeNode node;
   final int depth;
@@ -40,7 +41,7 @@ class FolderTreeTile extends StatelessWidget {
     final borderRadius = BorderRadius.circular(indentation);
 
     return Container(
-      height: indentation,
+      height: height,
       decoration: BoxDecoration(
         borderRadius: borderRadius,
         color: isSelected

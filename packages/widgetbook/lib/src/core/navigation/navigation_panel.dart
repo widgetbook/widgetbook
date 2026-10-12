@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 // ignore: unnecessary_import flutter(<3.35.0)
 import 'package:meta/meta.dart';
 
@@ -17,14 +16,12 @@ import 'tree_node.dart';
 class NavigationPanel extends StatefulWidget {
   const NavigationPanel({
     super.key,
-    this.initialPath,
     this.onLeafNodeTap,
     required this.root,
     this.header,
     this.foldersExpandedByDefault = true,
   });
 
-  final String? initialPath;
   final ValueChanged<TreeNode<dynamic>>? onLeafNodeTap;
   final TreeNode<Null> root;
   final Widget? header;
@@ -35,44 +32,27 @@ class NavigationPanel extends StatefulWidget {
 }
 
 class _NavigationPanelState extends State<NavigationPanel> {
+  static const _listPadding = EdgeInsets.all(16);
+
   Timer? _debounce;
   final Set<String> _toggled = {};
   final ScrollController _scrollController = ScrollController();
-
-  /// Key of the currently selected tile, used to scroll it into view.
-  final GlobalKey _selectedTileKey = GlobalKey();
-
-  /// Nodes rendered by the list, as of the latest [build].
   List<TreeNode> _entries = const [];
-
-  /// The path the panel last reacted to, used to detect external changes.
   String? _lastPath;
-
-  /// Whether [_lastPath] was ever set; the first path is revealed without
-  /// an animation, since it is the deep-linked one.
-  bool _hasPath = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _revealPath(widget.initialPath);
-  }
+  bool _hasRevealedInitialPath = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    // [WidgetbookScope] is an [InheritedNotifier], so this runs whenever the
-    // state changes, including when the path is updated from outside the
-    // panel (e.g. a deep link or a knob that changes the route).
     final path = WidgetbookState.of(context).path;
-    if (path == _lastPath) return;
+    if (_hasRevealedInitialPath && path == _lastPath) return;
 
-    final isFirstPath = !_hasPath;
-    _hasPath = true;
+    final animate = _hasRevealedInitialPath;
+    _hasRevealedInitialPath = true;
     _lastPath = path;
     _revealPath(path);
-    _scrollToPath(path, animate: !isFirstPath);
+    _scrollToPath(path, animate: animate);
   }
 
   /// Expands all ancestors of [path], so that the node is visible in the tree.
@@ -88,63 +68,51 @@ class _NavigationPanelState extends State<NavigationPanel> {
     }
   }
 
-  /// Scrolls the tile of [path] into view, once the list has rebuilt.
-  ///
-  /// [attempts] guards against frames in which the scrolling cannot happen
-  /// yet, either because the list is not attached to the controller or the
-  /// tile is outside the list's build range.
-  void _scrollToPath(String? path, {required bool animate, int attempts = 5}) {
-    if (path == null || attempts <= 0) return;
+  double _extentOf(TreeNode node) {
+    return node.isCategory ? CategoryTreeTile.height : FolderTreeTile.height;
+  }
+
+  /// Centers the tile of [path] in the list, unless it is already fully
+  /// visible. Runs after the next frame, once the list contains the tile.
+  void _scrollToPath(String? path, {required bool animate}) {
+    if (path == null) return;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted || path != _lastPath) return;
-
-      if (!_scrollController.hasClients) {
-        _scrollToPath(path, animate: animate, attempts: attempts - 1);
+      if (!mounted || path != _lastPath || !_scrollController.hasClients) {
         return;
       }
 
       final index = _entries.indexWhere((node) => node.path == path);
-      if (index < 0) return; // Filtered out by the search query.
+      if (index < 0) return;
+
+      final tileTop = _entries
+          .take(index)
+          .fold(_listPadding.top, (offset, node) => offset + _extentOf(node));
+      final tileExtent = _extentOf(_entries[index]);
 
       final position = _scrollController.position;
-      final tileContext = _selectedTileKey.currentContext;
+      final viewport = position.viewportDimension;
+      final isFullyVisible =
+          tileTop >= position.pixels &&
+          tileTop + tileExtent <= position.pixels + viewport;
+      if (isFullyVisible) return;
 
-      if (tileContext == null) {
-        // The tile is outside the list's build range; jump to its estimated
-        // offset first, so that the next frame builds it.
-        _scrollController.jumpTo(
-          (index * FolderTreeTile.indentation).clamp(
-            position.minScrollExtent,
-            position.maxScrollExtent,
-          ),
-        );
-
-        _scrollToPath(path, animate: false, attempts: attempts - 1);
-        return;
-      }
-
-      if (_isFullyVisible(tileContext, position)) return;
-
-      Scrollable.ensureVisible(
-        tileContext,
-        alignment: 0.5,
-        duration: animate ? const Duration(milliseconds: 250) : Duration.zero,
-        curve: Curves.easeInOut,
+      final target = (tileTop - (viewport - tileExtent) / 2).clamp(
+        position.minScrollExtent,
+        position.maxScrollExtent,
       );
+
+      final isNearby = (target - position.pixels).abs() <= viewport;
+      if (animate && isNearby) {
+        _scrollController.animateTo(
+          target,
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeInOut,
+        );
+      } else {
+        _scrollController.jumpTo(target);
+      }
     });
-  }
-
-  bool _isFullyVisible(BuildContext tileContext, ScrollPosition position) {
-    final box = tileContext.findRenderObject();
-    if (box is! RenderBox) return false;
-
-    final viewport = RenderAbstractViewport.of(box);
-    final leadingOffset = viewport.getOffsetToReveal(box, 0).offset;
-    final trailingOffset = viewport.getOffsetToReveal(box, 1).offset;
-
-    return position.pixels >= trailingOffset &&
-        position.pixels <= leadingOffset;
   }
 
   bool _isExpandedByDefault(TreeNode node) {
@@ -199,15 +167,12 @@ class _NavigationPanelState extends State<NavigationPanel> {
       );
     }
 
-    final isSelected = node.path == selectedPath;
-
     return FolderTreeTile(
-      key: isSelected ? _selectedTileKey : null,
       node: node,
       depth: node.depth,
       isTerminal: node.isTerminal,
       isExpanded: _isExpanded(node),
-      isSelected: isSelected,
+      isSelected: node.path == selectedPath,
       onExpanderTap: () => _toggleExpanded(node),
       onTap: () {
         if (!node.isClickable) {
@@ -258,8 +223,10 @@ class _NavigationPanelState extends State<NavigationPanel> {
               ? const Center(child: Text('No matches found'))
               : ListView.builder(
                   controller: _scrollController,
-                  padding: const EdgeInsets.all(16),
+                  padding: _listPadding,
                   itemCount: entries.length,
+                  itemExtentBuilder: (index, _) =>
+                      index < entries.length ? _extentOf(entries[index]) : null,
                   itemBuilder: (context, index) =>
                       _buildTile(entries[index], state.path),
                 ),
