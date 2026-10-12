@@ -23,7 +23,6 @@ class ResponsiveLayout extends StatelessWidget {
     final state = WidgetbookState.of(context);
 
     return NavigationPanel(
-      initialPath: state.path,
       root: state.root,
       header: state.config.header,
       foldersExpandedByDefault: state.config.foldersExpandedByDefault,
