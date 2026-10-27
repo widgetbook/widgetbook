@@ -39,7 +39,7 @@ This causes Widgetbook Cloud to miss the head commit `z` for the pull request, w
 The workflow below uploads a build for **both** the head commit `z` and the base commit `a` of every pull request, so the visual pull request is complete as soon as CI finishes.
 It avoids the merge commit pitfall from the caution above by checking out and pushing the pull request's head commit explicitly, instead of the merge commit `m` that GitHub checks out by default.
 
-Create an [API key](/cloud/workspaces#api-keys) with the "Push builds" permission for your project and add it as `WIDGETBOOK_API_KEY` to your [repository secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository), then add the workflow:
+Create an [API key](/cloud/workspaces#api-keys) with the "Push builds" permission for your project on the **API Keys** tab of your workspace settings, and add it as `WIDGETBOOK_API_KEY` to your [repository secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository), then add the workflow:
 
 ```yaml
 name: Widgetbook Cloud Visual PR
