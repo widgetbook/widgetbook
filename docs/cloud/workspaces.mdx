@@ -23,9 +23,29 @@ Members
 - Add or remove members to the workspace
 - Change the role of a member
 
+API keys
+- Create and revoke the [API keys](#api-keys) of the Widgetbook CLI
+
 Billing
 - See and manage your current plan
 - Investigate your usage
+
+### API keys
+
+The [Widgetbook CLI](/cli) authenticates with an API key.
+Owners create API keys in the workspace settings, under **API keys**.
+A key is shown only once, so store it as a secret right away.
+
+Each key has permissions:
+
+- **Create projects** covers the whole workspace and lets [`cloud project create`](/cli/commands/cloud-project-create) create projects.
+- **Push builds** and **Skip reviews** cover either selected projects or all projects of the workspace, and let [`cloud build push`](/cli/commands/cloud-build-push) and [`cloud review skip`](/cli/commands/cloud-review-skip) act on them.
+
+We recommend one key with the "Create projects" permission for setting up projects, and separate keys for your CI pipelines, limited to the projects they push to.
+With a key limited to exactly one project, `--project` is optional.
+
+Existing project API keys keep working with all CLI versions.
+They act like keys limited to their project with the "Push builds" and "Skip reviews" permissions.
 
 ### Delete workspace
 

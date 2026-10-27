@@ -11,7 +11,7 @@ Requires *Allow CI to skip the review check* to be enabled in the project's gene
 ## Usage
 
 ```bash
-widgetbook cloud review skip --api-key <WORKSPACE_API_KEY> --project my-app --pr 123 --sha <HEAD_SHA> --reason "No UI changes"
+widgetbook cloud review skip --api-key <API_KEY> --project my-app --pr 123 --sha <HEAD_SHA> --reason "No UI changes"
 ```
 
 ## Arguments
@@ -20,8 +20,8 @@ The CLI accepts the following arguments.
 
 | Argument    | Mandatory | Description                                                                      |
 | ----------- | --------- | -------------------------------------------------------------------------------- |
-| `--api-key` | ✅        | A workspace API key, or the API key of the project. See [API keys](#api-keys).   |
-| `--project` | ➖        | The name of the project on Widgetbook Cloud. Mandatory with a workspace API key. |
+| `--api-key` | ✅        | An API key with the "Skip reviews" permission. See [API keys](#api-keys).        |
+| `--project` | ➖        | The name of the project. Optional when the key reaches exactly one project.      |
 | `--pr`      | ✅        | The number of the pull request to skip the review for.                           |
 | `--sha`     | ✅        | The head commit SHA of the pull request.                                         |
 | `--reason`  | ➖        | Shown in the commit status. Up to 500 characters.                                |
@@ -37,12 +37,10 @@ The pull request and its head commit are passed explicitly because every CI prov
 
 ## API keys
 
-Like [`cloud build push`](/cli/commands/cloud-build-push#api-keys), the command accepts two kinds of keys:
+`--api-key` takes an [API key](/cloud/workspaces#api-keys) with the "Skip reviews" permission for the project.
+Existing project API keys keep working.
 
-- A **workspace API key**, which starts with `widgetbook_ws_`, together with the project's name in `--project`.
-- A **project API key**, for which `--project` is optional.
-  If you pass it, it must match the name of the key's project.
-
+Like with [`cloud build push`](/cli/commands/cloud-build-push#api-keys), `--project` is optional when the key reaches exactly one project.
 If no project with the given name exists, the command fails and shows how to create it with [`cloud project create`](/cli/commands/cloud-project-create).
 
 ## Behavior
@@ -58,4 +56,4 @@ A skip only applies to the commit it was issued for.
 Pushing a new commit leaves the review check unreported again, so the pull request is blocked until a build is uploaded or the commit is skipped in turn.
 
 One skip covers one Widgetbook project.
-If a repository holds several projects, call the command once per project, passing that project's name in `--project` or that project's API key.
+If a repository holds several projects, call the command once per project, passing that project's name in `--project`.

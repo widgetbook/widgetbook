@@ -69,16 +69,21 @@ To create a Widgetbook Build, follow these steps inside your Widgetbook project:
     ```
   </Step>
 
-  <Step title="Get your API key">
-    Create a **workspace API key** in your Widgetbook Cloud **workspace settings**.
-    The key is shown only once, so store it somewhere safe.
+  <Step title="Get your API keys">
+    Create [API keys](/cloud/workspaces#api-keys) in your Widgetbook Cloud workspace settings, under **API keys**.
+    Each key is shown only once, so store it somewhere safe.
+
+    We recommend two keys:
+
+    - A key with the "Create projects" permission, to set up projects.
+    - A key with the "Push builds" permission for your CI pipeline, limited to the projects it pushes to.
   </Step>
 
   <Step title="Create the project">
     Creating the project is a one-time setup step, so skip it if the project already exists in Widgetbook Cloud.
 
     ```bash
-    widgetbook cloud project create --api-key WORKSPACE_API_KEY --project my-app
+    widgetbook cloud project create --api-key SETUP_API_KEY --project my-app
     ```
 
     See [`cloud project create`](/cli/commands/cloud-project-create) for details.
@@ -86,17 +91,18 @@ To create a Widgetbook Build, follow these steps inside your Widgetbook project:
 
   <Step title="Push the build to Widgetbook Cloud">
     ```bash
-    widgetbook cloud build push --api-key WORKSPACE_API_KEY --project my-app
+    widgetbook cloud build push --api-key CI_API_KEY --project my-app
     ```
 
     `--project` refers to the project by its name.
+    It is optional when the key reaches exactly one project.
     If you rename the project in Widgetbook Cloud, update `--project` as well.
   </Step>
 </Steps>
 
 <Info>
-Project API keys from the Widgetbook Cloud **project settings page** still work.
-With a project API key, `--project` is optional:
+Existing project API keys keep working with all CLI versions.
+They reach exactly one project, so `--project` is optional:
 
 ```bash
 widgetbook cloud build push --api-key PROJECT_API_KEY

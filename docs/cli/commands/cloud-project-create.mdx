@@ -4,11 +4,12 @@ Creates a project in your Widgetbook Cloud workspace.
 
 Creating a project is a one-time setup step.
 Run the command once when you onboard a project, or run it in your CI pipeline with `--allow-existing`, so that every run after the first one succeeds as well.
+Your pipelines then refer to the project by its name.
 
 ## Usage
 
 ```bash
-widgetbook cloud project create --api-key <WORKSPACE_API_KEY> --project my-app
+widgetbook cloud project create --api-key <API_KEY> --project my-app
 ```
 
 ## Arguments
@@ -17,19 +18,19 @@ The CLI accepts the following arguments.
 
 | Argument           | Mandatory | Default                      | Description                                                                                         |
 | ------------------ | --------- | ---------------------------- | --------------------------------------------------------------------------------------------------- |
-| `--api-key`        | ✅        | -                            | A workspace API key for Widgetbook Cloud.                                                           |
+| `--api-key`        | ✅        | -                            | An API key with the "Create projects" permission. See [API key](#api-key).                          |
 | `--project`        | ✅        | -                            | The name of the project to create.                                                                  |
 | `--allow-existing` | ➖        | `false`                      | Exit successfully instead of failing when a project with this name already exists in the workspace. |
 | `--api-url`        | ➖        | `https://api.widgetbook.io/` | Base URL of the Widgetbook Cloud API.                                                               |
 
-## Workspace API key
+## API key
 
-Creating a project requires a workspace API key, which starts with `widgetbook_ws_`.
-You create it in your Widgetbook Cloud workspace settings.
-The key is shown only once, so store it as a secret in your CI provider right away.
+Creating a project requires an [API key](/cloud/workspaces#api-keys) with the "Create projects" permission.
+You create it in your Widgetbook Cloud workspace settings, under **API keys**.
+The key is shown only once, so store it as a secret right away.
 
-A project API key cannot create projects.
-If you pass one, the command fails before it sends any request.
+Only keys for the whole workspace can hold the "Create projects" permission.
+With any other key, the command fails with `This API key lacks the scope PROJECTS_CREATE.`
 
 ## Project name
 

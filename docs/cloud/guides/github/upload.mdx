@@ -9,12 +9,12 @@ If you want to use Widgetbook Cloud with your existing GitHub repository, here's
   </Step>
   
   <Step title="Add API Key as a Secret">
-    Create a workspace API key in your Widgetbook Cloud **workspace settings**.
+    Create an [API key](/cloud/workspaces#api-keys) with the "Push builds" permission for your project in your Widgetbook Cloud workspace settings, under **API keys**.
     The key is shown only once, so add it as `WIDGETBOOK_API_KEY` to your [GitHub repository's secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) right away.
 
     <Info>
-      Project API keys from the **project settings page** still work.
-      With a project API key, `--project` is optional.
+      Existing project API keys keep working.
+      `--project` is optional when the key reaches exactly one project.
     </Info>
   </Step>
 
