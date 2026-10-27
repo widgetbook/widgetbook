@@ -40,11 +40,10 @@ ScenarioRecord _scenario({
 void main() {
   setUpAll(() {
     registerFallbackValue(
-      const SubmitBuildRequest(apiKey: ProjectApiKey('k'), buildId: 'b'),
+      const CloudProject(workspaceId: 'w', projectId: 'p', name: 'n'),
     );
     registerFallbackValue(
       const CreateBuildRequest(
-        apiKey: ProjectApiKey('k'),
         versionControlProvider: 'github',
         repository: 'r',
         actor: 'a',
@@ -58,7 +57,7 @@ void main() {
       ),
     );
     registerFallbackValue(
-      const AppendSnapshotsRequest(apiKey: ProjectApiKey('k'), snapshots: []),
+      const AppendSnapshotsRequest(snapshots: []),
     );
   });
 
@@ -86,10 +85,9 @@ void main() {
     late List<ScenarioRecord> scenarios;
 
     BuildPushArgs makeArgs({
-      ApiKey apiKey = const ProjectApiKey('api-key'),
       String? project,
     }) => BuildPushArgs(
-      apiKey: apiKey,
+      apiKey: 'api-key',
       project: project,
       path: '/project',
       branch: 'main',
@@ -176,13 +174,35 @@ void main() {
         (_) async => CacheStore(scenarios: scenarios),
       );
 
-      when(() => cloudClient.createBuild(any(), any())).thenAnswer(
+      when(() => cloudClient.listWorkspaces(any())).thenAnswer(
+        (_) async => const [WorkspaceResponse(id: 'workspace-1', name: 'W')],
+      );
+      when(
+        () => cloudClient.listProjects(any(), any(), name: any(named: 'name')),
+      ).thenAnswer(
+        (_) async => [
+          ProjectResponse(
+            id: 'project-1',
+            name: 'my-app',
+            createdAt: DateTime.utc(2026),
+          ),
+        ],
+      );
+      when(
+        () => cloudClient.createBuild(any(), any(), any(), any()),
+      ).thenAnswer(
         (_) async => draftResponse,
       );
       when(
-        () => cloudClient.appendSnapshots(any(), any<String>(), any()),
+        () => cloudClient.appendSnapshots(
+          any(),
+          any(),
+          any(),
+          any<String>(),
+          any(),
+        ),
       ).thenAnswer((_) async => const AppendSnapshotsResponse(inserted: 1));
-      when(() => cloudClient.submitBuild(any())).thenAnswer(
+      when(() => cloudClient.submitBuild(any(), any(), any())).thenAnswer(
         (_) async => const SubmitBuildResponse(
           buildId: 'build-123',
           buildUrl: 'https://widgetbook.io/builds/build-123',
@@ -210,7 +230,8 @@ void main() {
 
       final captured =
           verify(
-                () => cloudClient.createBuild(any(), captureAny()),
+                () =>
+                    cloudClient.createBuild(any(), any(), any(), captureAny()),
               ).captured.single
               as CreateBuildRequest;
 
@@ -235,6 +256,8 @@ void main() {
 
         final batches = verify(
           () => cloudClient.appendSnapshots(
+            any(),
+            any(),
             any(),
             'build-123',
             captureAny(),
@@ -272,20 +295,22 @@ void main() {
     test('submit is called after create + append', () async {
       await command.runWith(context, makeArgs());
 
-      verify(() => cloudClient.submitBuild(any())).called(1);
+      verify(() => cloudClient.submitBuild(any(), any(), any())).called(1);
     });
 
     test(
       'allow-existing tolerates a 409 on create and skips the upload',
       () async {
-        when(() => cloudClient.createBuild(any(), any())).thenThrow(
+        when(
+          () => cloudClient.createBuild(any(), any(), any(), any()),
+        ).thenThrow(
           CloudException('Build already exists', statusCode: 409),
         );
 
         final exitCode = await command.runWith(
           context,
           const BuildPushArgs(
-            apiKey: ProjectApiKey('api-key'),
+            apiKey: 'api-key',
             project: null,
             path: '/project',
             branch: 'main',
@@ -301,15 +326,21 @@ void main() {
 
         expect(exitCode, equals(0));
         verifyNever(
-          () => cloudClient.appendSnapshots(any(), any<String>(), any()),
+          () => cloudClient.appendSnapshots(
+            any(),
+            any(),
+            any(),
+            any<String>(),
+            any(),
+          ),
         );
         verifyNever(() => storageClient.uploadObjects(any(), any(), any()));
-        verifyNever(() => cloudClient.submitBuild(any()));
+        verifyNever(() => cloudClient.submitBuild(any(), any(), any()));
       },
     );
 
     test('without allow-existing a 409 on create is rethrown', () async {
-      when(() => cloudClient.createBuild(any(), any())).thenThrow(
+      when(() => cloudClient.createBuild(any(), any(), any(), any())).thenThrow(
         CloudException('Build already exists', statusCode: 409),
       );
 
@@ -319,109 +350,70 @@ void main() {
       );
     });
 
-    test('a project key without --project names no project', () async {
-      await command.runWith(context, makeArgs());
-
-      final createRequest =
-          verify(
-                () => cloudClient.createBuild(any(), captureAny()),
-              ).captured.single
-              as CreateBuildRequest;
-
-      expect(createRequest.apiKey, isA<ProjectApiKey>());
-      expect(createRequest.projectName, isNull);
-    });
-
-    test('a project key with --project names the project', () async {
+    test('resolves the project once and uses it on every route', () async {
       await command.runWith(context, makeArgs(project: 'my-app'));
 
-      final createRequest =
-          verify(
-                () => cloudClient.createBuild(any(), captureAny()),
-              ).captured.single
-              as CreateBuildRequest;
+      verify(() => cloudClient.listWorkspaces('api-key')).called(1);
+      verify(
+        () =>
+            cloudClient.listProjects('api-key', 'workspace-1', name: 'my-app'),
+      ).called(1);
 
-      expect(createRequest.apiKey, isA<ProjectApiKey>());
-      expect(createRequest.projectName, equals('my-app'));
+      final createProject =
+          verify(
+                () => cloudClient.createBuild(
+                  'api-key',
+                  captureAny(),
+                  any(),
+                  any(),
+                ),
+              ).captured.single
+              as CloudProject;
+      expect(createProject.workspaceId, equals('workspace-1'));
+      expect(createProject.projectId, equals('project-1'));
+
+      final appendProjects = verify(
+        () => cloudClient.appendSnapshots(
+          'api-key',
+          captureAny(),
+          any(),
+          'build-123',
+          any(),
+        ),
+      ).captured;
+      expect(appendProjects, everyElement(same(createProject)));
+
+      verify(
+        () => cloudClient.submitBuild('api-key', createProject, 'build-123'),
+      ).called(1);
     });
 
-    test(
-      'a workspace key names the project on create only',
-      () async {
-        const apiKey = WorkspaceApiKey('widgetbook_ws_secret');
+    test('uses the only project of the key without --project', () async {
+      await command.runWith(context, makeArgs());
 
-        await command.runWith(
-          context,
-          makeArgs(apiKey: apiKey, project: 'my-app'),
-        );
+      verify(
+        () => cloudClient.listProjects('api-key', 'workspace-1'),
+      ).called(1);
+      verify(() => cloudClient.submitBuild(any(), any(), any())).called(1);
+    });
 
-        final createRequest =
-            verify(
-                  () => cloudClient.createBuild(any(), captureAny()),
-                ).captured.single
-                as CreateBuildRequest;
-        expect(createRequest.apiKey, same(apiKey));
-        expect(createRequest.projectName, equals('my-app'));
-
-        final appendRequests = verify(
-          () => cloudClient.appendSnapshots(any(), any<String>(), captureAny()),
-        ).captured.cast<AppendSnapshotsRequest>();
-        for (final request in appendRequests) {
-          expect(request.apiKey, same(apiKey));
-          expect(request.toJson().keys, equals(['snapshots']));
-        }
-
-        final submitRequest =
-            verify(
-                  () => cloudClient.submitBuild(captureAny()),
-                ).captured.single
-                as SubmitBuildRequest;
-        expect(submitRequest.apiKey, same(apiKey));
-        expect(submitRequest.toJson().keys, equals(['buildId']));
-      },
-    );
-
-    test('points to project create when the project is unknown', () async {
-      when(() => cloudClient.createBuild(any(), any())).thenThrow(
-        CloudException(
-          "No project named 'my-app' in this workspace.",
-          statusCode: 422,
-        ),
-      );
+    test('creates no build when the project cannot be resolved', () async {
+      when(
+        () => cloudClient.listProjects(any(), any(), name: any(named: 'name')),
+      ).thenAnswer((_) async => const []);
 
       await expectLater(
-        command.runWith(
-          context,
-          makeArgs(
-            apiKey: const WorkspaceApiKey('widgetbook_ws_secret'),
-            project: 'my-app',
-          ),
-        ),
+        command.runWith(context, makeArgs(project: 'my-app')),
         throwsA(
           isA<CliException>().having(
             (e) => e.message,
             'message',
-            equals(
-              "No project named 'my-app'. "
-              'Create it with: '
-              'widgetbook cloud project create --project my-app',
-            ),
+            startsWith("No project named 'my-app'."),
           ),
         ),
       );
-    });
 
-    test('passes other 422 errors through', () async {
-      final error = CloudException(
-        "This API key does not belong to project 'my-app'.",
-        statusCode: 422,
-      );
-      when(() => cloudClient.createBuild(any(), any())).thenThrow(error);
-
-      await expectLater(
-        command.runWith(context, makeArgs(project: 'my-app')),
-        throwsA(same(error)),
-      );
+      verifyNever(() => cloudClient.createBuild(any(), any(), any(), any()));
     });
   });
 
@@ -474,7 +466,23 @@ void main() {
       ).thenAnswer(
         (_) async => MockProcessResult.success('Flutter 3.24.0'),
       );
-      when(() => cloudClient.createBuild(any(), any())).thenAnswer(
+      when(() => cloudClient.listWorkspaces(any())).thenAnswer(
+        (_) async => const [WorkspaceResponse(id: 'workspace-1', name: 'W')],
+      );
+      when(
+        () => cloudClient.listProjects(any(), any(), name: any(named: 'name')),
+      ).thenAnswer(
+        (_) async => [
+          ProjectResponse(
+            id: 'project-1',
+            name: 'my-app',
+            createdAt: DateTime.utc(2026),
+          ),
+        ],
+      );
+      when(
+        () => cloudClient.createBuild(any(), any(), any(), any()),
+      ).thenAnswer(
         (_) async => const CreateTurboBuildResponse(
           buildId: 'turbo-1',
           buildUrl: 'https://widgetbook.io/builds/turbo-1',
@@ -496,7 +504,7 @@ void main() {
       final exitCode = await command.runWith(
         context,
         const BuildPushArgs(
-          apiKey: ProjectApiKey('api-key'),
+          apiKey: 'api-key',
           project: null,
           path: '/project',
           branch: 'main',
@@ -512,10 +520,16 @@ void main() {
 
       expect(exitCode, equals(0));
       verifyNever(
-        () => cloudClient.appendSnapshots(any(), any<String>(), any()),
+        () => cloudClient.appendSnapshots(
+          any(),
+          any(),
+          any(),
+          any<String>(),
+          any(),
+        ),
       );
       verifyNever(() => storageClient.uploadObjects(any(), any(), any()));
-      verifyNever(() => cloudClient.submitBuild(any()));
+      verifyNever(() => cloudClient.submitBuild(any(), any(), any()));
     });
   });
 }

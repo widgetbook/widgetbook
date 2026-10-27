@@ -48,17 +48,8 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
          description: 'Pushes a new build to Widgetbook Cloud',
        ) {
     argParser
-      ..addOption(
-        'api-key',
-        help: 'Workspace or project API key from Widgetbook Cloud',
-        mandatory: true,
-      )
-      ..addOption(
-        'project',
-        help:
-            'Name of the project on Widgetbook Cloud. '
-            'Required with a workspace API key.',
-      )
+      ..addApiKeyOption()
+      ..addProjectOption()
       ..addOption(
         'path',
         help: "Path to the `build` folder's parent (i.e. the project root)",
@@ -113,11 +104,8 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     ArgResults results,
   ) async {
     final path = results['path'] as String;
-    final project = results['project'] as String?;
-    final apiKey = parseApiKey(
-      results['api-key'] as String,
-      project: project,
-    );
+    final apiKey = results['api-key'] as String;
+    final project = parseProjectOption(results);
 
     final repository = context.repository;
 
@@ -260,14 +248,28 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     }
     final stories = storiesByNavPath.values.toList();
 
+    final projectProgress = logger.progress('Resolving project');
+    final CloudProject project;
+    try {
+      project = await cloudClient.resolveProject(
+        args.apiKey,
+        name: args.project,
+      );
+    } catch (_) {
+      projectProgress.fail('Could not resolve the project');
+      rethrow;
+    }
+    projectProgress.complete("Project '${project.name}'");
+
     final createProgress = logger.progress('Creating build');
 
     final CreateBuildResponse createResponse;
     try {
       createResponse = await cloudClient.createBuild(
+        args.apiKey,
+        project,
         versions,
         CreateBuildRequest(
-          apiKey: args.apiKey,
           versionControlProvider: args.vendor,
           repository: args.repository,
           actor: args.actor,
@@ -278,7 +280,6 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
           expectedSnapshotCount: cache.scenarios.length,
           size: dirSize + cache.totalSnapshotSize,
           hash: hash,
-          projectName: args.project,
         ),
       );
     } on CloudException catch (e) {
@@ -293,7 +294,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
         return 0;
       }
 
-      throw e.withProjectHint(args.project);
+      rethrow;
     }
 
     if (createResponse.isTurbo) {
@@ -313,6 +314,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     await _appendSnapshots(
       versions: versions,
       apiKey: args.apiKey,
+      project: project,
       buildId: createResponse.buildId,
       scenarios: cache.scenarios,
     );
@@ -389,10 +391,9 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
     final submitProgress = logger.progress('Submitting build');
     final submitResponse = await cloudClient.submitBuild(
-      SubmitBuildRequest(
-        apiKey: args.apiKey,
-        buildId: createResponse.buildId,
-      ),
+      args.apiKey,
+      project,
+      createResponse.buildId,
     );
 
     submitProgress.complete(
@@ -404,10 +405,11 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
   /// Builds a [SnapshotRecord] per cache scenario, packs them into
   /// byte-bounded batches, and POSTs each batch to
-  /// `v4/builds/{buildId}/snapshots` with bounded parallelism.
+  /// the snapshots route of [buildId] with bounded parallelism.
   Future<void> _appendSnapshots({
     required VersionsMetadata? versions,
-    required ApiKey apiKey,
+    required String apiKey,
+    required CloudProject project,
     required String buildId,
     required List<ScenarioRecord> scenarios,
   }) async {
@@ -436,12 +438,11 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     final promises = batches.map((batch) async {
       await pool.withResource(
         () => cloudClient.appendSnapshots(
+          apiKey,
+          project,
           versions,
           buildId,
-          AppendSnapshotsRequest(
-            apiKey: apiKey,
-            snapshots: batch,
-          ),
+          AppendSnapshotsRequest(snapshots: batch),
         ),
       );
 

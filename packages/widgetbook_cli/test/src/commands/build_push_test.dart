@@ -1,5 +1,4 @@
 import 'package:args/args.dart';
-import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
@@ -113,42 +112,20 @@ void main() {
 
         final args = await command.parseResults(context, results);
 
-        expect(
-          args.apiKey,
-          isA<ProjectApiKey>().having((key) => key.value, 'value', apiKey),
-        );
+        expect(args.apiKey, equals(apiKey));
         expect(args.project, isNull);
       });
 
-      test('project with a project key', () async {
+      test('project', () async {
         when(() => results['project']).thenReturn('my-app');
 
         final args = await command.parseResults(context, results);
 
-        expect(args.apiKey, isA<ProjectApiKey>());
         expect(args.project, equals('my-app'));
       });
 
-      test('project with a workspace key', () async {
-        when(() => results['api-key']).thenReturn('widgetbook_ws_secret');
-        when(() => results['project']).thenReturn('my-app');
-
-        final args = await command.parseResults(context, results);
-
-        expect(
-          args.apiKey,
-          isA<WorkspaceApiKey>().having(
-            (key) => key.value,
-            'value',
-            'widgetbook_ws_secret',
-          ),
-        );
-        expect(args.project, equals('my-app'));
-      });
-
-      for (final project in [null, '', '  ']) {
-        test('throws for a workspace key with project "$project"', () {
-          when(() => results['api-key']).thenReturn('widgetbook_ws_secret');
+      for (final project in ['', '  ']) {
+        test('throws for project "$project"', () {
           when(() => results['project']).thenReturn(project);
 
           expect(
@@ -157,7 +134,7 @@ void main() {
               isA<CliException>().having(
                 (e) => e.message,
                 'message',
-                equals('A workspace API key needs --project <name>.'),
+                equals('The option project must not be empty.'),
               ),
             ),
           );
@@ -306,33 +283,5 @@ void main() {
         });
       });
     });
-
-    test(
-      'fails before any request for a workspace key without project',
-      () async {
-        final cloudClient = MockWidgetbookHttpClient();
-        final runner = CommandRunner<int>('widgetbook', 'CLI')
-          ..addCommand(
-            BuildPushCommand(
-              context: context,
-              logger: logger,
-              cloudClient: cloudClient,
-            ),
-          );
-
-        await expectLater(
-          runner.run(['push', '--api-key', 'widgetbook_ws_secret']),
-          throwsA(
-            isA<CliException>().having(
-              (e) => e.message,
-              'message',
-              equals('A workspace API key needs --project <name>.'),
-            ),
-          ),
-        );
-
-        verifyZeroInteractions(cloudClient);
-      },
-    );
   });
 }

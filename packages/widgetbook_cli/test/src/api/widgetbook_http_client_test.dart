@@ -4,30 +4,50 @@ import 'package:widgetbook_cli/widgetbook_cli.dart';
 
 import '../../helper/fake_http_adapter.dart';
 
-const projectKey = ProjectApiKey('project-key');
-const workspaceKey = WorkspaceApiKey('widgetbook_ws_secret');
+const apiKey = 'widgetbook_secret';
 const headSha = '832e76a9899f560a90ffd62ae2ce83bbeff58f54';
+const project = CloudProject(
+  workspaceId: 'workspace-1',
+  projectId: 'project-1',
+  name: 'my-app',
+);
+const projectPath = '/v4/workspaces/workspace-1/projects/project-1';
+
+const workspacesResponse = FakeResponse(200, {
+  'workspaces': [
+    {'id': 'workspace-1', 'name': 'My Workspace'},
+  ],
+});
+
+FakeResponse projectsResponse(List<String> names) {
+  return FakeResponse(200, {
+    'projects': [
+      for (final (i, name) in names.indexed)
+        {
+          'id': 'project-${i + 1}',
+          'name': name,
+          'createdAt': '2026-01-02T03:04:05.000Z',
+        },
+    ],
+  });
+}
 
 WidgetbookHttpClient clientFor(FakeHttpAdapter adapter) {
   return WidgetbookHttpClient()..client.httpClientAdapter = adapter;
 }
 
-CreateBuildRequest createBuildRequest(ApiKey apiKey, {String? projectName}) {
-  return CreateBuildRequest(
-    apiKey: apiKey,
-    versionControlProvider: 'GitHub',
-    repository: 'widgetbook/app',
-    actor: 'octocat',
-    branch: 'main',
-    sha: headSha,
-    mergedResultSha: null,
-    stories: const [],
-    expectedSnapshotCount: 3,
-    size: 1024,
-    hash: null,
-    projectName: projectName,
-  );
-}
+const createBuildRequest = CreateBuildRequest(
+  versionControlProvider: 'GitHub',
+  repository: 'widgetbook/app',
+  actor: 'octocat',
+  branch: 'main',
+  sha: headSha,
+  mergedResultSha: null,
+  stories: [],
+  expectedSnapshotCount: 3,
+  size: 1024,
+  hash: null,
+);
 
 Matcher throwsCloudException(int statusCode, String detail) {
   return throwsA(
@@ -38,83 +58,36 @@ Matcher throwsCloudException(int statusCode, String detail) {
   );
 }
 
+Matcher throwsCliException(String message) {
+  return throwsA(
+    isA<CliException>()
+        .having((e) => e, 'type', isNot(isA<CloudException>()))
+        .having((e) => e.message, 'message', message),
+  );
+}
+
+void expectAuthorized(RecordedRequest request) {
+  expect(request.header('Authorization'), equals('Bearer $apiKey'));
+}
+
+void expectNoCredentialInBody(RecordedRequest request) {
+  expect(request.body ?? {}, isNot(contains('apiKey')));
+  expect(request.body ?? {}, isNot(contains('projectName')));
+}
+
 void main() {
   group('$WidgetbookHttpClient', () {
-    group('createBuild', () {
-      const turboResponse = FakeResponse(201, {
-        'type': 'turbo',
-        'buildId': 'build-1',
-        'buildUrl': 'https://widgetbook.io/builds/build-1',
-      });
+    group('listWorkspaces', () {
+      test('gets the workspaces of the key', () async {
+        final adapter = FakeHttpAdapter([workspacesResponse]);
 
-      test('sends a project key in the body, as before', () async {
-        final adapter = FakeHttpAdapter([turboResponse]);
-
-        await clientFor(adapter).createBuild(
-          VersionsMetadata(
-            flutter: '3.44.1',
-            widgetbook: '4.0.0',
-            cli: '4.0.0',
-          ),
-          createBuildRequest(projectKey),
-        );
+        final workspaces = await clientFor(adapter).listWorkspaces(apiKey);
 
         final request = adapter.requests.single;
-        expect(request.method, equals('POST'));
-        expect(request.uri.path, equals('/v4/builds'));
-        expect(request.header('Authorization'), isNull);
-        expect(request.header('x-widgetbook_cli-version'), equals('4.0.0'));
-        expect(
-          request.body!.keys,
-          orderedEquals([
-            'apiKey',
-            'versionControlProvider',
-            'repository',
-            'actor',
-            'branch',
-            'sha',
-            'mergedResultSha',
-            'stories',
-            'expectedSnapshotCount',
-            'size',
-            'hash',
-          ]),
-        );
-        expect(request.body!['apiKey'], equals('project-key'));
-      });
-
-      test('adds the projectName to a project key request', () async {
-        final adapter = FakeHttpAdapter([turboResponse]);
-
-        await clientFor(adapter).createBuild(
-          null,
-          createBuildRequest(projectKey, projectName: 'my-app'),
-        );
-
-        final request = adapter.requests.single;
-        expect(request.header('Authorization'), isNull);
-        expect(request.body!['apiKey'], equals('project-key'));
-        expect(request.body!['projectName'], equals('my-app'));
-      });
-
-      test('sends a workspace key as a bearer token', () async {
-        final adapter = FakeHttpAdapter([turboResponse]);
-
-        await clientFor(adapter).createBuild(
-          VersionsMetadata(flutter: null, widgetbook: null, cli: '4.0.0'),
-          createBuildRequest(workspaceKey, projectName: 'my-app'),
-        );
-
-        final request = adapter.requests.single;
-        expect(request.method, equals('POST'));
-        expect(request.uri.path, equals('/v4/builds'));
-        expect(
-          request.header('Authorization'),
-          equals('Bearer widgetbook_ws_secret'),
-        );
-        expect(request.header('x-widgetbook_cli-version'), equals('4.0.0'));
-        expect(request.body, isNot(contains('apiKey')));
-        expect(request.body!['projectName'], equals('my-app'));
+        expect(request.method, equals('GET'));
+        expect(request.uri.path, equals('/v4/workspaces'));
+        expectAuthorized(request);
+        expect(workspaces.single.id, equals('workspace-1'));
       });
 
       for (final detail in ['Missing API key.', 'Invalid API key.']) {
@@ -124,232 +97,48 @@ void main() {
           ]);
 
           expect(
-            clientFor(
-              adapter,
-            ).createBuild(null, createBuildRequest(projectKey)),
+            clientFor(adapter).listWorkspaces(apiKey),
             throwsCloudException(401, detail),
           );
         });
       }
     });
 
-    group('appendSnapshots', () {
-      const appendResponse = FakeResponse(201, {'inserted': 0});
-
-      test('sends a project key in the body, as before', () async {
-        final adapter = FakeHttpAdapter([appendResponse]);
-
-        await clientFor(adapter).appendSnapshots(
-          null,
-          'build-1',
-          const AppendSnapshotsRequest(apiKey: projectKey, snapshots: []),
-        );
-
-        final request = adapter.requests.single;
-        expect(request.method, equals('POST'));
-        expect(request.uri.path, equals('/v4/builds/build-1/snapshots'));
-        expect(request.header('Authorization'), isNull);
-        expect(
-          request.body,
-          equals({'apiKey': 'project-key', 'snapshots': <dynamic>[]}),
-        );
-      });
-
-      test('sends a workspace key as a bearer token only', () async {
-        final adapter = FakeHttpAdapter([appendResponse]);
-
-        await clientFor(adapter).appendSnapshots(
-          null,
-          'build-1',
-          const AppendSnapshotsRequest(apiKey: workspaceKey, snapshots: []),
-        );
-
-        final request = adapter.requests.single;
-        expect(request.method, equals('POST'));
-        expect(request.uri.path, equals('/v4/builds/build-1/snapshots'));
-        expect(
-          request.header('Authorization'),
-          equals('Bearer widgetbook_ws_secret'),
-        );
-        expect(request.body, equals({'snapshots': <dynamic>[]}));
-      });
-    });
-
-    group('submitBuild', () {
-      const submitResponse = FakeResponse(201, {
-        'buildId': 'build-1',
-        'buildUrl': 'https://widgetbook.io/builds/build-1',
-      });
-
-      test('sends a project key in the body, as before', () async {
-        final adapter = FakeHttpAdapter([submitResponse]);
-
-        await clientFor(adapter).submitBuild(
-          const SubmitBuildRequest(apiKey: projectKey, buildId: 'build-1'),
-        );
-
-        final request = adapter.requests.single;
-        expect(request.method, equals('POST'));
-        expect(request.uri.path, equals('/v4/builds/submit'));
-        expect(request.header('Authorization'), isNull);
-        expect(
-          request.body,
-          equals({'apiKey': 'project-key', 'buildId': 'build-1'}),
-        );
-      });
-
-      test('sends a workspace key as a bearer token only', () async {
-        final adapter = FakeHttpAdapter([submitResponse]);
-
-        await clientFor(adapter).submitBuild(
-          const SubmitBuildRequest(apiKey: workspaceKey, buildId: 'build-1'),
-        );
-
-        final request = adapter.requests.single;
-        expect(request.method, equals('POST'));
-        expect(request.uri.path, equals('/v4/builds/submit'));
-        expect(
-          request.header('Authorization'),
-          equals('Bearer widgetbook_ws_secret'),
-        );
-        expect(request.body, equals({'buildId': 'build-1'}));
-      });
-    });
-
-    group('skipReview', () {
-      const skipResponse = FakeResponse(201, {
-        'sha': headSha,
-        'state': 'success',
-        'prNumber': 123,
-      });
-      const noRetryDelays = [Duration.zero, Duration.zero, Duration.zero];
-
-      test('sends a project key in the body, as before', () async {
-        final adapter = FakeHttpAdapter([skipResponse]);
-
-        await clientFor(adapter).skipReview(
-          123,
-          const SkipReviewRequest(
-            apiKey: projectKey,
-            sha: headSha,
-            reason: 'No UI changes',
-          ),
-        );
-
-        final request = adapter.requests.single;
-        expect(request.method, equals('POST'));
-        expect(request.uri.path, equals('/v4/pull-requests/123/review-skip'));
-        expect(request.header('Authorization'), isNull);
-        expect(
-          request.body,
-          equals({
-            'apiKey': 'project-key',
-            'sha': headSha,
-            'reason': 'No UI changes',
-          }),
-        );
-      });
-
-      test('adds the projectName to a project key request', () async {
-        final adapter = FakeHttpAdapter([skipResponse]);
-
-        await clientFor(adapter).skipReview(
-          123,
-          const SkipReviewRequest(
-            apiKey: projectKey,
-            sha: headSha,
-            projectName: 'my-app',
-          ),
-        );
-
-        final request = adapter.requests.single;
-        expect(request.header('Authorization'), isNull);
-        expect(
-          request.body,
-          equals({
-            'apiKey': 'project-key',
-            'sha': headSha,
-            'projectName': 'my-app',
-          }),
-        );
-      });
-
-      test('sends a workspace key as a bearer token', () async {
-        final adapter = FakeHttpAdapter([skipResponse]);
-
-        await clientFor(adapter).skipReview(
-          123,
-          const SkipReviewRequest(
-            apiKey: workspaceKey,
-            sha: headSha,
-            projectName: 'my-app',
-          ),
-        );
-
-        final request = adapter.requests.single;
-        expect(request.method, equals('POST'));
-        expect(request.uri.path, equals('/v4/pull-requests/123/review-skip'));
-        expect(
-          request.header('Authorization'),
-          equals('Bearer widgetbook_ws_secret'),
-        );
-        expect(
-          request.body,
-          equals({'sha': headSha, 'projectName': 'my-app'}),
-        );
-      });
-
-      test('retries while the pull request is unknown', () async {
+    group('listProjects', () {
+      test('gets the projects of the workspace', () async {
         final adapter = FakeHttpAdapter([
-          const FakeResponse(404, {'message': 'Pull request not found.'}),
-          const FakeResponse(404, {'message': 'Pull request not found.'}),
-          skipResponse,
+          projectsResponse(['a', 'b']),
         ]);
 
-        final response = await clientFor(adapter).skipReview(
-          123,
-          const SkipReviewRequest(apiKey: workspaceKey, sha: headSha),
-          retryDelays: noRetryDelays,
-        );
+        final projects = await clientFor(
+          adapter,
+        ).listProjects(apiKey, 'workspace-1');
 
-        expect(response.prNumber, equals(123));
-        expect(adapter.requests, hasLength(3));
+        final request = adapter.requests.single;
+        expect(request.method, equals('GET'));
+        expect(request.uri.path, equals('/v4/workspaces/workspace-1/projects'));
+        expect(request.uri.queryParameters, isEmpty);
+        expectAuthorized(request);
+        expect(projects.map((p) => p.name), equals(['a', 'b']));
       });
 
-      const notRetried = {
-        400: 'A workspace API key must name the project: provide projectName.',
-        401: 'Invalid API key.',
-        422: "No project named 'my-app' in this workspace.",
-      };
+      test('filters by name', () async {
+        final adapter = FakeHttpAdapter([
+          projectsResponse(['my app']),
+        ]);
 
-      for (final MapEntry(key: statusCode, value: detail)
-          in notRetried.entries) {
-        test('does not retry a $statusCode', () async {
-          final adapter = FakeHttpAdapter([
-            FakeResponse(statusCode, {'message': detail}),
-            skipResponse,
-          ]);
+        await clientFor(
+          adapter,
+        ).listProjects(apiKey, 'workspace-1', name: 'my app');
 
-          await expectLater(
-            clientFor(adapter).skipReview(
-              123,
-              const SkipReviewRequest(
-                apiKey: workspaceKey,
-                sha: headSha,
-                projectName: 'my-app',
-              ),
-              retryDelays: noRetryDelays,
-            ),
-            throwsCloudException(statusCode, detail),
-          );
-
-          expect(adapter.requests, hasLength(1));
-        });
-      }
+        final request = adapter.requests.single;
+        expect(request.uri.path, equals('/v4/workspaces/workspace-1/projects'));
+        expect(request.uri.queryParameters, equals({'name': 'my app'}));
+      });
     });
 
     group('createProject', () {
-      test('creates the project with a workspace key', () async {
+      test('posts the name to the workspace', () async {
         final adapter = FakeHttpAdapter([
           const FakeResponse(201, {
             'id': 'project-1',
@@ -359,16 +148,15 @@ void main() {
         ]);
 
         final response = await clientFor(adapter).createProject(
-          const CreateProjectRequest(apiKey: workspaceKey, name: 'my-app'),
+          apiKey,
+          'workspace-1',
+          const CreateProjectRequest(name: 'my-app'),
         );
 
         final request = adapter.requests.single;
         expect(request.method, equals('POST'));
-        expect(request.uri.path, equals('/v4/projects'));
-        expect(
-          request.header('Authorization'),
-          equals('Bearer widgetbook_ws_secret'),
-        );
+        expect(request.uri.path, equals('/v4/workspaces/workspace-1/projects'));
+        expectAuthorized(request);
         expect(request.body, equals({'name': 'my-app'}));
 
         expect(response.id, equals('project-1'));
@@ -385,10 +173,405 @@ void main() {
 
         expect(
           clientFor(adapter).createProject(
-            const CreateProjectRequest(apiKey: workspaceKey, name: 'my-app'),
+            apiKey,
+            'workspace-1',
+            const CreateProjectRequest(name: 'my-app'),
           ),
           throwsCloudException(409, detail),
         );
+      });
+
+      test('reports a missing scope as a 403', () {
+        const detail = 'This API key lacks the scope PROJECTS_CREATE.';
+        final adapter = FakeHttpAdapter([
+          const FakeResponse(403, {'message': detail, 'statusCode': 403}),
+        ]);
+
+        expect(
+          clientFor(adapter).createProject(
+            apiKey,
+            'workspace-1',
+            const CreateProjectRequest(name: 'my-app'),
+          ),
+          throwsCloudException(403, detail),
+        );
+      });
+    });
+
+    group('createBuild', () {
+      test('posts the build to the project', () async {
+        final adapter = FakeHttpAdapter([
+          const FakeResponse(201, {
+            'type': 'turbo',
+            'buildId': 'build-1',
+            'buildUrl': 'https://widgetbook.io/builds/build-1',
+          }),
+        ]);
+
+        await clientFor(adapter).createBuild(
+          apiKey,
+          project,
+          VersionsMetadata(
+            flutter: '3.44.1',
+            widgetbook: '4.0.0',
+            cli: '4.0.0',
+          ),
+          createBuildRequest,
+        );
+
+        final request = adapter.requests.single;
+        expect(request.method, equals('POST'));
+        expect(request.uri.path, equals('$projectPath/builds'));
+        expectAuthorized(request);
+        expect(request.header('x-widgetbook_cli-version'), equals('4.0.0'));
+        expectNoCredentialInBody(request);
+        expect(
+          request.body!.keys,
+          orderedEquals([
+            'versionControlProvider',
+            'repository',
+            'actor',
+            'branch',
+            'sha',
+            'mergedResultSha',
+            'stories',
+            'expectedSnapshotCount',
+            'size',
+            'hash',
+          ]),
+        );
+      });
+
+      const errors = {
+        403: 'This API key has no access to this project.',
+        404: 'Project not found.',
+        409: 'Build already exists',
+      };
+
+      for (final MapEntry(key: statusCode, value: detail) in errors.entries) {
+        test('shows the server message of a $statusCode', () {
+          final adapter = FakeHttpAdapter([
+            FakeResponse(statusCode, {'message': detail}),
+          ]);
+
+          expect(
+            clientFor(
+              adapter,
+            ).createBuild(apiKey, project, null, createBuildRequest),
+            throwsCloudException(statusCode, detail),
+          );
+        });
+      }
+    });
+
+    group('appendSnapshots', () {
+      test('posts the snapshots to the build', () async {
+        final adapter = FakeHttpAdapter([
+          const FakeResponse(201, {'inserted': 0}),
+        ]);
+
+        await clientFor(adapter).appendSnapshots(
+          apiKey,
+          project,
+          VersionsMetadata(flutter: null, widgetbook: null, cli: '4.0.0'),
+          'build-1',
+          const AppendSnapshotsRequest(snapshots: []),
+        );
+
+        final request = adapter.requests.single;
+        expect(request.method, equals('POST'));
+        expect(
+          request.uri.path,
+          equals('$projectPath/builds/build-1/snapshots'),
+        );
+        expectAuthorized(request);
+        expect(request.header('x-widgetbook_cli-version'), equals('4.0.0'));
+        expect(request.body, equals({'snapshots': <dynamic>[]}));
+      });
+    });
+
+    group('submitBuild', () {
+      test('posts to the submit route of the build without a body', () async {
+        final adapter = FakeHttpAdapter([
+          const FakeResponse(201, {
+            'buildId': 'build-1',
+            'buildUrl': 'https://widgetbook.io/builds/build-1',
+          }),
+        ]);
+
+        final response = await clientFor(
+          adapter,
+        ).submitBuild(apiKey, project, 'build-1');
+
+        final request = adapter.requests.single;
+        expect(request.method, equals('POST'));
+        expect(request.uri.path, equals('$projectPath/builds/build-1/submit'));
+        expectAuthorized(request);
+        expect(request.body, isNull);
+        expect(
+          response.buildUrl,
+          equals('https://widgetbook.io/builds/build-1'),
+        );
+      });
+    });
+
+    group('skipReview', () {
+      const skipResponse = FakeResponse(200, {
+        'sha': headSha,
+        'state': 'success',
+        'prNumber': 123,
+      });
+      const noRetryDelays = [Duration.zero, Duration.zero, Duration.zero];
+      const unknownPullRequest = FakeResponse(404, {
+        'message':
+            'No pull request #123 is known for this project. '
+            'Widgetbook learns about pull requests from git-provider '
+            'webhooks, so a freshly opened pull request may not have '
+            'synchronized yet.',
+      });
+
+      test('posts the skip to the pull request of the project', () async {
+        final adapter = FakeHttpAdapter([skipResponse]);
+
+        await clientFor(adapter).skipReview(
+          apiKey,
+          project,
+          123,
+          const SkipReviewRequest(sha: headSha, reason: 'No UI changes'),
+        );
+
+        final request = adapter.requests.single;
+        expect(request.method, equals('POST'));
+        expect(
+          request.uri.path,
+          equals('$projectPath/pull-requests/123/review-skip'),
+        );
+        expectAuthorized(request);
+        expect(
+          request.body,
+          equals({'sha': headSha, 'reason': 'No UI changes'}),
+        );
+      });
+
+      test('retries while the pull request is not synced yet', () async {
+        final adapter = FakeHttpAdapter([
+          unknownPullRequest,
+          unknownPullRequest,
+          skipResponse,
+        ]);
+
+        final response = await clientFor(adapter).skipReview(
+          apiKey,
+          project,
+          123,
+          const SkipReviewRequest(sha: headSha),
+          retryDelays: noRetryDelays,
+        );
+
+        expect(response.prNumber, equals(123));
+        expect(adapter.requests, hasLength(3));
+      });
+
+      test('gives up after the last retry', () async {
+        final adapter = FakeHttpAdapter([unknownPullRequest]);
+
+        await expectLater(
+          clientFor(adapter).skipReview(
+            apiKey,
+            project,
+            123,
+            const SkipReviewRequest(sha: headSha),
+            retryDelays: noRetryDelays,
+          ),
+          throwsA(
+            isA<CloudException>()
+                .having((e) => e.statusCode, 'statusCode', 404)
+                .having((e) => e.detail, 'detail', startsWith('No pull')),
+          ),
+        );
+
+        expect(adapter.requests, hasLength(4));
+      });
+
+      const notRetried = [
+        (400, 'Synthetic pull requests have no git-provider counterpart.'),
+        (401, 'Invalid API key.'),
+        (403, 'This API key lacks the scope REVIEWS_SKIP.'),
+        (403, 'This API key has no access to this project.'),
+        (404, 'Workspace not found.'),
+        (404, 'Project not found.'),
+        (422, 'Validation failed.'),
+      ];
+
+      for (final (statusCode, detail) in notRetried) {
+        test('does not retry a $statusCode: $detail', () async {
+          final adapter = FakeHttpAdapter([
+            FakeResponse(statusCode, {'message': detail}),
+            skipResponse,
+          ]);
+
+          await expectLater(
+            clientFor(adapter).skipReview(
+              apiKey,
+              project,
+              123,
+              const SkipReviewRequest(sha: headSha),
+              retryDelays: noRetryDelays,
+            ),
+            throwsCloudException(statusCode, detail),
+          );
+
+          expect(adapter.requests, hasLength(1));
+        });
+      }
+    });
+  });
+
+  group('CloudResolver', () {
+    group('resolveWorkspaceId', () {
+      test('returns the one workspace of the key', () async {
+        final adapter = FakeHttpAdapter([workspacesResponse]);
+
+        final id = await clientFor(adapter).resolveWorkspaceId(apiKey);
+
+        expect(id, equals('workspace-1'));
+      });
+
+      for (final count in [0, 2]) {
+        test('fails for $count workspaces', () {
+          final adapter = FakeHttpAdapter([
+            FakeResponse(200, {
+              'workspaces': [
+                for (var i = 0; i < count; i++)
+                  {'id': 'workspace-$i', 'name': 'Workspace $i'},
+              ],
+            }),
+          ]);
+
+          expect(
+            clientFor(adapter).resolveWorkspaceId(apiKey),
+            throwsCliException(
+              'Expected the API key to belong to exactly one workspace, '
+              'but Widgetbook Cloud returned $count.',
+            ),
+          );
+        });
+      }
+    });
+
+    group('resolveProject', () {
+      test('looks the project up by name', () async {
+        final adapter = FakeHttpAdapter([
+          workspacesResponse,
+          projectsResponse(['my-app']),
+        ]);
+
+        final resolved = await clientFor(
+          adapter,
+        ).resolveProject(apiKey, name: 'my-app');
+
+        expect(resolved.workspaceId, equals('workspace-1'));
+        expect(resolved.projectId, equals('project-1'));
+        expect(resolved.name, equals('my-app'));
+        expect(resolved.path, equals(projectPath.substring(1)));
+
+        final [workspaces, projects] = adapter.requests;
+        expect(workspaces.uri.path, equals('/v4/workspaces'));
+        expect(projects.method, equals('GET'));
+        expect(
+          projects.uri.path,
+          equals('/v4/workspaces/workspace-1/projects'),
+        );
+        expect(projects.uri.queryParameters, equals({'name': 'my-app'}));
+        for (final request in adapter.requests) {
+          expectAuthorized(request);
+        }
+      });
+
+      test('uses the only project without a name', () async {
+        final adapter = FakeHttpAdapter([
+          workspacesResponse,
+          projectsResponse(['my-app']),
+        ]);
+
+        final resolved = await clientFor(adapter).resolveProject(apiKey);
+
+        expect(resolved.projectId, equals('project-1'));
+        expect(adapter.requests.last.uri.queryParameters, isEmpty);
+      });
+
+      test('points to project create for an unknown name', () {
+        final adapter = FakeHttpAdapter([
+          workspacesResponse,
+          projectsResponse([]),
+        ]);
+
+        expect(
+          clientFor(adapter).resolveProject(apiKey, name: 'my-app'),
+          throwsCliException(
+            "No project named 'my-app'. "
+            'Create it with: widgetbook cloud project create --project my-app',
+          ),
+        );
+      });
+
+      test('quotes a name with spaces in the suggested command', () {
+        final adapter = FakeHttpAdapter([
+          workspacesResponse,
+          projectsResponse([]),
+        ]);
+
+        expect(
+          clientFor(adapter).resolveProject(apiKey, name: 'my app'),
+          throwsCliException(
+            "No project named 'my app'. "
+            'Create it with: '
+            'widgetbook cloud project create --project "my app"',
+          ),
+        );
+      });
+
+      test('fails without a name when the key reaches no project', () {
+        final adapter = FakeHttpAdapter([
+          workspacesResponse,
+          projectsResponse([]),
+        ]);
+
+        expect(
+          clientFor(adapter).resolveProject(apiKey),
+          throwsCliException(
+            'This API key reaches no project. Create one with: '
+            'widgetbook cloud project create --project <name>',
+          ),
+        );
+      });
+
+      test('asks for a name when the key reaches several projects', () {
+        final adapter = FakeHttpAdapter([
+          workspacesResponse,
+          projectsResponse(['a', 'b']),
+        ]);
+
+        expect(
+          clientFor(adapter).resolveProject(apiKey),
+          throwsCliException(
+            'This API key reaches 2 projects. '
+            'Pass --project <name> to choose one.',
+          ),
+        );
+      });
+
+      test('does not look up projects without a workspace', () async {
+        final adapter = FakeHttpAdapter([
+          const FakeResponse(200, {'workspaces': <dynamic>[]}),
+        ]);
+
+        await expectLater(
+          clientFor(adapter).resolveProject(apiKey, name: 'my-app'),
+          throwsA(isA<CliException>()),
+        );
+
+        expect(adapter.requests, hasLength(1));
       });
     });
   });

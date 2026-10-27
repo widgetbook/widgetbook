@@ -1,5 +1,3 @@
-import '../api/api.dart';
-
 /// Typed representation of the arguments passed to the review skip command.
 class ReviewSkipArgs {
   const ReviewSkipArgs({
@@ -10,9 +8,10 @@ class ReviewSkipArgs {
     required this.reason,
   });
 
-  final ApiKey apiKey;
+  final String apiKey;
 
-  /// Name of the Widgetbook Cloud project, required with a [WorkspaceApiKey].
+  /// Name of the Widgetbook Cloud project, or `null` to use the only project
+  /// the [apiKey] reaches.
   final String? project;
 
   final int prNumber;

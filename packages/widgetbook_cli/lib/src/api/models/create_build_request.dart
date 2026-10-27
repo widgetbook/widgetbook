@@ -1,9 +1,7 @@
-import 'api_key.dart';
 import 'story_record.dart';
 
 class CreateBuildRequest {
   const CreateBuildRequest({
-    required this.apiKey,
     required this.versionControlProvider,
     required this.repository,
     required this.actor,
@@ -14,10 +12,8 @@ class CreateBuildRequest {
     required this.expectedSnapshotCount,
     required this.size,
     required this.hash,
-    this.projectName,
   });
 
-  final ApiKey apiKey;
   final String versionControlProvider;
   final String repository;
   final String actor;
@@ -28,11 +24,9 @@ class CreateBuildRequest {
   final int expectedSnapshotCount;
   final int size;
   final String? hash;
-  final String? projectName;
 
   Map<String, dynamic> toJson() {
     return {
-      ...apiKey.toJson(),
       'versionControlProvider': versionControlProvider,
       'repository': repository,
       'actor': actor,
@@ -43,7 +37,6 @@ class CreateBuildRequest {
       'expectedSnapshotCount': expectedSnapshotCount,
       'size': size,
       'hash': hash,
-      if (projectName != null) 'projectName': projectName,
     };
   }
 }

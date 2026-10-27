@@ -5,63 +5,55 @@ import 'package:test/test.dart';
 import 'package:widgetbook_cli/src/api/cloud_exception.dart';
 import 'package:widgetbook_cli/widgetbook_cli.dart';
 
+import '../../helper/fake_http_adapter.dart';
 import '../../helper/mocks.dart';
 
-class _FakeCreateProjectRequest extends Fake implements CreateProjectRequest {}
-
 void main() {
-  setUpAll(() {
-    registerFallbackValue(_FakeCreateProjectRequest());
-  });
-
   group('$ProjectCreateCommand', () {
-    const workspaceKey = 'widgetbook_ws_secret';
+    const apiKey = 'widgetbook_secret';
     const existsMessage =
         'A project with this name already exists in this workspace.';
+    const workspacesResponse = FakeResponse(200, {
+      'workspaces': [
+        {'id': 'workspace-1', 'name': 'My Workspace'},
+      ],
+    });
+    const createdResponse = FakeResponse(201, {
+      'id': 'project-1',
+      'name': 'my-app',
+      'createdAt': '2026-01-02T03:04:05.000Z',
+    });
 
     late Logger logger;
     late Progress progress;
     late Context context;
-    late MockWidgetbookHttpClient client;
-    late ProjectCreateCommand command;
-    late CommandRunner<int> runner;
 
     setUp(() {
       logger = MockLogger();
       progress = MockProgress();
       context = MockContext();
-      client = MockWidgetbookHttpClient();
 
       when(() => logger.progress(any<String>())).thenReturn(progress);
-
-      command = ProjectCreateCommand(
-        context: context,
-        logger: logger,
-        cloudClient: client,
-      );
-      runner = CommandRunner<int>('widgetbook', 'CLI')..addCommand(command);
     });
 
-    Future<int?> run(List<String> args) => runner.run(['create', ...args]);
-
-    Matcher throwsCliException(Object message) {
-      return throwsA(
-        isA<CliException>().having((e) => e.message, 'message', message),
+    Future<int?> run(FakeHttpAdapter adapter, List<String> args) {
+      final command = ProjectCreateCommand(
+        context: context,
+        logger: logger,
+        cloudClient: WidgetbookHttpClient()..client.httpClientAdapter = adapter,
       );
+      final runner = CommandRunner<int>('widgetbook', 'CLI')
+        ..addCommand(command);
+
+      return runner.run(['create', ...args]);
     }
 
-    test('creates the project', () async {
-      when(() => client.createProject(any())).thenAnswer(
-        (_) async => CreateProjectResponse(
-          id: 'project-1',
-          name: 'my-app',
-          createdAt: DateTime.utc(2026),
-        ),
-      );
+    test('creates the project in the workspace of the key', () async {
+      final adapter = FakeHttpAdapter([workspacesResponse, createdResponse]);
 
-      final exitCode = await run([
+      final exitCode = await run(adapter, [
         '--api-key',
-        workspaceKey,
+        apiKey,
         '--project',
         'my-app',
       ]);
@@ -69,42 +61,75 @@ void main() {
       expect(exitCode, equals(ExitCode.success.code));
       verify(() => progress.complete("Project 'my-app' created.")).called(1);
 
-      final request =
-          verify(() => client.createProject(captureAny())).captured.single
-              as CreateProjectRequest;
-      expect(request.apiKey.value, equals(workspaceKey));
-      expect(request.name, equals('my-app'));
+      final [workspaces, create] = adapter.requests;
+      expect(workspaces.method, equals('GET'));
+      expect(workspaces.uri.path, equals('/v4/workspaces'));
+      expect(create.method, equals('POST'));
+      expect(create.uri.path, equals('/v4/workspaces/workspace-1/projects'));
+      expect(create.body, equals({'name': 'my-app'}));
+      for (final request in adapter.requests) {
+        expect(request.header('Authorization'), equals('Bearer $apiKey'));
+      }
     });
 
-    test('fails before any request for a project key', () async {
+    for (final legacyKey in ['project-key', 'widgetbook_ws_secret']) {
+      test('sends any key to the server: $legacyKey', () async {
+        final adapter = FakeHttpAdapter([workspacesResponse, createdResponse]);
+
+        await run(adapter, ['--api-key', legacyKey, '--project', 'my-app']);
+
+        expect(
+          adapter.requests.last.header('Authorization'),
+          equals('Bearer $legacyKey'),
+        );
+      });
+    }
+
+    test('shows the missing scope of the key', () async {
+      const detail = 'This API key lacks the scope PROJECTS_CREATE.';
+      final adapter = FakeHttpAdapter([
+        workspacesResponse,
+        const FakeResponse(403, {'message': detail, 'statusCode': 403}),
+      ]);
+
       await expectLater(
-        run(['--api-key', 'project-key', '--project', 'my-app']),
-        throwsCliException(
-          startsWith('Creating a project requires a workspace API key'),
+        run(adapter, ['--api-key', apiKey, '--project', 'my-app']),
+        throwsA(
+          isA<CloudException>()
+              .having((e) => e.statusCode, 'statusCode', 403)
+              .having((e) => e.message, 'message', contains(detail)),
         ),
       );
 
-      verifyZeroInteractions(client);
+      verify(() => progress.fail('Could not create the project')).called(1);
     });
 
     test('fails before any request for an empty project', () async {
+      final adapter = FakeHttpAdapter([workspacesResponse]);
+
       await expectLater(
-        run(['--api-key', workspaceKey, '--project', ' ']),
-        throwsCliException('The option project must not be empty.'),
+        run(adapter, ['--api-key', apiKey, '--project', ' ']),
+        throwsA(
+          isA<CliException>().having(
+            (e) => e.message,
+            'message',
+            'The option project must not be empty.',
+          ),
+        ),
       );
 
-      verifyZeroInteractions(client);
+      expect(adapter.requests, isEmpty);
     });
 
     const argsWithout = {
       'api-key': ['--project', 'my-app'],
-      'project': ['--api-key', workspaceKey],
+      'project': ['--api-key', apiKey],
     };
 
     for (final MapEntry(key: missing, value: args) in argsWithout.entries) {
       test('requires $missing', () {
         expect(
-          run(args),
+          run(FakeHttpAdapter([workspacesResponse]), args),
           throwsA(
             isA<ArgumentError>().having(
               (e) => e.message,
@@ -117,13 +142,14 @@ void main() {
     }
 
     test('succeeds for an existing project with --allow-existing', () async {
-      when(() => client.createProject(any())).thenThrow(
-        CloudException(existsMessage, statusCode: 409),
-      );
+      final adapter = FakeHttpAdapter([
+        workspacesResponse,
+        const FakeResponse(409, {'message': existsMessage}),
+      ]);
 
-      final exitCode = await run([
+      final exitCode = await run(adapter, [
         '--api-key',
-        workspaceKey,
+        apiKey,
         '--project',
         'my-app',
         '--allow-existing',
@@ -136,12 +162,13 @@ void main() {
     });
 
     test('fails for an existing project without --allow-existing', () async {
-      when(() => client.createProject(any())).thenThrow(
-        CloudException(existsMessage, statusCode: 409),
-      );
+      final adapter = FakeHttpAdapter([
+        workspacesResponse,
+        const FakeResponse(409, {'message': existsMessage}),
+      ]);
 
       await expectLater(
-        run(['--api-key', workspaceKey, '--project', 'my-app']),
+        run(adapter, ['--api-key', apiKey, '--project', 'my-app']),
         throwsA(
           isA<CliException>()
               .having((e) => e.exitCode, 'exitCode', isNot(0))
@@ -154,37 +181,51 @@ void main() {
       );
     });
 
-    test('passes other errors through', () async {
-      final error = CloudException('Invalid API key.', statusCode: 401);
-      when(() => client.createProject(any())).thenThrow(error);
+    test('passes other errors through with --allow-existing', () async {
+      final adapter = FakeHttpAdapter([
+        const FakeResponse(401, {'message': 'Invalid API key.'}),
+      ]);
 
       await expectLater(
-        run([
+        run(adapter, [
           '--api-key',
-          workspaceKey,
+          apiKey,
           '--project',
           'my-app',
           '--allow-existing',
         ]),
-        throwsA(same(error)),
+        throwsA(
+          isA<CloudException>()
+              .having((e) => e.statusCode, 'statusCode', 401)
+              .having((e) => e.detail, 'detail', 'Invalid API key.'),
+        ),
       );
     });
 
     group('api-url', () {
       test('is shown in the usage', () {
+        final command = ProjectCreateCommand(context: context);
+
         expect(command.argParser.options['api-url']!.hide, isFalse);
         expect(command.argParser.usage, contains('--api-url'));
       });
 
-      test('sets the base URL', () {
-        final command = ProjectCreateCommand(context: context);
+      test('is applied to the requests', () async {
+        final adapter = FakeHttpAdapter([workspacesResponse, createdResponse]);
 
-        command.argParser.parse(['--api-url', 'https://api.example.com']);
+        await run(adapter, [
+          '--api-key',
+          apiKey,
+          '--project',
+          'my-app',
+          '--api-url',
+          'https://api.example.com/cloud',
+        ]);
 
-        expect(
-          command.cloudClient.client.options.baseUrl,
-          equals('https://api.example.com/'),
-        );
+        for (final request in adapter.requests) {
+          expect(request.uri.host, equals('api.example.com'));
+          expect(request.uri.path, startsWith('/cloud/v4/workspaces'));
+        }
       });
     });
   });

@@ -1,5 +1,3 @@
-import '../api/api.dart';
-
 /// Typed representation of the arguments passed to the project create command.
 class ProjectCreateArgs {
   const ProjectCreateArgs({
@@ -8,7 +6,7 @@ class ProjectCreateArgs {
     required this.allowExisting,
   });
 
-  final WorkspaceApiKey apiKey;
+  final String apiKey;
   final String project;
 
   /// Whether to exit successfully instead of failing when a project with this

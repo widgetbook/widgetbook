@@ -20,11 +20,7 @@ class ProjectCreateCommand extends CliCommand<ProjectCreateArgs> {
          description: 'Creates a project in your Widgetbook Cloud workspace.',
        ) {
     argParser
-      ..addOption(
-        'api-key',
-        help: 'Workspace API key from Widgetbook Cloud',
-        mandatory: true,
-      )
+      ..addApiKeyOption()
       ..addOption(
         'project',
         help: 'Name of the project to create (e.g. my-app)',
@@ -47,29 +43,9 @@ class ProjectCreateCommand extends CliCommand<ProjectCreateArgs> {
     Context context,
     ArgResults results,
   ) {
-    final apiKey = ApiKey.parse(results['api-key'] as String);
-
-    if (apiKey is! WorkspaceApiKey) {
-      throw CliException(
-        'Creating a project requires a workspace API key, which starts with '
-        '${WorkspaceApiKey.prefix}. '
-        'Create one in your Widgetbook Cloud workspace settings.',
-        ExitCode.usage.code,
-      );
-    }
-
-    final project = results['project'] as String;
-
-    if (project.trim().isEmpty) {
-      throw CliException(
-        'The option project must not be empty.',
-        ExitCode.usage.code,
-      );
-    }
-
     return ProjectCreateArgs(
-      apiKey: apiKey,
-      project: project,
+      apiKey: results['api-key'] as String,
+      project: parseProjectOption(results)!,
       allowExisting: results['allow-existing'] as bool,
     );
   }
@@ -79,11 +55,11 @@ class ProjectCreateCommand extends CliCommand<ProjectCreateArgs> {
     final progress = logger.progress("Creating project '${args.project}'");
 
     try {
+      final workspaceId = await cloudClient.resolveWorkspaceId(args.apiKey);
       final response = await cloudClient.createProject(
-        CreateProjectRequest(
-          apiKey: args.apiKey,
-          name: args.project,
-        ),
+        args.apiKey,
+        workspaceId,
+        CreateProjectRequest(name: args.project),
       );
 
       progress.complete("Project '${response.name}' created.");
@@ -107,6 +83,9 @@ class ProjectCreateCommand extends CliCommand<ProjectCreateArgs> {
         );
       }
 
+      rethrow;
+    } on CliException {
+      progress.fail('Could not create the project');
       rethrow;
     }
   }
