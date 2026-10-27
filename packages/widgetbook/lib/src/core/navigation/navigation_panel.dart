@@ -16,14 +16,12 @@ import 'tree_node.dart';
 class NavigationPanel extends StatefulWidget {
   const NavigationPanel({
     super.key,
-    this.initialPath,
     this.onLeafNodeTap,
     required this.root,
     this.header,
     this.foldersExpandedByDefault = true,
   });
 
-  final String? initialPath;
   final ValueChanged<TreeNode<dynamic>>? onLeafNodeTap;
   final TreeNode<Null> root;
   final Widget? header;
@@ -34,28 +32,87 @@ class NavigationPanel extends StatefulWidget {
 }
 
 class _NavigationPanelState extends State<NavigationPanel> {
+  static const _listPadding = EdgeInsets.all(16);
+
   Timer? _debounce;
   final Set<String> _toggled = {};
+  final ScrollController _scrollController = ScrollController();
+  List<TreeNode> _entries = const [];
+  String? _lastPath;
+  bool _hasRevealedInitialPath = false;
 
   @override
-  void initState() {
-    super.initState();
-    _revealInitialPath();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final path = WidgetbookState.of(context).path;
+    if (_hasRevealedInitialPath && path == _lastPath) return;
+
+    final animate = _hasRevealedInitialPath;
+    _hasRevealedInitialPath = true;
+    _lastPath = path;
+    _revealPath(path);
+    _scrollToPath(path, animate: animate);
   }
 
-  /// Expands all ancestors of [NavigationPanel.initialPath], so that the
-  /// deep-linked node is visible on startup.
-  void _revealInitialPath() {
-    final initialPath = widget.initialPath;
-    if (initialPath == null) return;
+  /// Expands all ancestors of [path], so that the node is visible in the tree.
+  void _revealPath(String? path) {
+    if (path == null) return;
 
-    var node = widget.root.findByPath(initialPath)?.parent;
+    var node = widget.root.findByPath(path)?.parent;
     while (node != null && !node.isRoot) {
       if (!_isExpanded(node)) {
         _toggled.add(node.path);
       }
       node = node.parent;
     }
+  }
+
+  double _extentOf(TreeNode node) {
+    return node.isCategory ? CategoryTreeTile.height : FolderTreeTile.height;
+  }
+
+  /// Centers the tile of [path] in the list, unless it is already fully
+  /// visible. Runs after the next frame, once the list contains the tile.
+  void _scrollToPath(String? path, {required bool animate}) {
+    if (path == null) return;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || path != _lastPath || !_scrollController.hasClients) {
+        return;
+      }
+
+      final index = _entries.indexWhere((node) => node.path == path);
+      if (index < 0) return;
+
+      final tileTop = _entries
+          .take(index)
+          .fold(_listPadding.top, (offset, node) => offset + _extentOf(node));
+      final tileExtent = _extentOf(_entries[index]);
+
+      final position = _scrollController.position;
+      final viewport = position.viewportDimension;
+      final isFullyVisible =
+          tileTop >= position.pixels &&
+          tileTop + tileExtent <= position.pixels + viewport;
+      if (isFullyVisible) return;
+
+      final target = (tileTop - (viewport - tileExtent) / 2).clamp(
+        position.minScrollExtent,
+        position.maxScrollExtent,
+      );
+
+      final isNearby = (target - position.pixels).abs() <= viewport;
+      if (animate && isNearby) {
+        _scrollController.animateTo(
+          target,
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeInOut,
+        );
+      } else {
+        _scrollController.jumpTo(target);
+      }
+    });
   }
 
   bool _isExpandedByDefault(TreeNode node) {
@@ -135,7 +192,7 @@ class _NavigationPanelState extends State<NavigationPanel> {
         ? widget.root
         : widget.root.filter((node) => _filterNode(node, query));
 
-    final entries = filteredRoot != null
+    final entries = _entries = filteredRoot != null
         ? _flattenTree(filteredRoot)
         : <TreeNode>[];
 
@@ -165,8 +222,11 @@ class _NavigationPanelState extends State<NavigationPanel> {
           child: entries.isEmpty
               ? const Center(child: Text('No matches found'))
               : ListView.builder(
-                  padding: const EdgeInsets.all(16),
+                  controller: _scrollController,
+                  padding: _listPadding,
                   itemCount: entries.length,
+                  itemExtentBuilder: (index, _) =>
+                      index < entries.length ? _extentOf(entries[index]) : null,
                   itemBuilder: (context, index) =>
                       _buildTile(entries[index], state.path),
                 ),
@@ -192,6 +252,7 @@ class _NavigationPanelState extends State<NavigationPanel> {
   @override
   void dispose() {
     _debounce?.cancel();
+    _scrollController.dispose();
     super.dispose();
   }
 }
