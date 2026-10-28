@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **FEAT**: Show the `--api-url` option of `cloud build push` and `cloud review skip` in their usage.
+- **FEAT**: Show the `--api-url` option of `cloud build push` and `cloud review skip` in their usage. ([#2050](https://github.com/widgetbook/widgetbook/pull/2050))
 
 ## 4.0.0-beta.14
 
