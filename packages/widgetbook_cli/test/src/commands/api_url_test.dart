@@ -1,6 +1,7 @@
 import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:dio/dio.dart';
+import 'package:file/memory.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
@@ -9,61 +10,33 @@ import 'package:widgetbook_cli/widgetbook_cli.dart';
 
 import '../../helper/mocks.dart';
 
-const _requestPaths = [
-  'v4/builds',
-  'v4/builds/build-1/snapshots',
-  'v4/builds/submit',
-  'v4/pull-requests/123/review-skip',
-];
+class _FakeCreateBuildRequest extends Fake implements CreateBuildRequest {}
 
-const _invalidUrls = [
-  'api.widgetbook.io',
-  'ftp://x',
-  'https://',
-  'https://host/?x',
-];
-
-String _errorFor(String url) =>
-    'The --api-url option must be an http or https URL, got "$url".';
-
-List<Uri> _requestedUris(WidgetbookHttpClient client) => [
-  for (final path in _requestPaths)
-    RequestOptions(baseUrl: client.client.options.baseUrl, path: path).uri,
-];
-
-/// Runs [args] against mocked dependencies, which fail the run once the
-/// command reaches its actual work.
-Future<void> _runUntilMockedWorkFails(
-  CommandRunner<int> runner,
-  List<String> args,
-) async {
-  try {
-    await runner.run(args);
-  } on Object catch (_) {}
-}
-
-typedef _CloudCommand = ({
-  List<String> path,
-  List<String> args,
-  CliCommand<Object?> Function(Context, WidgetbookHttpClient) create,
-});
-
-final _cloudCommands = <_CloudCommand>[
-  (
-    path: ['cloud', 'build', 'push'],
-    args: ['--api-key', 'key'],
-    create: (context, client) =>
-        BuildPushCommand(context: context, cloudClient: client),
-  ),
-  (
-    path: ['cloud', 'review', 'skip'],
-    args: ['--api-key', 'key', '--pr', '123', '--sha', 'sha'],
-    create: (context, client) =>
-        ReviewSkipCommand(context: context, cloudClient: client),
-  ),
-];
+class _FakeSkipReviewRequest extends Fake implements SkipReviewRequest {}
 
 void main() {
+  const headSha = '832e76a9899f560a90ffd62ae2ce83bbeff58f54';
+  const requestPaths = [
+    'v4/builds',
+    'v4/builds/build-1/snapshots',
+    'v4/builds/submit',
+    'v4/pull-requests/123/review-skip',
+  ];
+  const invalidUrls = [
+    'api.widgetbook.io',
+    'ftp://x',
+    'https://',
+    'https://host/?x',
+  ];
+
+  String errorFor(String url) =>
+      'The --api-url option must be an http or https URL, got "$url".';
+
+  setUpAll(() {
+    registerFallbackValue(_FakeCreateBuildRequest());
+    registerFallbackValue(_FakeSkipReviewRequest());
+  });
+
   group('parseApiUrlOption', () {
     late ArgParser parser;
 
@@ -102,26 +75,31 @@ void main() {
       });
     }
 
-    for (final url in _invalidUrls) {
-      test('rejects $url as a usage error', () {
+    for (final url in invalidUrls) {
+      test('throws $CliException for $url', () {
         expect(
           () => parseApiUrlOption(parser.parse(['--api-url', url])),
           throwsA(
             isA<CliException>()
                 .having((e) => e.exitCode, 'exitCode', ExitCode.usage.code)
-                .having((e) => e.message, 'message', _errorFor(url)),
+                .having((e) => e.message, 'message', errorFor(url)),
           ),
         );
       });
     }
   });
 
-  group('$WidgetbookHttpClient.baseUrl', () {
+  group('$WidgetbookHttpClient baseUrl', () {
+    List<Uri> requestedUris(WidgetbookHttpClient client) => [
+      for (final path in requestPaths)
+        RequestOptions(baseUrl: client.client.options.baseUrl, path: path).uri,
+    ];
+
     test('defaults to $BASE_API_URL', () {
       expect(
-        _requestedUris(WidgetbookHttpClient()),
+        requestedUris(WidgetbookHttpClient()),
         equals([
-          for (final path in _requestPaths)
+          for (final path in requestPaths)
             Uri.parse('https://api.widgetbook.io/$path'),
         ]),
       );
@@ -138,65 +116,171 @@ void main() {
         final client = WidgetbookHttpClient()..baseUrl = Uri.parse(base);
 
         expect(
-          _requestedUris(client),
+          requestedUris(client),
           equals([
-            for (final path in _requestPaths) Uri.parse('$expected/$path'),
+            for (final path in requestPaths) Uri.parse('$expected/$path'),
           ]),
         );
       });
     }
   });
 
-  for (final command in _cloudCommands) {
-    group(command.path.join(' '), () {
-      late Context context;
-      late MockWidgetbookHttpClient client;
+  group('--api-url', () {
+    late Logger logger;
+    late Context context;
+    late Repository repository;
+    late MockWidgetbookHttpClient cloudClient;
+    late MockProcessManager processManager;
+    late MockCacheReader cacheReader;
+    late MemoryFileSystem fileSystem;
+    late CliRunner cliRunner;
 
-      setUp(() {
-        context = MockContext();
-        client = MockWidgetbookHttpClient();
-      });
+    setUp(() {
+      logger = MockLogger();
+      context = MockContext();
+      repository = MockRepository();
+      cloudClient = MockWidgetbookHttpClient();
+      processManager = MockProcessManager();
+      cacheReader = MockCacheReader();
+      fileSystem = MemoryFileSystem();
 
-      test('shows --api-url with its default in the usage', () {
-        final usage = command.create(context, client).argParser.usage;
+      when(() => logger.progress(any<String>())).thenReturn(MockProgress());
 
-        expect(usage, contains('--api-url'));
-        expect(usage, contains('https://api.widgetbook.io/'));
-      });
+      when(() => context.name).thenReturn('github');
+      when(() => context.user).thenReturn('John Doe');
+      when(() => context.project).thenReturn('widgetbook');
+      when(() => context.repository).thenReturn(repository);
+      when(() => repository.currentBranch).thenAnswer(
+        (_) async => const Reference(headSha, 'refs/heads/main'),
+      );
 
-      test('sets --api-url on its cloud client', () async {
-        final cliCommand = command.create(context, client);
-        final runner = CommandRunner<int>('test', 'test')
-          ..addCommand(cliCommand);
+      fileSystem.directory('/project/build/web').createSync(recursive: true);
+      when(
+        () => processManager.run(
+          any<List<String>>(),
+          workingDirectory: any(named: 'workingDirectory'),
+          runInShell: any(named: 'runInShell'),
+        ),
+      ).thenAnswer(
+        (_) async => MockProcessResult.success('Flutter 3.24.0'),
+      );
+      when(() => cacheReader.read(any<String>())).thenAnswer(
+        (_) async => CacheStore(
+          scenarios: [
+            ScenarioRecord(
+              component: const ComponentMetadata(
+                name: 'Button',
+                path: 'widgets/button',
+              ),
+              story: const StoryMetadata(name: 'Default', designLink: null),
+              scenario: ScenarioMetadata(
+                name: 'light',
+                path: 'widgets/button/Button/Default/light',
+                modes: const {},
+                args: const {},
+              ),
+              image: const ImageMetadata(
+                path: '.widgetbook/snapshots/aaaa1111.png',
+                hash: 'aaaa1111',
+                size: 1024,
+                width: 10,
+                height: 10,
+                pixelRatio: 1,
+              ),
+              semantics: const {'hash': 'aaaa1111'},
+            ),
+          ],
+        ),
+      );
 
-        await _runUntilMockedWorkFails(runner, [
-          cliCommand.name,
-          ...command.args,
-          ...['--api-url', 'https://host'],
-        ]);
+      when(() => cloudClient.createBuild(any(), any())).thenAnswer(
+        (_) async => const CreateTurboBuildResponse(
+          buildId: 'turbo-1',
+          buildUrl: 'https://host/builds/turbo-1',
+        ),
+      );
+      when(() => cloudClient.skipReview(any(), any())).thenAnswer(
+        (_) async => const SkipReviewResponse(
+          sha: headSha,
+          state: 'success',
+          prNumber: 123,
+        ),
+      );
 
-        verify(() => client.baseUrl = Uri.parse('https://host')).called(1);
-      });
+      cliRunner = CliRunner(
+        context: context,
+        logger: logger,
+        pubUpdater: MockPubUpdater(),
+      );
+    });
 
-      for (final url in _invalidUrls) {
-        test('exits with the usage code for --api-url $url', () async {
-          final logger = MockLogger();
-          final runner = CliRunner(
-            context: context,
-            logger: logger,
-            pubUpdater: MockPubUpdater(),
+    final commands = <(String, List<String>, CliCommand<Object?> Function())>[
+      (
+        'cloud build push',
+        ['--api-key', 'key', '--path', '/project'],
+        () => BuildPushCommand(
+          context: context,
+          logger: logger,
+          cloudClient: cloudClient,
+          processManager: processManager,
+          fileSystem: fileSystem,
+          cacheReader: cacheReader,
+        ),
+      ),
+      (
+        'cloud review skip',
+        ['--api-key', 'key', '--pr', '123', '--sha', headSha],
+        () => ReviewSkipCommand(
+          context: context,
+          logger: logger,
+          cloudClient: cloudClient,
+        ),
+      ),
+    ];
+
+    for (final (name, args, buildCommand) in commands) {
+      group('widgetbook $name', () {
+        test('is shown in the usage', () {
+          final command = buildCommand();
+
+          expect(command.argParser.options['api-url']!.hide, isFalse);
+          expect(command.argParser.usage, contains('--api-url'));
+          expect(
+            command.argParser.usage,
+            contains('https://api.widgetbook.io/'),
           );
+        });
 
-          final exitCode = await runner.run([
-            ...command.path,
-            ...command.args,
-            ...['--api-url', url],
+        test('sets the base URL of the cloud client', () async {
+          final command = buildCommand();
+          final runner = CommandRunner<int>('widgetbook', '')
+            ..addCommand(command);
+
+          final result = await runner.run([
+            command.name,
+            ...args,
+            ...['--api-url', 'https://host'],
           ]);
 
-          expect(exitCode, equals(ExitCode.usage.code));
-          verify(() => logger.err(_errorFor(url))).called(1);
+          expect(result, equals(ExitCode.success.code));
+          verify(
+            () => cloudClient.baseUrl = Uri.parse('https://host'),
+          ).called(1);
         });
-      }
-    });
-  }
+
+        for (final url in invalidUrls) {
+          test('exits with the usage code for $url', () async {
+            final result = await cliRunner.run([
+              ...name.split(' '),
+              ...args,
+              ...['--api-url', url],
+            ]);
+
+            expect(result, equals(ExitCode.usage.code));
+            verify(() => logger.err(errorFor(url))).called(1);
+          });
+        }
+      });
+    }
+  });
 }
