@@ -17,6 +17,7 @@ import '../storage/storage.dart';
 import '../utils/build_hasher.dart';
 import '../utils/executable_manager.dart';
 import 'build_push_args.dart';
+import 'cloud_options.dart';
 
 /// Target byte budget for a single append batch (~1 MB of JSON-encoded
 /// snapshot records). Keeps each append request small.
@@ -86,17 +87,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
             'commit already exists on Widgetbook Cloud.',
         negatable: false,
       )
-      ..addOption(
-        'api-url',
-        help:
-            'Base URL of the Widgetbook Cloud API. Defaults to $BASE_API_URL.',
-        callback: (url) {
-          if (url == null) return;
-          this.cloudClient.client.options.baseUrl = url.endsWith('/')
-              ? url
-              : '$url/';
-        },
-      )
+      ..addApiUrlOption()
       ..addFlag(
         'no-turbo',
         hide: true,
@@ -109,6 +100,14 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
   final FileSystem fileSystem;
   final CacheReader cacheReader;
   final BuildHasher buildHasher;
+
+  @override
+  FutureOr<int>? run() {
+    final apiUrl = parseApiUrlOption(argResults!);
+    if (apiUrl != null) cloudClient.baseUrl = apiUrl;
+
+    return super.run();
+  }
 
   @override
   FutureOr<BuildPushArgs> parseResults(

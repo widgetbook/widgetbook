@@ -5,6 +5,7 @@ import 'package:mason_logger/mason_logger.dart';
 
 import '../api/api.dart';
 import '../core/core.dart';
+import 'cloud_options.dart';
 import 'review_skip_args.dart';
 
 class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
@@ -41,20 +42,18 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
         'reason',
         help: 'Shown in the commit status (e.g. "No UI changes")',
       )
-      ..addOption(
-        'api-url',
-        help:
-            'Base URL of the Widgetbook Cloud API. Defaults to $BASE_API_URL.',
-        callback: (url) {
-          if (url == null) return;
-          this.cloudClient.client.options.baseUrl = url.endsWith('/')
-              ? url
-              : '$url/';
-        },
-      );
+      ..addApiUrlOption();
   }
 
   final WidgetbookHttpClient cloudClient;
+
+  @override
+  FutureOr<int>? run() {
+    final apiUrl = parseApiUrlOption(argResults!);
+    if (apiUrl != null) cloudClient.baseUrl = apiUrl;
+
+    return super.run();
+  }
 
   @override
   FutureOr<ReviewSkipArgs> parseResults(
