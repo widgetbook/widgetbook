@@ -5,6 +5,15 @@ import '../api/api.dart';
 import '../core/core.dart';
 
 extension CloudOptions on ArgParser {
+  void addProjectOption() {
+    addOption(
+      'project',
+      help:
+          'Name of the project on Widgetbook Cloud. '
+          'Optional when the API key reaches exactly one project.',
+    );
+  }
+
   void addApiUrlOption() {
     addOption(
       'api-url',
@@ -35,4 +44,19 @@ Uri? parseApiUrlOption(ArgResults results) {
   }
 
   return url;
+}
+
+/// Parses the `project` option declared by [CloudOptions.addProjectOption],
+/// which must not be blank when passed.
+String? parseProjectOption(ArgResults results) {
+  final project = results['project'] as String?;
+
+  if (project != null && project.trim().isEmpty) {
+    throw CliException(
+      'The option project must not be empty.',
+      ExitCode.usage.code,
+    );
+  }
+
+  return project;
 }

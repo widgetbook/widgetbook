@@ -23,9 +23,10 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
     argParser
       ..addOption(
         'api-key',
-        help: "Project's API key from setting page on Widgetbook Cloud",
+        help: 'API key from your Widgetbook Cloud workspace settings',
         mandatory: true,
       )
+      ..addProjectOption()
       ..addOption(
         'pr',
         help: 'Pull request number (e.g. 123)',
@@ -73,6 +74,7 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
 
     return ReviewSkipArgs(
       apiKey: apiKey,
+      project: parseProjectOption(results),
       prNumber: prNumber,
       sha: results['sha'] as String,
       reason: results['reason'] as String?,
@@ -86,10 +88,16 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
     );
 
     try {
+      final project = await cloudClient.resolveProject(
+        args.apiKey,
+        name: args.project,
+      );
+
       final response = await cloudClient.skipReview(
+        args.apiKey,
+        project,
         args.prNumber,
         SkipReviewRequest(
-          apiKey: args.apiKey,
           sha: args.sha,
           reason: args.reason,
         ),

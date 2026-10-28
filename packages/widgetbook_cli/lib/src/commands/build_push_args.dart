@@ -2,6 +2,7 @@
 class BuildPushArgs {
   const BuildPushArgs({
     required this.apiKey,
+    required this.project,
     required this.path,
     required this.branch,
     required this.commit,
@@ -14,6 +15,11 @@ class BuildPushArgs {
   });
 
   final String apiKey;
+
+  /// Name of the Widgetbook Cloud project, or `null` to use the only project
+  /// the [apiKey] reaches.
+  final String? project;
+
   final String path;
   final String branch;
   final String commit;

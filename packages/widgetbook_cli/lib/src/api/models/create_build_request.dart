@@ -2,7 +2,6 @@ import 'story_record.dart';
 
 class CreateBuildRequest {
   const CreateBuildRequest({
-    required this.apiKey,
     required this.versionControlProvider,
     required this.repository,
     required this.actor,
@@ -15,7 +14,6 @@ class CreateBuildRequest {
     required this.hash,
   });
 
-  final String apiKey;
   final String versionControlProvider;
   final String repository;
   final String actor;
@@ -29,7 +27,6 @@ class CreateBuildRequest {
 
   Map<String, dynamic> toJson() {
     return {
-      'apiKey': apiKey,
       'versionControlProvider': versionControlProvider,
       'repository': repository,
       'actor': actor,
