@@ -216,7 +216,11 @@ class WidgetbookHttpClient {
       } catch (e, stackTrace) {
         final exception = CloudException.parse(e, stackTrace);
 
-        if (!exception.isUnknownPullRequest || attempt >= retryDelays.length) {
+        final pullRequestNotSynced =
+            exception.statusCode == 404 &&
+            exception.detail.startsWith('No pull request #');
+
+        if (!pullRequestNotSynced || attempt >= retryDelays.length) {
           throw exception;
         }
 
@@ -248,16 +252,8 @@ class WidgetbookHttpClient {
       },
     );
   }
-}
 
-extension on CloudException {
-  /// A 404 for the pull request itself, as opposed to one for the workspace
-  /// or project in the path, which retrying cannot resolve.
-  bool get isUnknownPullRequest {
-    return statusCode == 404 && detail.startsWith('No pull request #');
+  static String _quote(String value) {
+    return value.contains(RegExp(r'\s')) ? '"$value"' : value;
   }
-}
-
-String _quote(String value) {
-  return value.contains(RegExp(r'\s')) ? '"$value"' : value;
 }
