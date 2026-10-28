@@ -12,4 +12,5 @@ export 'models/snapshot_record.dart';
 export 'models/story_record.dart';
 export 'models/submit_build_response.dart';
 export 'models/versions_metadata.dart';
+export 'models/workspace_response.dart';
 export 'widgetbook_http_client.dart';

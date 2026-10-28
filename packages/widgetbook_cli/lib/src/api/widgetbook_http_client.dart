@@ -13,6 +13,7 @@ import 'models/skip_review_request.dart';
 import 'models/skip_review_response.dart';
 import 'models/submit_build_response.dart';
 import 'models/versions_metadata.dart';
+import 'models/workspace_response.dart';
 
 const BASE_API_URL = 'https://api.widgetbook.io/';
 
