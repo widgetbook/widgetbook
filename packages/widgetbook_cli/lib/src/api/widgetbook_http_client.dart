@@ -26,6 +26,7 @@ const _skipReviewRetryDelays = [
 class WidgetbookHttpClient {
   WidgetbookHttpClient({
     Dio? client,
+    Uri? baseUrl,
   }) : client =
            client ??
            Dio(
@@ -33,9 +34,23 @@ class WidgetbookHttpClient {
                baseUrl: BASE_API_URL,
                contentType: Headers.jsonContentType,
              ),
-           );
+           ) {
+    if (baseUrl != null) this.baseUrl = baseUrl;
+  }
 
   final Dio client;
+
+  Uri get baseUrl => Uri.parse(client.options.baseUrl);
+
+  /// Dio appends the relative request paths to the base URL as strings, so
+  /// the base URL is stored with exactly one trailing slash.
+  set baseUrl(Uri url) {
+    final normalized = url.path.endsWith('/')
+        ? url
+        : url.replace(path: '${url.path}/');
+
+    client.options.baseUrl = normalized.toString();
+  }
 
   /// Creates a new build that can be either a draft or a turbo build.
   Future<CreateBuildResponse> createBuild(

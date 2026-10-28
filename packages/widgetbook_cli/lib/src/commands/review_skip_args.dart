@@ -5,10 +5,12 @@ class ReviewSkipArgs {
     required this.prNumber,
     required this.sha,
     required this.reason,
+    this.apiUrl,
   });
 
   final String apiKey;
   final int prNumber;
   final String sha;
   final String? reason;
+  final Uri? apiUrl;
 }

@@ -5,6 +5,7 @@ import 'package:mason_logger/mason_logger.dart';
 
 import '../api/api.dart';
 import '../core/core.dart';
+import 'cloud_options.dart';
 import 'review_skip_args.dart';
 
 class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
@@ -41,17 +42,7 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
         'reason',
         help: 'Shown in the commit status (e.g. "No UI changes")',
       )
-      ..addOption(
-        'api-url',
-        help:
-            'Base URL of the Widgetbook Cloud API. Defaults to $BASE_API_URL.',
-        callback: (url) {
-          if (url == null) return;
-          this.cloudClient.client.options.baseUrl = url.endsWith('/')
-              ? url
-              : '$url/';
-        },
-      );
+      ..addApiUrlOption();
   }
 
   final WidgetbookHttpClient cloudClient;
@@ -61,6 +52,7 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
     Context context,
     ArgResults results,
   ) {
+    final apiUrl = parseApiUrlOption(results);
     final apiKey = results['api-key'] as String;
     final prOption = results['pr'] as String;
     final prNumber = int.tryParse(prOption);
@@ -77,11 +69,14 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
       prNumber: prNumber,
       sha: results['sha'] as String,
       reason: results['reason'] as String?,
+      apiUrl: apiUrl,
     );
   }
 
   @override
   FutureOr<int> runWith(Context context, ReviewSkipArgs args) async {
+    if (args.apiUrl case final url?) cloudClient.baseUrl = url;
+
     final progress = logger.progress(
       'Skipping Widgetbook review for PR #${args.prNumber}',
     );
