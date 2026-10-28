@@ -5,6 +5,7 @@ import 'package:mason_logger/mason_logger.dart';
 
 import '../api/api.dart';
 import '../core/core.dart';
+import 'cloud_options.dart';
 import 'review_skip_args.dart';
 
 class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
@@ -41,16 +42,7 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
         'reason',
         help: 'Shown in the commit status (e.g. "No UI changes")',
       )
-      ..addOption(
-        'api-url',
-        hide: true,
-        callback: (url) {
-          if (url == null) return;
-          this.cloudClient.client.options.baseUrl = url.endsWith('/')
-              ? url
-              : '$url/';
-        },
-      );
+      ..addApiUrlOption(this.cloudClient);
   }
 
   final WidgetbookHttpClient cloudClient;

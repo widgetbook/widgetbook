@@ -25,6 +25,14 @@ void main() {
     });
 
     group('api-url', () {
+      test('is shown in the usage', () {
+        final command = BuildPushCommand(context: context);
+
+        expect(command.argParser.options['api-url']!.hide, isFalse);
+        expect(command.argParser.usage, contains('--api-url'));
+        expect(command.argParser.usage, contains('https://api.widgetbook.io/'));
+      });
+
       test('appends missing trailing slash to baseUrl', () {
         final command = BuildPushCommand(context: context);
 
@@ -32,12 +40,12 @@ void main() {
           '--api-key',
           'key',
           '--api-url',
-          'https://staging.api.widgetbook.io',
+          'https://api.example.com',
         ]);
 
         expect(
           command.cloudClient.client.options.baseUrl,
-          equals('https://staging.api.widgetbook.io/'),
+          equals('https://api.example.com/'),
         );
       });
 
@@ -48,12 +56,12 @@ void main() {
           '--api-key',
           'key',
           '--api-url',
-          'https://staging.api.widgetbook.io/',
+          'https://api.example.com/',
         ]);
 
         expect(
           command.cloudClient.client.options.baseUrl,
-          equals('https://staging.api.widgetbook.io/'),
+          equals('https://api.example.com/'),
         );
       });
     });
