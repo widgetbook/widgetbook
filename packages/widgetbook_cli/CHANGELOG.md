@@ -1,7 +1,7 @@
 ## Unreleased
 
 - **FEAT**: Show the `--api-url` option of `cloud build push` and `cloud review skip` in their usage. ([#2050](https://github.com/widgetbook/widgetbook/pull/2050))
-- **FIX**: Accept the `--api-url` of `cloud build push` and `cloud review skip` with or without a trailing slash, including ports and paths, and report invalid URLs as a usage error. ([#2051](https://github.com/widgetbook/widgetbook/pull/2051))
+- **FIX**: Report an invalid `--api-url` of `cloud build push` and `cloud review skip` as a usage error instead of crashing. ([#2051](https://github.com/widgetbook/widgetbook/pull/2051))
 
 ## 4.0.0-beta.14
 
