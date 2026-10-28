@@ -11,7 +11,6 @@ class BuildPushArgs {
     required this.repository,
     required this.noTurbo,
     required this.allowExisting,
-    this.apiUrl,
   });
 
   final String apiKey;
@@ -27,5 +26,4 @@ class BuildPushArgs {
   /// Whether to exit successfully instead of failing when a build for this
   /// commit already exists on Widgetbook Cloud.
   final bool allowExisting;
-  final Uri? apiUrl;
 }

@@ -102,11 +102,18 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
   final BuildHasher buildHasher;
 
   @override
+  FutureOr<int>? run() {
+    final apiUrl = parseApiUrlOption(argResults!);
+    if (apiUrl != null) cloudClient.baseUrl = apiUrl;
+
+    return super.run();
+  }
+
+  @override
   FutureOr<BuildPushArgs> parseResults(
     Context context,
     ArgResults results,
   ) async {
-    final apiUrl = parseApiUrlOption(results);
     final path = results['path'] as String;
     final apiKey = results['api-key'] as String;
 
@@ -171,14 +178,11 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
       repository: repoName,
       noTurbo: noTurbo,
       allowExisting: allowExisting,
-      apiUrl: apiUrl,
     );
   }
 
   @override
   FutureOr<int> runWith(Context context, BuildPushArgs args) async {
-    if (args.apiUrl case final url?) cloudClient.baseUrl = url;
-
     final lockPath = p.join(args.path, 'pubspec.lock');
     final versions = await VersionsMetadata.from(
       lockFile: fileSystem.file(lockPath),

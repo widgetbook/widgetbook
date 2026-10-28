@@ -48,11 +48,18 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
   final WidgetbookHttpClient cloudClient;
 
   @override
+  FutureOr<int>? run() {
+    final apiUrl = parseApiUrlOption(argResults!);
+    if (apiUrl != null) cloudClient.baseUrl = apiUrl;
+
+    return super.run();
+  }
+
+  @override
   FutureOr<ReviewSkipArgs> parseResults(
     Context context,
     ArgResults results,
   ) {
-    final apiUrl = parseApiUrlOption(results);
     final apiKey = results['api-key'] as String;
     final prOption = results['pr'] as String;
     final prNumber = int.tryParse(prOption);
@@ -69,14 +76,11 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
       prNumber: prNumber,
       sha: results['sha'] as String,
       reason: results['reason'] as String?,
-      apiUrl: apiUrl,
     );
   }
 
   @override
   FutureOr<int> runWith(Context context, ReviewSkipArgs args) async {
-    if (args.apiUrl case final url?) cloudClient.baseUrl = url;
-
     final progress = logger.progress(
       'Skipping Widgetbook review for PR #${args.prNumber}',
     );
