@@ -40,12 +40,12 @@ void main() {
           '--api-key',
           'key',
           '--api-url',
-          'https://api.example.com',
+          'https://staging.api.widgetbook.io',
         ]);
 
         expect(
           command.cloudClient.client.options.baseUrl,
-          equals('https://api.example.com/'),
+          equals('https://staging.api.widgetbook.io/'),
         );
       });
 
@@ -56,12 +56,12 @@ void main() {
           '--api-key',
           'key',
           '--api-url',
-          'https://api.example.com/',
+          'https://staging.api.widgetbook.io/',
         ]);
 
         expect(
           command.cloudClient.client.options.baseUrl,
-          equals('https://api.example.com/'),
+          equals('https://staging.api.widgetbook.io/'),
         );
       });
     });
