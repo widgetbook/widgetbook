@@ -18,12 +18,13 @@ class CloudProject {
 
   /// The API path that the routes acting on this project are nested under.
   String get path => 'v4/workspaces/$workspaceId/projects/$projectId';
-}
 
-extension CloudResolver on WidgetbookHttpClient {
   /// Returns the id of the one workspace the [apiKey] belongs to.
-  Future<String> resolveWorkspaceId(String apiKey) async {
-    final workspaces = await listWorkspaces(apiKey);
+  static Future<String> _resolveWorkspaceId(
+    WidgetbookHttpClient cloudClient,
+    String apiKey,
+  ) async {
+    final workspaces = await cloudClient.listWorkspaces(apiKey);
 
     if (workspaces.length != 1) {
       throw CliException(
@@ -38,9 +39,17 @@ extension CloudResolver on WidgetbookHttpClient {
 
   /// Returns the project called [name], or the only project the [apiKey]
   /// reaches if no [name] is given.
-  Future<CloudProject> resolveProject(String apiKey, {String? name}) async {
-    final workspaceId = await resolveWorkspaceId(apiKey);
-    final projects = await listProjects(apiKey, workspaceId, name: name);
+  static Future<CloudProject> resolve({
+    required WidgetbookHttpClient cloudClient,
+    required String apiKey,
+    String? name,
+  }) async {
+    final workspaceId = await _resolveWorkspaceId(cloudClient, apiKey);
+    final projects = await cloudClient.listProjects(
+      apiKey,
+      workspaceId,
+      name: name,
+    );
 
     if (name != null && projects.isEmpty) {
       throw CliException(

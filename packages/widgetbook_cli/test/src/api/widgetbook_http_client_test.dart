@@ -36,6 +36,14 @@ WidgetbookHttpClient clientFor(FakeHttpAdapter adapter) {
   return WidgetbookHttpClient()..client.httpClientAdapter = adapter;
 }
 
+Future<CloudProject> resolve(FakeHttpAdapter adapter, {String? name}) {
+  return CloudProject.resolve(
+    cloudClient: clientFor(adapter),
+    apiKey: apiKey,
+    name: name,
+  );
+}
+
 const createBuildRequest = CreateBuildRequest(
   versionControlProvider: 'GitHub',
   repository: 'widgetbook/app',
@@ -366,14 +374,17 @@ void main() {
     });
   });
 
-  group('CloudResolver', () {
-    group('resolveWorkspaceId', () {
+  group('$CloudProject.resolve', () {
+    group('workspace', () {
       test('returns the one workspace of the key', () async {
-        final adapter = FakeHttpAdapter([workspacesResponse]);
+        final adapter = FakeHttpAdapter([
+          workspacesResponse,
+          projectsResponse(['my-app']),
+        ]);
 
-        final id = await clientFor(adapter).resolveWorkspaceId(apiKey);
+        final resolved = await resolve(adapter);
 
-        expect(id, equals('workspace-1'));
+        expect(resolved.workspaceId, equals('workspace-1'));
       });
 
       for (final count in [0, 2]) {
@@ -388,7 +399,7 @@ void main() {
           ]);
 
           expect(
-            clientFor(adapter).resolveWorkspaceId(apiKey),
+            resolve(adapter),
             throwsCliException(
               'Expected the API key to belong to exactly one workspace, '
               'but Widgetbook Cloud returned $count.',
@@ -398,16 +409,14 @@ void main() {
       }
     });
 
-    group('resolveProject', () {
+    group('project', () {
       test('looks the project up by name', () async {
         final adapter = FakeHttpAdapter([
           workspacesResponse,
           projectsResponse(['my-app']),
         ]);
 
-        final resolved = await clientFor(
-          adapter,
-        ).resolveProject(apiKey, name: 'my-app');
+        final resolved = await resolve(adapter, name: 'my-app');
 
         expect(resolved.workspaceId, equals('workspace-1'));
         expect(resolved.projectId, equals('project-1'));
@@ -433,7 +442,7 @@ void main() {
           projectsResponse(['my-app']),
         ]);
 
-        final resolved = await clientFor(adapter).resolveProject(apiKey);
+        final resolved = await resolve(adapter);
 
         expect(resolved.projectId, equals('project-1'));
         expect(adapter.requests.last.uri.queryParameters, isEmpty);
@@ -446,7 +455,7 @@ void main() {
         ]);
 
         expect(
-          clientFor(adapter).resolveProject(apiKey, name: 'my-app'),
+          resolve(adapter, name: 'my-app'),
           throwsCliException(
             "No project named 'my-app'. "
             'Create it with: widgetbook cloud project create --project my-app',
@@ -461,7 +470,7 @@ void main() {
         ]);
 
         expect(
-          clientFor(adapter).resolveProject(apiKey, name: 'my app'),
+          resolve(adapter, name: 'my app'),
           throwsCliException(
             "No project named 'my app'. "
             'Create it with: '
@@ -477,7 +486,7 @@ void main() {
         ]);
 
         expect(
-          clientFor(adapter).resolveProject(apiKey),
+          resolve(adapter),
           throwsCliException(
             'This API key reaches no project. Create one with: '
             'widgetbook cloud project create --project <name>',
@@ -492,7 +501,7 @@ void main() {
         ]);
 
         expect(
-          clientFor(adapter).resolveProject(apiKey),
+          resolve(adapter),
           throwsCliException(
             'This API key reaches 2 projects. '
             'Pass --project <name> to choose one.',
@@ -506,7 +515,7 @@ void main() {
         ]);
 
         await expectLater(
-          clientFor(adapter).resolveProject(apiKey, name: 'my-app'),
+          resolve(adapter, name: 'my-app'),
           throwsA(isA<CliException>()),
         );
 
