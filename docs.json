@@ -471,6 +471,10 @@
           "href": "/cloud/workspaces"
         },
         {
+          "title": "API keys",
+          "href": "/cloud/api-keys"
+        },
+        {
           "group": "Projects",
           "pages": [
             {

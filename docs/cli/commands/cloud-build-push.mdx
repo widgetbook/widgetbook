@@ -15,7 +15,8 @@ The CLI accepts the following arguments.
 | Argument       | Mandatory | Default\*                     | Description                                                      |
 | -------------- | --------- | ----------------------------- | ---------------------------------------------------------------- |
 | `--path`       | ➖        | `./`                          | The path to your project.                                        |
-| `--api-key`    | ✅        | -                             | The project specific API key for Widgetbook Cloud.               |
+| `--api-key`    | ✅        | -                             | An [API key](/cloud/api-keys) with the "Push builds" permission.  |
+| `--project`    | ➖        | -                             | The name of the project. Optional when the API key reaches exactly one project. See [Choosing the project](/cloud/api-keys#choosing-the-project). |
 | `--branch`     | ➖        | Current git branch            | The name of the branch for which the Widgetbook is uploaded.     |
 | `--commit`     | ➖        | HEAD commit of current branch | The SHA hash of the commit for which the Widgetbook is uploaded. |
 | `--repository` | ➖        | Repository top-level name     | The name of the repository for which the Widgetbook is uploaded. |
