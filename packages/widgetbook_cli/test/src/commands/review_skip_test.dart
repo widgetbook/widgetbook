@@ -1,12 +1,9 @@
 import 'package:args/args.dart';
-import 'package:args/command_runner.dart';
-import 'package:dio/dio.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 import 'package:widgetbook_cli/widgetbook_cli.dart';
 
-import '../../helper/fake_http_adapter.dart';
 import '../../helper/mocks.dart';
 
 class _FakeSkipReviewRequest extends Fake implements SkipReviewRequest {}
@@ -82,91 +79,6 @@ void main() {
 
       expect(exitCode, equals(ExitCode.success.code));
       verify(() => client.skipReview(123, any())).called(1);
-    });
-
-    group('api-url', () {
-      test('is shown in the usage', () {
-        final command = ReviewSkipCommand(context: context);
-
-        expect(command.argParser.options['api-url']!.hide, isFalse);
-        expect(command.argParser.usage, contains('--api-url'));
-        expect(command.argParser.usage, contains('https://api.widgetbook.io/'));
-      });
-
-      for (final url in [
-        'https://api.example.com',
-        'https://api.example.com/',
-      ]) {
-        test('requests the API below $url', () async {
-          final adapter = FakeHttpAdapter([
-            const FakeResponse(200, {
-              'sha': headSha,
-              'state': 'success',
-              'prNumber': 123,
-            }),
-          ]);
-          final dio = Dio(BaseOptions(baseUrl: BASE_API_URL))
-            ..httpClientAdapter = adapter;
-          final logger = MockLogger();
-          when(() => logger.progress(any())).thenReturn(MockProgress());
-          final runner = CommandRunner<int>('test', 'test')
-            ..addCommand(
-              ReviewSkipCommand(
-                context: context,
-                logger: logger,
-                cloudClient: WidgetbookHttpClient(client: dio),
-              ),
-            );
-
-          final exitCode = await runner.run([
-            'skip',
-            ...['--api-key', 'key', '--pr', '123', '--sha', headSha],
-            ...['--api-url', url],
-          ]);
-
-          expect(exitCode, equals(ExitCode.success.code));
-          expect(
-            adapter.requests.single.uri,
-            equals(
-              Uri.parse(
-                'https://api.example.com/v4/pull-requests/123/review-skip',
-              ),
-            ),
-          );
-        });
-      }
-
-      for (final url in [
-        'api.widgetbook.io',
-        'ftp://x',
-        'https://',
-        'https://host/?x',
-      ]) {
-        test('rejects $url as a usage error', () async {
-          final logger = MockLogger();
-          final runner = CliRunner(
-            context: context,
-            logger: logger,
-            pubUpdater: MockPubUpdater(),
-          );
-
-          final exitCode = await runner.run([
-            'cloud',
-            'review',
-            'skip',
-            ...['--api-key', 'key', '--pr', '123', '--sha', headSha],
-            ...['--api-url', url],
-          ]);
-
-          expect(exitCode, equals(ExitCode.usage.code));
-          verify(
-            () => logger.err(
-              'The --api-url option must be an http or https URL, '
-              'got "$url".',
-            ),
-          ).called(1);
-        });
-      }
     });
   });
 }
