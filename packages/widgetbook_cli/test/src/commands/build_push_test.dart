@@ -106,7 +106,33 @@ void main() {
         final args = await command.parseResults(context, results);
 
         expect(args.apiKey, equals(apiKey));
+        expect(args.project, isNull);
       });
+
+      test('project', () async {
+        when(() => results['project']).thenReturn('my-app');
+
+        final args = await command.parseResults(context, results);
+
+        expect(args.project, equals('my-app'));
+      });
+
+      for (final project in ['', '  ']) {
+        test('throws for project "$project"', () {
+          when(() => results['project']).thenReturn(project);
+
+          expect(
+            () => command.parseResults(context, results),
+            throwsA(
+              isA<CliException>().having(
+                (e) => e.message,
+                'message',
+                equals('The option project must not be empty.'),
+              ),
+            ),
+          );
+        });
+      }
 
       group('actor', () {
         test('from $ArgResults', () async {

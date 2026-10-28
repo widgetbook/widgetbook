@@ -17,6 +17,7 @@ import '../storage/storage.dart';
 import '../utils/build_hasher.dart';
 import '../utils/executable_manager.dart';
 import 'build_push_args.dart';
+import 'cloud_options.dart';
 
 /// Target byte budget for a single append batch (~1 MB of JSON-encoded
 /// snapshot records). Keeps each append request small.
@@ -47,11 +48,8 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
          description: 'Pushes a new build to Widgetbook Cloud',
        ) {
     argParser
-      ..addOption(
-        'api-key',
-        help: "Project's API key from setting page on Widgetbook Cloud",
-        mandatory: true,
-      )
+      ..addApiKeyOption()
+      ..addProjectOption()
       ..addOption(
         'path',
         help: "Path to the `build` folder's parent (i.e. the project root)",
@@ -116,6 +114,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
   ) async {
     final path = results['path'] as String;
     final apiKey = results['api-key'] as String;
+    final project = parseProjectOption(results);
 
     final repository = context.repository;
 
@@ -169,6 +168,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
     return BuildPushArgs(
       apiKey: apiKey,
+      project: project,
       branch: branch,
       commit: commit,
       mergedResultCommit: mergedResultCommit,
@@ -257,14 +257,28 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     }
     final stories = storiesByNavPath.values.toList();
 
+    final projectProgress = logger.progress('Resolving project');
+    final CloudProject project;
+    try {
+      project = await cloudClient.resolveProject(
+        args.apiKey,
+        name: args.project,
+      );
+    } catch (_) {
+      projectProgress.fail('Could not resolve the project');
+      rethrow;
+    }
+    projectProgress.complete("Project '${project.name}'");
+
     final createProgress = logger.progress('Creating build');
 
     final CreateBuildResponse createResponse;
     try {
       createResponse = await cloudClient.createBuild(
+        args.apiKey,
+        project,
         versions,
         CreateBuildRequest(
-          apiKey: args.apiKey,
           versionControlProvider: args.vendor,
           repository: args.repository,
           actor: args.actor,
@@ -309,6 +323,7 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     await _appendSnapshots(
       versions: versions,
       apiKey: args.apiKey,
+      project: project,
       buildId: createResponse.buildId,
       scenarios: cache.scenarios,
     );
@@ -385,10 +400,9 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
     final submitProgress = logger.progress('Submitting build');
     final submitResponse = await cloudClient.submitBuild(
-      SubmitBuildRequest(
-        apiKey: args.apiKey,
-        buildId: createResponse.buildId,
-      ),
+      args.apiKey,
+      project,
+      createResponse.buildId,
     );
 
     submitProgress.complete(
@@ -400,10 +414,11 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
 
   /// Builds a [SnapshotRecord] per cache scenario, packs them into
   /// byte-bounded batches, and POSTs each batch to
-  /// `v4/builds/{buildId}/snapshots` with bounded parallelism.
+  /// the snapshots route of [buildId] with bounded parallelism.
   Future<void> _appendSnapshots({
     required VersionsMetadata? versions,
     required String apiKey,
+    required CloudProject project,
     required String buildId,
     required List<ScenarioRecord> scenarios,
   }) async {
@@ -432,12 +447,11 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     final promises = batches.map((batch) async {
       await pool.withResource(
         () => cloudClient.appendSnapshots(
+          apiKey,
+          project,
           versions,
           buildId,
-          AppendSnapshotsRequest(
-            apiKey: apiKey,
-            snapshots: batch,
-          ),
+          AppendSnapshotsRequest(snapshots: batch),
         ),
       );
 

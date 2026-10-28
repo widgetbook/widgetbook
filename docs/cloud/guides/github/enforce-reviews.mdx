@@ -93,7 +93,7 @@ To resolve the check on them, let your CI declare that no build is coming:
   <Step title="Allow CI to skip the review">
     In your project's *General* settings, enable *Allow CI to skip the review check*.
 
-    This is off by default because it lets anyone who can run CI with the project API key waive the review.
+    This is off by default because it lets anyone who can run CI with an API key that has the "Skip reviews" permission waive the review.
     Keep your workflow files protected accordingly.
   </Step>
   <Step title="Call the CLI when no build is uploaded">

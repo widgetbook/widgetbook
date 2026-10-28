@@ -4,6 +4,7 @@ import 'package:args/args.dart';
 
 import '../core/core.dart';
 import 'build_push.dart';
+import 'project_create.dart';
 import 'review_skip.dart';
 
 class CloudCommand extends CliVoidCommand {
@@ -13,6 +14,18 @@ class CloudCommand extends CliVoidCommand {
          name: 'cloud',
          description: 'Manage your Widgetbook Cloud projects.',
        ) {
+    addSubcommand(
+      CliCommandsGroup(
+        name: 'project',
+        description: 'Manage the projects of your Widgetbook Cloud workspace.',
+        commands: [
+          ProjectCreateCommand(
+            context: context,
+          ),
+        ],
+      ),
+    );
+
     addSubcommand(
       CliCommandsGroup(
         name: 'build',

@@ -5,6 +5,7 @@ import 'package:mason_logger/mason_logger.dart';
 
 import '../api/api.dart';
 import '../core/core.dart';
+import 'cloud_options.dart';
 import 'review_skip_args.dart';
 
 class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
@@ -20,11 +21,8 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
              'for a commit that uploads no build.',
        ) {
     argParser
-      ..addOption(
-        'api-key',
-        help: "Project's API key from setting page on Widgetbook Cloud",
-        mandatory: true,
-      )
+      ..addApiKeyOption()
+      ..addProjectOption()
       ..addOption(
         'pr',
         help: 'Pull request number (e.g. 123)',
@@ -60,7 +58,6 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
     Context context,
     ArgResults results,
   ) {
-    final apiKey = results['api-key'] as String;
     final prOption = results['pr'] as String;
     final prNumber = int.tryParse(prOption);
 
@@ -72,7 +69,8 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
     }
 
     return ReviewSkipArgs(
-      apiKey: apiKey,
+      apiKey: results['api-key'] as String,
+      project: parseProjectOption(results),
       prNumber: prNumber,
       sha: results['sha'] as String,
       reason: results['reason'] as String?,
@@ -86,10 +84,16 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
     );
 
     try {
+      final project = await cloudClient.resolveProject(
+        args.apiKey,
+        name: args.project,
+      );
+
       final response = await cloudClient.skipReview(
+        args.apiKey,
+        project,
         args.prNumber,
         SkipReviewRequest(
-          apiKey: args.apiKey,
           sha: args.sha,
           reason: args.reason,
         ),
