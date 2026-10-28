@@ -3,7 +3,6 @@
 - **FEAT**: Send the API key of `cloud build push` and `cloud review skip` as a bearer token and call the project routes of Widgetbook Cloud, so keys created in the workspace settings work alongside existing project API keys. ([#2040](https://github.com/widgetbook/widgetbook/pull/2040))
 - **FEAT**: Add `--project` to `cloud build push` and `cloud review skip`, which names the project; it is optional when the API key reaches exactly one project. ([#2040](https://github.com/widgetbook/widgetbook/pull/2040))
 - **FEAT**: Add `cloud project create`, which creates a project in the workspace of an API key with the "Create projects" permission, with `--allow-existing` to succeed when the project already exists. ([#2040](https://github.com/widgetbook/widgetbook/pull/2040))
-- **FEAT**: Show `--api-url` in the usage of `cloud build push`, `cloud review skip` and `cloud project create`. ([#2040](https://github.com/widgetbook/widgetbook/pull/2040))
 
 ## 4.0.0-beta.14
 

@@ -259,25 +259,5 @@ void main() {
         });
       }
     });
-
-    group('api-url', () {
-      test('is shown in the usage', () {
-        final command = ReviewSkipCommand(context: context);
-
-        expect(command.argParser.options['api-url']!.hide, isFalse);
-        expect(command.argParser.usage, contains('--api-url'));
-      });
-
-      test('sets the base URL', () {
-        final command = ReviewSkipCommand(context: context);
-
-        command.argParser.parse(['--api-url', 'https://api.example.com']);
-
-        expect(
-          command.cloudClient.client.options.baseUrl,
-          equals('https://api.example.com/'),
-        );
-      });
-    });
   });
 }

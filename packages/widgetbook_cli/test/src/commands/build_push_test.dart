@@ -25,13 +25,6 @@ void main() {
     });
 
     group('api-url', () {
-      test('is shown in the usage', () {
-        final command = BuildPushCommand(context: context);
-
-        expect(command.argParser.options['api-url']!.hide, isFalse);
-        expect(command.argParser.usage, contains('--api-url'));
-      });
-
       test('appends missing trailing slash to baseUrl', () {
         final command = BuildPushCommand(context: context);
 

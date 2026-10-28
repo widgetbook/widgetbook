@@ -25,7 +25,6 @@ The CLI accepts the following arguments.
 | `--pr`      | ✅        | The number of the pull request to skip the review for.                           |
 | `--sha`     | ✅        | The head commit SHA of the pull request.                                         |
 | `--reason`  | ➖        | Shown in the commit status. Up to 500 characters.                                |
-| `--api-url` | ➖        | Base URL of the Widgetbook Cloud API. Defaults to `https://api.widgetbook.io/`.  |
 
 The pull request and its head commit are passed explicitly because every CI provider exposes them under different variables, and several expose a merge commit where the head commit is expected.
 

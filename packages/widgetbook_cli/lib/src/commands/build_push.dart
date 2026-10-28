@@ -84,7 +84,16 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
             'commit already exists on Widgetbook Cloud.',
         negatable: false,
       )
-      ..addApiUrlOption(this.cloudClient)
+      ..addOption(
+        'api-url',
+        hide: true,
+        callback: (url) {
+          if (url == null) return;
+          this.cloudClient.client.options.baseUrl = url.endsWith('/')
+              ? url
+              : '$url/';
+        },
+      )
       ..addFlag(
         'no-turbo',
         hide: true,

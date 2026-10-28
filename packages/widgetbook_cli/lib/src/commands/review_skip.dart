@@ -39,7 +39,16 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
         'reason',
         help: 'Shown in the commit status (e.g. "No UI changes")',
       )
-      ..addApiUrlOption(this.cloudClient);
+      ..addOption(
+        'api-url',
+        hide: true,
+        callback: (url) {
+          if (url == null) return;
+          this.cloudClient.client.options.baseUrl = url.endsWith('/')
+              ? url
+              : '$url/';
+        },
+      );
   }
 
   final WidgetbookHttpClient cloudClient;
