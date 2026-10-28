@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Show the `--api-url` option of `cloud build push` and `cloud review skip` in their usage. ([#2050](https://github.com/widgetbook/widgetbook/pull/2050))
+
 ## 4.0.0-beta.14
 
 - **FIX**: Migrate to the `platform` package's 3.2 `NativePlatform` API. ([#2033](https://github.com/widgetbook/widgetbook/pull/2033))

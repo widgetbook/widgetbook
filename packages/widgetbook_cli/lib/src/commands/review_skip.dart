@@ -43,7 +43,8 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
       )
       ..addOption(
         'api-url',
-        hide: true,
+        help:
+            'Base URL of the Widgetbook Cloud API. Defaults to $BASE_API_URL.',
         callback: (url) {
           if (url == null) return;
           this.cloudClient.client.options.baseUrl = url.endsWith('/')

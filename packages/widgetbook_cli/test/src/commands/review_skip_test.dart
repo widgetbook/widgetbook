@@ -80,5 +80,31 @@ void main() {
       expect(exitCode, equals(ExitCode.success.code));
       verify(() => client.skipReview(123, any())).called(1);
     });
+
+    group('api-url', () {
+      test('is shown in the usage', () {
+        final command = ReviewSkipCommand(context: context);
+
+        expect(command.argParser.options['api-url']!.hide, isFalse);
+        expect(command.argParser.usage, contains('--api-url'));
+        expect(command.argParser.usage, contains('https://api.widgetbook.io/'));
+      });
+
+      for (final url in [
+        'https://api.example.com',
+        'https://api.example.com/',
+      ]) {
+        test('sets the base URL from $url', () {
+          final command = ReviewSkipCommand(context: context);
+
+          command.argParser.parse(['--api-url', url]);
+
+          expect(
+            command.cloudClient.client.options.baseUrl,
+            equals('https://api.example.com/'),
+          );
+        });
+      }
+    });
   });
 }
