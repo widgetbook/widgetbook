@@ -1,4 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:mason_logger/mason_logger.dart';
+
+import '../core/core.dart';
 
 import 'cloud_exception.dart';
 import 'cloud_project.dart';
@@ -92,6 +95,45 @@ class WidgetbookHttpClient {
     }
   }
 
+  /// Returns the project called [name], or the only project the [apiKey]
+  /// reaches if no [name] is given.
+  Future<CloudProject> resolveProject(String apiKey, {String? name}) async {
+    final workspaceId = await _resolveWorkspaceId(apiKey);
+    final projects = await listProjects(apiKey, workspaceId, name: name);
+
+    if (name != null && projects.isEmpty) {
+      throw CliException(
+        "No project named '$name'. Create it with: "
+        'widgetbook cloud project create --project ${_quote(name)}',
+        ExitCode.data.code,
+      );
+    }
+
+    if (projects.isEmpty) {
+      throw CliException(
+        'This API key reaches no project. Create one with: '
+        'widgetbook cloud project create --project <name>',
+        ExitCode.data.code,
+      );
+    }
+
+    if (projects.length > 1) {
+      throw CliException(
+        'This API key reaches ${projects.length} projects. '
+        'Pass --project <name> to choose one.',
+        ExitCode.data.code,
+      );
+    }
+
+    final project = projects.single;
+
+    return CloudProject(
+      workspaceId: workspaceId,
+      projectId: project.id,
+      name: project.name,
+    );
+  }
+
   /// Creates a new build that can be either a draft or a turbo build.
   Future<CreateBuildResponse> createBuild(
     String apiKey,
@@ -183,6 +225,21 @@ class WidgetbookHttpClient {
     }
   }
 
+  /// Returns the id of the one workspace the [apiKey] belongs to.
+  Future<String> _resolveWorkspaceId(String apiKey) async {
+    final workspaces = await listWorkspaces(apiKey);
+
+    if (workspaces.length != 1) {
+      throw CliException(
+        'Expected the API key to belong to exactly one workspace, '
+        'but Widgetbook Cloud returned ${workspaces.length}.',
+        ExitCode.data.code,
+      );
+    }
+
+    return workspaces.single.id;
+  }
+
   Options _options(String apiKey, [VersionsMetadata? versions]) {
     return Options(
       headers: {
@@ -199,4 +256,8 @@ extension on CloudException {
   bool get isUnknownPullRequest {
     return statusCode == 404 && detail.startsWith('No pull request #');
   }
+}
+
+String _quote(String value) {
+  return value.contains(RegExp(r'\s')) ? '"$value"' : value;
 }

@@ -262,9 +262,8 @@ class BuildPushCommand extends CliCommand<BuildPushArgs> {
     final projectProgress = logger.progress('Resolving project');
     final CloudProject project;
     try {
-      project = await CloudProject.resolve(
-        cloudClient: cloudClient,
-        apiKey: args.apiKey,
+      project = await cloudClient.resolveProject(
+        args.apiKey,
         name: args.project,
       );
     } catch (_) {

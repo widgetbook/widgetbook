@@ -37,10 +37,16 @@ ScenarioRecord _scenario({
   );
 }
 
+const project = CloudProject(
+  workspaceId: 'workspace-1',
+  projectId: 'project-1',
+  name: 'my-app',
+);
+
 void main() {
   setUpAll(() {
     registerFallbackValue(
-      const CloudProject(workspaceId: 'w', projectId: 'p', name: 'n'),
+      project,
     );
     registerFallbackValue(
       const CreateBuildRequest(
@@ -174,20 +180,9 @@ void main() {
         (_) async => CacheStore(scenarios: scenarios),
       );
 
-      when(() => cloudClient.listWorkspaces(any())).thenAnswer(
-        (_) async => const [WorkspaceResponse(id: 'workspace-1', name: 'W')],
-      );
       when(
-        () => cloudClient.listProjects(any(), any(), name: any(named: 'name')),
-      ).thenAnswer(
-        (_) async => [
-          ProjectResponse(
-            id: 'project-1',
-            name: 'my-app',
-            createdAt: DateTime.utc(2026),
-          ),
-        ],
-      );
+        () => cloudClient.resolveProject(any(), name: any(named: 'name')),
+      ).thenAnswer((_) async => project);
       when(
         () => cloudClient.createBuild(any(), any(), any(), any()),
       ).thenAnswer(
@@ -353,64 +348,42 @@ void main() {
     test('resolves the project once and uses it on every route', () async {
       await command.runWith(context, makeArgs(project: 'my-app'));
 
-      verify(() => cloudClient.listWorkspaces('api-key')).called(1);
       verify(
-        () =>
-            cloudClient.listProjects('api-key', 'workspace-1', name: 'my-app'),
+        () => cloudClient.resolveProject('api-key', name: 'my-app'),
       ).called(1);
-
-      final createProject =
-          verify(
-                () => cloudClient.createBuild(
-                  'api-key',
-                  captureAny(),
-                  any(),
-                  any(),
-                ),
-              ).captured.single
-              as CloudProject;
-      expect(createProject.workspaceId, equals('workspace-1'));
-      expect(createProject.projectId, equals('project-1'));
-
-      final appendProjects = verify(
+      verify(
+        () => cloudClient.createBuild('api-key', project, any(), any()),
+      ).called(1);
+      verify(
         () => cloudClient.appendSnapshots(
           'api-key',
-          captureAny(),
+          project,
           any(),
           'build-123',
           any(),
         ),
-      ).captured;
-      expect(appendProjects, everyElement(same(createProject)));
-
+      ).called(greaterThan(0));
       verify(
-        () => cloudClient.submitBuild('api-key', createProject, 'build-123'),
+        () => cloudClient.submitBuild('api-key', project, 'build-123'),
       ).called(1);
     });
 
     test('uses the only project of the key without --project', () async {
       await command.runWith(context, makeArgs());
 
-      verify(
-        () => cloudClient.listProjects('api-key', 'workspace-1'),
-      ).called(1);
+      verify(() => cloudClient.resolveProject('api-key')).called(1);
       verify(() => cloudClient.submitBuild(any(), any(), any())).called(1);
     });
 
     test('creates no build when the project cannot be resolved', () async {
+      final error = CliException("No project named 'my-app'.", 65);
       when(
-        () => cloudClient.listProjects(any(), any(), name: any(named: 'name')),
-      ).thenAnswer((_) async => const []);
+        () => cloudClient.resolveProject(any(), name: any(named: 'name')),
+      ).thenThrow(error);
 
       await expectLater(
         command.runWith(context, makeArgs(project: 'my-app')),
-        throwsA(
-          isA<CliException>().having(
-            (e) => e.message,
-            'message',
-            startsWith("No project named 'my-app'."),
-          ),
-        ),
+        throwsA(same(error)),
       );
 
       verifyNever(() => cloudClient.createBuild(any(), any(), any(), any()));
@@ -466,20 +439,9 @@ void main() {
       ).thenAnswer(
         (_) async => MockProcessResult.success('Flutter 3.24.0'),
       );
-      when(() => cloudClient.listWorkspaces(any())).thenAnswer(
-        (_) async => const [WorkspaceResponse(id: 'workspace-1', name: 'W')],
-      );
       when(
-        () => cloudClient.listProjects(any(), any(), name: any(named: 'name')),
-      ).thenAnswer(
-        (_) async => [
-          ProjectResponse(
-            id: 'project-1',
-            name: 'my-app',
-            createdAt: DateTime.utc(2026),
-          ),
-        ],
-      );
+        () => cloudClient.resolveProject(any(), name: any(named: 'name')),
+      ).thenAnswer((_) async => project);
       when(
         () => cloudClient.createBuild(any(), any(), any(), any()),
       ).thenAnswer(

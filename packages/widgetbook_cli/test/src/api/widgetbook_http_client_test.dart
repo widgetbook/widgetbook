@@ -37,11 +37,7 @@ WidgetbookHttpClient clientFor(FakeHttpAdapter adapter) {
 }
 
 Future<CloudProject> resolve(FakeHttpAdapter adapter, {String? name}) {
-  return CloudProject.resolve(
-    cloudClient: clientFor(adapter),
-    apiKey: apiKey,
-    name: name,
-  );
+  return clientFor(adapter).resolveProject(apiKey, name: name);
 }
 
 const createBuildRequest = CreateBuildRequest(
@@ -374,7 +370,7 @@ void main() {
     });
   });
 
-  group('$CloudProject.resolve', () {
+  group('resolveProject', () {
     group('workspace', () {
       test('returns the one workspace of the key', () async {
         final adapter = FakeHttpAdapter([

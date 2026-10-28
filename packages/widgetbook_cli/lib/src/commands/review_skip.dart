@@ -88,9 +88,8 @@ class ReviewSkipCommand extends CliCommand<ReviewSkipArgs> {
     );
 
     try {
-      final project = await CloudProject.resolve(
-        cloudClient: cloudClient,
-        apiKey: args.apiKey,
+      final project = await cloudClient.resolveProject(
+        args.apiKey,
         name: args.project,
       );
 

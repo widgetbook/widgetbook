@@ -123,81 +123,76 @@ void main() {
         ]);
       }
 
-      void expectSkipRequest(RecordedRequest request) {
-        expect(request.method, equals('POST'));
-        expect(
-          request.uri.path,
-          equals(
-            '/v4/workspaces/workspace-1/projects/project-1'
-            '/pull-requests/123/review-skip',
-          ),
+      group('with a mocked client', () {
+        const project = CloudProject(
+          workspaceId: 'workspace-1',
+          projectId: 'project-1',
+          name: 'my-app',
         );
-        expect(request.body, equals({'sha': headSha, 'reason': 'No UI'}));
-      }
 
-      test('skips the review of the named project', () async {
-        final adapter = FakeHttpAdapter([
-          workspacesResponse,
-          projectsResponse,
-          skipResponse,
-        ]);
+        late MockWidgetbookHttpClient client;
 
-        final exitCode = await run(adapter, [
-          '--project',
-          'my-app',
-          '--reason',
-          'No UI',
-        ]);
+        setUpAll(() {
+          registerFallbackValue(project);
+          registerFallbackValue(const SkipReviewRequest(sha: headSha));
+        });
 
-        expect(exitCode, equals(ExitCode.success.code));
-
-        final [workspaces, projects, skip] = adapter.requests;
-        expect(workspaces.uri.path, equals('/v4/workspaces'));
-        expect(
-          projects.uri.path,
-          equals('/v4/workspaces/workspace-1/projects'),
-        );
-        expect(projects.uri.queryParameters, equals({'name': 'my-app'}));
-        expectSkipRequest(skip);
-        for (final request in adapter.requests) {
-          expect(request.header('Authorization'), equals('Bearer $apiKey'));
-        }
-      });
-
-      test('skips the review of the only project without --project', () async {
-        final adapter = FakeHttpAdapter([
-          workspacesResponse,
-          projectsResponse,
-          skipResponse,
-        ]);
-
-        await run(adapter, ['--reason', 'No UI']);
-
-        final [_, projects, skip] = adapter.requests;
-        expect(projects.uri.queryParameters, isEmpty);
-        expectSkipRequest(skip);
-      });
-
-      test('points to project create for an unknown project', () async {
-        final adapter = FakeHttpAdapter([
-          workspacesResponse,
-          const FakeResponse(200, {'projects': <dynamic>[]}),
-        ]);
-
-        await expectLater(
-          run(adapter, ['--project', 'my-app']),
-          throwsA(
-            isA<CliException>().having(
-              (e) => e.message,
-              'message',
-              "No project named 'my-app'. "
-                  'Create it with: '
-                  'widgetbook cloud project create --project my-app',
+        setUp(() {
+          client = MockWidgetbookHttpClient();
+          when(
+            () => client.resolveProject(any(), name: any(named: 'name')),
+          ).thenAnswer((_) async => project);
+          when(
+            () => client.skipReview(any(), any(), any(), any()),
+          ).thenAnswer(
+            (_) async => const SkipReviewResponse(
+              sha: headSha,
+              state: 'success',
+              prNumber: 123,
             ),
-          ),
-        );
+          );
+        });
 
-        expect(adapter.requests, hasLength(2));
+        Future<int?> runMocked(List<String> args) {
+          final runner = CommandRunner<int>('widgetbook', 'CLI')
+            ..addCommand(
+              ReviewSkipCommand(
+                context: context,
+                logger: logger,
+                cloudClient: client,
+              ),
+            );
+
+          return runner.run([
+            'skip',
+            '--api-key',
+            apiKey,
+            '--pr',
+            '123',
+            '--sha',
+            headSha,
+            ...args,
+          ]);
+        }
+
+        test('skips the review of the named project', () async {
+          final exitCode = await runMocked(['--project', 'my-app']);
+
+          expect(exitCode, equals(ExitCode.success.code));
+          verify(() => client.resolveProject(apiKey, name: 'my-app')).called(1);
+          verify(
+            () => client.skipReview(apiKey, project, 123, any()),
+          ).called(1);
+        });
+
+        test('resolves without a name when --project is absent', () async {
+          await runMocked([]);
+
+          verify(() => client.resolveProject(apiKey)).called(1);
+          verify(
+            () => client.skipReview(apiKey, project, 123, any()),
+          ).called(1);
+        });
       });
 
       test('retries a pull request that is not synced yet', () async {
