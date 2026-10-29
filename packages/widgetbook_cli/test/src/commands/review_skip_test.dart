@@ -1,84 +1,258 @@
 import 'package:args/args.dart';
+import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
+import 'package:widgetbook_cli/src/api/cloud_exception.dart';
 import 'package:widgetbook_cli/widgetbook_cli.dart';
 
+import '../../helper/fake_http_adapter.dart';
 import '../../helper/mocks.dart';
 
-class _FakeSkipReviewRequest extends Fake implements SkipReviewRequest {}
-
 void main() {
-  setUpAll(() {
-    registerFallbackValue(_FakeSkipReviewRequest());
-  });
-
   group('$ReviewSkipCommand', () {
+    const apiKey = 'widgetbook_secret';
     const headSha = '832e76a9899f560a90ffd62ae2ce83bbeff58f54';
+    const workspacesResponse = FakeResponse(200, {
+      'workspaces': [
+        {'id': 'workspace-1', 'name': 'My Workspace'},
+      ],
+    });
+    const projectsResponse = FakeResponse(200, {
+      'projects': [
+        {
+          'id': 'project-1',
+          'name': 'my-app',
+          'createdAt': '2026-01-02T03:04:05.000Z',
+        },
+      ],
+    });
+    const skipResponse = FakeResponse(200, {
+      'sha': headSha,
+      'state': 'success',
+      'prNumber': 123,
+    });
 
+    late Logger logger;
     late Context context;
-    late ArgResults results;
-    late MockWidgetbookHttpClient client;
-    late ReviewSkipCommand command;
 
     setUp(() {
-      final logger = MockLogger();
+      logger = MockLogger();
       when(() => logger.progress(any<String>())).thenReturn(MockProgress());
 
       context = MockContext();
-      results = MockArgResults();
-      client = MockWidgetbookHttpClient();
-      command = ReviewSkipCommand(
-        context: context,
-        logger: logger,
-        cloudClient: client,
-      );
-
-      when(() => results['api-key']).thenReturn('key');
-      when(() => results['pr']).thenReturn('123');
-      when(() => results['sha']).thenReturn(headSha);
-      when(() => results['reason']).thenReturn('No UI changes');
     });
 
-    test('parses the passed options', () async {
-      final args = await command.parseResults(context, results);
+    group('parseResults', () {
+      late ArgResults results;
+      late ReviewSkipCommand command;
 
-      expect(args.apiKey, equals('key'));
-      expect(args.prNumber, equals(123));
-      expect(args.sha, equals(headSha));
-      expect(args.reason, equals('No UI changes'));
+      setUp(() {
+        results = MockArgResults();
+        command = ReviewSkipCommand(context: context, logger: logger);
+
+        when(() => results['api-key']).thenReturn(apiKey);
+        when(() => results['pr']).thenReturn('123');
+        when(() => results['sha']).thenReturn(headSha);
+        when(() => results['reason']).thenReturn('No UI changes');
+      });
+
+      test('parses the passed options', () async {
+        final args = await command.parseResults(context, results);
+
+        expect(args.apiKey, equals(apiKey));
+        expect(args.project, isNull);
+        expect(args.prNumber, equals(123));
+        expect(args.sha, equals(headSha));
+        expect(args.reason, equals('No UI changes'));
+      });
+
+      test('parses the project', () async {
+        when(() => results['project']).thenReturn('my-app');
+
+        final args = await command.parseResults(context, results);
+
+        expect(args.project, equals('my-app'));
+      });
+
+      test('throws for an empty project', () {
+        when(() => results['project']).thenReturn(' ');
+
+        expect(
+          () => command.parseResults(context, results),
+          throwsA(
+            isA<CliException>().having(
+              (e) => e.message,
+              'message',
+              'The option project must not be empty.',
+            ),
+          ),
+        );
+      });
+
+      test('throws when the pull request number is not a number', () {
+        when(() => results['pr']).thenReturn('not-a-number');
+
+        expect(
+          () => command.parseResults(context, results),
+          throwsA(isA<CliException>()),
+        );
+      });
     });
 
-    test('throws when the pull request number is not a number', () {
-      when(() => results['pr']).thenReturn('not-a-number');
+    group('run', () {
+      Future<int?> run(FakeHttpAdapter adapter, List<String> args) {
+        final command = ReviewSkipCommand(
+          context: context,
+          logger: logger,
+          cloudClient: WidgetbookHttpClient()
+            ..client.httpClientAdapter = adapter,
+        );
+        final runner = CommandRunner<int>('widgetbook', 'CLI')
+          ..addCommand(command);
 
-      expect(
-        () => command.parseResults(context, results),
-        throwsA(isA<CliException>()),
-      );
-    });
+        return runner.run([
+          'skip',
+          '--api-key',
+          apiKey,
+          '--pr',
+          '123',
+          '--sha',
+          headSha,
+          ...args,
+        ]);
+      }
 
-    test('posts the skip and reports the resulting status', () async {
-      when(() => client.skipReview(any(), any())).thenAnswer(
-        (_) async => const SkipReviewResponse(
-          sha: headSha,
-          state: 'success',
-          prNumber: 123,
-        ),
-      );
+      group('with a mocked client', () {
+        const project = CloudProject(
+          workspaceId: 'workspace-1',
+          projectId: 'project-1',
+          name: 'my-app',
+        );
 
-      final exitCode = await command.runWith(
-        context,
-        const ReviewSkipArgs(
-          apiKey: 'key',
-          prNumber: 123,
-          sha: headSha,
-          reason: 'No UI changes',
-        ),
-      );
+        late MockWidgetbookHttpClient client;
 
-      expect(exitCode, equals(ExitCode.success.code));
-      verify(() => client.skipReview(123, any())).called(1);
+        setUpAll(() {
+          registerFallbackValue(project);
+          registerFallbackValue(const SkipReviewRequest(sha: headSha));
+        });
+
+        setUp(() {
+          client = MockWidgetbookHttpClient();
+          when(
+            () => client.resolveProject(any(), name: any(named: 'name')),
+          ).thenAnswer((_) async => project);
+          when(
+            () => client.skipReview(any(), any(), any(), any()),
+          ).thenAnswer(
+            (_) async => const SkipReviewResponse(
+              sha: headSha,
+              state: 'success',
+              prNumber: 123,
+            ),
+          );
+        });
+
+        Future<int?> runMocked(List<String> args) {
+          final runner = CommandRunner<int>('widgetbook', 'CLI')
+            ..addCommand(
+              ReviewSkipCommand(
+                context: context,
+                logger: logger,
+                cloudClient: client,
+              ),
+            );
+
+          return runner.run([
+            'skip',
+            '--api-key',
+            apiKey,
+            '--pr',
+            '123',
+            '--sha',
+            headSha,
+            ...args,
+          ]);
+        }
+
+        test('skips the review of the named project', () async {
+          final exitCode = await runMocked(['--project', 'my-app']);
+
+          expect(exitCode, equals(ExitCode.success.code));
+          verify(() => client.resolveProject(apiKey, name: 'my-app')).called(1);
+          verify(
+            () => client.skipReview(apiKey, project, 123, any()),
+          ).called(1);
+        });
+
+        test('resolves without a name when --project is absent', () async {
+          await runMocked([]);
+
+          verify(() => client.resolveProject(apiKey)).called(1);
+          verify(
+            () => client.skipReview(apiKey, project, 123, any()),
+          ).called(1);
+        });
+      });
+
+      test('retries a pull request that is not synced yet', () async {
+        final adapter = FakeHttpAdapter([
+          workspacesResponse,
+          projectsResponse,
+          const FakeResponse(404, {
+            'message': 'No pull request #123 is known for this project.',
+          }),
+          skipResponse,
+        ]);
+        final command = ReviewSkipCommand(
+          context: context,
+          logger: logger,
+          cloudClient: WidgetbookHttpClient()
+            ..client.httpClientAdapter = adapter,
+        );
+
+        await command.runWith(
+          context,
+          const ReviewSkipArgs(
+            apiKey: apiKey,
+            project: null,
+            prNumber: 123,
+            sha: headSha,
+            reason: null,
+          ),
+        );
+
+        expect(adapter.requests, hasLength(4));
+      }, timeout: const Timeout(Duration(seconds: 10)));
+
+      const notRetried = [
+        (404, 'Workspace not found.'),
+        (404, 'Project not found.'),
+        (403, 'This API key has no access to this project.'),
+        (422, 'Validation failed.'),
+      ];
+
+      for (final (statusCode, detail) in notRetried) {
+        test('does not retry a $statusCode: $detail', () async {
+          final adapter = FakeHttpAdapter([
+            workspacesResponse,
+            projectsResponse,
+            FakeResponse(statusCode, {'message': detail}),
+            skipResponse,
+          ]);
+
+          await expectLater(
+            run(adapter, []),
+            throwsA(
+              isA<CloudException>()
+                  .having((e) => e.statusCode, 'statusCode', statusCode)
+                  .having((e) => e.message, 'message', contains(detail)),
+            ),
+          );
+
+          expect(adapter.requests, hasLength(3));
+        });
+      }
     });
   });
 }

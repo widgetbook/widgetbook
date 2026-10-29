@@ -1,5 +1,6 @@
 ## Unreleased
 
+- **FEAT**: Send the API key of `cloud build push` and `cloud review skip` as a bearer token to the routes of the project, chosen with the new `--project` option or as the only project the key reaches. ([#2052](https://github.com/widgetbook/widgetbook/pull/2052))
 - **FEAT**: Show the `--api-url` option of `cloud build push` and `cloud review skip` in their usage. ([#2050](https://github.com/widgetbook/widgetbook/pull/2050))
 - **FIX**: Report an invalid `--api-url` of `cloud build push` and `cloud review skip` as a usage error instead of crashing. ([#2051](https://github.com/widgetbook/widgetbook/pull/2051))
 

@@ -1,0 +1,31 @@
+# API keys
+
+The [Widgetbook CLI](/cli) authenticates with Widgetbook Cloud through an API key, passed with `--api-key`.
+
+## Create an API key
+
+<Warning>Only an owner of a workspace can create API keys.</Warning>
+
+Open the workspace settings and select the **API Keys** tab to create a key.
+The key is shown only once, so store it as a secret in your CI provider right away.
+
+## Permissions
+
+Each key has one or more permissions:
+
+| Permission      | Covers                                 | Allows                                                                   |
+| --------------- | -------------------------------------- | ------------------------------------------------------------------------ |
+| Create projects | The whole workspace                    | Creating projects in the workspace.                                      |
+| Push builds     | Selected projects, or all projects     | Pushing builds with [`cloud build push`](/cli/commands/cloud-build-push). |
+| Skip reviews    | Selected projects, or all projects     | Skipping reviews with [`cloud review skip`](/cli/commands/cloud-review-skip). |
+
+We recommend one key with the "Create projects" permission for setting up projects, and separate keys for your CI pipelines, limited to the projects they work on.
+
+## Choosing the project
+
+`cloud build push` and `cloud review skip` act on one project.
+When the key reaches exactly one project, they use that project and `--project` is optional.
+Otherwise, pass the project's name with `--project`.
+
+`--project` refers to the project by its name.
+If you rename the project in Widgetbook Cloud, update `--project` in your CI pipelines as well.
