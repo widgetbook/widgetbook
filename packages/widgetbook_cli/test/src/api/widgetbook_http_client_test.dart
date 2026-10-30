@@ -185,6 +185,62 @@ void main() {
       });
     });
 
+    group('connectRepository', () {
+      const request = ConnectRepositoryRequest(
+        provider: 'github',
+        repository: 'widgetbook/app',
+      );
+
+      test('puts the repository of the project', () async {
+        final adapter = FakeHttpAdapter([
+          const FakeResponse(200, {
+            'provider': 'github',
+            'repository': 'widgetbook/app',
+          }),
+        ]);
+
+        final response = await clientFor(
+          adapter,
+        ).connectRepository(apiKey, project, request);
+
+        final sent = adapter.requests.single;
+        expect(sent.method, equals('PUT'));
+        expect(sent.uri.path, equals('$projectPath/repository'));
+        expectAuthorized(sent);
+        expect(
+          sent.body,
+          equals({'provider': 'github', 'repository': 'widgetbook/app'}),
+        );
+        expect(response.repository, equals('widgetbook/app'));
+      });
+
+      test('shows the server message of a 409', () {
+        const detail = 'The project is connected to another repository.';
+        final adapter = FakeHttpAdapter([
+          const FakeResponse(409, {'message': detail}),
+        ]);
+
+        expect(
+          clientFor(adapter).connectRepository(apiKey, project, request),
+          throwsCloudException(409, detail),
+        );
+      });
+    });
+
+    group('disconnectRepository', () {
+      test('deletes the repository of the project', () async {
+        final adapter = FakeHttpAdapter([const FakeResponse(204, {})]);
+
+        await clientFor(adapter).disconnectRepository(apiKey, project);
+
+        final sent = adapter.requests.single;
+        expect(sent.method, equals('DELETE'));
+        expect(sent.uri.path, equals('$projectPath/repository'));
+        expectAuthorized(sent);
+        expect(sent.body, isNull);
+      });
+    });
+
     group('createBuild', () {
       test('posts the build to the project', () async {
         final adapter = FakeHttpAdapter([
