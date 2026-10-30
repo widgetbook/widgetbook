@@ -9,6 +9,7 @@ import 'models/append_snapshots_request.dart';
 import 'models/append_snapshots_response.dart';
 import 'models/create_build_request.dart';
 import 'models/create_build_response.dart';
+import 'models/create_project_request.dart';
 import 'models/list_projects_response.dart';
 import 'models/list_workspaces_response.dart';
 import 'models/project_response.dart';
@@ -90,6 +91,26 @@ class WidgetbookHttpClient {
       );
 
       return ListProjectsResponse.fromJson(response.data!).projects;
+    } catch (e, stackTrace) {
+      throw CloudException.parse(e, stackTrace);
+    }
+  }
+
+  /// Creates a project in the workspace of the [apiKey].
+  Future<ProjectResponse> createProject(
+    String apiKey,
+    CreateProjectRequest request,
+  ) async {
+    final workspaceId = await _resolveWorkspaceId(apiKey);
+
+    try {
+      final response = await client.post<Map<String, dynamic>>(
+        'v4/workspaces/$workspaceId/projects',
+        data: request.toJson(),
+        options: _options(apiKey),
+      );
+
+      return ProjectResponse.fromJson(response.data!);
     } catch (e, stackTrace) {
       throw CloudException.parse(e, stackTrace);
     }

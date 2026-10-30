@@ -141,6 +141,50 @@ void main() {
       });
     });
 
+    group('createProject', () {
+      const request = CreateProjectRequest(name: 'my-app');
+
+      test('posts the name to the workspace', () async {
+        final adapter = FakeHttpAdapter([
+          workspacesResponse,
+          const FakeResponse(201, {
+            'id': 'project-1',
+            'name': 'my-app',
+            'createdAt': '2026-01-02T03:04:05.000Z',
+          }),
+        ]);
+
+        final project = await clientFor(
+          adapter,
+        ).createProject(apiKey, request);
+
+        final sent = adapter.requests.last;
+        expect(sent.method, equals('POST'));
+        expect(
+          sent.uri.path,
+          equals('/v4/workspaces/workspace-1/projects'),
+        );
+        expectAuthorized(sent);
+        expect(sent.body, equals({'name': 'my-app'}));
+        expect(project.id, equals('project-1'));
+        expect(project.name, equals('my-app'));
+      });
+
+      test('shows the server message of a 409', () {
+        const detail =
+            'A project with this name already exists in this workspace.';
+        final adapter = FakeHttpAdapter([
+          workspacesResponse,
+          const FakeResponse(409, {'message': detail}),
+        ]);
+
+        expect(
+          clientFor(adapter).createProject(apiKey, request),
+          throwsCloudException(409, detail),
+        );
+      });
+    });
+
     group('createBuild', () {
       test('posts the build to the project', () async {
         final adapter = FakeHttpAdapter([
