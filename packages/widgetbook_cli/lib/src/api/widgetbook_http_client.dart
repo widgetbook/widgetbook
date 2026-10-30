@@ -7,6 +7,8 @@ import 'cloud_exception.dart';
 import 'cloud_project.dart';
 import 'models/append_snapshots_request.dart';
 import 'models/append_snapshots_response.dart';
+import 'models/connect_repository_request.dart';
+import 'models/connect_repository_response.dart';
 import 'models/create_build_request.dart';
 import 'models/create_build_response.dart';
 import 'models/create_project_request.dart';
@@ -153,6 +155,46 @@ class WidgetbookHttpClient {
       projectId: project.id,
       name: project.name,
     );
+  }
+
+  /// Connects the project called [projectName], or the only project the
+  /// [apiKey] reaches, to the repository of the [request].
+  Future<ConnectRepositoryResponse> connectRepository(
+    String apiKey,
+    ConnectRepositoryRequest request, {
+    String? projectName,
+  }) async {
+    final project = await resolveProject(apiKey, name: projectName);
+
+    try {
+      final response = await client.put<Map<String, dynamic>>(
+        '${project.path}/repository',
+        data: request.toJson(),
+        options: _options(apiKey),
+      );
+
+      return ConnectRepositoryResponse.fromJson(response.data!);
+    } catch (e, stackTrace) {
+      throw CloudException.parse(e, stackTrace);
+    }
+  }
+
+  /// Disconnects the project called [projectName], or the only project the
+  /// [apiKey] reaches, from its repository.
+  Future<void> disconnectRepository(
+    String apiKey, {
+    String? projectName,
+  }) async {
+    final project = await resolveProject(apiKey, name: projectName);
+
+    try {
+      await client.delete<void>(
+        '${project.path}/repository',
+        options: _options(apiKey),
+      );
+    } catch (e, stackTrace) {
+      throw CloudException.parse(e, stackTrace);
+    }
   }
 
   /// Creates a new build that can be either a draft or a turbo build.
