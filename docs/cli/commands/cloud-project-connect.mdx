@@ -1,0 +1,34 @@
+# `cloud project connect`
+
+Connects a Widgetbook Cloud project to its Git repository, so that builds report their commit status and reviews are linked to pull requests.
+
+Only GitHub repositories are supported for now.
+
+## Usage
+
+```bash
+widgetbook cloud project connect --api-key <API_KEY> --project my-app --repository my-org/my-app
+```
+
+## Arguments
+
+The CLI accepts the following arguments.
+
+| Argument       | Mandatory | Default  | Description                                                                                                                                         |
+| -------------- | --------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--api-key`    | ✅        | -        | An [API key](/cloud/api-keys) with the "Connect repositories" permission.                                                                           |
+| `--project`    | ➖        | -        | The name of the project. Optional when the API key reaches exactly one project. See [Choosing the project](/cloud/api-keys#choosing-the-project). |
+| `--repository` | ✅        | -        | The repository to connect, as `owner/name`.                                                                                                         |
+| `--provider`   | ➖        | `github` | The Git provider of the repository. Only `github` is supported.                                                                                     |
+| `--api-url`    | ➖        | `https://api.widgetbook.io/` | Base URL of the Widgetbook Cloud API.                                                                                           |
+
+## Requirements
+
+The API key acts on GitHub as the person who created it.
+That person needs push access to the repository, and the Widgetbook GitHub App must be installed on it.
+
+## Behavior
+
+Connecting a project to the repository it is already connected to succeeds without changes.
+If the project is connected to another repository, the command fails.
+Disconnect it first with [`cloud project disconnect`](/cli/commands/cloud-project-disconnect).

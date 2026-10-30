@@ -784,6 +784,14 @@
               "href": "/cli/commands/cloud-project-create"
             },
             {
+              "title": "cloud project connect",
+              "href": "/cli/commands/cloud-project-connect"
+            },
+            {
+              "title": "cloud project disconnect",
+              "href": "/cli/commands/cloud-project-disconnect"
+            },
+            {
               "title": "cloud build push",
               "href": "/cli/commands/cloud-build-push"
             },
