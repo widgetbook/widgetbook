@@ -146,6 +146,7 @@ void main() {
 
       test('posts the name to the workspace', () async {
         final adapter = FakeHttpAdapter([
+          workspacesResponse,
           const FakeResponse(201, {
             'id': 'project-1',
             'name': 'my-app',
@@ -155,9 +156,9 @@ void main() {
 
         final project = await clientFor(
           adapter,
-        ).createProject(apiKey, 'workspace-1', request);
+        ).createProject(apiKey, request);
 
-        final sent = adapter.requests.single;
+        final sent = adapter.requests.last;
         expect(sent.method, equals('POST'));
         expect(
           sent.uri.path,
@@ -173,11 +174,12 @@ void main() {
         const detail =
             'A project with this name already exists in this workspace.';
         final adapter = FakeHttpAdapter([
+          workspacesResponse,
           const FakeResponse(409, {'message': detail}),
         ]);
 
         expect(
-          clientFor(adapter).createProject(apiKey, 'workspace-1', request),
+          clientFor(adapter).createProject(apiKey, request),
           throwsCloudException(409, detail),
         );
       });

@@ -96,12 +96,13 @@ class WidgetbookHttpClient {
     }
   }
 
-  /// Creates a project in [workspaceId].
+  /// Creates a project in the workspace of the [apiKey].
   Future<ProjectResponse> createProject(
     String apiKey,
-    String workspaceId,
     CreateProjectRequest request,
   ) async {
+    final workspaceId = await _resolveWorkspaceId(apiKey);
+
     try {
       final response = await client.post<Map<String, dynamic>>(
         'v4/workspaces/$workspaceId/projects',
@@ -118,7 +119,7 @@ class WidgetbookHttpClient {
   /// Returns the project called [name], or the only project the [apiKey]
   /// reaches if no [name] is given.
   Future<CloudProject> resolveProject(String apiKey, {String? name}) async {
-    final workspaceId = await resolveWorkspaceId(apiKey);
+    final workspaceId = await _resolveWorkspaceId(apiKey);
     final projects = await listProjects(apiKey, workspaceId, name: name);
 
     if (name != null && projects.isEmpty) {
@@ -250,7 +251,7 @@ class WidgetbookHttpClient {
   }
 
   /// Returns the id of the one workspace the [apiKey] belongs to.
-  Future<String> resolveWorkspaceId(String apiKey) async {
+  Future<String> _resolveWorkspaceId(String apiKey) async {
     final workspaces = await listWorkspaces(apiKey);
 
     if (workspaces.length != 1) {

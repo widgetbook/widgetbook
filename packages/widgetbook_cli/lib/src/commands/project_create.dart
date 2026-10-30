@@ -67,10 +67,8 @@ class ProjectCreateCommand extends CliCommand<ProjectCreateArgs> {
     final progress = logger.progress("Creating project '${args.project}'");
 
     try {
-      final workspaceId = await cloudClient.resolveWorkspaceId(args.apiKey);
       final response = await cloudClient.createProject(
         args.apiKey,
-        workspaceId,
         CreateProjectRequest(name: args.project),
       );
 

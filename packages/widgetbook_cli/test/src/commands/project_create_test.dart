@@ -27,9 +27,6 @@ void main() {
       when(() => logger.progress(any<String>())).thenReturn(progress);
 
       client = MockWidgetbookHttpClient();
-      when(
-        () => client.resolveWorkspaceId(any()),
-      ).thenAnswer((_) async => 'workspace-1');
 
       runner = CommandRunner<int>('widgetbook', 'CLI')
         ..addCommand(
@@ -46,13 +43,13 @@ void main() {
     }
 
     void stubCreateProject409() {
-      when(() => client.createProject(any(), any(), any())).thenThrow(
+      when(() => client.createProject(any(), any())).thenThrow(
         CloudException(existsMessage, statusCode: 409),
       );
     }
 
     test('creates the project in the workspace of the key', () async {
-      when(() => client.createProject(any(), any(), any())).thenAnswer(
+      when(() => client.createProject(any(), any())).thenAnswer(
         (_) async => ProjectResponse(
           id: 'project-1',
           name: 'my-app',
@@ -67,7 +64,7 @@ void main() {
 
       final request =
           verify(
-                () => client.createProject(apiKey, 'workspace-1', captureAny()),
+                () => client.createProject(apiKey, captureAny()),
               ).captured.single
               as CreateProjectRequest;
       expect(request.name, equals('my-app'));
