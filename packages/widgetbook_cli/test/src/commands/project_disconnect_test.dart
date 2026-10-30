@@ -9,19 +9,9 @@ import '../../helper/mocks.dart';
 void main() {
   group('$ProjectDisconnectCommand', () {
     const apiKey = 'widgetbook_secret';
-    const project = CloudProject(
-      workspaceId: 'workspace-1',
-      projectId: 'project-1',
-      name: 'my-app',
-    );
-
     late Progress progress;
     late MockWidgetbookHttpClient client;
     late CommandRunner<int> runner;
-
-    setUpAll(() {
-      registerFallbackValue(project);
-    });
 
     setUp(() {
       final logger = MockLogger();
@@ -30,10 +20,10 @@ void main() {
 
       client = MockWidgetbookHttpClient();
       when(
-        () => client.resolveProject(any(), name: any(named: 'name')),
-      ).thenAnswer((_) async => project);
-      when(
-        () => client.disconnectRepository(any(), any()),
+        () => client.disconnectRepository(
+          any(),
+          projectName: any(named: 'projectName'),
+        ),
       ).thenAnswer((_) async {});
 
       runner = CommandRunner<int>('widgetbook', 'CLI')
@@ -54,8 +44,9 @@ void main() {
       final exitCode = await run(['--project', 'my-app']);
 
       expect(exitCode, equals(ExitCode.success.code));
-      verify(() => client.resolveProject(apiKey, name: 'my-app')).called(1);
-      verify(() => client.disconnectRepository(apiKey, project)).called(1);
+      verify(
+        () => client.disconnectRepository(apiKey, projectName: 'my-app'),
+      ).called(1);
       verify(
         () => progress.complete(
           "Disconnected project 'my-app' from its repository.",
@@ -63,10 +54,13 @@ void main() {
       ).called(1);
     });
 
-    test('resolves without a name when --project is absent', () async {
+    test('disconnects the only project without --project', () async {
       await run([]);
 
-      verify(() => client.resolveProject(apiKey)).called(1);
+      verify(() => client.disconnectRepository(apiKey)).called(1);
+      verify(
+        () => progress.complete("Disconnected the project's repository."),
+      ).called(1);
     });
   });
 }

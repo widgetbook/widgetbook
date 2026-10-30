@@ -157,12 +157,15 @@ class WidgetbookHttpClient {
     );
   }
 
-  /// Connects [project] to the repository of the [request].
+  /// Connects the project called [projectName], or the only project the
+  /// [apiKey] reaches, to the repository of the [request].
   Future<ConnectRepositoryResponse> connectRepository(
     String apiKey,
-    CloudProject project,
-    ConnectRepositoryRequest request,
-  ) async {
+    ConnectRepositoryRequest request, {
+    String? projectName,
+  }) async {
+    final project = await resolveProject(apiKey, name: projectName);
+
     try {
       final response = await client.put<Map<String, dynamic>>(
         '${project.path}/repository',
@@ -176,11 +179,14 @@ class WidgetbookHttpClient {
     }
   }
 
-  /// Disconnects [project] from its repository.
+  /// Disconnects the project called [projectName], or the only project the
+  /// [apiKey] reaches, from its repository.
   Future<void> disconnectRepository(
-    String apiKey,
-    CloudProject project,
-  ) async {
+    String apiKey, {
+    String? projectName,
+  }) async {
+    final project = await resolveProject(apiKey, name: projectName);
+
     try {
       await client.delete<void>(
         '${project.path}/repository',

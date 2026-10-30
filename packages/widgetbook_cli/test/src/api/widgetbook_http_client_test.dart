@@ -193,17 +193,20 @@ void main() {
 
       test('puts the repository of the project', () async {
         final adapter = FakeHttpAdapter([
+          workspacesResponse,
+          projectsResponse(['my-app']),
           const FakeResponse(200, {
             'provider': 'github',
             'repository': 'widgetbook/app',
+            'project': {'id': 'project-1', 'name': 'my-app'},
           }),
         ]);
 
         final response = await clientFor(
           adapter,
-        ).connectRepository(apiKey, project, request);
+        ).connectRepository(apiKey, request, projectName: 'my-app');
 
-        final sent = adapter.requests.single;
+        final sent = adapter.requests.last;
         expect(sent.method, equals('PUT'));
         expect(sent.uri.path, equals('$projectPath/repository'));
         expectAuthorized(sent);
@@ -212,16 +215,23 @@ void main() {
           equals({'provider': 'github', 'repository': 'widgetbook/app'}),
         );
         expect(response.repository, equals('widgetbook/app'));
+        expect(response.projectName, equals('my-app'));
+        expect(
+          adapter.requests[1].uri.queryParameters,
+          equals({'name': 'my-app'}),
+        );
       });
 
       test('shows the server message of a 409', () {
         const detail = 'The project is connected to another repository.';
         final adapter = FakeHttpAdapter([
+          workspacesResponse,
+          projectsResponse(['my-app']),
           const FakeResponse(409, {'message': detail}),
         ]);
 
         expect(
-          clientFor(adapter).connectRepository(apiKey, project, request),
+          clientFor(adapter).connectRepository(apiKey, request),
           throwsCloudException(409, detail),
         );
       });
@@ -229,11 +239,17 @@ void main() {
 
     group('disconnectRepository', () {
       test('deletes the repository of the project', () async {
-        final adapter = FakeHttpAdapter([const FakeResponse(204, {})]);
+        final adapter = FakeHttpAdapter([
+          workspacesResponse,
+          projectsResponse(['my-app']),
+          const FakeResponse(204, {}),
+        ]);
 
-        await clientFor(adapter).disconnectRepository(apiKey, project);
+        await clientFor(
+          adapter,
+        ).disconnectRepository(apiKey, projectName: 'my-app');
 
-        final sent = adapter.requests.single;
+        final sent = adapter.requests.last;
         expect(sent.method, equals('DELETE'));
         expect(sent.uri.path, equals('$projectPath/repository'));
         expectAuthorized(sent);

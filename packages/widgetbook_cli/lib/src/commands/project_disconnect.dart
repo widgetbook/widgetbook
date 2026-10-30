@@ -55,15 +55,15 @@ class ProjectDisconnectCommand extends CliCommand<ProjectDisconnectArgs> {
     final progress = logger.progress('Disconnecting the project');
 
     try {
-      final project = await cloudClient.resolveProject(
+      await cloudClient.disconnectRepository(
         args.apiKey,
-        name: args.project,
+        projectName: args.project,
       );
 
-      await cloudClient.disconnectRepository(args.apiKey, project);
-
       progress.complete(
-        "Disconnected project '${project.name}' from its repository.",
+        args.project != null
+            ? "Disconnected project '${args.project}' from its repository."
+            : "Disconnected the project's repository.",
       );
 
       return ExitCode.success.code;

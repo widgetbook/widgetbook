@@ -9,18 +9,11 @@ import '../../helper/mocks.dart';
 void main() {
   group('$ProjectConnectCommand', () {
     const apiKey = 'widgetbook_secret';
-    const project = CloudProject(
-      workspaceId: 'workspace-1',
-      projectId: 'project-1',
-      name: 'my-app',
-    );
-
     late Progress progress;
     late MockWidgetbookHttpClient client;
     late CommandRunner<int> runner;
 
     setUpAll(() {
-      registerFallbackValue(project);
       registerFallbackValue(
         const ConnectRepositoryRequest(provider: 'github', repository: 'a/b'),
       );
@@ -33,12 +26,16 @@ void main() {
 
       client = MockWidgetbookHttpClient();
       when(
-        () => client.resolveProject(any(), name: any(named: 'name')),
-      ).thenAnswer((_) async => project);
-      when(() => client.connectRepository(any(), any(), any())).thenAnswer(
+        () => client.connectRepository(
+          any(),
+          any(),
+          projectName: any(named: 'projectName'),
+        ),
+      ).thenAnswer(
         (_) async => const ConnectRepositoryResponse(
           provider: 'github',
           repository: 'widgetbook/app',
+          projectName: 'my-app',
         ),
       );
 
@@ -65,7 +62,6 @@ void main() {
       ]);
 
       expect(exitCode, equals(ExitCode.success.code));
-      verify(() => client.resolveProject(apiKey, name: 'my-app')).called(1);
       verify(
         () => progress.complete(
           "Connected project 'my-app' to widgetbook/app.",
@@ -74,17 +70,21 @@ void main() {
 
       final request =
           verify(
-                () => client.connectRepository(apiKey, project, captureAny()),
+                () => client.connectRepository(
+                  apiKey,
+                  captureAny(),
+                  projectName: 'my-app',
+                ),
               ).captured.single
               as ConnectRepositoryRequest;
       expect(request.provider, equals('github'));
       expect(request.repository, equals('widgetbook/app'));
     });
 
-    test('resolves without a name when --project is absent', () async {
+    test('passes no project name when --project is absent', () async {
       await run(['--repository', 'widgetbook/app']);
 
-      verify(() => client.resolveProject(apiKey)).called(1);
+      verify(() => client.connectRepository(apiKey, any())).called(1);
     });
 
     for (final repository in ['widgetbook', 'widgetbook/app/x', '/app']) {

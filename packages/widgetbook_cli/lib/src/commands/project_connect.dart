@@ -80,22 +80,18 @@ class ProjectConnectCommand extends CliCommand<ProjectConnectArgs> {
     );
 
     try {
-      final project = await cloudClient.resolveProject(
-        args.apiKey,
-        name: args.project,
-      );
-
       final response = await cloudClient.connectRepository(
         args.apiKey,
-        project,
         ConnectRepositoryRequest(
           provider: args.provider,
           repository: args.repository,
         ),
+        projectName: args.project,
       );
 
       progress.complete(
-        "Connected project '${project.name}' to ${response.repository}.",
+        "Connected project '${response.projectName}' "
+        'to ${response.repository}.',
       );
 
       return ExitCode.success.code;
