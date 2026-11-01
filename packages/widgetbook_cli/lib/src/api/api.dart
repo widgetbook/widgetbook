@@ -1,6 +1,8 @@
 export 'cloud_project.dart';
 export 'models/append_snapshots_request.dart';
 export 'models/append_snapshots_response.dart';
+export 'models/connect_repository_request.dart';
+export 'models/connect_repository_response.dart';
 export 'models/create_build_request.dart';
 export 'models/create_build_response.dart';
 export 'models/create_project_request.dart';

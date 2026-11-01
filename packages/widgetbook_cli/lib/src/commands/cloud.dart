@@ -4,7 +4,9 @@ import 'package:args/args.dart';
 
 import '../core/core.dart';
 import 'build_push.dart';
+import 'project_connect.dart';
 import 'project_create.dart';
+import 'project_disconnect.dart';
 import 'review_skip.dart';
 
 class CloudCommand extends CliVoidCommand {
@@ -20,6 +22,12 @@ class CloudCommand extends CliVoidCommand {
         description: 'Manage the projects of your Widgetbook Cloud workspace.',
         commands: [
           ProjectCreateCommand(
+            context: context,
+          ),
+          ProjectConnectCommand(
+            context: context,
+          ),
+          ProjectDisconnectCommand(
             context: context,
           ),
         ],

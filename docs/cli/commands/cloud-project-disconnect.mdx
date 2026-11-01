@@ -1,0 +1,24 @@
+# `cloud project disconnect`
+
+Disconnects a Widgetbook Cloud project from its Git repository.
+
+## Usage
+
+```bash
+widgetbook cloud project disconnect --api-key <API_KEY> --project my-app
+```
+
+## Arguments
+
+The CLI accepts the following arguments.
+
+| Argument    | Mandatory | Default                      | Description                                                                                                                                         |
+| ----------- | --------- | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--api-key` | ✅        | -                            | An [API key](/cloud/api-keys) with the "Connect repositories" permission.                                                                           |
+| `--project` | ➖        | -                            | The name of the project. Optional when the API key reaches exactly one project. See [Choosing the project](/cloud/api-keys#choosing-the-project). |
+| `--api-url` | ➖        | `https://api.widgetbook.io/` | Base URL of the Widgetbook Cloud API.                                                                                                               |
+
+## Behavior
+
+The command also succeeds when the project is not connected to a repository.
+To connect the project again, use [`cloud project connect`](/cli/commands/cloud-project-connect).
