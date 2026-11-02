@@ -1,4 +1,4 @@
-## Unreleased
+## 4.0.0-beta.15
 
 - **FEAT**: Add `cloud project connect` and `cloud project disconnect`, which connect a project to its GitHub repository and disconnect it again. ([#2055](https://github.com/widgetbook/widgetbook/pull/2055))
 - **FEAT**: Add `cloud project create`, which creates a project in the workspace of the API key, with `--allow-existing` to succeed when the project already exists. ([#2053](https://github.com/widgetbook/widgetbook/pull/2053))
