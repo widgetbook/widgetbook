@@ -9,7 +9,7 @@ If you want to use Widgetbook Cloud with your existing GitLab repository, here's
   </Step>
   
   <Step title="Add API Key as a Variable">
-    Add `WIDGETBOOK_API_KEY` to your [GitLab's CI/CD Variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project). You can find the API key in the Widgetbook Cloud's **project settings page**. Make sure you **uncheck "Protect variable" checkbox**, to allow the variable to be accessible from feature branches.
+    Add `WIDGETBOOK_API_KEY` to your [GitLab's CI/CD Variables](https://docs.gitlab.com/ee/ci/variables/#for-a-project). To get one, create an [API key](/cloud/api-keys) with the "Push builds" permission in the workspace settings under **API Keys**. Make sure you **uncheck "Protect variable" checkbox**, to allow the variable to be accessible from feature branches.
   </Step>
 
   <Step title="Create GitLab CI/CD Pipeline">
