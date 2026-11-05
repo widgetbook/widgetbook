@@ -89,14 +89,71 @@ void main() {
         'given a query group with non-encoded special characters (e.g. comma) '
         'and non-ASCII characters, '
         'when [QueryGroup.fromParam] is called, '
-        'then an error is thrown',
+        'then the pairs split by the comma without a colon are skipped',
         () {
           final key = 'Тест field';
           final value = 'значение,,foo';
 
+          final group = QueryGroup.fromParam('{$key:$value}');
+
+          expect(group, equals(QueryGroup({key: 'значение'})));
+        },
+      );
+
+      test(
+        'given a query group with a single pair without a colon, '
+        'when [QueryGroup.fromParam] is called, '
+        'then it returns an empty group',
+        () {
+          expect(QueryGroup.fromParam('{value}'), equals(QueryGroup.empty));
+        },
+      );
+
+      test(
+        'given a query group with a mix of valid pairs and pairs without '
+        'a colon, '
+        'when [QueryGroup.fromParam] is called, '
+        'then only the valid pairs are kept',
+        () {
           expect(
-            () => QueryGroup.fromParam('{$key:$value}'),
-            throwsA(isA<RangeError>()),
+            QueryGroup.fromParam('{a:1,b}'),
+            equals(const QueryGroup({'a': '1'})),
+          );
+        },
+      );
+
+      test(
+        'given a query group with a trailing comma, '
+        'when [QueryGroup.fromParam] is called, '
+        'then the empty pair is skipped',
+        () {
+          expect(
+            QueryGroup.fromParam('{a:1,}'),
+            equals(const QueryGroup({'a': '1'})),
+          );
+        },
+      );
+
+      test(
+        'given a nullified query group with a pair without a colon, '
+        'when [QueryGroup.fromParam] is called, '
+        'then the pair is skipped and the group stays nullified',
+        () {
+          expect(
+            QueryGroup.fromParam('??{a:1,b}'),
+            equals(const QueryGroup({'a': '1'}, isNullified: true)),
+          );
+        },
+      );
+
+      test(
+        'given a query group with a non-encoded colon in a value, '
+        'when [QueryGroup.fromParam] is called, '
+        'then the value is split on the first colon only',
+        () {
+          expect(
+            QueryGroup.fromParam('{time:12:30}'),
+            equals(const QueryGroup({'time': '12:30'})),
           );
         },
       );
