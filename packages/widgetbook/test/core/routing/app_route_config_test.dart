@@ -24,6 +24,26 @@ void main() {
       );
 
       test(
+        'given a uri with a malformed query group, '
+        'then query groups are parsed without throwing',
+        () {
+          final config = AppRouteConfig(
+            uri: Uri.parse(
+              '/?path=component-x&text-scale={value}&foo={bar:x,oops}',
+            ),
+          );
+
+          expect(
+            config.queryGroups,
+            {
+              'text-scale': QueryGroup.empty,
+              'foo': const QueryGroup({'bar': 'x'}),
+            },
+          );
+        },
+      );
+
+      test(
         'given a uri, '
         'then path is extracted',
         () {
