@@ -1,4 +1,4 @@
-import 'package:path/path.dart' as p;
+import 'package:path/path.dart' as p show posix;
 
 import '../docs/docs.dart';
 import '../framework/framework.dart';
@@ -9,7 +9,7 @@ class Tree {
     final root = TreeNode<Null>('', null, null);
 
     for (final component in config.components) {
-      final parts = p.split(component.path);
+      final parts = p.posix.split(component.path);
 
       // Start with root and keep adding parts down the path
       final lastNode = parts.fold<TreeNode>(

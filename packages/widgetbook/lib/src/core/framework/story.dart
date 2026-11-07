@@ -3,7 +3,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:path/path.dart' as p;
+import 'package:path/path.dart' as p show posix;
 
 import '../state/state.dart';
 import '../utils.dart';
@@ -88,7 +88,7 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   // `Component<TWidget<T2>, TArgs>`.
   late final Component component;
 
-  String get path => p.join(component.fullPath, name);
+  String get path => p.posix.join(component.fullPath, name);
 
   /// By default, Widgetbook forces a rebuild when args change as otherwise
   /// StatefulWidgets might not reflect the latest arg values.
