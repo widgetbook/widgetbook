@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:path/path.dart' as p;
+import 'package:path/path.dart' as p show posix;
 
 import '../docs/docs.dart';
 import 'story.dart';
@@ -24,6 +24,6 @@ class Component<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
   final DocsBuilderFunction? docsBuilder;
   final List<Story<TWidget, TArgs>> stories;
 
-  String get fullPath => p.join(path, name);
-  String get docsPath => p.join(fullPath, 'Docs');
+  String get fullPath => p.posix.join(path, name);
+  String get docsPath => p.posix.join(fullPath, 'Docs');
 }
