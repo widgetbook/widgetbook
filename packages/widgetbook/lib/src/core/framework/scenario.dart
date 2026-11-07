@@ -4,7 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:meta/meta.dart';
-import 'package:path/path.dart' as p;
+import 'package:path/path.dart' as p show posix;
 
 import '../addons/addons.dart';
 import 'config.dart';
@@ -56,7 +56,7 @@ class Scenario<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
   /// It is initialized in the [Story] constructor.
   late final Story<TWidget, TArgs> story;
 
-  String get path => p.join(story.path, name);
+  String get path => p.posix.join(story.path, name);
 
   /// A function that is executed during the test after the widget is built
   /// and before the screenshot is taken.
