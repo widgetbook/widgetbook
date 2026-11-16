@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **FEAT**: Add the experimental `mcp` command, an MCP server that gives coding agents access to the comments placed with the `CommentsAddon`, stored locally in `.widgetbook/comments`.
+- **FEAT**: Add the experimental `mcp` command, an MCP server that gives coding agents access to the comments placed with the `CommentsAddon`, stored locally in `.widgetbook/comments`. ([#2063](https://github.com/widgetbook/widgetbook/pull/2063))
 
 ## 4.0.0-beta.15
 
