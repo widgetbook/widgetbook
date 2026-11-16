@@ -50,6 +50,7 @@ class _CommentsLayerState extends State<CommentsLayer> {
   String _signature = '';
   final _resolved = <String, ResolvedAnchor?>{};
   bool _needsResolve = true;
+  bool _scrolled = false;
   Map<String, _Pin> _pins = const {};
 
   bool _commenting = false;
@@ -179,12 +180,20 @@ class _CommentsLayerState extends State<CommentsLayer> {
     );
     if (_needsResolve || unmounted) {
       _needsResolve = false;
+      _scrolled = false;
       _resolved
         ..clear()
         ..addAll({
           for (final comment in _comments)
             comment.id: locator.resolve(story, comment.anchor),
         });
+    } else if (_scrolled) {
+      _scrolled = false;
+      for (final comment in _comments) {
+        if (_resolved[comment.id] == null) {
+          _resolved[comment.id] = locator.resolve(story, comment.anchor);
+        }
+      }
     }
 
     final storyBox = story.findRenderObject();
@@ -232,17 +241,58 @@ class _CommentsLayerState extends State<CommentsLayer> {
       );
     }
 
-    return _Pin(
-      position: _clamp(
+    final point =
         storyRect.topLeft +
-            Offset(
-              comment.anchor.point.x * storyRect.width,
-              comment.anchor.point.y * storyRect.height,
-            ),
-        storyRect,
-      ),
-      offscreen: false,
-      detached: true,
+        Offset(
+          comment.anchor.point.x * storyRect.width,
+          comment.anchor.point.y * storyRect.height,
+        );
+
+    return _scrolledAwayPin(comment, point, layerBox, storyRect) ??
+        _Pin(
+          position: _clamp(point, storyRect),
+          offscreen: false,
+          detached: true,
+        );
+  }
+
+  /// Places the pin of a list item that is not built, because its list is
+  /// scrolled elsewhere, where the item would be: at the edge of the list
+  /// in the item's direction.
+  _Pin? _scrolledAwayPin(
+    StoryComment comment,
+    Offset point,
+    RenderBox layerBox,
+    Rect storyRect,
+  ) {
+    final contentOffset = comment.anchor.scroll?.contentOffset;
+    final story = _story;
+    if (contentOffset == null || story == null) return null;
+
+    final scrollable = _locator?.scrollableOf(story, comment.anchor);
+    final viewportBox = scrollable?.context.findRenderObject();
+    if (scrollable == null ||
+        viewportBox is! RenderBox ||
+        !viewportBox.hasSize ||
+        !scrollable.position.hasPixels) {
+      return null;
+    }
+
+    final along = contentOffset - scrollable.position.pixels;
+    final local = viewportBox.globalToLocal(layerBox.localToGlobal(point));
+    final expected = MatrixUtils.transformPoint(
+      viewportBox.getTransformTo(layerBox),
+      scrollable.position.axis == Axis.vertical
+          ? Offset(local.dx, along)
+          : Offset(along, local.dy),
+    );
+    final visibleRect = _rectIn(layerBox, viewportBox).intersect(storyRect);
+    final offscreen = !visibleRect.contains(expected);
+
+    return _Pin(
+      position: _clamp(expected, visibleRect),
+      offscreen: offscreen,
+      detached: !offscreen,
     );
   }
 
@@ -378,7 +428,9 @@ class _CommentsLayerState extends State<CommentsLayer> {
         alignment: 0.5,
         duration: const Duration(milliseconds: 250),
       );
-    } else if (pin != null && pin.detached && story != null) {
+    } else if (pin != null &&
+        (pin.offscreen || pin.detached) &&
+        story != null) {
       if (_locator?.restoreScroll(story, comment.anchor) ?? false) {
         _needsResolve = true;
       }
@@ -392,9 +444,15 @@ class _CommentsLayerState extends State<CommentsLayer> {
 
   @override
   Widget build(BuildContext context) {
-    Widget story = RepaintBoundary(
-      key: _storyKey,
-      child: widget.child,
+    Widget story = NotificationListener<ScrollNotification>(
+      onNotification: (_) {
+        _scrolled = true;
+        return false;
+      },
+      child: RepaintBoundary(
+        key: _storyKey,
+        child: widget.child,
+      ),
     );
 
     if (_commenting) {

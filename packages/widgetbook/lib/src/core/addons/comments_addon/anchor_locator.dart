@@ -207,11 +207,18 @@ class AnchorLocator {
   /// Restores the scroll position recorded in [anchor], so that a lazily
   /// built widget, e.g. an item of a `ListView.builder`, gets built again.
   bool restoreScroll(Element story, CommentAnchor anchor) {
+    final scrollable = scrollableOf(story, anchor);
+    scrollable?.position.jumpTo(anchor.scroll!.pixels);
+    return scrollable != null;
+  }
+
+  /// The scrollable that the widget of [anchor] was in when it was pinned.
+  ScrollableState? scrollableOf(Element story, CommentAnchor anchor) {
     final scroll = anchor.scroll;
-    if (scroll == null) return false;
+    if (scroll == null) return null;
 
     final owner = _find(_index(story), scroll.owner)?.first;
-    if (owner == null) return false;
+    if (owner == null) return null;
 
     ScrollableState? scrollable;
     void visit(Element element) {
@@ -224,8 +231,7 @@ class AnchorLocator {
     }
 
     visit(owner);
-    scrollable?.position.jumpTo(scroll.pixels);
-    return scrollable != null;
+    return scrollable;
   }
 
   Map<WidgetLocation, List<Element>> _index(Element story) {

@@ -277,6 +277,38 @@ void main() {
       await unmount(tester);
     });
 
+    testWidgets('keeps pins of scrolled away items at the edge of the list', (
+      tester,
+    ) async {
+      final client = _FakeClient();
+      await pumpScreen(tester, client);
+      await addComment(tester, 'Phrase 3', 'Use the phrase card');
+      final list = find
+          .descendant(
+            of: find.byType(_LessonSummary),
+            matching: find.byType(Scrollable),
+          )
+          .first;
+      final scrollable = tester.state<ScrollableState>(list);
+
+      scrollable.position.jumpTo(3000);
+      await tester.pump();
+      await tester.pump();
+
+      expect(find.text('Phrase 3'), findsNothing);
+      expect(
+        (pinCenter(tester, '1').dy - tester.getRect(list).top).abs(),
+        lessThan(1),
+      );
+
+      scrollable.position.jumpTo(0);
+      await tester.pump();
+      await tester.pump();
+
+      expectPinOn(tester, '1', find.text('Phrase 3'));
+      await unmount(tester);
+    });
+
     testWidgets('follows a nested horizontal list', (tester) async {
       final client = _FakeClient();
       await pumpScreen(tester, client);
