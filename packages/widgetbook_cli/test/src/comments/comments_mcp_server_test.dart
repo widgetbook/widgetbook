@@ -12,6 +12,7 @@ void main() {
     late Directory root;
     late CommentStore store;
     late CommentsMcpServer server;
+    late bool servingUi;
     late ServerConnection connection;
     late InitializeResult initialization;
     late StreamController<Map<String, Object?>> channelEvents;
@@ -22,10 +23,12 @@ void main() {
       channelEvents = StreamController.broadcast();
 
       final channel = StreamChannelController<String>();
+      servingUi = true;
       server = CommentsMcpServer(
         channel.local,
         store: store,
         version: '1.0.0',
+        isServingUi: () => servingUi,
       );
       connection = MCPClient(
         Implementation(name: 'test', version: '1.0.0'),
@@ -146,6 +149,29 @@ void main() {
       });
 
       expect(result.isError, isTrue);
+    });
+
+    test('wakes every waiting call for a review', () async {
+      final first = call('wait_for_comments');
+      final second = call('wait_for_comments');
+      await Future<void>.delayed(Duration.zero);
+
+      final comment = submitComment();
+
+      expect((decode(await first) as List).single['id'], comment.id);
+      expect((decode(await second) as List).single['id'], comment.id);
+    });
+
+    test('explains that it does not receive reviews without the UI', () async {
+      servingUi = false;
+
+      final result = await call('wait_for_comments');
+
+      expect(result.isError, isTrue);
+      expect(
+        (result.content.single as TextContent).text,
+        contains('another one already serves the Widgetbook UI'),
+      );
     });
 
     test('waits for the next submitted review', () async {

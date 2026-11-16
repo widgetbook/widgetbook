@@ -98,6 +98,7 @@ Agents without MCP support can read these files directly.
   In profile and release builds, comments fall back to the position within the story.
 - When a commented widget is removed, its pin moves to the closest enclosing widget or stays at its last position, and the thread says that the widget was not found.
 - Only one `widgetbook mcp` server can serve the UI at a time.
-  A second server still gives its agent access to the stored comments.
+  A second server still gives its agent access to the stored comments, and takes over the port once the first one stops.
+- The server only accepts comments on code inside the directory it runs in, so a Widgetbook never stores its comments in another project.
 - On the web, the server only accepts requests from Widgetbook served on `localhost`, as with `flutter run -d chrome`.
   A deployed Widgetbook cannot store comments.

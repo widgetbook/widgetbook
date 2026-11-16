@@ -44,11 +44,15 @@ class _CommentsLayerState extends State<CommentsLayer> {
 
   AnchorLocator? _locator;
   Object? _error;
+  String? _actionError;
   Timer? _poll;
 
   List<StoryComment> _comments = const [];
   String _signature = '';
   final _resolved = <String, ResolvedAnchor?>{};
+
+  /// The scrollables of comments whose list item is not built.
+  final _scrollables = <String, ScrollableState>{};
   bool _needsResolve = true;
   bool _scrolled = false;
   Map<String, _Pin> _pins = const {};
@@ -118,15 +122,38 @@ class _CommentsLayerState extends State<CommentsLayer> {
     }
   }
 
+  /// Loads the comments of the story. Calls during a load are coalesced into
+  /// one follow-up load, so that polls never overlap.
   Future<void> _refresh() async {
+    if (_refreshing) {
+      _refreshQueued = true;
+      return;
+    }
+
+    _refreshing = true;
+    try {
+      do {
+        _refreshQueued = false;
+        await _load();
+      } while (_refreshQueued && mounted);
+    } finally {
+      _refreshing = false;
+    }
+  }
+
+  bool _refreshing = false;
+  bool _refreshQueued = false;
+
+  Future<void> _load() async {
     if (_locator == null) {
       if (_error != null) return _connect();
       return;
     }
 
+    final storyPath = widget.storyPath;
     try {
-      final comments = await widget.client.list(widget.storyPath);
-      if (!mounted) return;
+      final comments = await widget.client.list(storyPath);
+      if (!mounted || storyPath != widget.storyPath) return;
 
       final signature = comments
           .map((c) => '${c.id}:${c.status.name}:${c.messages.length}')
@@ -175,25 +202,32 @@ class _CommentsLayerState extends State<CommentsLayer> {
     final layerBox = _overlayBox;
     if (story == null || locator == null || layerBox == null) return;
 
-    final unmounted = _resolved.values.any(
-      (resolved) => resolved != null && !resolved.element.mounted,
-    );
-    if (_needsResolve || unmounted) {
+    final unmounted =
+        _resolved.values.any(
+          (resolved) => resolved != null && !resolved.element.mounted,
+        ) ||
+        _scrollables.values.any((scrollable) => !scrollable.mounted);
+    final retryUnresolved = _scrolled && _resolved.containsValue(null);
+    _scrolled = false;
+
+    if (_needsResolve || unmounted || retryUnresolved) {
+      final resolveAll = _needsResolve || unmounted;
       _needsResolve = false;
-      _scrolled = false;
-      _resolved
-        ..clear()
-        ..addAll({
-          for (final comment in _comments)
-            comment.id: locator.resolve(story, comment.anchor),
-        });
-    } else if (_scrolled) {
-      _scrolled = false;
-      for (final comment in _comments) {
-        if (_resolved[comment.id] == null) {
-          _resolved[comment.id] = locator.resolve(story, comment.anchor);
+
+      locator.batch(story, () {
+        for (final comment in _comments) {
+          if (resolveAll || _resolved[comment.id] == null) {
+            _resolved[comment.id] = locator.resolve(story, comment.anchor);
+          }
         }
-      }
+
+        _scrollables.clear();
+        for (final comment in _comments) {
+          if (_resolved[comment.id] != null) continue;
+          final scrollable = locator.scrollableOf(story, comment.anchor);
+          if (scrollable != null) _scrollables[comment.id] = scrollable;
+        }
+      });
     }
 
     final storyBox = story.findRenderObject();
@@ -266,10 +300,9 @@ class _CommentsLayerState extends State<CommentsLayer> {
     Rect storyRect,
   ) {
     final contentOffset = comment.anchor.scroll?.contentOffset;
-    final story = _story;
-    if (contentOffset == null || story == null) return null;
+    if (contentOffset == null) return null;
 
-    final scrollable = _locator?.scrollableOf(story, comment.anchor);
+    final scrollable = _scrollables[comment.id];
     final viewportBox = scrollable?.context.findRenderObject();
     if (scrollable == null ||
         viewportBox is! RenderBox ||
@@ -357,12 +390,13 @@ class _CommentsLayerState extends State<CommentsLayer> {
     });
   }
 
-  Future<void> _createComment(String text) async {
+  Future<bool> _createComment(String text) async {
     final composer = _composer;
-    if (composer == null || text.trim().isEmpty) return;
+    if (composer == null || text.trim().isEmpty) return false;
 
     final screenshot = await _screenshot(composer.anchor.point);
-    await _run(
+    final saved = await _run(
+      'Could not save the comment',
       () => widget.client.create(
         storyPath: widget.storyPath,
         storyUrl: widget.storyUrl,
@@ -372,7 +406,8 @@ class _CommentsLayerState extends State<CommentsLayer> {
       ),
     );
 
-    if (mounted) setState(() => _composer = null);
+    if (saved && mounted) setState(() => _composer = null);
+    return saved;
   }
 
   /// Captures the story without the comment overlay, with a ring around
@@ -381,8 +416,10 @@ class _CommentsLayerState extends State<CommentsLayer> {
     final boundary = _story?.findRenderObject();
     if (boundary is! RenderRepaintBoundary) return null;
 
+    ui.Image? image;
+    ui.Image? composed;
     try {
-      final image = await boundary.toImage(pixelRatio: 2);
+      image = await boundary.toImage(pixelRatio: 2);
       final recorder = ui.PictureRecorder();
       final center = Offset(pin.x * image.width, pin.y * image.height);
 
@@ -397,24 +434,45 @@ class _CommentsLayerState extends State<CommentsLayer> {
             ..strokeWidth = 5,
         );
 
-      final composed = await recorder.endRecording().toImage(
-        image.width,
-        image.height,
-      );
+      final picture = recorder.endRecording();
+      composed = await picture.toImage(image.width, image.height);
+      picture.dispose();
+
       final bytes = await composed.toByteData(format: ui.ImageByteFormat.png);
       return bytes?.buffer.asUint8List();
     } catch (_) {
       return null;
+    } finally {
+      image?.dispose();
+      composed?.dispose();
     }
   }
 
-  Future<void> _run(Future<void> Function() action) async {
+  /// Runs an action against the server and reports whether it succeeded.
+  /// A failure is shown in the toolbar, prefixed with [failure].
+  Future<bool> _run(String failure, Future<void> Function() action) async {
     try {
       await action();
+      if (mounted) setState(() => _actionError = null);
       await _refresh();
+      return true;
     } catch (error) {
-      if (mounted) setState(() => _error = error);
+      if (mounted) {
+        setState(() => _actionError = '$failure: ${_describe(error)}');
+      }
+      return false;
     }
+  }
+
+  /// The server's error message in [error], or the error itself, e.g. when
+  /// the server is not reachable.
+  static String _describe(Object error) {
+    final serverMessage = RegExp(
+      r'"error"\s*:\s*"((?:[^"\\]|\\.)*)"',
+    ).firstMatch('$error')?.group(1);
+    if (serverMessage != null) return serverMessage.replaceAll(r'\"', '"');
+
+    return '$error'.split('\n').first;
   }
 
   void _openPin(StoryComment comment) {
@@ -533,12 +591,20 @@ class _CommentsLayerState extends State<CommentsLayer> {
             comment: open,
             detached: _pins[open.id]!.detached,
             onClose: () => setState(() => _openId = null),
-            onReply: (text) => _run(() => widget.client.reply(open.id, text)),
-            onStatus: (status) =>
-                _run(() => widget.client.setStatus(open.id, status)),
+            onReply: (text) => _run(
+              'Could not send the reply',
+              () => widget.client.reply(open.id, text),
+            ),
+            onStatus: (status) => _run(
+              'Could not update the comment',
+              () => widget.client.setStatus(open.id, status),
+            ),
             onDelete: () async {
-              await _run(() => widget.client.delete(open.id));
-              if (mounted) setState(() => _openId = null);
+              final deleted = await _run(
+                'Could not delete the comment',
+                () => widget.client.delete(open.id),
+              );
+              if (deleted && mounted) setState(() => _openId = null);
             },
           ),
         ),
@@ -546,9 +612,39 @@ class _CommentsLayerState extends State<CommentsLayer> {
         left: 0,
         right: 0,
         bottom: 12,
-        child: Center(child: _buildToolbar()),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          spacing: 8,
+          children: [
+            if (_statusMessage case final message?)
+              Center(
+                child: _Toolbar(
+                  color: _errorSurface,
+                  children: [
+                    _ToolbarLabel(message),
+                    if (_actionError != null)
+                      _ToolbarButton(
+                        icon: Icons.close,
+                        onPressed: () => setState(() => _actionError = null),
+                      ),
+                  ],
+                ),
+              ),
+            Center(child: _buildToolbar()),
+          ],
+        ),
       ),
     ];
+  }
+
+  /// An error to show while connected: a failed action, or the lost
+  /// connection to the server, which clears on the next successful poll.
+  String? get _statusMessage {
+    if (_actionError != null) return _actionError;
+    if (_error != null && _locator != null) {
+      return 'Lost the connection to `widgetbook mcp`';
+    }
+    return null;
   }
 
   Widget _card({
@@ -614,7 +710,10 @@ class _CommentsLayerState extends State<CommentsLayer> {
           ),
           onPressed: drafts == 0
               ? null
-              : () => _run(() => widget.client.submit(widget.storyPath)),
+              : () => _run(
+                  'Could not submit the review',
+                  () => widget.client.submit(widget.storyPath),
+                ),
           child: const Text('Submit'),
         ),
         _ToolbarButton(
@@ -677,6 +776,7 @@ class _Composer {
 
 const _accent = Color(0xFF2F6BFF);
 const _surface = Color(0xFF1E1E1E);
+const _errorSurface = Color(0xFFB3261E);
 
 class _Chrome extends StatelessWidget {
   const _Chrome({required this.child});
@@ -830,7 +930,10 @@ class _MessageField extends StatefulWidget {
   });
 
   final String hint;
-  final ValueChanged<String> onSubmit;
+
+  /// Sends the text and reports whether it was saved. The text stays in
+  /// the field when it was not, so that it is not lost.
+  final Future<bool> Function(String text) onSubmit;
   final VoidCallback? onCancel;
   final bool autofocus;
 
@@ -847,11 +950,12 @@ class _MessageFieldState extends State<_MessageField> {
     super.dispose();
   }
 
-  void _submit() {
+  Future<void> _submit() async {
     final text = _controller.text;
     if (text.trim().isEmpty) return;
-    _controller.clear();
-    widget.onSubmit(text);
+
+    final saved = await widget.onSubmit(text);
+    if (saved && mounted && _controller.text == text) _controller.clear();
   }
 
   @override
@@ -886,7 +990,7 @@ class _MessageFieldState extends State<_MessageField> {
 class _CommentComposer extends StatelessWidget {
   const _CommentComposer({required this.onSubmit, required this.onCancel});
 
-  final ValueChanged<String> onSubmit;
+  final Future<bool> Function(String text) onSubmit;
   final VoidCallback onCancel;
 
   @override
@@ -915,7 +1019,7 @@ class _ThreadCard extends StatelessWidget {
   final StoryComment comment;
   final bool detached;
   final VoidCallback onClose;
-  final ValueChanged<String> onReply;
+  final Future<bool> Function(String text) onReply;
   final ValueChanged<CommentStatus> onStatus;
   final VoidCallback onDelete;
 
@@ -1009,14 +1113,15 @@ class _ThreadCard extends StatelessWidget {
 }
 
 class _Toolbar extends StatelessWidget {
-  const _Toolbar({required this.children});
+  const _Toolbar({required this.children, this.color = _surface});
 
   final List<Widget> children;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: _surface,
+      color: color,
       elevation: 6,
       borderRadius: BorderRadius.circular(24),
       child: Padding(

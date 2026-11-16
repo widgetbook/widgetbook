@@ -203,6 +203,15 @@ void main() {
       ]);
     });
 
+    test('skips files that are not valid comments', () {
+      final draft = createDraft();
+      File(
+        p.join(store.directory.path, 'broken.json'),
+      ).writeAsStringSync('{"id": 1}');
+
+      expect(store.list().map((comment) => comment.id), [draft.id]);
+    });
+
     test('rejects ids that are not comment ids', () {
       expect(
         () => store.get('../secrets'),

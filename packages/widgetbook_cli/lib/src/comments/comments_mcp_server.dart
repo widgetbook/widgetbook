@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:dart_mcp/server.dart';
 
@@ -17,7 +18,9 @@ final class CommentsMcpServer extends MCPServer
     super.channel, {
     required this.store,
     required String version,
-  }) : super.fromStreamChannel(
+    bool Function()? isServingUi,
+  }) : _isServingUi = isServingUi ?? (() => true),
+       super.fromStreamChannel(
          implementation: Implementation(name: 'widgetbook', version: version),
          instructions: _instructions,
        ) {
@@ -34,8 +37,17 @@ final class CommentsMcpServer extends MCPServer
   final CommentStore store;
   late final StreamSubscription<List<Comment>> _subscription;
 
-  final List<String> _undelivered = [];
-  Completer<void>? _waiter;
+  /// Whether this server's HTTP API is the one the Widgetbook UI reaches.
+  /// Only then does it learn about submitted reviews.
+  final bool Function() _isServingUi;
+
+  /// The comment ids of each submitted review, in order.
+  final List<List<String>> _reviews = [];
+
+  /// How many of [_reviews] were returned by `wait_for_comments`.
+  int _delivered = 0;
+
+  final List<Completer<void>> _waiters = [];
 
   static const channelMethod = 'notifications/claude/channel';
 
@@ -53,9 +65,11 @@ final class CommentsMcpServer extends MCPServer
   }
 
   void _onSubmitted(List<Comment> comments) {
-    _undelivered.addAll(comments.map((comment) => comment.id));
-    _waiter?.complete();
-    _waiter = null;
+    _reviews.add([for (final comment in comments) comment.id]);
+    for (final waiter in _waiters) {
+      waiter.complete();
+    }
+    _waiters.clear();
 
     final stories = comments.map((comment) => comment.storyPath).toSet();
     sendNotification(
@@ -213,17 +227,30 @@ final class CommentsMcpServer extends MCPServer
   );
 
   Future<CallToolResult> _wait(CallToolRequest request) async {
+    if (!_isServingUi()) {
+      return _error(
+        'This widgetbook mcp server does not receive reviews, because '
+        'another one already serves the Widgetbook UI. Use list_comments, '
+        'or close the other server; this one takes over its port then.',
+      );
+    }
+
     final timeout = Duration(
       seconds: request.arguments?['timeoutSeconds'] as int? ?? 300,
     );
 
-    if (_undelivered.isEmpty) {
-      final waiter = _waiter ??= Completer<void>();
-      await waiter.future.timeout(timeout, onTimeout: () {});
+    final from = _delivered;
+    if (_reviews.length == from) {
+      final waiter = Completer<void>();
+      _waiters.add(waiter);
+      await waiter.future.timeout(
+        timeout,
+        onTimeout: () => _waiters.remove(waiter),
+      );
     }
 
-    final ids = [..._undelivered];
-    _undelivered.clear();
+    final ids = {for (final review in _reviews.skip(from)) ...review};
+    _delivered = max(_delivered, _reviews.length);
 
     final comments = store
         .list(statuses: {CommentStatus.open})

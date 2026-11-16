@@ -234,7 +234,30 @@ class AnchorLocator {
     return scrollable;
   }
 
+  /// Runs [run] with one index of [story] for all lookups, instead of
+  /// walking the widget tree for each of them.
+  T batch<T>(Element story, T Function() run) {
+    _batchIndex = (story, _buildIndex(story));
+    try {
+      return run();
+    } finally {
+      _batchIndex = null;
+    }
+  }
+
+  (Element, Map<WidgetLocation, List<Element>>)? _batchIndex;
+
   Map<WidgetLocation, List<Element>> _index(Element story) {
+    if (_batchIndex case (
+      final batchStory,
+      final index,
+    ) when batchStory == story) {
+      return index;
+    }
+    return _buildIndex(story);
+  }
+
+  Map<WidgetLocation, List<Element>> _buildIndex(Element story) {
     final index = <WidgetLocation, List<Element>>{};
 
     void visit(Element element) {

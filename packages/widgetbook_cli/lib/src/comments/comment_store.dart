@@ -25,6 +25,20 @@ class CommentTransitionException implements Exception {
   String toString() => message;
 }
 
+/// Thrown when a comment is pinned to code outside of the project, e.g.
+/// when the Widgetbook of another project reaches this server's port.
+class CommentOutsideProjectException implements Exception {
+  CommentOutsideProjectException(this.location, this.root);
+
+  final String location;
+  final String root;
+
+  @override
+  String toString() =>
+      'The commented widget ($location) is not part of $root. '
+      'Start `widgetbook mcp` in the project of this Widgetbook.';
+}
+
 /// Stores comments as one JSON file per thread in
 /// `<root>/.widgetbook/comments`, next to their screenshots.
 ///
@@ -91,15 +105,12 @@ class CommentStore {
     Map<String, dynamic> anchor = const {},
     List<int>? screenshotPng,
   }) {
+    _checkInProject(anchor['location']);
     _ensureDirectory();
 
     final id = _newId();
     final now = _now();
     final screenshot = screenshotPng == null ? null : '$id.png';
-
-    if (screenshot != null) {
-      File(p.join(directory.path, screenshot)).writeAsBytesSync(screenshotPng!);
-    }
 
     final comment = Comment(
       id: id,
@@ -119,8 +130,51 @@ class CommentStore {
       screenshot: screenshot,
     );
 
+    if (screenshot != null) {
+      File(p.join(directory.path, screenshot)).writeAsBytesSync(screenshotPng!);
+    }
     _write(comment);
     return comment;
+  }
+
+  /// Rejects anchors whose widget is created by code outside of [root].
+  /// Only desktop file locations and web app locations are checked, as
+  /// `package:` locations may point to other packages of a monorepo.
+  void _checkInProject(Object? location) {
+    if (location is! Map) return;
+
+    final uri = location['uri'] ?? location['file'];
+    if (uri is! String) return;
+
+    const appScheme = 'org-dartlang-app:///';
+    final inProject = switch (uri) {
+      _ when uri.startsWith('file:') => _safely(
+        () => p.isWithin(root, Uri.parse(uri).toFilePath()),
+      ),
+      _ when uri.startsWith(appScheme) => _safely(
+        () => _findAppFile(uri.substring(appScheme.length)) != null,
+      ),
+      _ => true,
+    };
+
+    if (inProject == false) {
+      throw CommentOutsideProjectException(
+        location['file'] as String? ?? uri,
+        root,
+      );
+    }
+  }
+
+  static T? _safely<T>(T Function() run) {
+    try {
+      return run();
+    } on Exception {
+      return null;
+    } on ArgumentError {
+      return null;
+    } on UnsupportedError {
+      return null;
+    }
   }
 
   /// Adds a message to the thread. A user reply on a comment the agent
@@ -161,10 +215,15 @@ class CommentStore {
 
   void delete(String id) {
     final comment = get(id);
-    _jsonFile(id).deleteSync();
-    if (comment.screenshot != null) {
-      final screenshot = screenshotFile(comment);
-      if (screenshot.existsSync()) screenshot.deleteSync();
+    _deleteIfExists(_jsonFile(id));
+    if (comment.screenshot != null) _deleteIfExists(screenshotFile(comment));
+  }
+
+  static void _deleteIfExists(File file) {
+    try {
+      file.deleteSync();
+    } on PathNotFoundException {
+      return;
     }
   }
 
@@ -212,13 +271,17 @@ class CommentStore {
     return File(p.join(directory.path, '$id.json'));
   }
 
+  /// Reads a comment, skipping files that are missing, e.g. deleted while
+  /// listing, or that are not valid comments.
   Comment? _read(File file) {
-    if (!file.existsSync()) return null;
-
     try {
       final json = jsonDecode(file.readAsStringSync());
       return Comment.fromJson((json as Map).cast<String, dynamic>());
+    } on FileSystemException {
+      return null;
     } on FormatException {
+      return null;
+    } on TypeError {
       return null;
     }
   }
@@ -265,7 +328,11 @@ class CommentStore {
     final source = map['uri'] ?? map['file'];
     if (source is! String) return map;
 
-    return {...map, 'file': _resolvedPaths[source] ??= _resolvePath(source)};
+    return {
+      ...map,
+      'file': _resolvedPaths[source] ??=
+          _safely(() => _resolvePath(source)) ?? source,
+    };
   }
 
   final _resolvedPaths = <String, String>{};

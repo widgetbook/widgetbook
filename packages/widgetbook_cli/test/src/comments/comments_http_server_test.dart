@@ -88,6 +88,65 @@ void main() {
       expect(response.headers.value('access-control-allow-origin'), isNull);
     });
 
+    test('keeps running after a request it cannot handle', () async {
+      final (status, _) = await send('POST', '/comments', {
+        'storyPath': 'widgets/Card/Default',
+        'text': 'Use a larger title',
+        'anchor': {
+          'location': {'uri': 'file://host/etc/passwd', 'line': 1},
+        },
+      });
+      expect(status, isNot(HttpStatus.internalServerError));
+
+      final (infoStatus, _) = await send('GET', '/info');
+      expect(infoStatus, HttpStatus.ok);
+    });
+
+    test('rejects requests addressed to other hosts', () async {
+      final request = await client.getUrl(
+        Uri.parse('http://127.0.0.1:${server.port}/comments'),
+      );
+      request.headers.host = 'rebound.example';
+      final response = await request.close();
+      await response.drain<void>();
+
+      expect(response.statusCode, HttpStatus.forbidden);
+    });
+
+    test('rejects comments on code of another project', () async {
+      final (status, body) = await send('POST', '/comments', {
+        'storyPath': 'widgets/Card/Default',
+        'text': 'Use a larger title',
+        'screenshot': base64Encode([1, 2, 3]),
+        'anchor': {
+          'location': {
+            'uri': 'file:///elsewhere/lib/card.dart',
+            'file': '/elsewhere/lib/card.dart',
+          },
+        },
+      });
+
+      expect(status, HttpStatus.conflict);
+      expect(body['error'], contains('/elsewhere/lib/card.dart'));
+      expect(store.list(), isEmpty);
+      expect(store.directory.existsSync(), isFalse);
+    });
+
+    test('rejects bodies above the size limit', () async {
+      final limited = CommentsHttpServer(store, maxBodyBytes: 100);
+      await limited.start(port: 0);
+      addTearDown(limited.close);
+
+      final request = await client.postUrl(
+        Uri.parse('http://127.0.0.1:${limited.port}/comments'),
+      );
+      request.write(jsonEncode({'text': 'x' * 200}));
+      final response = await request.close();
+      await response.drain<void>();
+
+      expect(response.statusCode, HttpStatus.requestEntityTooLarge);
+    });
+
     test('recognizes loopback origins', () {
       expect(
         CommentsHttpServer.isLoopbackOrigin('http://localhost:8080'),

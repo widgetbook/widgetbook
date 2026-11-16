@@ -52,26 +52,40 @@ class McpCommand extends CliVoidCommand {
     );
 
     final httpServer = CommentsHttpServer(store);
-    try {
-      await httpServer.start(port: port);
+    Timer? retry;
+
+    Future<bool> tryStart() async {
+      try {
+        await httpServer.start(port: port);
+        stderr.writeln(
+          'Widgetbook comments are available to the UI on port $port.',
+        );
+        return true;
+      } on SocketException {
+        return false;
+      }
+    }
+
+    if (!await tryStart()) {
       stderr.writeln(
-        'Widgetbook comments are available to the UI on port $port.',
+        'Port $port is in use, likely by another `widgetbook mcp`. '
+        'The agent can still read the comments, but submitted reviews only '
+        'reach the other server. Retrying until the port is free.',
       );
-    } on SocketException catch (error) {
-      stderr.writeln(
-        'Port $port is in use (${error.message}). The agent can still '
-        'read the comments, but the Widgetbook UI cannot store new ones '
-        'through this server.',
-      );
+      retry = Timer.periodic(const Duration(seconds: 5), (timer) async {
+        if (await tryStart()) timer.cancel();
+      });
     }
 
     final mcpServer = CommentsMcpServer(
       stdioChannel(input: stdin, output: stdout),
       store: store,
       version: packageVersion,
+      isServingUi: () => httpServer.isRunning,
     );
 
     await mcpServer.done;
+    retry?.cancel();
     await httpServer.close();
     await store.close();
 

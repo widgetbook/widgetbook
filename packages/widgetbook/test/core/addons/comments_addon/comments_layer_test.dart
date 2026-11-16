@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart' hide Viewport;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/core/addons/comments_addon/comment.dart';
@@ -12,6 +14,8 @@ class _FakeClient implements CommentsClient {
   final bool reachable;
   final comments = <Map<String, dynamic>>[];
   List<int>? lastScreenshot;
+  Object? createError;
+  Completer<void>? listGate;
 
   @override
   int get port => 0;
@@ -24,7 +28,11 @@ class _FakeClient implements CommentsClient {
 
   @override
   Future<List<StoryComment>> list(String storyPath) async {
-    return comments.map(StoryComment.fromJson).toList();
+    final snapshot = comments
+        .where((comment) => comment['storyPath'] == storyPath)
+        .toList();
+    await listGate?.future;
+    return snapshot.map(StoryComment.fromJson).toList();
   }
 
   @override
@@ -35,9 +43,11 @@ class _FakeClient implements CommentsClient {
     required CommentAnchor anchor,
     List<int>? screenshot,
   }) async {
+    if (createError case final error?) throw error;
     lastScreenshot = screenshot;
     comments.add({
       'id': 'c${comments.length}',
+      'storyPath': storyPath,
       'status': 'draft',
       'anchor': anchor.toJson(),
       'messages': [
@@ -142,14 +152,15 @@ void main() {
     WidgetTester tester,
     _FakeClient client, {
     VoidCallback? onPressed,
+    String storyPath = 'widgets/List/Default',
   }) async {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
           body: CommentsLayer(
             client: client,
-            storyPath: 'widgets/List/Default',
-            storyUrl: '/?path=widgets/List/Default',
+            storyPath: storyPath,
+            storyUrl: '/?path=$storyPath',
             pollInterval: const Duration(milliseconds: 100),
             child: _Story(onPressed: onPressed ?? () {}),
           ),
@@ -375,6 +386,63 @@ void main() {
       expect((anchor['location'] as Map)['occurrence'], 2);
       expect(client.lastScreenshot, isNotEmpty);
       expect(find.text('Commenting · 1'), findsOneWidget);
+      await unmount(tester);
+    });
+
+    testWidgets('keeps the comment and shows why it could not be saved', (
+      tester,
+    ) async {
+      final client = _FakeClient()
+        ..createError = Exception(
+          '{"error":"The commented widget is not part of /other"}',
+        );
+      await pumpLayer(tester, client);
+      await tester.tap(find.text('Comment'));
+      await tester.pump();
+
+      await addComment(tester, 'Item 2', 'Use a larger text style');
+
+      expect(client.comments, isEmpty);
+      expect(
+        find.textContaining('The commented widget is not part of /other'),
+        findsOneWidget,
+      );
+      final field = tester.widget<TextField>(find.byType(TextField));
+      expect(field.controller!.text, 'Use a larger text style');
+      await unmount(tester);
+    });
+
+    testWidgets('ignores comments of the previous story', (tester) async {
+      final client = _FakeClient()
+        ..comments.add({
+          'id': 'a',
+          'storyPath': 'widgets/List/A',
+          'status': 'open',
+          'anchor': {
+            'point': {'x': 0.5, 'y': 0.1},
+          },
+          'messages': [
+            {'author': 'user', 'text': 'On story A'},
+          ],
+        });
+      await pumpLayer(tester, client, storyPath: 'widgets/List/A');
+      expect(find.text('1'), findsWidgets);
+
+      client.listGate = Completer<void>();
+      await tester.pump(const Duration(milliseconds: 100));
+      await pumpLayer(tester, client, storyPath: 'widgets/List/B');
+
+      final staleGate = client.listGate!;
+      client.listGate = Completer<void>();
+      staleGate.complete();
+      await tester.pump();
+      await tester.pump();
+
+      expect(find.text('Comment'), findsOneWidget);
+      expect(find.text('1'), findsNothing);
+
+      client.listGate!.complete();
+      client.listGate = null;
       await unmount(tester);
     });
 
