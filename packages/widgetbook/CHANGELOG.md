@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Add `Config.atlas` to map which stories lead to which other stories in named `AtlasFlow`s, shown as a graph on the default home page and by the new `LeadsToDocBlock`.
+
 ## 4.0.0-beta.15
 
 - **FIX**: Scroll the navigation tree to the selected node and expand its ancestors when the path changes, including on deep links. ([#2042](https://github.com/widgetbook/widgetbook/pull/2042) - by [@niktishakov](https://github.com/niktishakov))

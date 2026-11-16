@@ -4,6 +4,7 @@ export 'component_name_block.dart';
 export 'composer_block.dart';
 export 'dart_comment_block.dart';
 export 'extension.dart';
+export 'leads_to_block.dart';
 export 'stories_block.dart';
 export 'story_block.dart';
 export 'subtitle_block.dart';

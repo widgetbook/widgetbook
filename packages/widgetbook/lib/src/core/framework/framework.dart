@@ -1,5 +1,6 @@
 export 'addon.dart';
 export 'arg.dart';
+export 'atlas_flow.dart';
 export 'builder_arg.dart';
 export 'component.dart';
 export 'component_meta.dart';

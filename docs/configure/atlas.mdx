@@ -1,0 +1,53 @@
+# Atlas
+
+The atlas maps which page of your app leads to which other pages.
+Each page is a story, and a page can lead to any number of other pages.
+Pages are grouped into named flows, such as onboarding or checkout.
+
+Declare the flows in their own file and reference the stories by their variables.
+Since the stories never reference each other, two pages can lead to each other without a circular initialization,
+and renaming a story variable breaks the build instead of the atlas.
+
+```dart title=widgetbook/lib/widgetbook.atlas.dart
+import 'auth/login.stories.dart' as login;
+import 'home/home.stories.dart' as home;
+import 'settings/settings.stories.dart' as settings;
+
+final onboarding = AtlasFlow(
+  name: 'Onboarding',
+  links: {
+    login.$Default: [home.$Default, login.$SignUp],
+    login.$SignUp: [home.$Default],
+  },
+);
+
+final preferences = AtlasFlow(
+  name: 'Preferences',
+  links: {
+    home.$Default: [settings.$Default],
+    settings.$Default: [home.$Default],
+  },
+);
+```
+
+Every story in a flow must belong to a component in `Config.components`.
+Stories of different files usually share names such as `$Default`, so import the stories files with a prefix.
+
+```dart title=widgetbook/lib/widgetbook.config.dart
+final config = Config(
+  components: components,
+  atlas: [onboarding, preferences],
+);
+```
+
+## Home Page
+
+When `atlas` is not empty, the default [home widget](/configure/home-widget) shows every flow as a graph.
+Tapping a page opens its story.
+To show the atlas inside a custom home widget, use `AtlasHomePage`.
+
+## Leads To DocBlock
+
+The `LeadsToDocBlock` is part of the default docs and lists, per flow, which pages each story of the component leads to and is reached from.
+It renders nothing for components without pages in the atlas.
+See [DocBlocks](/documentation/doc-blocks#leadstodocblock) to add it to custom docs.

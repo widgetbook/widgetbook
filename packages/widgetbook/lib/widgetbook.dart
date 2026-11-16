@@ -10,6 +10,7 @@ export 'package:flutter_test/src/widget_tester.dart';
 export 'src/core/accessibility/accessibility.dart';
 export 'src/core/addons/addons.dart' hide NoneViewport;
 export 'src/core/args/args.dart';
+export 'src/core/atlas/atlas.dart';
 export 'src/core/docs/docs.dart';
 export 'src/core/fields/fields.dart';
 export 'src/core/framework/framework.dart';

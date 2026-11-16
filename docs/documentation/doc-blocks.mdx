@@ -54,6 +54,15 @@ StoryDocBlock(story: myStory, height: 800)             // Custom fixed height
 StoryDocBlock.unconstrained(story: myStory)            // Unconstrained
 ```
 
+### LeadsToDocBlock
+
+Lists, per [atlas](/configure/atlas) flow, which pages each story of the current component leads to and is reached from. Renders nothing when none of the component's stories is part of a flow.
+
+**Usage:**
+```dart
+const LeadsToDocBlock()
+```
+
 ### PrimaryStoryDocBlock
 
 Displays only the first story for the component. Useful for highlighting the main example.
