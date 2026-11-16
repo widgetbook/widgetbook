@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **FEAT**: Add the experimental `CommentsAddon` to pin comments to the widgets of a story and hand them to a coding agent through `widgetbook mcp`. Pins follow their widget through scrolling, zoom and hot reload. Supports macOS. ([#2063](https://github.com/widgetbook/widgetbook/pull/2063))
+- **FEAT**: Add the experimental `CommentsAddon` to pin comments to the widgets of a story and hand them to a coding agent through `widgetbook mcp`. Pins follow their widget through scrolling, zoom and hot reload. Supports macOS and the web. ([#2063](https://github.com/widgetbook/widgetbook/pull/2063))
 
 ## 4.0.0-beta.15
 

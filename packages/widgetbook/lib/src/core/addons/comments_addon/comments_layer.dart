@@ -103,13 +103,13 @@ class _CommentsLayerState extends State<CommentsLayer> {
   }
 
   Future<void> _connect() async {
-    final widgetbookLib = AnchorLocator.libraryDirectory(
-      AnchorLocator.creationFile(context as Element),
+    final widgetbookPrefix = AnchorLocator.packagePrefix(
+      AnchorLocator.creationUri(context as Element),
     );
 
     try {
       final root = await widget.client.root();
-      _locator = AnchorLocator(root: root, excludedDirectory: widgetbookLib);
+      _locator = AnchorLocator(root: root, excludedPrefix: widgetbookPrefix);
       await _refresh();
     } catch (error) {
       if (!mounted) return;

@@ -41,6 +41,66 @@ void main() {
       return (response.statusCode, (json as Map).cast<String, dynamic>());
     }
 
+    test('allows browsers on loopback origins', () async {
+      final preflight = await client.openUrl(
+        'OPTIONS',
+        Uri.parse('http://127.0.0.1:${server.port}/comments'),
+      );
+      preflight.headers
+        ..set('origin', 'http://localhost:61234')
+        ..set('access-control-request-method', 'POST');
+      final preflightResponse = await preflight.close();
+      await preflightResponse.drain<void>();
+
+      expect(preflightResponse.statusCode, HttpStatus.noContent);
+      expect(
+        preflightResponse.headers.value('access-control-allow-origin'),
+        'http://localhost:61234',
+      );
+      expect(
+        preflightResponse.headers.value('access-control-allow-methods'),
+        contains('PATCH'),
+      );
+
+      final request = await client.getUrl(
+        Uri.parse('http://127.0.0.1:${server.port}/info'),
+      );
+      request.headers.set('origin', 'http://127.0.0.1:61234');
+      final response = await request.close();
+      await response.drain<void>();
+
+      expect(response.statusCode, HttpStatus.ok);
+      expect(
+        response.headers.value('access-control-allow-origin'),
+        'http://127.0.0.1:61234',
+      );
+    });
+
+    test('rejects browsers on other origins', () async {
+      final request = await client.postUrl(
+        Uri.parse('http://127.0.0.1:${server.port}/reviews'),
+      );
+      request.headers.set('origin', 'https://example.com');
+      final response = await request.close();
+      await response.drain<void>();
+
+      expect(response.statusCode, HttpStatus.forbidden);
+      expect(response.headers.value('access-control-allow-origin'), isNull);
+    });
+
+    test('recognizes loopback origins', () {
+      expect(
+        CommentsHttpServer.isLoopbackOrigin('http://localhost:8080'),
+        isTrue,
+      );
+      expect(CommentsHttpServer.isLoopbackOrigin('http://[::1]:8080'), isTrue);
+      expect(
+        CommentsHttpServer.isLoopbackOrigin('http://localhost.evil.com'),
+        isFalse,
+      );
+      expect(CommentsHttpServer.isLoopbackOrigin('null'), isFalse);
+    });
+
     test('returns the project root', () async {
       final (status, body) = await send('GET', '/info');
 

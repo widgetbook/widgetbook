@@ -73,7 +73,8 @@ class WidgetLocation {
     required this.file,
     required this.line,
     required this.column,
-  });
+    String? uri,
+  }) : uri = uri ?? file;
 
   static WidgetLocation? fromJson(Object? json) {
     if (json is! Map) return null;
@@ -81,21 +82,40 @@ class WidgetLocation {
     return WidgetLocation(
       widget: json['widget'] as String,
       file: json['file'] as String,
+      uri: json['uri'] as String?,
       line: json['line'] as int,
       column: json['column'] as int,
     );
   }
 
   final String widget;
+
+  /// The path for people and agents, relative to the project when possible.
   final String file;
+
+  /// The location as reported at runtime, e.g. a `file:` URI on desktop or
+  /// an `org-dartlang-app:` URI on the web. Used to find the widget again.
+  final String uri;
+
   final int line;
   final int column;
 
-  String get key => '$file:$line:$column';
+  String get key => '$uri:$line:$column';
+
+  /// Whether [other] is in the same file, comparing [uri] and then [file],
+  /// e.g. for a comment placed on another platform.
+  bool sameFile(WidgetLocation other) {
+    return other.uri == uri || other.file == file;
+  }
+
+  bool samePosition(WidgetLocation other) {
+    return sameFile(other) && other.line == line && other.column == column;
+  }
 
   Map<String, dynamic> toJson() => {
     'widget': widget,
     'file': file,
+    'uri': uri,
     'line': line,
     'column': column,
   };

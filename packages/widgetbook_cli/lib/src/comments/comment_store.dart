@@ -247,25 +247,107 @@ class CommentStore {
     return '$time-$suffix';
   }
 
-  /// Rewrites `file://` URIs below [root] in the UI's anchor to paths
-  /// relative to [root], so that agents can open them directly.
+  /// Rewrites the `file` of each location in the UI's anchor to a path
+  /// relative to [root] where possible, so that agents can open it directly.
+  /// The location's `uri`, as reported at runtime, is kept for the UI.
   Object? _relativizeFiles(Object? value) {
     return switch (value) {
-      Map() => {
+      Map() => _relativizeLocation({
         for (final entry in value.entries)
-          entry.key as String: entry.key == 'file' && entry.value is String
-              ? _relativePath(entry.value as String)
-              : _relativizeFiles(entry.value),
-      },
+          entry.key as String: _relativizeFiles(entry.value),
+      }),
       List() => value.map(_relativizeFiles).toList(),
       _ => value,
     };
   }
 
-  String _relativePath(String file) {
-    final path = file.startsWith('file://')
-        ? Uri.parse(file).toFilePath()
-        : file;
+  Map<String, dynamic> _relativizeLocation(Map<String, dynamic> map) {
+    final source = map['uri'] ?? map['file'];
+    if (source is! String) return map;
+
+    return {...map, 'file': _resolvedPaths[source] ??= _resolvePath(source)};
+  }
+
+  final _resolvedPaths = <String, String>{};
+
+  String _resolvePath(String uri) {
+    const appScheme = 'org-dartlang-app:///';
+
+    if (uri.startsWith('file:')) return _relative(Uri.parse(uri).toFilePath());
+    if (uri.startsWith(appScheme)) {
+      return _findAppFile(uri.substring(appScheme.length)) ??
+          uri.substring(appScheme.length);
+    }
+    if (uri.startsWith('package:')) return _findPackageFile(uri) ?? uri;
+    return _relative(uri);
+  }
+
+  String _relative(String path) {
     return p.isWithin(root, path) ? p.relative(path, from: root) : path;
+  }
+
+  /// Finds the app that a web URI like `org-dartlang-app:///lib/card.dart`
+  /// is relative to, which is [root] or one of its subdirectories.
+  String? _findAppFile(String path) {
+    for (final directory in _projectDirectories()) {
+      final file = File(p.join(directory.path, path));
+      if (file.existsSync()) return _relative(file.path);
+    }
+    return null;
+  }
+
+  /// Resolves a `package:` URI with the package configs in the project.
+  String? _findPackageFile(String uri) {
+    final parsed = Uri.parse(uri);
+    if (parsed.pathSegments.isEmpty) return null;
+    final name = parsed.pathSegments.first;
+
+    for (final directory in _projectDirectories()) {
+      final config = File(
+        p.join(directory.path, '.dart_tool', 'package_config.json'),
+      );
+      if (!config.existsSync()) continue;
+
+      final packages =
+          (jsonDecode(config.readAsStringSync()) as Map)['packages'];
+      final package = (packages as List).cast<Map<dynamic, dynamic>>().where(
+        (package) => package['name'] == name,
+      );
+      if (package.isEmpty) continue;
+
+      final rootUri = package.first['rootUri'] as String;
+      final packageRoot = config.uri
+          .resolve(rootUri.endsWith('/') ? rootUri : '$rootUri/')
+          .resolve('${package.first['packageUri'] ?? 'lib/'}');
+      final file = File.fromUri(
+        packageRoot.resolve(parsed.pathSegments.skip(1).join('/')),
+      );
+      if (file.existsSync()) return _relative(file.path);
+    }
+    return null;
+  }
+
+  Iterable<Directory> _subdirectories(Directory directory) {
+    try {
+      return directory.listSync().whereType<Directory>();
+    } on FileSystemException {
+      return const [];
+    }
+  }
+
+  Iterable<Directory> _projectDirectories({int depth = 4}) sync* {
+    const skipped = {'build', 'node_modules', 'Pods'};
+    var level = [Directory(root)];
+
+    for (var i = 0; i <= depth && level.isNotEmpty; i++) {
+      yield* level;
+      level = [
+        for (final directory in level)
+          ..._subdirectories(directory).where((child) {
+            final name = p.basename(child.path);
+            return !name.startsWith('.') && !skipped.contains(name);
+          }),
+      ];
+    }
   }
 }

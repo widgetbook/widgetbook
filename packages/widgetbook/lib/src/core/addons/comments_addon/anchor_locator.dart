@@ -26,30 +26,68 @@ class ResolvedAnchor {
 class AnchorLocator {
   AnchorLocator({
     this.root,
-    this.excludedDirectory,
+    this.excludedPrefix,
   });
 
   /// The project root, used to make locations relative.
   final String? root;
 
-  /// The `lib` directory of the widgetbook package.
-  final String? excludedDirectory;
+  /// The [packagePrefix] of the widgetbook package's own widgets.
+  final String? excludedPrefix;
 
   final _locations = Expando<_CachedLocation>('locations');
 
-  /// The file that created the widget of [element], if creation locations
-  /// are tracked.
-  static String? creationFile(Element element) {
+  /// The runtime URI of the file that created the widget of [element],
+  /// if creation locations are tracked.
+  static String? creationUri(Element element) {
     return _creationLocation(element)?['file'] as String?;
   }
 
-  /// The `lib` directory that contains [file].
-  static String? libraryDirectory(String? file) {
-    if (file == null) return null;
+  /// The part of [uri] that identifies its package: everything up to its
+  /// `lib` directory, or the package name of a `package:` URI.
+  static String? packagePrefix(String? uri) {
+    if (uri == null) return null;
 
-    final path = _toPath(file);
-    final index = path.lastIndexOf('${p.separator}lib${p.separator}');
-    return index == -1 ? null : path.substring(0, index + 4);
+    if (uri.startsWith('package:')) {
+      final slash = uri.indexOf('/');
+      return slash == -1 ? null : uri.substring(0, slash + 1);
+    }
+
+    final index = uri.lastIndexOf('/lib/');
+    return index == -1 ? null : uri.substring(0, index + 5);
+  }
+
+  /// Whether [uri] belongs to the user's code rather than to Flutter,
+  /// Widgetbook, a hosted package or a generated file.
+  static bool isLocal(String uri, {String? excludedPrefix}) {
+    if (excludedPrefix != null && uri.startsWith(excludedPrefix)) return false;
+
+    const excludedSchemes = [
+      'package:flutter/',
+      'package:flutter_test/',
+      'org-dartlang-sdk:',
+    ];
+
+    return !excludedSchemes.any(uri.startsWith) &&
+        !uri.endsWith('.g.dart') &&
+        !uri.contains('/.pub-cache/') &&
+        !uri.contains('/packages/flutter/lib/') &&
+        !uri.contains('/packages/flutter_test/lib/');
+  }
+
+  /// The path of [uri] for people and agents: relative to [root] for files
+  /// on desktop, and relative to the app for `org-dartlang-app:` URIs on
+  /// the web. Other URIs, e.g. `package:` URIs, are kept as they are.
+  static String displayFile(String uri, String? root) {
+    if (uri.startsWith('file:')) {
+      final path = Uri.parse(uri).toFilePath();
+      return root != null && p.isWithin(root, path)
+          ? p.relative(path, from: root)
+          : path;
+    }
+
+    const appScheme = 'org-dartlang-app:///';
+    return uri.startsWith(appScheme) ? uri.substring(appScheme.length) : uri;
   }
 
   WidgetLocation? locationOf(Element element) {
@@ -120,7 +158,7 @@ class AnchorLocator {
 
     final index = _index(story);
 
-    final exact = index[location];
+    final exact = _find(index, location);
     if (exact != null) {
       final occurrence = anchor.occurrence.clamp(0, exact.length - 1);
       return ResolvedAnchor(exact[occurrence], exact: true);
@@ -130,7 +168,7 @@ class AnchorLocator {
         index.entries
             .where(
               (entry) =>
-                  entry.key.file == location.file &&
+                  entry.key.sameFile(location) &&
                   entry.key.widget == location.widget,
             )
             .toList()
@@ -146,7 +184,7 @@ class AnchorLocator {
     }
 
     for (final parent in anchor.chain) {
-      final elements = index[parent];
+      final elements = _find(index, parent);
       if (elements != null) {
         return ResolvedAnchor(elements.first, exact: false);
       }
@@ -161,7 +199,7 @@ class AnchorLocator {
     final scroll = anchor.scroll;
     if (scroll == null) return false;
 
-    final owner = _index(story)[scroll.owner]?.first;
+    final owner = _find(_index(story), scroll.owner)?.first;
     if (owner == null) return false;
 
     ScrollableState? scrollable;
@@ -192,6 +230,17 @@ class AnchorLocator {
 
     story.visitChildren(visit);
     return index;
+  }
+
+  List<Element>? _find(
+    Map<WidgetLocation, List<Element>> index,
+    WidgetLocation location,
+  ) {
+    return index[location] ??
+        index.entries
+            .where((entry) => entry.key.samePosition(location))
+            .firstOrNull
+            ?.value;
   }
 
   List<Element> _occurrences(Element story, WidgetLocation location) {
@@ -255,32 +304,16 @@ class AnchorLocator {
     final json = _creationLocation(element);
     if (json == null) return null;
 
-    final path = _toPath(json['file'] as String);
-    if (!_isLocal(path)) return null;
+    final uri = json['file'] as String;
+    if (!isLocal(uri, excludedPrefix: excludedPrefix)) return null;
 
     return WidgetLocation(
       widget: element.widget.runtimeType.toString().split('<').first,
-      file: root != null && p.isWithin(root!, path)
-          ? p.relative(path, from: root)
-          : path,
+      uri: uri,
+      file: displayFile(uri, root),
       line: json['line'] as int,
       column: json['column'] as int,
     );
-  }
-
-  bool _isLocal(String path) {
-    if (excludedDirectory != null && p.isWithin(excludedDirectory!, path)) {
-      return false;
-    }
-
-    return !path.endsWith('.g.dart') &&
-        !path.contains('${p.separator}.pub-cache${p.separator}') &&
-        !path.contains(
-          p.join('packages', 'flutter', 'lib') + p.separator,
-        ) &&
-        !path.contains(
-          p.join('packages', 'flutter_test', 'lib') + p.separator,
-        );
   }
 
   static Map<String, Object?>? _creationLocation(Element element) {
@@ -291,10 +324,6 @@ class AnchorLocator {
       ),
     );
     return (json['creationLocation'] as Map?)?.cast<String, Object?>();
-  }
-
-  static String _toPath(String file) {
-    return file.startsWith('file:') ? Uri.parse(file).toFilePath() : file;
   }
 }
 

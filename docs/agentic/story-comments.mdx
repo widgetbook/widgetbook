@@ -1,8 +1,8 @@
 # Story Comments
 
 <Warning>
-  This feature is currently **experimental** and only supported on **macOS**,
-  so any breaking changes can be introduced at any minor version.
+  This feature is currently **experimental** and supported on **macOS** and
+  the **web**, so any breaking changes can be introduced at any minor version.
 </Warning>
 
 Story comments let you review a story the way you review a design: click a widget in Widgetbook, write what should change, and submit your comments to a coding agent.
@@ -25,7 +25,8 @@ Each comment is pinned to the **source location** of the clicked widget (for exa
    );
    ```
 
-2. Allow the macOS app to reach the local server by adding the `network.client` entitlement to `macos/Runner/DebugProfile.entitlements`:
+2. On macOS, allow the app to reach the local server by adding the `network.client` entitlement to `macos/Runner/DebugProfile.entitlements`.
+   The web needs no setup.
 
    ```xml
    <key>com.apple.security.network.client</key>
@@ -41,7 +42,7 @@ Each comment is pinned to the **source location** of the clicked widget (for exa
 
    The server stores the comments and makes them available to the agent.
 
-4. Run Widgetbook in debug mode, e.g. `flutter run -d macos`.
+4. Run Widgetbook in debug mode, e.g. `flutter run -d macos` or `flutter run -d chrome`.
 
 ## Workflow
 
@@ -98,3 +99,5 @@ Agents without MCP support can read these files directly.
 - When a commented widget is removed, its pin moves to the closest enclosing widget or stays at its last position, and the thread says that the widget was not found.
 - Only one `widgetbook mcp` server can serve the UI at a time.
   A second server still gives its agent access to the stored comments.
+- On the web, the server only accepts requests from Widgetbook served on `localhost`, as with `flutter run -d chrome`.
+  A deployed Widgetbook cannot store comments.

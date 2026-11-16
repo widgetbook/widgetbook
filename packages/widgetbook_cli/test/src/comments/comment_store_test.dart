@@ -73,6 +73,55 @@ void main() {
       ]);
     });
 
+    test('resolves web locations to files of the project', () {
+      File(p.join(root.path, 'apps', 'shop', 'lib', 'card.dart'))
+        ..createSync(recursive: true)
+        ..writeAsStringSync('');
+      File(p.join(root.path, 'packages', 'ui', 'lib', 'src', 'button.dart'))
+        ..createSync(recursive: true)
+        ..writeAsStringSync('');
+      File(
+          p.join(
+            root.path,
+            'apps',
+            'shop',
+            '.dart_tool',
+            'package_config.json',
+          ),
+        )
+        ..createSync(recursive: true)
+        ..writeAsStringSync(
+          '{"configVersion": 2, "packages": [{"name": "ui", '
+          '"rootUri": "../../../packages/ui", "packageUri": "lib/"}]}',
+        );
+
+      final comment = store.create(
+        storyPath: 'widgets/Card/Default',
+        text: 'Too much padding',
+        anchor: {
+          'location': {
+            'uri': 'org-dartlang-app:///lib/card.dart',
+            'file': 'lib/card.dart',
+          },
+          'chain': [
+            {
+              'uri': 'package:ui/src/button.dart',
+              'file': 'package:ui/src/button.dart',
+            },
+          ],
+        },
+      );
+
+      expect(comment.anchor['location'], {
+        'uri': 'org-dartlang-app:///lib/card.dart',
+        'file': 'apps/shop/lib/card.dart',
+      });
+      expect(
+        (comment.anchor['chain'] as List).single['file'],
+        'packages/ui/lib/src/button.dart',
+      );
+    });
+
     test('submits drafts as one review', () async {
       final first = createDraft();
       final second = createDraft(storyPath: 'widgets/Card/Dense');

@@ -7,8 +7,9 @@ import 'comment_store.dart';
 
 /// The HTTP API that the Widgetbook UI uses to read and write comments.
 ///
-/// It only listens on the loopback interface and sends no CORS headers,
-/// so browsers cannot reach it from other origins.
+/// It only listens on the loopback interface. Browsers may only reach it
+/// from loopback origins, i.e. a Widgetbook served by `flutter run`;
+/// requests from any other website are rejected.
 class CommentsHttpServer {
   CommentsHttpServer(this.store);
 
@@ -26,8 +27,41 @@ class CommentsHttpServer {
 
   static const defaultPort = 7357;
 
+  static bool isLoopbackOrigin(String origin) {
+    final uri = Uri.tryParse(origin);
+    return uri != null &&
+        (uri.scheme == 'http' || uri.scheme == 'https') &&
+        const {'localhost', '127.0.0.1', '::1'}.contains(uri.host);
+  }
+
   Future<void> _handle(HttpRequest request) async {
     final response = request.response;
+    final origin = request.headers.value('origin');
+
+    if (origin != null) {
+      if (!isLoopbackOrigin(origin)) {
+        _error(response, HttpStatus.forbidden, 'Origin $origin is not allowed');
+        await response.close();
+        return;
+      }
+
+      response.headers
+        ..set('access-control-allow-origin', origin)
+        ..set('vary', 'origin');
+    }
+
+    if (request.method == 'OPTIONS') {
+      response
+        ..statusCode = HttpStatus.noContent
+        ..headers.set(
+          'access-control-allow-methods',
+          'GET, POST, PATCH, DELETE',
+        )
+        ..headers.set('access-control-allow-headers', 'content-type')
+        ..headers.set('access-control-allow-private-network', 'true');
+      await response.close();
+      return;
+    }
 
     try {
       final result = await _route(request);

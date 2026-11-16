@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:meta/meta.dart';
 
 import 'comment.dart';
-import 'transport_stub.dart' if (dart.library.io) 'transport_io.dart';
+import 'transport_stub.dart'
+    if (dart.library.io) 'transport_io.dart'
+    if (dart.library.js_interop) 'transport_web.dart';
 
 /// Talks to the local HTTP API of `widgetbook mcp`.
 @internal

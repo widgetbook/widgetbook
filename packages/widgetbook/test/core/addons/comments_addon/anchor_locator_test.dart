@@ -47,9 +47,60 @@ void main() {
 
   AnchorLocator locator() {
     return AnchorLocator(
-      excludedDirectory: '/does/not/exist/lib',
+      excludedPrefix: 'file:///does/not/exist/lib/',
     );
   }
+
+  group('$AnchorLocator URIs', () {
+    test('finds the package prefix of file, app and package URIs', () {
+      expect(
+        AnchorLocator.packagePrefix(
+          'file:///repo/packages/widgetbook/lib/src/core/a.dart',
+        ),
+        'file:///repo/packages/widgetbook/lib/',
+      );
+      expect(
+        AnchorLocator.packagePrefix('package:widgetbook/src/core/a.dart'),
+        'package:widgetbook/',
+      );
+      expect(
+        AnchorLocator.packagePrefix('org-dartlang-app:///main.dart'),
+        null,
+      );
+    });
+
+    test('excludes Flutter, Widgetbook and generated code', () {
+      bool isLocal(String uri) {
+        return AnchorLocator.isLocal(
+          uri,
+          excludedPrefix: 'package:widgetbook/',
+        );
+      }
+
+      expect(isLocal('org-dartlang-app:///lib/card.dart'), isTrue);
+      expect(isLocal('package:ui_kit/src/card.dart'), isTrue);
+      expect(isLocal('file:///repo/app/lib/card.dart'), isTrue);
+      expect(isLocal('package:widgetbook/src/core/workbench.dart'), isFalse);
+      expect(isLocal('package:flutter/src/widgets/text.dart'), isFalse);
+      expect(isLocal('org-dartlang-sdk:///lib/ui/text.dart'), isFalse);
+      expect(isLocal('org-dartlang-app:///lib/card.stories.g.dart'), isFalse);
+      expect(
+        isLocal('file:///Users/me/.pub-cache/hosted/pub.dev/x/lib/x.dart'),
+        isFalse,
+      );
+    });
+
+    test('shows web locations relative to the app', () {
+      expect(
+        AnchorLocator.displayFile('org-dartlang-app:///lib/card.dart', '/repo'),
+        'lib/card.dart',
+      );
+      expect(
+        AnchorLocator.displayFile('package:ui_kit/card.dart', '/repo'),
+        'package:ui_kit/card.dart',
+      );
+    });
+  });
 
   group('$AnchorLocator', () {
     testWidgets('pins to the closest widget of the user code', (tester) async {
@@ -112,6 +163,31 @@ void main() {
       expect(locator().restoreScroll(story, anchor), isTrue);
       await tester.pump();
       expect(find.text('Item 18'), findsOneWidget);
+    });
+
+    testWidgets('finds comments placed on another platform by their file', (
+      tester,
+    ) async {
+      final story = await pumpStory(tester);
+      final anchor = locator().capture(
+        story,
+        tester.getCenter(find.text('Item 4')),
+      );
+      final fromOtherPlatform = CommentAnchor(
+        location: WidgetLocation(
+          widget: anchor.location!.widget,
+          file: anchor.location!.file,
+          uri: 'org-dartlang-app:///elsewhere.dart',
+          line: anchor.location!.line,
+          column: anchor.location!.column,
+        ),
+        occurrence: anchor.occurrence,
+        point: anchor.point,
+      );
+
+      final resolved = locator().resolve(story, fromOtherPlatform)!;
+
+      expect((resolved.element.widget as Text).data, 'Item 4');
     });
 
     testWidgets('falls back to the widget type when lines moved', (
