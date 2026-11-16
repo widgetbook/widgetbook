@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Add the experimental `CommentsAddon` to pin comments to the widgets of a story and hand them to a coding agent through `widgetbook mcp`. Pins follow their widget through scrolling, zoom and hot reload. Supports macOS.
+
 ## 4.0.0-beta.15
 
 - **FIX**: Scroll the navigation tree to the selected node and expand its ancestors when the path changes, including on deep links. ([#2042](https://github.com/widgetbook/widgetbook/pull/2042) - by [@niktishakov](https://github.com/niktishakov))

@@ -1,3 +1,7 @@
+## Unreleased
+
+- **FEAT**: Add the experimental `mcp` command, an MCP server that gives coding agents access to the comments placed with the `CommentsAddon`, stored locally in `.widgetbook/comments`.
+
 ## 4.0.0-beta.15
 
 - **FEAT**: Add `cloud project connect` and `cloud project disconnect`, which connect a project to its GitHub repository and disconnect it again. ([#2055](https://github.com/widgetbook/widgetbook/pull/2055))

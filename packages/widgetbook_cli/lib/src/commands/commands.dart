@@ -3,6 +3,7 @@ export 'build_push_args.dart';
 export 'cloud.dart';
 export 'init.dart';
 export 'init_args.dart';
+export 'mcp.dart';
 export 'project_connect.dart';
 export 'project_connect_args.dart';
 export 'project_create.dart';
