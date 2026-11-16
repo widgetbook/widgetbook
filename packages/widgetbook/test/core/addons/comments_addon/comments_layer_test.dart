@@ -1,8 +1,10 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Viewport;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/core/addons/comments_addon/comment.dart';
 import 'package:widgetbook/src/core/addons/comments_addon/comments_client.dart';
 import 'package:widgetbook/src/core/addons/comments_addon/comments_layer.dart';
+import 'package:widgetbook/src/core/addons/viewport_addon/viewport.dart';
+import 'package:widgetbook/src/core/addons/viewport_addon/viewports/ios_viewports.dart';
 
 class _FakeClient implements CommentsClient {
   _FakeClient({this.reachable = true});
@@ -87,6 +89,54 @@ class _Story extends StatelessWidget {
   }
 }
 
+class _LessonSummary extends StatelessWidget {
+  const _LessonSummary({required this.onNext});
+
+  final VoidCallback onNext;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Lesson complete')),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: 101,
+              itemBuilder: (context, index) => index == 0
+                  ? const _Topics()
+                  : ListTile(title: Text('Phrase $index')),
+            ),
+          ),
+          FilledButton(onPressed: onNext, child: const Text('Next lesson')),
+          const SizedBox(height: 80),
+        ],
+      ),
+    );
+  }
+}
+
+class _Topics extends StatelessWidget {
+  const _Topics();
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 48,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: [
+          for (final topic in ['Greetings', 'Numbers', 'Weekdays', 'Time'])
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Text(topic),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
 void main() {
   Future<void> pumpLayer(
     WidgetTester tester,
@@ -133,6 +183,135 @@ void main() {
   Offset pinCenter(WidgetTester tester, String number) {
     return tester.getCenter(find.text(number));
   }
+
+  void expectPinOn(WidgetTester tester, String number, Finder target) {
+    final distance = (pinCenter(tester, number) - tester.getCenter(target));
+    expect(distance.distance, lessThan(1));
+  }
+
+  group('$CommentsLayer in a scrollable screen of a device frame', () {
+    Future<void> pumpScreen(
+      WidgetTester tester,
+      _FakeClient client, {
+      VoidCallback? onNext,
+    }) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: Viewport(
+                data: IosViewports.iPhone13,
+                frameless: false,
+                child: CommentsLayer(
+                  client: client,
+                  storyPath: 'screens/LessonSummary/Default',
+                  storyUrl: '/?path=screens/LessonSummary/Default',
+                  child: _LessonSummary(onNext: onNext ?? () {}),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump();
+      await tester.tap(find.byIcon(Icons.add_comment_outlined));
+      await tester.pump();
+    }
+
+    ScrollableState scrollableOf(WidgetTester tester, Finder finder) {
+      return tester.state<ScrollableState>(
+        find.descendant(of: finder, matching: find.byType(Scrollable)).first,
+      );
+    }
+
+    testWidgets('restores a lazily built item that was scrolled away', (
+      tester,
+    ) async {
+      final client = _FakeClient();
+      await pumpScreen(tester, client);
+      await addComment(tester, 'Phrase 3', 'Use the phrase card');
+      expectPinOn(tester, '1', find.text('Phrase 3'));
+
+      scrollableOf(tester, find.byType(_LessonSummary)).position.jumpTo(3000);
+      await tester.pump();
+      await tester.pump();
+      expect(find.text('Phrase 3'), findsNothing);
+      expect(find.text('1'), findsOneWidget);
+
+      await tester.tap(find.text('1'));
+      await tester.pumpAndSettle();
+
+      expectPinOn(tester, '1', find.text('Phrase 3'));
+      expect(find.textContaining('Use the phrase card'), findsOneWidget);
+      await unmount(tester);
+    });
+
+    testWidgets('keeps the pin on its list item when the story is reopened', (
+      tester,
+    ) async {
+      final client = _FakeClient();
+      await pumpScreen(tester, client);
+      final list = find.byType(_LessonSummary);
+      scrollableOf(tester, list).position.jumpTo(700);
+      await tester.pump();
+      await addComment(tester, 'Phrase 17', 'Use a larger text style');
+      expectPinOn(tester, '1', find.text('Phrase 17'));
+
+      await unmount(tester);
+      await pumpScreen(tester, client);
+      await tester.pump();
+
+      for (final phrase in find.textContaining('Phrase ').evaluate()) {
+        final text = (phrase.widget as Text).data!;
+        if (text == 'Phrase 17') continue;
+        final distance =
+            pinCenter(tester, '1') - tester.getCenter(find.text(text));
+        expect(distance.distance, greaterThan(1), reason: 'pinned to $text');
+      }
+
+      await tester.tap(find.text('1'));
+      await tester.pumpAndSettle();
+
+      expectPinOn(tester, '1', find.text('Phrase 17'));
+      await unmount(tester);
+    });
+
+    testWidgets('follows a nested horizontal list', (tester) async {
+      final client = _FakeClient();
+      await pumpScreen(tester, client);
+      await addComment(tester, 'Weekdays', 'Use chips for topics');
+
+      scrollableOf(tester, find.byType(_Topics)).position.jumpTo(60);
+      await tester.pump();
+      await tester.pump();
+
+      expectPinOn(tester, '1', find.text('Weekdays'));
+      expect(
+        (client.comments.single['anchor'] as Map)['scroll'],
+        containsPair('pixels', 0.0),
+      );
+      await unmount(tester);
+    });
+
+    testWidgets('does not press buttons of the screen while commenting', (
+      tester,
+    ) async {
+      final client = _FakeClient();
+      var pressed = 0;
+      await pumpScreen(tester, client, onNext: () => pressed++);
+
+      await addComment(tester, 'Next lesson', 'Make it sticky');
+
+      expect(pressed, 0);
+      expect(
+        ((client.comments.single['anchor'] as Map)['location']
+            as Map)['widget'],
+        'Text',
+      );
+      await unmount(tester);
+    });
+  });
 
   group('$CommentsLayer', () {
     testWidgets('asks to start the server when it is unreachable', (

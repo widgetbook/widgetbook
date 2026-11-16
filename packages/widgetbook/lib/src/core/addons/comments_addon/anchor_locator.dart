@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
@@ -158,11 +160,16 @@ class AnchorLocator {
 
     final index = _index(story);
 
-    final exact = _find(index, location);
-    if (exact != null) {
-      final occurrence = anchor.occurrence.clamp(0, exact.length - 1);
-      return ResolvedAnchor(exact[occurrence], exact: true);
+    final byScroll = anchor.scroll?.contentOffset != null;
+
+    Element? pick(List<Element> candidates) {
+      if (byScroll) return _atScrollPosition(candidates, anchor).firstOrNull;
+      return candidates[anchor.occurrence.clamp(0, candidates.length - 1)];
     }
+
+    final exact = _find(index, location);
+    final exactMatch = exact == null ? null : pick(exact);
+    if (exactMatch != null) return ResolvedAnchor(exactMatch, exact: true);
 
     final moved =
         index.entries
@@ -177,17 +184,21 @@ class AnchorLocator {
               (b.key.line - location.line).abs(),
             ),
           );
-    if (moved.isNotEmpty) {
-      final elements = moved.first.value;
-      final occurrence = anchor.occurrence.clamp(0, elements.length - 1);
-      return ResolvedAnchor(elements[occurrence], exact: true);
+    if (exact == null) {
+      for (final entry in moved) {
+        final match = pick(entry.value);
+        if (match != null) return ResolvedAnchor(match, exact: true);
+      }
     }
 
     for (final parent in anchor.chain) {
       final elements = _find(index, parent);
-      if (elements != null) {
-        return ResolvedAnchor(elements.first, exact: false);
-      }
+      if (elements == null) continue;
+
+      final match = byScroll
+          ? _atScrollPosition(elements, anchor).firstOrNull
+          : elements.first;
+      if (match != null) return ResolvedAnchor(match, exact: false);
     }
 
     return null;
@@ -297,7 +308,59 @@ class AnchorLocator {
     return ScrollAnchor(
       owner: locationOf(owner)!,
       pixels: scrollable.position.pixels,
+      contentOffset: _contentOffset(element),
     );
+  }
+
+  /// Where [element] starts within the content of its innermost scrollable.
+  static double? _contentOffset(Element element) {
+    final scrollable = element.findAncestorStateOfType<ScrollableState>();
+    final box = element.findRenderObject();
+    final viewport = scrollable?.context.findRenderObject();
+    if (scrollable == null ||
+        !scrollable.position.hasPixels ||
+        box is! RenderBox ||
+        viewport is! RenderBox ||
+        !box.attached) {
+      return null;
+    }
+
+    final origin = box.localToGlobal(Offset.zero, ancestor: viewport);
+    final along = scrollable.position.axis == Axis.vertical
+        ? origin.dy
+        : origin.dx;
+    return scrollable.position.pixels + along;
+  }
+
+  /// Keeps the [candidates] that are at the anchor's position in the scrolled
+  /// content, closest first. Items of a lazily built list that is scrolled
+  /// elsewhere share the source location, but not the position.
+  List<Element> _atScrollPosition(
+    List<Element> candidates,
+    CommentAnchor anchor,
+  ) {
+    final expected = anchor.scroll?.contentOffset;
+    if (expected == null) return candidates;
+
+    double? distance(Element element) {
+      final offset = _contentOffset(element);
+      final box = element.findRenderObject();
+      if (offset == null || box is! RenderBox || !box.hasSize) return null;
+
+      final scrollable = element.findAncestorStateOfType<ScrollableState>()!;
+      final extent = scrollable.position.axis == Axis.vertical
+          ? box.size.height
+          : box.size.width;
+      final difference = (offset - expected).abs();
+      return difference <= math.max(extent / 2, 8) ? difference : null;
+    }
+
+    final matches = [
+      for (final candidate in candidates)
+        if (distance(candidate) case final difference?) (candidate, difference),
+    ]..sort((a, b) => a.$2.compareTo(b.$2));
+
+    return [for (final (candidate, _) in matches) candidate];
   }
 
   WidgetLocation? _localLocation(Element element) {

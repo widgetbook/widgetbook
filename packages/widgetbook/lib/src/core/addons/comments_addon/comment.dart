@@ -163,6 +163,7 @@ class CommentAnchor {
           : ScrollAnchor(
               owner: WidgetLocation.fromJson(scroll['owner'])!,
               pixels: (scroll['pixels'] as num).toDouble(),
+              contentOffset: (scroll['contentOffset'] as num?)?.toDouble(),
             ),
     );
   }
@@ -194,7 +195,12 @@ class CommentAnchor {
     'point': point.toJson(),
     'chain': chain.map((location) => location.toJson()).toList(),
     if (scroll != null)
-      'scroll': {'owner': scroll!.owner.toJson(), 'pixels': scroll!.pixels},
+      'scroll': {
+        'owner': scroll!.owner.toJson(),
+        'pixels': scroll!.pixels,
+        if (scroll!.contentOffset != null)
+          'contentOffset': scroll!.contentOffset,
+      },
   };
 
   static FractionalPoint _fraction(Map<dynamic, dynamic> json) {
@@ -207,11 +213,19 @@ class CommentAnchor {
 
 @internal
 class ScrollAnchor {
-  const ScrollAnchor({required this.owner, required this.pixels});
+  const ScrollAnchor({
+    required this.owner,
+    required this.pixels,
+    this.contentOffset,
+  });
 
   /// The widget from the user's code that creates the scrollable.
   final WidgetLocation owner;
   final double pixels;
+
+  /// Where the widget starts within the scrolled content, along the scroll
+  /// axis. Tells apart the items of a list that share a source location.
+  final double? contentOffset;
 }
 
 /// A point relative to a size, where (0, 0) is the top left

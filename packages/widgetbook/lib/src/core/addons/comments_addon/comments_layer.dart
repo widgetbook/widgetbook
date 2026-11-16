@@ -517,7 +517,7 @@ class _CommentsLayerState extends State<CommentsLayer> {
     if (_error != null && _locator == null) {
       return _Toolbar(
         children: [
-          const Text('Run `widgetbook mcp` to enable comments'),
+          const _ToolbarLabel('Run `widgetbook mcp` to enable comments'),
           _ToolbarButton(icon: Icons.refresh, onPressed: _connect),
         ],
       );
@@ -539,7 +539,7 @@ class _CommentsLayerState extends State<CommentsLayer> {
     final drafts = _draftCount;
     return _Toolbar(
       children: [
-        Text(
+        _ToolbarLabel(
           drafts == 0 ? 'Click a widget to comment' : 'Commenting · $drafts',
         ),
         _ToolbarButton(
@@ -969,6 +969,19 @@ class _Toolbar extends StatelessWidget {
           children: children,
         ),
       ),
+    );
+  }
+}
+
+class _ToolbarLabel extends StatelessWidget {
+  const _ToolbarLabel(this.text);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+      child: Text(text, maxLines: 1, overflow: TextOverflow.ellipsis),
     );
   }
 }
