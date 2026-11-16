@@ -16,9 +16,20 @@ final component = ComponentMeta(
 
 const meta = Meta(LessonSummary.new);
 
-final $Default = _Story();
+/// Gives the full-screen layout a phone-sized space, also in scenarios,
+/// where stories are otherwise laid out without size constraints.
+Widget _phone(BuildContext context, Widget child, LessonSummaryArgs args) {
+  return SizedBox(
+    width: 390,
+    height: 844,
+    child: Story.defaultSetup(context, child, args),
+  );
+}
+
+final $Default = _Story(setup: _phone);
 
 final $Long = _Story(
+  setup: _phone,
   args: _Args(
     phraseCount: IntArg(100),
   ),
