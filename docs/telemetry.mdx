@@ -1,8 +1,10 @@
 # Telemetry
 
-Widgetbook Generator collects and reports **anonymous** usage information.
-This information is essential to figure out how we should improve our package.
-Telemetry does not collect any personal information.
+Widgetbook Generator reports usage information to help us improve the package
+and to understand which organizations use Widgetbook.
+The data is pseudonymous: it does not include your name or email address,
+but some of it, like a repository owner URL, can relate to a person.
+We use it at organization level only.
 
 ## Opting-out
 
@@ -21,19 +23,30 @@ To opt-out from telemetry:
 
 ## Collected Data
 
-A new telemetry report after you run the `build_runner build` command,
+A new telemetry report is sent after you run the `build_runner build` command,
 if the `*.directories.g.dart` file has changed.
 
-We send the following information, which **has no personal data**:
+We send the following information:
 
 1. The package name.
-1. Unique **hashed** anonymous ID based on your git config email.
+1. A **hashed** ID based on your git config email. We do not try to link it to a person.
 1. The SHA of the first commit in the repository, to identify distinct projects.
 1. The repository's owner URL (e.g. `https://github.com/widgetbook`).
+   For personal repositories, this contains your username. We remove usernames before analysis.
 1. Information about Widgetbook Components like:
    - The number of components.
    - The number of components with various counts of use-cases.
    - The packages' names where the components were defined.
+
+## How We Use It
+
+- To improve the generator and decide what to build next.
+- To understand which organizations use Widgetbook, and to contact organizations
+  that may benefit from Widgetbook Cloud. We never mention telemetry data in that contact.
+
+The data is processed by Mixpanel (EU data residency).
+For legal basis, retention and your rights, see Section 4d of our
+[Privacy Policy](/cloud/account/privacy-policy).
 
 ## Further Notice
 
