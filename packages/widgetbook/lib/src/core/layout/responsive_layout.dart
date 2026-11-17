@@ -34,6 +34,13 @@ class ResponsiveLayout extends StatelessWidget {
           Navigator.of(context).pop();
         }
       },
+      onAtlasTap: () {
+        WidgetbookState.of(context).goHome();
+
+        if (isMobile) {
+          Navigator.of(context).pop();
+        }
+      },
     );
   }
 

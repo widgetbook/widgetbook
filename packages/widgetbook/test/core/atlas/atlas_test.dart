@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/core/atlas/atlas_layout.dart';
+import 'package:widgetbook/src/core/navigation/atlas_tree_tile.dart';
 import 'package:widgetbook/src/core/state/default_home_page.dart';
+import 'package:widgetbook/src/core/widgetbook_app.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';
@@ -250,6 +252,62 @@ void main() {
         );
 
         expect(find.text('Leads to'), findsNothing);
+      },
+    );
+  });
+
+  group('$AtlasTreeTile', () {
+    Future<void> pumpApp(WidgetTester tester, List<AtlasFlow> atlas) async {
+      tester.view.physicalSize = const Size(1600, 1000);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+
+      await tester.pumpWidget(
+        WidgetbookApp(
+          config: Config(components: components, atlas: atlas),
+        ),
+      );
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets(
+      'given an atlas, '
+      'when navigating to a page and tapping the atlas tile, '
+      'then the atlas is shown again',
+      (tester) async {
+        await pumpApp(tester, [
+          AtlasFlow(
+            name: 'Onboarding',
+            links: {
+              login: [home],
+            },
+          ),
+        ]);
+
+        final atlasPage = find.byType(AtlasHomePage);
+        expect(atlasPage, findsOneWidget);
+
+        await tester.findAndTap(
+          find.descendant(of: atlasPage, matching: find.text('Home')),
+        );
+        expect(atlasPage, findsNothing);
+
+        await tester.findAndTap(find.byType(AtlasTreeTile));
+        expect(atlasPage, findsOneWidget);
+        expect(
+          tester.widget<AtlasTreeTile>(find.byType(AtlasTreeTile)).isSelected,
+          isTrue,
+        );
+      },
+    );
+
+    testWidgets(
+      'given no atlas, '
+      'then no atlas tile is shown',
+      (tester) async {
+        await pumpApp(tester, const []);
+
+        expect(find.byType(AtlasTreeTile), findsNothing);
       },
     );
   });
