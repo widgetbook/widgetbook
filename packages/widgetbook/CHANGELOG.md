@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **BREAKING**: Set minimum SDK version to 3.13.0 & minimum Flutter version to 3.47.0. ([#2068](https://github.com/widgetbook/widgetbook/pull/2068))
+- **FIX**: Keep the semantics format of `testWidgetbook` snapshots on Flutter 3.50, which otherwise switched to Flutter's own `SemanticsData.toJson()`. ([#2069](https://github.com/widgetbook/widgetbook/pull/2069))
 
 ## 4.0.0-beta.15
 
