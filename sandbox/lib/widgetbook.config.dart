@@ -3,9 +3,11 @@ import 'package:widgetbook/widgetbook.dart';
 
 import 'components.g.dart';
 import 'theme.dart';
+import 'widgetbook.atlas.dart';
 
 final config = Config(
   components: components,
+  atlas: [authentication, accountManagement],
   addons: [
     TimeDilationAddon(),
     ViewportAddon([
