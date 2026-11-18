@@ -6,7 +6,6 @@ import 'package:meta/meta.dart';
 
 import '../framework/framework.dart';
 import '../state/state.dart';
-import 'atlas_tree_tile.dart';
 import 'category_tree_tile.dart';
 import 'folder_tree_tile.dart';
 import 'search_field.dart';
@@ -18,14 +17,12 @@ class NavigationPanel extends StatefulWidget {
   const NavigationPanel({
     super.key,
     this.onLeafNodeTap,
-    this.onAtlasTap,
     required this.root,
     this.header,
     this.foldersExpandedByDefault = true,
   });
 
   final ValueChanged<TreeNode<dynamic>>? onLeafNodeTap;
-  final VoidCallback? onAtlasTap;
   final TreeNode<Null> root;
   final Widget? header;
   final bool foldersExpandedByDefault;
@@ -221,18 +218,6 @@ class _NavigationPanelState extends State<NavigationPanel> {
             },
           ),
         ),
-        if (state.config.atlas.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 16,
-              right: 16,
-              top: 16,
-            ),
-            child: AtlasTreeTile(
-              isSelected: state.path == null,
-              onTap: () => widget.onAtlasTap?.call(),
-            ),
-          ),
         Expanded(
           child: entries.isEmpty
               ? const Center(child: Text('No matches found'))

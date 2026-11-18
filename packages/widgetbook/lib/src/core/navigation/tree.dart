@@ -4,9 +4,21 @@ import '../docs/docs.dart';
 import '../framework/framework.dart';
 import 'tree_node.dart';
 
+/// The navigation path of the atlas overview; each flow is nested below it.
+const atlasPath = 'Atlas';
+
 class Tree {
   static TreeNode<Null> build(Config config) {
     final root = TreeNode<Null>('', null, null);
+
+    if (config.atlas.isNotEmpty) {
+      final atlasNode = root.add(
+        TreeNode<List<AtlasFlow>>(atlasPath, config.atlas, root),
+      );
+      for (final flow in config.atlas) {
+        atlasNode.add(TreeNode<AtlasFlow>(flow.name, flow, atlasNode));
+      }
+    }
 
     for (final component in config.components) {
       final parts = p.split(component.path);

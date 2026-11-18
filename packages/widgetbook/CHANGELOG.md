@@ -1,6 +1,6 @@
 ## Unreleased
 
-- **FEAT**: Add `Config.atlas` to map which stories lead to which other stories in named `AtlasFlow`s, shown as a graph on the default home page, reachable from an "Atlas" entry in the navigation panel, and by the new `LeadsToDocBlock`. Add `WidgetbookState.goHome` to deselect the current story.
+- **FEAT**: Add `Config.atlas` to map which stories lead to which other stories in named `AtlasFlow`s, shown as a graph on the default home page, with an "Atlas" entry and one entry per flow in the navigation tree, and by the new `LeadsToDocBlock`. Add `WidgetbookState.goHome` to deselect the current story.
 
 ## 4.0.0-beta.15
 

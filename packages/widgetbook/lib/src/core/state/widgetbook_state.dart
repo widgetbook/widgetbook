@@ -108,6 +108,16 @@ class WidgetbookState extends ChangeNotifier {
     return node is TreeNode<Scenario> ? node.data : null;
   }
 
+  /// The atlas flows of the selected atlas node, if any.
+  @internal
+  List<AtlasFlow>? get atlasFlows {
+    return switch (activeNode) {
+      final TreeNode<AtlasFlow> node => [node.data],
+      final TreeNode<List<AtlasFlow>> node => node.data,
+      _ => null,
+    };
+  }
+
   /// The current selected docs, if any.
   List<DocBlock>? get docs {
     final node = activeNode;

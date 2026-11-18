@@ -35,6 +35,8 @@ class AtlasFlowGraph extends StatelessWidget {
               _nodeSize,
     };
 
+    if (rects.isEmpty) return const SizedBox.shrink();
+
     final edges = [
       for (final MapEntry(key: from, value: targets) in flow.links.entries)
         for (final to in targets)

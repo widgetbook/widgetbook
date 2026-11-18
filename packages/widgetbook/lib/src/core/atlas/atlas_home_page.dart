@@ -6,13 +6,16 @@ import '../theme/theme.dart';
 import 'atlas_flow_graph.dart';
 import 'atlas_layout.dart';
 
-/// Shows every [Config.atlas] flow as a graph of its pages. Tapping a page
-/// navigates to its story.
+/// Shows [flows], or every [Config.atlas] flow, as graphs of their pages.
+/// Tapping a page navigates to its story.
 ///
 /// This is the default home page when [Config.atlas] is not empty. Use it
 /// directly to embed the atlas in a custom [Config.home].
 class AtlasHomePage extends StatelessWidget {
-  const AtlasHomePage({super.key});
+  const AtlasHomePage({super.key, this.flows});
+
+  /// The flows to show, or all of [Config.atlas] when null.
+  final List<AtlasFlow>? flows;
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +23,22 @@ class AtlasHomePage extends StatelessWidget {
     assertAtlasStoriesRegistered(config);
 
     final theme = WidgetbookTheme.of(context);
+    final flows = this.flows ?? config.atlas;
+    final singleFlow = flows.length == 1 && this.flows != null;
 
     return ListView(
       padding: const EdgeInsets.all(24),
       children: [
-        Text('Atlas', style: theme.textTheme.displaySmall),
-        for (final flow in config.atlas) ...[
+        Text(
+          singleFlow ? flows.single.name : 'Atlas',
+          style: theme.textTheme.displaySmall,
+        ),
+        for (final flow in flows) ...[
           const SizedBox(height: 32),
-          Text(flow.name, style: theme.textTheme.titleLarge),
-          const SizedBox(height: 16),
+          if (!singleFlow) ...[
+            Text(flow.name, style: theme.textTheme.titleLarge),
+            const SizedBox(height: 16),
+          ],
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: AtlasFlowGraph(flow: flow),

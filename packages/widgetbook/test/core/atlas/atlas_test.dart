@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/core/atlas/atlas_layout.dart';
-import 'package:widgetbook/src/core/navigation/atlas_tree_tile.dart';
+import 'package:widgetbook/src/core/navigation/folder_tree_tile.dart';
 import 'package:widgetbook/src/core/state/default_home_page.dart';
 import 'package:widgetbook/src/core/widgetbook_app.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -256,8 +256,30 @@ void main() {
     );
   });
 
-  group('$AtlasTreeTile', () {
-    Future<void> pumpApp(WidgetTester tester, List<AtlasFlow> atlas) async {
+  group('Atlas navigation', () {
+    late List<AtlasFlow> atlas;
+
+    setUp(() {
+      atlas = [
+        AtlasFlow(
+          name: 'Onboarding',
+          links: {
+            login: [signUp],
+          },
+        ),
+        AtlasFlow(
+          name: 'Preferences',
+          links: {
+            home: [settings],
+          },
+        ),
+      ];
+    });
+
+    Future<WidgetbookState> pumpApp(
+      WidgetTester tester,
+      List<AtlasFlow> atlas,
+    ) async {
       tester.view.physicalSize = const Size(1600, 1000);
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.resetPhysicalSize);
@@ -268,46 +290,89 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
+
+      return WidgetbookState.of(tester.element(find.byType(AtlasHomePage)));
+    }
+
+    Finder inTree(String text) {
+      return find.descendant(
+        of: find.byType(FolderTreeTile),
+        matching: find.text(text),
+      );
+    }
+
+    Finder inAtlasPage(String text) {
+      return find.descendant(
+        of: find.byType(AtlasHomePage),
+        matching: find.text(text),
+      );
     }
 
     testWidgets(
-      'given an atlas, '
-      'when navigating to a page and tapping the atlas tile, '
-      'then the atlas is shown again',
+      'when tapping a flow in the navigation tree, '
+      'then only that flow is shown',
       (tester) async {
-        await pumpApp(tester, [
-          AtlasFlow(
-            name: 'Onboarding',
-            links: {
-              login: [home],
-            },
-          ),
-        ]);
+        final state = await pumpApp(tester, atlas);
 
-        final atlasPage = find.byType(AtlasHomePage);
-        expect(atlasPage, findsOneWidget);
+        await tester.findAndTap(inTree('Preferences'));
 
-        await tester.findAndTap(
-          find.descendant(of: atlasPage, matching: find.text('Home')),
-        );
-        expect(atlasPage, findsNothing);
+        expect(state.path, 'Atlas/Preferences');
+        expect(inAtlasPage('Preferences'), findsOneWidget);
+        expect(inAtlasPage('Settings'), findsOneWidget);
+        expect(inAtlasPage('Onboarding'), findsNothing);
+        expect(inAtlasPage('SignUp'), findsNothing);
+      },
+    );
 
-        await tester.findAndTap(find.byType(AtlasTreeTile));
-        expect(atlasPage, findsOneWidget);
-        expect(
-          tester.widget<AtlasTreeTile>(find.byType(AtlasTreeTile)).isSelected,
-          isTrue,
-        );
+    testWidgets(
+      'given a page was opened, '
+      'when tapping the atlas node in the navigation tree, '
+      'then all flows are shown again',
+      (tester) async {
+        final state = await pumpApp(tester, atlas);
+
+        await tester.findAndTap(inAtlasPage('SignUp'));
+        expect(state.path, signUp.path);
+        expect(find.byType(AtlasHomePage), findsNothing);
+
+        await tester.findAndTap(inTree('Atlas'));
+
+        expect(state.path, 'Atlas');
+        expect(inAtlasPage('Onboarding'), findsOneWidget);
+        expect(inAtlasPage('Preferences'), findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      'when calling goHome, '
+      'then the selected story is cleared',
+      (tester) async {
+        final state = await pumpApp(tester, atlas);
+
+        state.goToStory(home);
+        await tester.pumpAndSettle();
+        state.goHome();
+        await tester.pumpAndSettle();
+
+        expect(state.path, isNull);
+        expect(find.byType(AtlasHomePage), findsOneWidget);
       },
     );
 
     testWidgets(
       'given no atlas, '
-      'then no atlas tile is shown',
+      'then the navigation tree has no atlas node',
       (tester) async {
-        await pumpApp(tester, const []);
+        tester.view.physicalSize = const Size(1600, 1000);
+        tester.view.devicePixelRatio = 1.0;
+        addTearDown(tester.view.resetPhysicalSize);
 
-        expect(find.byType(AtlasTreeTile), findsNothing);
+        await tester.pumpWidget(
+          WidgetbookApp(config: Config(components: components)),
+        );
+        await tester.pumpAndSettle();
+
+        expect(inTree('Atlas'), findsNothing);
       },
     );
   });

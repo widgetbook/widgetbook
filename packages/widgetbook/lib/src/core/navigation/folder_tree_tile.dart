@@ -75,6 +75,8 @@ class FolderTreeTile extends StatelessWidget {
             SizedBox(
               width: indentation,
               child: switch (node) {
+                TreeNode<List<AtlasFlow>>() => const Icon(Icons.map, size: 16),
+                TreeNode<AtlasFlow>() => const Icon(Icons.route, size: 16),
                 TreeNode<Story>() => const StoryIcon(),
                 TreeNode<Scenario>() => const ScenarioIcon(),
                 TreeNode<Component>() => const ComponentIcon(),
