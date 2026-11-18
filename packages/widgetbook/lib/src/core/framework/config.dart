@@ -2,7 +2,6 @@
 /// @docImport '../addons/addons.dart';
 library;
 
-import 'package:flutter/cupertino.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../accessibility/accessibility_config.dart';
@@ -14,7 +13,7 @@ import 'framework.dart';
 ///
 /// The [AppBuilder] receives a [BuildContext] and the child widget (use case)
 /// and should return a widget that wraps the child with the appropriate
-/// app-level widgets like [MaterialApp], [CupertinoApp], or [WidgetsApp].
+/// app-level widgets like [MaterialApp] or [WidgetsApp].
 typedef AppBuilder = Widget Function(BuildContext context, Widget child);
 
 Widget widgetsAppBuilder(BuildContext context, Widget child) {
@@ -31,13 +30,6 @@ Widget materialAppBuilder(BuildContext context, Widget child) {
     home: Material(
       child: child,
     ),
-  );
-}
-
-Widget cupertinoAppBuilder(BuildContext context, Widget child) {
-  return CupertinoApp(
-    debugShowCheckedModeBanner: false,
-    home: child,
   );
 }
 
