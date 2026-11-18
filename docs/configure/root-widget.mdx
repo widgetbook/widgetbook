@@ -10,7 +10,7 @@ RootWidget
 ```
 
 You can use a custom root widget by providing an `appBuilder` function to the `Config`.
-This is helpful if you need to wrap your app widget (i.e. `MaterialApp`, `CupertinoApp`) with another custom widget.
+This is helpful if you need to wrap your app widget (e.g. `MaterialApp`) with another custom widget.
 
 <Info>
   If you want to wrap your story in a custom widget, you can also use the
@@ -22,12 +22,6 @@ This is helpful if you need to wrap your app widget (i.e. `MaterialApp`, `Cupert
 final config = Config(
   // ...
   appBuilder: materialAppBuilder,
-);
-
-// Cupertino App
-final config = Config(
-  // ...
-  appBuilder: cupertinoAppBuilder,
 );
 
 // Custom App
