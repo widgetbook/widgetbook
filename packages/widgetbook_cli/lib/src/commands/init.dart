@@ -107,7 +107,6 @@ class InitCommand extends CliCommand<InitArgs> {
         'pub',
         'add',
         'widgetbook:"^$widgetbookVersion"',
-        'material_ui',
         'dev:build_runner',
         '$packageName:{path: $relativePath}',
       ],
