@@ -48,8 +48,7 @@ class StatsBanner extends StatelessWidget {
               const _SummaryItem(
                 icon: Icons.open_in_new,
                 text: 'Visual test with Widgetbook Cloud',
-                url:
-                    'https://docs.widgetbook.io/cloud?utm_source=oss&utm_medium=banner',
+                url: 'https://docs.widgetbook.io/cloud?utm_source=oss&utm_medium=banner',
               ),
             ],
           ),

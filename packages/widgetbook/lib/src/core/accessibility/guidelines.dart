@@ -28,8 +28,7 @@ abstract final class WidgetbookGuidelines {
     MinTapTargetGuideline(
       id: 'tap-target-ios',
       size: Size(44, 44),
-      helpUrl:
-          'https://developer.apple.com/design/human-interface-guidelines/accessibility',
+      helpUrl: 'https://developer.apple.com/design/human-interface-guidelines/accessibility',
     ),
     LabeledTappableGuideline(),
     FlutterGuideline(textContrastGuideline, id: 'text-contrast'),

@@ -26,17 +26,14 @@ class DefaultHomePage extends StatelessWidget {
               children: [
                 _Card(
                   title: '📖 Docs',
-                  url:
-                      'https://docs.widgetbook.io?utm_source=oss&utm_medium=home',
+                  url: 'https://docs.widgetbook.io?utm_source=oss&utm_medium=home',
                   description:
                       'Learn more about knobs, addons, mocking, and more.',
                 ),
                 _Card(
                   title: '📝 Examples',
-                  url:
-                      'https://github.com/widgetbook/widgetbook/tree/main/examples',
-                  description:
-                      'Explore the Widgetbook examples and learn how to use them.',
+                  url: 'https://github.com/widgetbook/widgetbook/tree/main/examples',
+                  description: 'Explore the Widgetbook examples and learn how to use them.',
                 ),
               ],
             ),
@@ -44,17 +41,13 @@ class DefaultHomePage extends StatelessWidget {
               children: [
                 _Card(
                   title: '🚀 Deploy',
-                  url:
-                      'https://docs.widgetbook.io/cloud/builds/overview?utm_source=oss&utm_medium=home',
-                  description:
-                      'Deploy your Widgetbook with our managed-hosting solution.',
+                  url: 'https://docs.widgetbook.io/cloud/builds/overview?utm_source=oss&utm_medium=home',
+                  description: 'Deploy your Widgetbook with our managed-hosting solution.',
                 ),
                 _Card(
                   title: '✨ Detect Changes',
-                  url:
-                      'https://docs.widgetbook.io/cloud/reviews?utm_source=oss&utm_medium=home',
-                  description:
-                      'Detect visual changes in your PRs with Widgetbook Cloud.',
+                  url: 'https://docs.widgetbook.io/cloud/reviews?utm_source=oss&utm_medium=home',
+                  description: 'Detect visual changes in your PRs with Widgetbook Cloud.',
                 ),
               ],
             ),

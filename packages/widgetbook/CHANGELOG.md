@@ -1,3 +1,7 @@
+## Unreleased
+
+- **BREAKING**: Set minimum SDK version to 3.13.0 & minimum Flutter version to 3.47.0. ([#2068](https://github.com/widgetbook/widgetbook/pull/2068))
+
 ## 4.0.0-beta.15
 
 - **FIX**: Scroll the navigation tree to the selected node and expand its ancestors when the path changes, including on deep links. ([#2042](https://github.com/widgetbook/widgetbook/pull/2042) - by [@niktishakov](https://github.com/niktishakov))
