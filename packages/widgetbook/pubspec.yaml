@@ -23,12 +23,14 @@ dependencies:
   code_builder: ^4.5.0
   collection: ^1.15.0
   crypto: ^3.0.0
+  cupertino_ui: ^1.1.7
   dart_style: ^3.0.0
   flutter:
     sdk: flutter
   flutter_test:
     sdk: flutter
   glob: ^2.0.2
+  material_ui: ^1.11.1
   meta: ^1.8.0
   nested: ^1.0.0
   path: ^1.8.0

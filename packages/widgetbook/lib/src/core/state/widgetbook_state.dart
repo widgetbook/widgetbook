@@ -1,5 +1,5 @@
-/// @docImport 'package:flutter/cupertino.dart';
-/// @docImport 'package:flutter/material.dart';
+/// @docImport 'package:cupertino_ui/cupertino_ui.dart';
+/// @docImport 'package:material_ui/material_ui.dart';
 library;
 
 import 'package:flutter/widgets.dart';

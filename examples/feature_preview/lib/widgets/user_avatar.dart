@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class UserAvatar extends StatelessWidget {
   const UserAvatar({super.key, this.name});

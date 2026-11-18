@@ -5,7 +5,7 @@ class ConfigTemplate extends Template {
     : super(
         'lib/widgetbook.config.dart',
         '''
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import 'components.g.dart';
