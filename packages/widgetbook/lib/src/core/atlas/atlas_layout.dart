@@ -2,53 +2,67 @@ import 'package:flutter/foundation.dart';
 
 import '../framework/framework.dart';
 
-/// Arranges the pages of an [AtlasFlow] into columns by their shortest
-/// distance from an entry page, i.e. a page that no other page leads to.
-/// Pages that are only reachable through a cycle start a column of their own.
+/// Arranges the pages of an [AtlasFlow] into columns, left to right.
+///
+/// Links that close a cycle (e.g. going back or retrying) are [backLinks].
+/// Every other link points to a later column, as each page is placed by its
+/// longest path from an entry page, so the last screens of a flow end up last.
 @internal
 class AtlasLayout {
   factory AtlasLayout(AtlasFlow flow) {
     final pages = flow.pages;
     final targets = {for (final targets in flow.links.values) ...targets};
     final entryPages = pages.where((page) => !targets.contains(page));
-    final depths = <Story, int>{};
 
-    void visit(Story start) {
-      if (depths.containsKey(start)) return;
-      depths[start] = 0;
+    final onPath = <Story>{};
+    final visited = <Story>{};
+    final finished = <Story>[];
+    final backLinks = <(Story, Story)>{};
 
-      final queue = [start];
-      while (queue.isNotEmpty) {
-        final current = queue.removeAt(0);
-        for (final next in flow.leadsTo(current)) {
-          if (depths.containsKey(next)) continue;
-          depths[next] = depths[current]! + 1;
-          queue.add(next);
+    void visit(Story page) {
+      if (!visited.add(page)) return;
+      onPath.add(page);
+      for (final next in flow.leadsTo(page)) {
+        if (onPath.contains(next)) {
+          backLinks.add((page, next));
+        } else {
+          visit(next);
         }
       }
+      onPath.remove(page);
+      finished.add(page);
     }
 
     entryPages.forEach(visit);
     pages.forEach(visit);
 
+    final depths = <Story, int>{};
+    for (final page in finished.reversed) {
+      final depth = depths.putIfAbsent(page, () => 0);
+      for (final next in flow.leadsTo(page)) {
+        if (backLinks.contains((page, next))) continue;
+        if ((depths[next] ?? -1) <= depth) depths[next] = depth + 1;
+      }
+    }
+
     final columns = <List<Story>>[];
-    depths.forEach((page, depth) {
+    for (final page in finished.reversed) {
+      final depth = depths[page]!;
       while (columns.length <= depth) {
         columns.add([]);
       }
       columns[depth].add(page);
-    });
+    }
 
-    return AtlasLayout._(columns);
+    return AtlasLayout._(columns, backLinks);
   }
 
-  AtlasLayout._(this.columns);
+  AtlasLayout._(this.columns, this.backLinks);
 
   final List<List<Story>> columns;
+  final Set<(Story, Story)> backLinks;
 
-  int columnOf(Story page) {
-    return columns.indexWhere((column) => column.contains(page));
-  }
+  bool isBackLink(Story from, Story to) => backLinks.contains((from, to));
 }
 
 /// Throws if [config] has an [AtlasFlow] referencing a story that is not part

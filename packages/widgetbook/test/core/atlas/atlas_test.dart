@@ -56,8 +56,32 @@ void main() {
 
   group('$AtlasLayout', () {
     test(
-      'given pages leading to each other, '
-      'then columns follow the shortest distance from the entry page',
+      'given a page reached both directly and through other pages, '
+      'then it is placed after the longest path to it',
+      () {
+        final layout = AtlasLayout(
+          AtlasFlow(
+            name: 'Onboarding',
+            links: {
+              login: [home, signUp],
+              signUp: [settings],
+              settings: [home],
+            },
+          ),
+        );
+
+        expect(layout.columns, [
+          [login],
+          [signUp],
+          [settings],
+          [home],
+        ]);
+      },
+    );
+
+    test(
+      'given pages leading back to an earlier page, '
+      'then only those links are back links',
       () {
         final layout = AtlasLayout(
           AtlasFlow(
@@ -65,16 +89,18 @@ void main() {
             links: {
               login: [signUp, home],
               signUp: [home, login],
-              home: [settings],
+              home: [settings, home],
             },
           ),
         );
 
         expect(layout.columns, [
           [login],
-          [signUp, home],
+          [signUp],
+          [home],
           [settings],
         ]);
+        expect(layout.backLinks, {(signUp, login), (home, home)});
       },
     );
 

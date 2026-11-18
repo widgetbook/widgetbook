@@ -8,10 +8,10 @@ import '../state/state.dart';
 import '../theme/theme.dart';
 import 'atlas_layout.dart';
 
-const _nodeSize = Size(200, 56);
-const _columnGap = 96.0;
-const _rowGap = 24.0;
-const _loopDepth = 32.0;
+const _nodeSize = Size(176, 52);
+const _columnGap = 72.0;
+const _rowGap = 20.0;
+const _laneGap = 14.0;
 
 /// Draws the pages of an [AtlasFlow] as tappable nodes, laid out left to right
 /// by [AtlasLayout], connected by arrows to the pages they lead to.
@@ -37,26 +37,25 @@ class AtlasFlowGraph extends StatelessWidget {
 
     if (rects.isEmpty) return const SizedBox.shrink();
 
+    final bounds = rects.values.reduce((a, b) => a.expandToInclude(b));
+    var lanes = 0;
     final edges = [
       for (final MapEntry(key: from, value: targets) in flow.links.entries)
         for (final to in targets)
-          _Edge(
-            from: rects[from]!,
-            to: rects[to]!,
-            direction: _EdgeDirection.of(
-              layout.columnOf(from),
-              layout.columnOf(to),
-              isSelfLink: from == to,
-            ),
-          ),
+          layout.isBackLink(from, to)
+              ? _Edge.back(
+                  from: rects[from]!,
+                  to: rects[to]!,
+                  laneY: bounds.bottom + _laneGap * ++lanes,
+                )
+              : _Edge.forward(from: rects[from]!, to: rects[to]!),
     ];
 
-    final bounds = rects.values.reduce((a, b) => a.expandToInclude(b));
     final theme = WidgetbookTheme.of(context);
 
     return SizedBox(
-      width: bounds.right + _columnGap / 2,
-      height: bounds.bottom + _loopDepth + _rowGap,
+      width: bounds.right + 8,
+      height: bounds.bottom + _laneGap * (lanes + 1),
       child: Stack(
         children: [
           Positioned.fill(
@@ -124,50 +123,57 @@ class _AtlasNode extends StatelessWidget {
   }
 }
 
-enum _EdgeDirection {
-  forward,
-  sameColumn,
-  backward;
-
-  static _EdgeDirection of(
-    int fromColumn,
-    int toColumn, {
-    required bool isSelfLink,
-  }) {
-    if (isSelfLink || toColumn < fromColumn) return backward;
-    if (toColumn == fromColumn) return sameColumn;
-    return forward;
-  }
-}
-
+/// A link drawn as [path], ending in an arrowhead at [tip] that points in
+/// [direction] (radians).
 class _Edge {
-  const _Edge({required this.from, required this.to, required this.direction});
+  _Edge._(this.path, this.tip, this.direction);
 
-  final Rect from;
-  final Rect to;
-  final _EdgeDirection direction;
+  /// Runs from the right side of a page to the left side of a later one.
+  factory _Edge.forward({required Rect from, required Rect to}) {
+    final start = from.centerRight;
+    final end = to.centerLeft;
+    final bend = math.min(_columnGap, end.dx - start.dx) / 2;
 
-  /// Forward links run from the right side of a page to the left side of the
-  /// next one; all others loop around so they do not cross the pages between.
-  (Offset, Offset, Offset, Offset) get curve {
-    switch (direction) {
-      case _EdgeDirection.forward:
-        final start = from.centerRight;
-        final end = to.centerLeft;
-        const bend = Offset(_columnGap / 2, 0);
-        return (start, start + bend, end - bend, end);
-      case _EdgeDirection.sameColumn:
-        final start = from.centerRight;
-        final end = to.centerRight;
-        const bend = Offset(_columnGap / 2, 0);
-        return (start, start + bend, end + bend, end);
-      case _EdgeDirection.backward:
-        final start = from.bottomCenter + Offset(from.width / 6, 0);
-        final end = to.bottomCenter - Offset(to.width / 6, 0);
-        final bottom = math.max(start.dy, end.dy) + _loopDepth;
-        return (start, Offset(start.dx, bottom), Offset(end.dx, bottom), end);
-    }
+    return _Edge._(
+      Path()
+        ..moveTo(start.dx, start.dy)
+        ..cubicTo(
+          start.dx + bend,
+          start.dy,
+          end.dx - bend,
+          end.dy,
+          end.dx,
+          end.dy,
+        ),
+      end,
+      0,
+    );
   }
+
+  /// Runs below all pages along its own lane at [laneY], so back links do not
+  /// cross pages or overlap each other.
+  factory _Edge.back({
+    required Rect from,
+    required Rect to,
+    required double laneY,
+  }) {
+    final start = from.bottomCenter + Offset(from.width / 6, 0);
+    final end = to.bottomCenter - Offset(to.width / 6, 0);
+
+    return _Edge._(
+      Path()
+        ..moveTo(start.dx, start.dy)
+        ..lineTo(start.dx, laneY)
+        ..lineTo(end.dx, laneY)
+        ..lineTo(end.dx, end.dy),
+      end,
+      -math.pi / 2,
+    );
+  }
+
+  final Path path;
+  final Offset tip;
+  final double direction;
 }
 
 class _EdgePainter extends CustomPainter {
@@ -187,29 +193,14 @@ class _EdgePainter extends CustomPainter {
       ..style = PaintingStyle.stroke;
 
     for (final edge in edges) {
-      final (start, control1, control2, end) = edge.curve;
+      canvas.drawPath(edge.path, paint);
 
-      canvas.drawPath(
-        Path()
-          ..moveTo(start.dx, start.dy)
-          ..cubicTo(
-            control1.dx,
-            control1.dy,
-            control2.dx,
-            control2.dy,
-            end.dx,
-            end.dy,
-          ),
-        paint,
-      );
-
-      final angle = (end - control2).direction;
       for (final side in [-1, 1]) {
         canvas.drawLine(
-          end,
-          end -
+          edge.tip,
+          edge.tip -
               Offset.fromDirection(
-                angle + side * _arrowAngle,
+                edge.direction + side * _arrowAngle,
                 _arrowLength,
               ),
           paint,

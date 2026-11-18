@@ -39,12 +39,42 @@ class AtlasHomePage extends StatelessWidget {
             Text(flow.name, style: theme.textTheme.titleLarge),
             const SizedBox(height: 16),
           ],
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: AtlasFlowGraph(flow: flow),
-          ),
+          _HorizontalScroll(child: AtlasFlowGraph(flow: flow)),
         ],
       ],
+    );
+  }
+}
+
+class _HorizontalScroll extends StatefulWidget {
+  const _HorizontalScroll({required this.child});
+
+  final Widget child;
+
+  @override
+  State<_HorizontalScroll> createState() => _HorizontalScrollState();
+}
+
+class _HorizontalScrollState extends State<_HorizontalScroll> {
+  final _controller = ScrollController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scrollbar(
+      controller: _controller,
+      thumbVisibility: true,
+      child: SingleChildScrollView(
+        controller: _controller,
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.only(bottom: 16),
+        child: widget.child,
+      ),
     );
   }
 }
