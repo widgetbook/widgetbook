@@ -1,3 +1,7 @@
+## Unreleased
+
+- **BREAKING**: Set minimum SDK version to 3.13.0. ([#2068](https://github.com/widgetbook/widgetbook/pull/2068))
+
 ## 4.0.0-beta.15
 
 - **FEAT**: Add `cloud project connect` and `cloud project disconnect`, which connect a project to its GitHub repository and disconnect it again. ([#2055](https://github.com/widgetbook/widgetbook/pull/2055))

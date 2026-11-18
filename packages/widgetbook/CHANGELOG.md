@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **BREAKING**: Set minimum SDK version to 3.13.0 & minimum Flutter version to 3.47.0. ([#2068](https://github.com/widgetbook/widgetbook/pull/2068))
+- **REFACTOR**: Require `analyzer` 8.2.0 or later. ([#2068](https://github.com/widgetbook/widgetbook/pull/2068))
 
 ## 4.0.0-beta.15
 
