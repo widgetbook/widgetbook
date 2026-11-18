@@ -1,4 +1,4 @@
-/// @docImport 'package:cupertino_ui/cupertino_ui.dart';
+/// @docImport 'package:flutter/cupertino.dart';
 /// @docImport 'package:material_ui/material_ui.dart';
 library;
 

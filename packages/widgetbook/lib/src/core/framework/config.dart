@@ -2,7 +2,7 @@
 /// @docImport '../addons/addons.dart';
 library;
 
-import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../accessibility/accessibility_config.dart';

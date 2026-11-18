@@ -2,8 +2,8 @@
 
 - **BREAKING**: Set minimum SDK version to 3.13.0 & minimum Flutter version to 3.47.0. ([#2068](https://github.com/widgetbook/widgetbook/pull/2068))
 - **FIX**: Keep the semantics format of `testWidgetbook` snapshots on Flutter 3.50, which otherwise switched to Flutter's own `SemanticsData.toJson()`. ([#2069](https://github.com/widgetbook/widgetbook/pull/2069))
-- **BREAKING**: Migrate from `package:flutter/material.dart` and `package:flutter/cupertino.dart` to `material_ui` and `cupertino_ui`.
-  `MaterialThemeAddon`, `CupertinoThemeAddon`, the default app builders and `Config.lightTheme`/`darkTheme` now use their types.
+- **BREAKING**: Migrate from `package:flutter/material.dart` to `material_ui`.
+  `MaterialThemeAddon`, `materialAppBuilder` and `Config.lightTheme`/`darkTheme` now use its types.
   Projects still on `package:flutter/material.dart` can pass their own `appBuilder` and use `ThemeAddon<ThemeData>`. ([#2070](https://github.com/widgetbook/widgetbook/pull/2070))
 
 ## 4.0.0-beta.15
