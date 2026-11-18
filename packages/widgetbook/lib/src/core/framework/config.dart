@@ -3,7 +3,7 @@
 library;
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../accessibility/accessibility_config.dart';
 import '../docs/docs.dart';

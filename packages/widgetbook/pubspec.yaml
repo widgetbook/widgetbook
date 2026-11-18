@@ -29,6 +29,7 @@ dependencies:
   flutter_test:
     sdk: flutter
   glob: ^2.0.2
+  material_ui: ^1.11.1
   meta: ^1.8.0
   nested: ^1.0.0
   path: ^1.8.0

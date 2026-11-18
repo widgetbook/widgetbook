@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:widgetbook/src/core/layout/responsive_layout.dart';
 import 'package:widgetbook/src/core/routing/routing.dart';

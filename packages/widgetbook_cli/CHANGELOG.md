@@ -1,6 +1,7 @@
 ## Unreleased
 
 - **BREAKING**: Set minimum SDK version to 3.13.0. ([#2068](https://github.com/widgetbook/widgetbook/pull/2068))
+- **FEAT**: Add `material_ui` in `widgetbook init` and use it in the generated config. ([#2070](https://github.com/widgetbook/widgetbook/pull/2070))
 
 ## 4.0.0-beta.15
 
