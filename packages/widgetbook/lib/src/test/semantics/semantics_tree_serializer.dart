@@ -10,7 +10,7 @@ class SemanticsTreeSerializer {
 
   static Map<String, dynamic> toJson(SemanticsNode node) {
     final data = node.getSemanticsData();
-    final properties = SemanticsDataExtension(data).toJson();
+    final properties = data.toWidgetbookJson();
 
     final children = <Map<String, dynamic>>[];
     node.visitChildren((child) {
