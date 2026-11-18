@@ -5,6 +5,7 @@ class ConfigTemplate extends Template {
     : super(
         'lib/widgetbook.config.dart',
         '''
+import 'package:material_ui/material_ui.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import 'components.g.dart';
@@ -16,6 +17,10 @@ final config = Config(
       Viewports.none,
       IosViewports.iPhone13,
     ]),
+    MaterialThemeAddon({
+      'Light': ThemeData.light(),
+      'Dark': ThemeData.dark(),
+    }),
     AlignmentAddon(),
   ],
 );
