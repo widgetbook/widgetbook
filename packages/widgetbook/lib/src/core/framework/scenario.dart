@@ -13,11 +13,10 @@ import 'scenario_definition.dart';
 import 'story.dart';
 import 'story_args.dart';
 
-typedef ScenarioRunner<TArgs extends StoryArgs> =
-    Future<void> Function(
-      WidgetTester tester,
-      TArgs args,
-    );
+typedef ScenarioRunner<TArgs extends StoryArgs> = Future<void> Function(
+  WidgetTester tester,
+  TArgs args,
+);
 
 enum ScenarioType {
   // Defined by the user in the config

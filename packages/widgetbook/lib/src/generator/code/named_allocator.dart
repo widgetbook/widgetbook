@@ -31,10 +31,12 @@ class NamedAllocator implements Allocator {
     final plainUrl = url.replaceFirst('package:', '').replaceAll('.dart', '');
 
     // If the URL is a barrel export, use the package name as the namespace.
-    if (path.split(plainUrl) case [
-      final String package,
-      final String file,
-    ] when package == file) {
+    if (path.split(plainUrl)
+        case [
+          final String package,
+          final String file,
+        ]
+        when package == file) {
       return '_$package';
     }
 
