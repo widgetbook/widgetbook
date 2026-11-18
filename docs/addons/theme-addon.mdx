@@ -37,6 +37,9 @@ There are 3 different variants of the Theme Addon, which depend on the theme dat
 
 If your app is built using `MaterialApp`, then you are probably using `ThemeData` to define your themes. Then `MaterialThemeAddon` is the right choice for you.
 
+`MaterialThemeAddon` expects the `ThemeData` of [`material_ui`](https://pub.dev/packages/material_ui).
+If your app still uses `package:flutter/material.dart`, use the generic [`ThemeAddon`](#custom-theme) with your `ThemeData` and pass your own `appBuilder` to `Config`.
+
 ```dart title=widgetbook/lib/widgetbook.config.dart
 import 'package:my_app/themes.dart'; // For AppThemes
 
