@@ -7,6 +7,7 @@
   Projects still on `package:flutter/material.dart` can pass their own `appBuilder` and use `ThemeAddon<ThemeData>`. ([#2070](https://github.com/widgetbook/widgetbook/pull/2070))
 - **BREAKING**: Remove `CupertinoThemeAddon`, `CupertinoThemeMode` and `cupertinoAppBuilder`.
   Use `ThemeAddon<CupertinoThemeData>` and a custom `appBuilder` returning a `CupertinoApp` instead. ([#2071](https://github.com/widgetbook/widgetbook/pull/2071))
+- **REFACTOR**: Allow `build` 5.x. ([#2073](https://github.com/widgetbook/widgetbook/pull/2073))
 
 ## 4.0.0-beta.15
 
