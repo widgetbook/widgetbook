@@ -30,8 +30,76 @@ class _Story extends StatelessWidget {
   }
 }
 
+class _Labels extends StatelessWidget {
+  const _Labels(this.labels);
+
+  final List<String> labels;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        for (final label in labels) Text(label),
+      ],
+    );
+  }
+}
+
+class _ScrollingLabels extends StatelessWidget {
+  const _ScrollingLabels(this.labels);
+
+  final List<String> labels;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: [
+        for (final label in labels) SizedBox(height: 100, child: Text(label)),
+      ],
+    );
+  }
+}
+
+class _Pair extends StatelessWidget {
+  const _Pair();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        Text('First'),
+        Text('Second'),
+      ],
+    );
+  }
+}
+
+class _PairWithInsertedLine extends StatelessWidget {
+  const _PairWithInsertedLine();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        Text('Inserted'),
+        Text('First'),
+        Text('Second'),
+      ],
+    );
+  }
+}
+
 void main() {
   final storyKey = GlobalKey();
+
+  Future<Element> pumpWidget(WidgetTester tester, Widget child) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: RepaintBoundary(key: storyKey, child: child),
+      ),
+    );
+    return storyKey.currentContext! as Element;
+  }
 
   Future<Element> pumpStory(WidgetTester tester) async {
     await tester.pumpWidget(
@@ -238,6 +306,109 @@ void main() {
 
       expect(resolved.exact, isFalse);
       expect(resolved.element.widget, isA<SizedBox>());
+    });
+  });
+
+  group('$AnchorLocator after code changes', () {
+    String textOf(ResolvedAnchor resolved) {
+      return (resolved.element.widget as Text).data!;
+    }
+
+    CommentAnchor captureText(Element story, WidgetTester tester, String text) {
+      return locator().capture(story, tester.getCenter(find.text(text)));
+    }
+
+    testWidgets('keeps the pin when an item is inserted before it', (
+      tester,
+    ) async {
+      var story = await pumpWidget(tester, const _Labels(['First', 'Second']));
+      final anchor = captureText(story, tester, 'Second');
+
+      story = await pumpWidget(
+        tester,
+        const _Labels(['Inserted', 'First', 'Second']),
+      );
+      final resolved = locator().resolve(story, anchor)!;
+
+      expect(textOf(resolved), 'Second');
+      expect(resolved.uncertain, isFalse);
+    });
+
+    testWidgets('keeps the pin when a list item is inserted before it', (
+      tester,
+    ) async {
+      final labels = [for (var i = 0; i < 10; i++) 'Item $i'];
+      var story = await pumpWidget(tester, _ScrollingLabels(labels));
+      final anchor = captureText(story, tester, 'Item 2');
+
+      story = await pumpWidget(
+        tester,
+        _ScrollingLabels(['Inserted', ...labels]),
+      );
+      final resolved = locator().resolve(story, anchor)!;
+
+      expect(textOf(resolved), 'Item 2');
+      expect(resolved.uncertain, isFalse);
+    });
+
+    testWidgets('keeps the pin when a line is inserted above it', (
+      tester,
+    ) async {
+      var story = await pumpWidget(tester, const _Pair());
+      final pinned = captureText(story, tester, 'Second');
+
+      story = await pumpWidget(tester, const _PairWithInsertedLine());
+      final shifted = captureText(story, tester, 'First').location!;
+      final anchor = CommentAnchor(
+        location: WidgetLocation(
+          widget: pinned.location!.widget,
+          file: shifted.file,
+          uri: shifted.uri,
+          line: shifted.line,
+          column: shifted.column,
+        ),
+        signature: pinned.signature,
+        point: pinned.point,
+        chain: pinned.chain,
+      );
+      final resolved = locator().resolve(story, anchor)!;
+
+      expect(textOf(resolved), 'Second');
+      expect(resolved.uncertain, isFalse);
+    });
+
+    testWidgets('marks the pin uncertain when no widget shows its content', (
+      tester,
+    ) async {
+      var story = await pumpWidget(tester, const _Labels(['First', 'Second']));
+      final anchor = captureText(story, tester, 'Second');
+
+      story = await pumpWidget(
+        tester,
+        const _Labels(['Alpha', 'Beta', 'Gamma']),
+      );
+      final resolved = locator().resolve(story, anchor)!;
+
+      expect(resolved.uncertain, isTrue);
+    });
+
+    testWidgets('trusts the only candidate when its content changes', (
+      tester,
+    ) async {
+      var story = await pumpWidget(tester, const _Labels(['0']));
+      final anchor = captureText(story, tester, '0');
+
+      story = await pumpWidget(tester, const _Labels(['1']));
+      final resolved = locator().resolve(story, anchor)!;
+
+      expect(textOf(resolved), '1');
+      expect(resolved.uncertain, isFalse);
+    });
+
+    testWidgets('records what the widget shows', (tester) async {
+      final story = await pumpWidget(tester, const _Pair());
+
+      expect(captureText(story, tester, 'Second').signature, 'Second');
     });
   });
 }

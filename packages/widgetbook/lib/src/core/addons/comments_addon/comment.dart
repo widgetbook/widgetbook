@@ -141,6 +141,7 @@ class CommentAnchor {
     this.offset,
     this.chain = const [],
     this.scroll,
+    this.signature,
   });
 
   factory CommentAnchor.fromJson(Map<String, dynamic> json) {
@@ -165,6 +166,7 @@ class CommentAnchor {
               pixels: (scroll['pixels'] as num).toDouble(),
               contentOffset: (scroll['contentOffset'] as num?)?.toDouble(),
             ),
+      signature: json['signature'] as String?,
     );
   }
 
@@ -188,7 +190,13 @@ class CommentAnchor {
   /// The scroll position of the innermost scrollable around the widget.
   final ScrollAnchor? scroll;
 
+  /// What the widget showed when it was pinned: the text of its subtree,
+  /// including icons. Tells apart widgets that took each other's source
+  /// location, e.g. after a line was inserted above.
+  final String? signature;
+
   Map<String, dynamic> toJson() => {
+    if (signature != null) 'signature': signature,
     if (location != null)
       'location': {...location!.toJson(), 'occurrence': occurrence},
     if (offset != null) 'offset': offset!.toJson(),

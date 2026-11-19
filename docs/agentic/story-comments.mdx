@@ -96,6 +96,8 @@ Agents without MCP support can read these files directly.
 
 - Pins rely on the widget creation locations that Flutter tracks in **debug builds**.
   In profile and release builds, comments fall back to the position within the story.
+- When the code changes, e.g. a widget is inserted above a commented one, a pin finds its widget again by what it shows.
+  If several widgets could be the commented one and none shows that anymore, the pin is marked with `?` until you check it.
 - When a commented widget is removed, its pin moves to the closest enclosing widget or stays at its last position, and the thread says that the widget was not found.
 - Only one `widgetbook mcp` server can serve the UI at a time.
   A second server still gives its agent access to the stored comments, and takes over the port once the first one stops.

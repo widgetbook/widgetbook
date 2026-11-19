@@ -272,6 +272,7 @@ class _CommentsLayerState extends State<CommentsLayer> {
         position: _clamp(point, visibleRect),
         offscreen: !visibleRect.contains(point),
         detached: false,
+        uncertain: resolved.uncertain,
       );
     }
 
@@ -570,6 +571,7 @@ class _CommentsLayerState extends State<CommentsLayer> {
                 number: index + 1,
                 status: comment.status,
                 faded: pin.offscreen || pin.detached,
+                uncertain: pin.uncertain,
                 selected: comment.id == _openId,
                 onTap: () => _openPin(comment),
               ),
@@ -590,6 +592,7 @@ class _CommentsLayerState extends State<CommentsLayer> {
           child: _ThreadCard(
             comment: open,
             detached: _pins[open.id]!.detached,
+            uncertain: _pins[open.id]!.uncertain,
             onClose: () => setState(() => _openId = null),
             onReply: (text) => _run(
               'Could not send the reply',
@@ -735,21 +738,24 @@ class _Pin {
     required this.position,
     required this.offscreen,
     required this.detached,
+    this.uncertain = false,
   });
 
   final Offset position;
   final bool offscreen;
   final bool detached;
+  final bool uncertain;
 
   @override
   bool operator ==(Object other) =>
       other is _Pin &&
       other.position == position &&
       other.offscreen == offscreen &&
-      other.detached == detached;
+      other.detached == detached &&
+      other.uncertain == uncertain;
 
   @override
-  int get hashCode => Object.hash(position, offscreen, detached);
+  int get hashCode => Object.hash(position, offscreen, detached, uncertain);
 }
 
 @immutable
@@ -777,6 +783,7 @@ class _Composer {
 const _accent = Color(0xFF2F6BFF);
 const _surface = Color(0xFF1E1E1E);
 const _errorSurface = Color(0xFFB3261E);
+const _uncertainColor = Color(0xFFF59E0B);
 
 class _Chrome extends StatelessWidget {
   const _Chrome({required this.child});
@@ -847,6 +854,7 @@ class _PinBadge extends StatelessWidget {
     required this.faded,
     required this.selected,
     required this.onTap,
+    this.uncertain = false,
   });
 
   static const radius = 13.0;
@@ -855,6 +863,7 @@ class _PinBadge extends StatelessWidget {
   final CommentStatus status;
   final bool faded;
   final bool selected;
+  final bool uncertain;
   final VoidCallback onTap;
 
   Color get _color => switch (status) {
@@ -881,15 +890,15 @@ class _PinBadge extends StatelessWidget {
               color: _color,
               shape: BoxShape.circle,
               border: Border.all(
-                color: Colors.white,
-                width: selected ? 3 : 2,
+                color: uncertain ? _uncertainColor : Colors.white,
+                width: selected || uncertain ? 3 : 2,
               ),
               boxShadow: const [
                 BoxShadow(blurRadius: 4, color: Colors.black26),
               ],
             ),
             child: Text(
-              '$number',
+              uncertain ? '$number?' : '$number',
               style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
@@ -1010,6 +1019,7 @@ class _ThreadCard extends StatelessWidget {
   const _ThreadCard({
     required this.comment,
     required this.detached,
+    required this.uncertain,
     required this.onClose,
     required this.onReply,
     required this.onStatus,
@@ -1018,6 +1028,7 @@ class _ThreadCard extends StatelessWidget {
 
   final StoryComment comment;
   final bool detached;
+  final bool uncertain;
   final VoidCallback onClose;
   final Future<bool> Function(String text) onReply;
   final ValueChanged<CommentStatus> onStatus;
@@ -1058,6 +1069,12 @@ class _ThreadCard extends StatelessWidget {
                   ? '${location.widget} not found after the last change'
                   : '${location.widget} · ${location.file}:${location.line}',
               style: const TextStyle(fontSize: 11, color: Colors.white54),
+            ),
+          if (uncertain)
+            Text(
+              'The code changed, so this pin may be on the wrong widget. '
+              'It was pinned to "${comment.anchor.signature}".',
+              style: const TextStyle(fontSize: 11, color: _uncertainColor),
             ),
           const SizedBox(height: 6),
           ConstrainedBox(

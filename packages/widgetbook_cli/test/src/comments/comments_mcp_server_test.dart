@@ -81,6 +81,7 @@ void main() {
             'line': 12,
             'column': 7,
           },
+          'signature': 'Lesson complete',
         },
         screenshotPng: base64Decode(_pngPixel),
       );
@@ -107,7 +108,7 @@ void main() {
           'status': 'open',
           'storyPath': 'widgets/Card/Default',
           'text': 'Use a larger title',
-          'widget': 'Text at lib/card.dart:12:7',
+          'widget': 'Text "Lesson complete" at lib/card.dart:12:7',
           'replies': 0,
         },
       ]);

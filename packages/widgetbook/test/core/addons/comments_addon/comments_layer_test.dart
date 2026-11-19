@@ -512,6 +512,29 @@ void main() {
       await unmount(tester);
     });
 
+    testWidgets('marks pins whose widget may have changed', (tester) async {
+      final client = _FakeClient();
+      await pumpLayer(tester, client);
+      await tester.tap(find.text('Comment'));
+      await tester.pump();
+      await addComment(tester, 'Item 2', 'Use a larger text style');
+      await unmount(tester);
+
+      final anchor = client.comments.single['anchor'] as Map<String, dynamic>;
+      expect(anchor['signature'], 'Item 2');
+      anchor['signature'] = 'Removed item';
+
+      await pumpLayer(tester, client);
+      await tester.tap(find.text('1?'));
+      await tester.pump();
+
+      expect(
+        find.textContaining('It was pinned to "Removed item"'),
+        findsOneWidget,
+      );
+      await unmount(tester);
+    });
+
     testWidgets('submits drafts and resolves comments', (tester) async {
       final client = _FakeClient();
       await pumpLayer(tester, client);

@@ -290,7 +290,7 @@ final class CommentsMcpServer extends MCPServer
       'status': comment.status.name,
       'storyPath': comment.storyPath,
       'text': comment.messages.first.text,
-      'widget': _describeLocation(comment.anchor['location']),
+      'widget': _describeWidget(comment.anchor),
       'replies': comment.messages.length - 1,
     };
   }
@@ -298,13 +298,19 @@ final class CommentsMcpServer extends MCPServer
   Map<String, Object?> _details(Comment comment) {
     return {
       ...comment.toJson()..remove('screenshot'),
-      'widget': _describeLocation(comment.anchor['location']),
+      'widget': _describeWidget(comment.anchor),
     };
   }
 
-  String? _describeLocation(Object? location) {
+  /// Describes the pinned widget, e.g. `Text "Phrase 17" at lib/a.dart:4:7`.
+  /// What it showed lets agents find it after lines moved.
+  String? _describeWidget(Map<String, dynamic> anchor) {
+    final location = anchor['location'];
     if (location is! Map) return null;
-    return '${location['widget']} at '
+
+    final signature = anchor['signature'];
+    final shown = signature is String ? ' "$signature"' : '';
+    return '${location['widget']}$shown at '
         '${location['file']}:${location['line']}:${location['column']}';
   }
 

@@ -10,13 +10,21 @@ import 'comment.dart';
 /// The widget that a [CommentAnchor] currently points to.
 @internal
 class ResolvedAnchor {
-  const ResolvedAnchor(this.element, {required this.exact});
+  const ResolvedAnchor(
+    this.element, {
+    required this.exact,
+    this.uncertain = false,
+  });
 
   final Element element;
 
   /// Whether [element] is the commented widget itself. If not, it is the
   /// closest widget that encloses it, e.g. after the code was changed.
   final bool exact;
+
+  /// Whether [element] is only the best guess: several widgets could be the
+  /// commented one, and none of them shows what it showed when pinned.
+  final bool uncertain;
 }
 
 /// Maps between widgets of a story and their [WidgetLocation]s, using the
@@ -147,8 +155,39 @@ class AnchorLocator {
       point: point,
       chain: _chain(element, story),
       scroll: _scroll(element, story),
+      signature: signatureOf(element),
     );
   }
+
+  /// The text that [element] shows, including icons, which are rendered as
+  /// text. Limited to a short prefix, as it only tells widgets apart.
+  static String? signatureOf(Element element) {
+    final parts = <String>[];
+    var length = 0;
+
+    void visit(Element child) {
+      if (length >= _signatureLength) return;
+      final widget = child.widget;
+      if (widget is RichText) {
+        final text = widget.text.toPlainText().trim();
+        if (text.isNotEmpty) {
+          parts.add(text);
+          length += text.length;
+        }
+      }
+      child.visitChildren(visit);
+    }
+
+    visit(element);
+    if (parts.isEmpty) return null;
+
+    final signature = parts.join(' ');
+    return signature.length > _signatureLength
+        ? signature.substring(0, _signatureLength)
+        : signature;
+  }
+
+  static const _signatureLength = 120;
 
   /// Finds the widget that [anchor] points to within [story].
   ///
@@ -162,16 +201,17 @@ class AnchorLocator {
 
     final byScroll = anchor.scroll?.contentOffset != null;
 
-    Element? pick(List<Element> candidates) {
-      if (byScroll) return _atScrollPosition(candidates, anchor).firstOrNull;
-      return candidates[anchor.occurrence.clamp(0, candidates.length - 1)];
+    List<Element> ordered(List<Element> elements) {
+      final occurrence = anchor.occurrence;
+      final indexed = [...elements.indexed]
+        ..sort(
+          (a, b) =>
+              (a.$1 - occurrence).abs().compareTo((b.$1 - occurrence).abs()),
+        );
+      return [for (final (_, element) in indexed) element];
     }
 
-    final exact = _find(index, location);
-    final exactMatch = exact == null ? null : pick(exact);
-    if (exactMatch != null) return ResolvedAnchor(exactMatch, exact: true);
-
-    final moved =
+    final sameType =
         index.entries
             .where(
               (entry) =>
@@ -184,11 +224,43 @@ class AnchorLocator {
               (b.key.line - location.line).abs(),
             ),
           );
-    if (exact == null) {
-      for (final entry in moved) {
-        final match = pick(entry.value);
-        if (match != null) return ResolvedAnchor(match, exact: true);
+
+    final exact = _find(index, location) ?? const <Element>[];
+    final candidates = {
+      ...ordered(exact),
+      for (final entry in sameType) ...ordered(entry.value),
+    }.toList();
+    final signature = anchor.signature;
+
+    Element? showingSignature(List<Element> elements) {
+      if (signature == null) return null;
+      for (final element in elements) {
+        if (signatureOf(element) == signature) return element;
       }
+      return null;
+    }
+
+    if (byScroll) {
+      final moved = showingSignature(_byScrollDistance(candidates, anchor));
+      if (moved != null) return ResolvedAnchor(moved, exact: true);
+
+      final atPosition = _atScrollPosition(candidates, anchor).firstOrNull;
+      if (atPosition != null) {
+        return ResolvedAnchor(
+          atPosition,
+          exact: true,
+          uncertain: signature != null && candidates.length > 1,
+        );
+      }
+    } else if (candidates.isNotEmpty) {
+      if (signature == null || candidates.length == 1) {
+        return ResolvedAnchor(candidates.first, exact: true);
+      }
+
+      final match = showingSignature(candidates);
+      return match != null
+          ? ResolvedAnchor(match, exact: true)
+          : ResolvedAnchor(candidates.first, exact: true, uncertain: true);
     }
 
     for (final parent in anchor.chain) {
@@ -392,6 +464,24 @@ class AnchorLocator {
     ]..sort((a, b) => a.$2.compareTo(b.$2));
 
     return [for (final (candidate, _) in matches) candidate];
+  }
+
+  /// Orders [candidates] by their distance to the anchor's position in the
+  /// scrolled content, without dropping distant ones.
+  List<Element> _byScrollDistance(
+    List<Element> candidates,
+    CommentAnchor anchor,
+  ) {
+    final expected = anchor.scroll!.contentOffset!;
+    final distances = [
+      for (final candidate in candidates)
+        (
+          candidate,
+          (_contentOffset(candidate) ?? double.infinity) - expected,
+        ),
+    ]..sort((a, b) => a.$2.abs().compareTo(b.$2.abs()));
+
+    return [for (final (candidate, _) in distances) candidate];
   }
 
   WidgetLocation? _localLocation(Element element) {
