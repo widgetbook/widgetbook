@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class DurationText extends StatelessWidget {
   const DurationText({super.key, this.duration});

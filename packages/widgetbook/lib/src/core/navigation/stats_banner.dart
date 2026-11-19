@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:meta/meta.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -48,8 +48,7 @@ class StatsBanner extends StatelessWidget {
               const _SummaryItem(
                 icon: Icons.open_in_new,
                 text: 'Visual test with Widgetbook Cloud',
-                url:
-                    'https://docs.widgetbook.io/cloud?utm_source=oss&utm_medium=banner',
+                url: 'https://docs.widgetbook.io/cloud?utm_source=oss&utm_medium=banner',
               ),
             ],
           ),

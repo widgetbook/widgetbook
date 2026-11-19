@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart' hide Viewport;
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart' hide Viewport;
 import 'package:widgetbook/src/core/addons/comments_addon/comment.dart';
 import 'package:widgetbook/src/core/addons/comments_addon/comments_client.dart';
 import 'package:widgetbook/src/core/addons/comments_addon/comments_layer.dart';

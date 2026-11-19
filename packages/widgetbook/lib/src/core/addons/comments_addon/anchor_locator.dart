@@ -248,10 +248,12 @@ class AnchorLocator {
   (Element, Map<WidgetLocation, List<Element>>)? _batchIndex;
 
   Map<WidgetLocation, List<Element>> _index(Element story) {
-    if (_batchIndex case (
-      final batchStory,
-      final index,
-    ) when batchStory == story) {
+    if (_batchIndex
+        case (
+          final batchStory,
+          final index,
+        )
+        when batchStory == story) {
       return index;
     }
     return _buildIndex(story);

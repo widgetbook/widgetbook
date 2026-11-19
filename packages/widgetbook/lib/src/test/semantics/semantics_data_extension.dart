@@ -4,7 +4,7 @@ import 'json_helpers.dart';
 import 'semantics_flags_extension.dart';
 
 extension SemanticsDataExtension on SemanticsData {
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toWidgetbookJson() {
     final properties = <String, dynamic>{};
 
     // Flags collection

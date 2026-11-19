@@ -69,10 +69,9 @@ class TreeNode<T> {
 
   TreeNode<TChild> add<TChild>(TreeNode<TChild> node) {
     return _children.putIfAbsent(
-          node.name,
-          () => node,
-        )
-        as TreeNode<TChild>;
+      node.name,
+      () => node,
+    ) as TreeNode<TChild>;
   }
 
   void addAll(Iterable<TreeNode> nodes) {

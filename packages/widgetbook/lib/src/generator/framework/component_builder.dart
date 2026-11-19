@@ -88,13 +88,14 @@ class ComponentBuilder {
               'stories': literalList(
                 stories
                     .map(
-                      (story) => refer(story.displayName)
-                          .cascade(r'$generatedName')
-                          .assign(
-                            literalString(
-                              story.displayName.replaceFirst(r'$', ''),
-                            ),
-                          ),
+                      (story) =>
+                          refer(story.displayName)
+                              .cascade(r'$generatedName')
+                              .assign(
+                                literalString(
+                                  story.displayName.replaceFirst(r'$', ''),
+                                ),
+                              ),
                     )
                     .toList(),
               ),
