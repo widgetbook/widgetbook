@@ -10,6 +10,7 @@
 - **REFACTOR**: Allow `build` 5.x. ([#2073](https://github.com/widgetbook/widgetbook/pull/2073))
 - **FIX**: Skip malformed pairs in URL query groups instead of failing to open the route, and keep values with an unencoded `:` whole. ([#2060](https://github.com/widgetbook/widgetbook/pull/2060) - by [@flavianunes](https://github.com/flavianunes))
 - **FIX**: Render stories with a `:` in their name on web. ([#2061](https://github.com/widgetbook/widgetbook/pull/2061) - by [@GhagSagar23](https://github.com/GhagSagar23))
+- **FIX**: Keep nullable args and addons set to `null` after a reload, as URL query groups like `??{value:x}` were dropped when parsed. ([#2077](https://github.com/widgetbook/widgetbook/pull/2077))
 
 ## 4.0.0-beta.15
 

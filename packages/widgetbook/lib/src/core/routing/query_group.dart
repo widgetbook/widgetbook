@@ -8,7 +8,7 @@ class QueryGroup {
 
   /// Pattern to identify valid query group strings.
   /// Examples of valid strings: `{foo:bar}`, `??{foo:bar}`, `??`, `{}`
-  static final pattern = RegExp(r'^\??\{.*\}$|^\?\?$');
+  static final pattern = RegExp(r'^(\?\?)?\{.*\}$|^\?\?$');
 
   static const nullabilitySymbol = '??';
   static const QueryGroup empty = QueryGroup({});
