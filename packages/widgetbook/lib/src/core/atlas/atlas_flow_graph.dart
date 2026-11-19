@@ -89,6 +89,15 @@ Size? atlasPreviewSize(WidgetbookState state) {
   final preview = state.config.atlasPreview;
   if (preview == null) return null;
 
+  final viewport = atlasSelectedViewport(state);
+  if (viewport == null) return preview.fallbackSize;
+
+  return Size(viewport.maxWidth, viewport.maxHeight);
+}
+
+/// The viewport selected in the [ViewportAddon], if it has a fixed size.
+@internal
+ViewportData? atlasSelectedViewport(WidgetbookState state) {
   final addon = state.config.addons?.whereType<ViewportAddon>().firstOrNull;
   final viewport = addon?.valueFromQueryGroup(
     state.queryGroups[addon.groupName],
@@ -97,10 +106,10 @@ Size? atlasPreviewSize(WidgetbookState state) {
   if (viewport == null ||
       !viewport.maxWidth.isFinite ||
       !viewport.maxHeight.isFinite) {
-    return preview.fallbackSize;
+    return null;
   }
 
-  return Size(viewport.maxWidth, viewport.maxHeight);
+  return viewport;
 }
 
 /// Draws the nodes of an [AtlasFlow] at the positions of [geometry],
@@ -348,7 +357,9 @@ class _PageCard extends StatelessWidget {
 }
 
 /// Renders [page] like the workbench does, through the app builder, addons and
-/// story setup, scaled down from [size]. Animations only run while [isLive].
+/// story setup, scaled down from [size]. The selected viewport is applied
+/// without its frame, as the node itself is the viewport. Animations only run
+/// while [isLive].
 class _Preview extends StatelessWidget {
   const _Preview({
     required this.page,
@@ -362,7 +373,13 @@ class _Preview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final config = WidgetbookState.of(context).config;
+    final state = WidgetbookState.of(context);
+    final config = state.config;
+    final viewport = atlasSelectedViewport(state);
+    final modes = [
+      if (viewport != null) ViewportMode(viewport),
+      if (page.args != null) ...page.scenario.modes,
+    ];
 
     return ClipRect(
       child: IgnorePointer(
@@ -374,9 +391,12 @@ class _Preview extends StatelessWidget {
               child: MediaQuery(
                 data: MediaQuery.of(context).copyWith(size: size),
                 child: RepaintBoundary(
-                  child: page.args == null
-                      ? page.story.buildWithConfig(context, config)
-                      : page.scenario.buildWithConfig(context, config),
+                  child: page.story.buildWithConfig(
+                    context,
+                    config,
+                    args: page.args,
+                    modes: modes,
+                  ),
                 ),
               ),
             ),
@@ -435,25 +455,30 @@ class _PlaceholderCard extends StatelessWidget {
 class _Edge {
   _Edge._(this.path, this.tip, this.direction);
 
-  /// Runs from the right side of a node to the left side of a later one.
+  /// Runs from the right side of a node to the left side of a later one,
+  /// arriving along the line between both ends so that the arrowhead points
+  /// in the direction the link actually comes from.
   factory _Edge.forward({required Rect from, required Rect to}) {
     final start = from.centerRight;
     final end = to.centerLeft;
     final bend = math.min(_columnGap, end.dx - start.dx) / 2;
+    final control1 = start + Offset(bend, 0);
+    final approach = end - control1;
+    final control2 = end - approach / approach.distance * bend;
 
     return _Edge._(
       Path()
         ..moveTo(start.dx, start.dy)
         ..cubicTo(
-          start.dx + bend,
-          start.dy,
-          end.dx - bend,
-          end.dy,
+          control1.dx,
+          control1.dy,
+          control2.dx,
+          control2.dy,
           end.dx,
           end.dy,
         ),
       end,
-      0,
+      approach.direction,
     );
   }
 

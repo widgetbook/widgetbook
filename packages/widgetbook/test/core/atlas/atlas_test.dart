@@ -629,6 +629,36 @@ void main() {
     );
 
     testWidgets(
+      'given a selected viewport, '
+      'then previews are not framed by the viewport addon',
+      (tester) async {
+        await pumpApp(
+          tester,
+          Config(
+            components: withProfile,
+            addons: [
+              ViewportAddon([IosViewports.iPhone13]),
+            ],
+            atlas: [
+              AtlasFlow(
+                name: 'Account',
+                links: {
+                  home: [profile],
+                },
+              ),
+            ],
+          ),
+        );
+
+        expect(inAtlasPage(find.text('Default profile')), findsOneWidget);
+        expect(
+          inAtlasPage(find.text(IosViewports.iPhone13.name)),
+          findsNothing,
+        );
+      },
+    );
+
+    testWidgets(
       'when tapping zoom in, '
       'then the graph is scaled up',
       (tester) async {
