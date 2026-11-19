@@ -8,6 +8,7 @@
 - **BREAKING**: Remove `CupertinoThemeAddon`, `CupertinoThemeMode` and `cupertinoAppBuilder`.
   Use `ThemeAddon<CupertinoThemeData>` and a custom `appBuilder` returning a `CupertinoApp` instead. ([#2071](https://github.com/widgetbook/widgetbook/pull/2071))
 - **REFACTOR**: Allow `build` 5.x. ([#2073](https://github.com/widgetbook/widgetbook/pull/2073))
+- **FIX**: Render stories with a `:` in their name on web. ([#2061](https://github.com/widgetbook/widgetbook/pull/2061) - by [@GhagSagar23](https://github.com/GhagSagar23))
 
 ## 4.0.0-beta.15
 
