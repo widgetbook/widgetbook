@@ -11,14 +11,12 @@ import 'atlas_layout.dart';
 import 'atlas_navigation.dart';
 
 const _columnGap = 72.0;
-const _labeledColumnGap = 248.0;
+const _labeledColumnGap = 200.0;
 const _rowGap = 20.0;
 const _laneGap = 14.0;
 const _labeledLaneGap = 28.0;
 const _labelMaxWidth = 160.0;
 const _portSpacing = 12.0;
-const _arrowStub = 16.0;
-const _labeledArrowStub = _labelMaxWidth + 12;
 const _labeledPortSpacing = 28.0;
 const _textNodeSize = Size(176, 52);
 const _previewNodeWidth = 200.0;
@@ -153,23 +151,53 @@ class AtlasFlowGraph extends StatelessWidget {
       spacing: flow.hasLinkLabels ? _labeledPortSpacing : _portSpacing,
     );
 
+    final placedLabels = <Rect>[];
+    Size? labelSize(AtlasLink? link) {
+      final label = link?.label;
+      if (label == null) return null;
+
+      final painter = TextPainter(
+        text: TextSpan(text: label, style: theme.textTheme.bodySmall),
+        textDirection: TextDirection.ltr,
+        maxLines: 1,
+      )..layout(maxWidth: _labelMaxWidth - 16);
+      final size = Size(painter.width + 20, painter.height + 4);
+      painter.dispose();
+      return size;
+    }
+
+    final layout = geometry.layout;
+    final links = [
+      for (final from in flow.pages)
+        for (final to in flow.leadsTo(from)) (from, to),
+    ];
+    int span((AtlasNode, AtlasNode) link) {
+      return layout.columnOf(link.$2) - layout.columnOf(link.$1);
+    }
+
+    final forwardLinks =
+        links.where((link) => !layout.isBackLink(link.$1, link.$2)).toList()
+          ..sort((a, b) => span(a).compareTo(span(b)));
+
     var lanes = 0;
     final edges = [
-      for (final from in flow.pages)
-        for (final to in flow.leadsTo(from))
-          geometry.layout.isBackLink(from, to)
-              ? _Edge.back(
-                  from: rects[from]!,
-                  to: rects[to]!,
-                  laneY: geometry.nodesBottom + geometry.laneGap * ++lanes,
-                  link: flow.linkBetween(from, to),
-                )
-              : _Edge.forward(
-                  start: ports.start(from, to),
-                  end: ports.end(from, to),
-                  stub: flow.hasLinkLabels ? _labeledArrowStub : _arrowStub,
-                  link: flow.linkBetween(from, to),
-                ),
+      for (final (from, to) in links)
+        if (layout.isBackLink(from, to))
+          _Edge.back(
+            from: rects[from]!,
+            to: rects[to]!,
+            laneY: geometry.nodesBottom + geometry.laneGap * ++lanes,
+            link: flow.linkBetween(from, to),
+          ),
+      for (final (from, to) in forwardLinks)
+        _Edge.forward(
+          start: ports.start(from, to),
+          end: ports.end(from, to),
+          link: flow.linkBetween(from, to),
+          labelSize: labelSize(flow.linkBetween(from, to)),
+          nodes: rects.values,
+          placedLabels: placedLabels,
+        ),
     ];
 
     return SizedBox.fromSize(
@@ -578,20 +606,65 @@ class _Edge {
   _Edge._(this.path, this.tip, this.direction, this.labelAnchor, this.link);
 
   /// Runs from [start] on the right side of a node to [end] on the left side
-  /// of a later one. It leaves and arrives horizontally and ends in a straight
-  /// [stub], so the line visibly meets the node at a right angle, like its
-  /// arrowhead. Its label sits on the stub, at the height of the link's own
-  /// port, so labels of links into the same node do not overlap.
+  /// of a later one as one continuous curve. It leaves and arrives
+  /// horizontally, so the line meets the node at a right angle, like its
+  /// arrowhead. Its label of [labelSize] sits in the middle of the curve, or
+  /// as close to it as possible without covering [nodes] and, if possible,
+  /// the [placedLabels], to which its own area is then added.
   factory _Edge.forward({
     required Offset start,
     required Offset end,
-    required double stub,
     required AtlasLink? link,
+    required Size? labelSize,
+    required Iterable<Rect> nodes,
+    required List<Rect> placedLabels,
   }) {
-    final stubStart = end - Offset(stub, 0);
-    final bend = (stubStart.dx - start.dx) / 2;
-    final control1 = start + Offset(bend, 0);
-    final control2 = stubStart - Offset(bend, 0);
+    final bend = Offset((end.dx - start.dx) / 2, 0);
+    final control1 = start + bend;
+    final control2 = end - bend;
+
+    Offset pointAt(double t) {
+      final u = 1 - t;
+      return start * (u * u * u) +
+          control1 * (3 * u * u * t) +
+          control2 * (3 * u * t * t) +
+          end * (t * t * t);
+    }
+
+    int costAt(Offset point) {
+      final label = Rect.fromCenter(
+        center: point,
+        width: labelSize!.width,
+        height: labelSize.height,
+      );
+      return nodes.where(label.overlaps).length * 100 +
+          placedLabels.where(label.overlaps).length;
+    }
+
+    final candidates = [
+      for (var step = 0; step <= 20; step++)
+        for (final t in {0.5 - step / 40, 0.5 + step / 40}) pointAt(t),
+    ];
+
+    var labelAnchor = pointAt(0.5);
+    if (labelSize != null) {
+      var lowest = costAt(labelAnchor);
+      for (final point in candidates) {
+        if (lowest == 0) break;
+        final cost = costAt(point);
+        if (cost < lowest) {
+          lowest = cost;
+          labelAnchor = point;
+        }
+      }
+      placedLabels.add(
+        Rect.fromCenter(
+          center: labelAnchor,
+          width: labelSize.width,
+          height: labelSize.height,
+        ),
+      );
+    }
 
     return _Edge._(
       Path()
@@ -601,13 +674,12 @@ class _Edge {
           control1.dy,
           control2.dx,
           control2.dy,
-          stubStart.dx,
-          stubStart.dy,
-        )
-        ..lineTo(end.dx, end.dy),
+          end.dx,
+          end.dy,
+        ),
       end,
       0,
-      Offset(end.dx - stub / 2 - _EdgePainter.arrowLength / 2, end.dy),
+      labelAnchor,
       link,
     );
   }
@@ -649,7 +721,7 @@ class _EdgePainter extends CustomPainter {
   final List<_Edge> edges;
   final Color color;
 
-  static const arrowLength = 8.0;
+  static const _arrowLength = 8.0;
   static const _arrowAngle = math.pi / 7;
 
   @override
@@ -668,7 +740,7 @@ class _EdgePainter extends CustomPainter {
           edge.tip -
               Offset.fromDirection(
                 edge.direction + side * _arrowAngle,
-                arrowLength,
+                _arrowLength,
               ),
           paint,
         );

@@ -64,6 +64,10 @@ class AtlasLayout {
   final List<List<AtlasNode>> columns;
   final Set<(AtlasNode, AtlasNode)> backLinks;
 
+  int columnOf(AtlasNode node) {
+    return columns.indexWhere((column) => column.contains(node));
+  }
+
   bool isBackLink(AtlasNode from, AtlasNode to) {
     return backLinks.contains((from, to));
   }
