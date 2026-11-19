@@ -45,7 +45,8 @@ class QueryGroup {
   /// Decodes a string query group encoded value back to a [QueryGroup].
   ///
   /// Each pair is split on its first colon, so a value with a non-encoded
-  /// colon (e.g. `12:30`) is kept whole. Pairs without a colon are skipped.
+  /// colon (e.g. `12:30`) is kept whole. Pairs without a colon or with an
+  /// empty key are skipped.
   // ignore: sort_constructors_first
   factory QueryGroup.fromParam(String value) {
     if (value == '{}') {
@@ -64,7 +65,7 @@ class QueryGroup {
     final fields = <String, String>{};
     for (final param in params) {
       final separatorIndex = param.indexOf(':');
-      if (separatorIndex == -1) continue;
+      if (separatorIndex <= 0) continue;
 
       final fieldKey = param.substring(0, separatorIndex);
       final fieldValue = param.substring(separatorIndex + 1);

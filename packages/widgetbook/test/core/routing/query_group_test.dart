@@ -89,7 +89,7 @@ void main() {
         'given a query group with non-encoded special characters (e.g. comma) '
         'and non-ASCII characters, '
         'when [QueryGroup.fromParam] is called, '
-        'then the pairs split by the comma without a colon are skipped',
+        'then unencoded commas in a value truncate it and drop the remainder',
         () {
           final key = 'Тест field';
           final value = 'значение,,foo';
@@ -118,6 +118,18 @@ void main() {
           expect(
             QueryGroup.fromParam('{a:1,b}'),
             equals(const QueryGroup({'a': '1'})),
+          );
+        },
+      );
+
+      test(
+        'given a query group with a pair with an empty key, '
+        'when [QueryGroup.fromParam] is called, '
+        'then the pair is skipped',
+        () {
+          expect(
+            QueryGroup.fromParam('{:1,a:2}'),
+            equals(const QueryGroup({'a': '2'})),
           );
         },
       );
