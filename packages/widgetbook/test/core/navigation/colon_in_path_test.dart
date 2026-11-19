@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/core/framework/component.dart';
-import 'package:widgetbook/src/core/navigation/tree.dart';
 import 'package:widgetbook/src/core/navigation/tree_node.dart';
 
 import '../../helper/story_helpers.dart';
