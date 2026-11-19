@@ -1,12 +1,22 @@
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
+
+import '../atlas/atlas_layout.dart';
 
 import '../docs/docs.dart';
 import '../framework/framework.dart';
 import 'tree_node.dart';
 
+/// The navigation path of the atlas overview; each flow is nested below it.
+const atlasPath = 'Atlas';
+
 class Tree {
   static TreeNode<Null> build(Config config) {
     final root = TreeNode<Null>('', null, null);
+
+    if (config.atlas.isNotEmpty) {
+      _addAtlas(root, config);
+    }
 
     for (final component in config.components) {
       final parts = p.split(component.path);
@@ -60,5 +70,47 @@ class Tree {
     }
 
     return root;
+  }
+
+  static void _addAtlas(TreeNode<Null> root, Config config) {
+    final registered = registeredStories(config);
+    final atlasNode = root.add(
+      TreeNode<List<AtlasFlow>>(atlasPath, config.atlas, root),
+    );
+
+    for (final flow in config.atlas) {
+      final flowNode = atlasNode.add(
+        TreeNode<AtlasFlow>(flow.name, flow, atlasNode),
+      );
+
+      if (flow.variants.isEmpty) {
+        _addAtlasPages(flowNode, flow, registered);
+      }
+      for (final variant in flow.variantFlows) {
+        final variantNode = flowNode.add(
+          TreeNode<AtlasFlow>(variant.name, variant, flowNode),
+        );
+        _addAtlasPages(variantNode, variant, registered);
+      }
+    }
+  }
+
+  static void _addAtlasPages(
+    TreeNode<AtlasFlow> flowNode,
+    AtlasFlow flow,
+    Set<Story> registered,
+  ) {
+    for (final node in flow.pages) {
+      if (isUnregisteredPage(node, registered)) {
+        debugPrint(
+          'Widgetbook: the "${flow.name}" AtlasFlow references a story that '
+          'is not part of Config.components; it is shown as a placeholder.',
+        );
+      } else if (node is AtlasPage && node.args != null) {
+        flowNode.add(
+          TreeNode<Scenario>(node.pathSegment, node.scenario, flowNode),
+        );
+      }
+    }
   }
 }

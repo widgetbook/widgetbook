@@ -1,0 +1,189 @@
+# Atlas
+
+The atlas maps which page of your app leads to which other pages.
+Each page is a story, and a page can lead to any number of other pages.
+Pages are grouped into named flows, such as onboarding or checkout.
+
+Declare the flows in their own file and reference the stories by their variables.
+Since the stories never reference each other, two pages can lead to each other without a circular initialization,
+and renaming a story variable breaks the build instead of the atlas.
+
+```dart title=widgetbook/lib/widgetbook.atlas.dart
+import 'auth/login.stories.dart' as login;
+import 'home/home.stories.dart' as home;
+import 'settings/settings.stories.dart' as settings;
+
+final onboarding = AtlasFlow(
+  name: 'Onboarding',
+  links: {
+    login.$Default: [home.$Default, login.$SignUp],
+    login.$SignUp: [home.$Default],
+  },
+);
+
+final preferences = AtlasFlow(
+  name: 'Preferences',
+  links: {
+    home.$Default: [settings.$Default],
+    settings.$Default: [home.$Default],
+  },
+);
+```
+
+Stories of different files usually share names such as `$Default`, so import the stories files with a prefix.
+
+```dart title=widgetbook/lib/widgetbook.config.dart
+final config = Config(
+  components: components,
+  atlas: [onboarding, preferences],
+);
+```
+
+## Pages in a Specific State
+
+A bare story shows the story with its default args.
+To show a story in a specific state, wrap it in an `AtlasPage` with args.
+A story can appear several times in one flow with different args.
+
+```dart
+final guestMenu = AtlasPage(
+  menu.$MainMenu,
+  id: 'main-menu-guest',
+  label: 'Main menu · guest',
+  args: menu.MainMenuArgs.fixed(isLoggedIn: false),
+);
+```
+
+Pages with args are listed below their flow in the navigation tree (e.g. `?path=Atlas/Settings/main-menu-guest`).
+Opening one renders the story with those args, and the args panel lists them.
+These states live in the atlas only, so they don't become stories or snapshots.
+Two pages are the same node when they share an `id`, or, without ids, the same story and the same args instance, so declare a page in a variable when it appears in several links.
+
+## Link Labels
+
+Wrap a target in an `AtlasLink` to label the arrow, e.g. with the action that leads there.
+The optional description is shown when hovering the label.
+
+```dart
+final settings = AtlasFlow(
+  name: 'Settings',
+  links: {
+    menu.$MainMenu: [
+      AtlasLink(to: profile.$Default, label: 'Profile'),
+      AtlasLink(
+        to: system.$Default,
+        label: 'System',
+        description: 'Pushes a page onto the menu navigator',
+      ),
+      imprint,
+    ],
+  },
+);
+```
+
+## Variants
+
+A flow can have variants for its different states, e.g. a menu for logged-in users and for guests.
+The flow's `links` are shared by all variants, and each `AtlasFlowVariant` adds its own.
+Variants are listed below their flow in the navigation tree (e.g. `?path=Atlas/Settings/Guest`), and the flow page switches between them in place.
+Pages keep their position across variants, so switching shows exactly what differs.
+
+```dart
+final guestMenu = AtlasPage(
+  menu.$MainMenu,
+  id: 'main-menu-guest',
+  args: menu.MainMenuArgs.fixed(isLoggedIn: false),
+);
+
+final settings = AtlasFlow(
+  name: 'Settings',
+  links: {
+    menu.$MainMenu: [imprint],
+  },
+  variants: [
+    AtlasFlowVariant(
+      name: 'Logged in',
+      links: {
+        menu.$MainMenu: [AtlasLink(to: profile.$Default, label: 'Profile')],
+      },
+    ),
+    AtlasFlowVariant(
+      name: 'Guest',
+      links: {
+        guestMenu: [AtlasLink(to: login.$Default, label: 'Sign in'), imprint],
+      },
+    ),
+  ],
+);
+```
+
+## Groups
+
+Large flows read better in sections, e.g. the steps of an onboarding.
+`AtlasGroup`s are laid out left to right in their declaration order, each under a header, and keep the order of their pages within their own columns.
+A page belongs to the first group that lists it, and pages of no group follow the groups.
+
+```dart
+final onboarding = AtlasFlow(
+  name: 'Onboarding',
+  groups: [
+    AtlasGroup(name: 'Account', pages: [welcome.$Default, signUp.$Default]),
+    AtlasGroup(name: 'Identity', pages: [identity.$Upload, identity.$Selfie]),
+  ],
+  links: { /* ... */ },
+);
+```
+
+## Terminals
+
+Destinations without a story, such as an external link or logging out, are `AtlasTerminal`s.
+Tapping a terminal with a `url` opens it.
+
+```dart
+const imprint = AtlasTerminal(label: 'Imprint', url: 'https://example.com/imprint');
+const logout = AtlasTerminal(label: 'Log out', description: 'Signs the user out');
+```
+
+A story that is not part of `Config.components` is shown as a placeholder, and a warning is printed, so flows can be adopted incrementally.
+
+## Decorators
+
+Decorators wrap a node, e.g. to dim it or add a badge based on your own data.
+They can be set on an `AtlasPage`, an `AtlasTerminal`, or a whole `AtlasFlow`.
+
+```dart
+final onboarding = AtlasFlow(
+  name: 'Onboarding',
+  decorators: [
+    (context, node, child) => Opacity(
+      opacity: completedSteps.contains(node) ? 0.4 : 1,
+      child: child,
+    ),
+  ],
+  links: { /* ... */ },
+);
+```
+
+## Previews
+
+Every page shows a live preview, rendered like the workbench: through the `appBuilder`, the addons and the story's `setup`.
+Changing an addon, e.g. the theme or locale, updates the previews.
+Previews are framed by the viewport selected in the `ViewportAddon`, or by `AtlasPreviewConfig.fallbackSize` when none is selected.
+Animations only run in the preview under the mouse.
+Set `atlasPreview: null` in the `Config` to show page names only.
+
+## Home Page
+
+When `atlas` is not empty, the default [home widget](/configure/home-widget) shows every flow as a graph.
+Tapping a page opens its story, or its state for a page with args.
+Graphs can be panned and zoomed, and the fit button fits a whole flow into view.
+The navigation tree gets an "Atlas" entry that shows all flows, with one entry per flow below it to look at a single flow (e.g. `?path=Atlas/Onboarding`).
+`WidgetbookState.of(context).goHome()` also leads back to the home page.
+Flow names must be unique, page ids must be unique within their flow, and no top-level folder of your components may be named "Atlas".
+To show the atlas inside a custom home widget, use `AtlasHomePage`.
+
+## Leads To DocBlock
+
+The `LeadsToDocBlock` is part of the default docs and lists, per flow, which pages each story of the component leads to and is reached from.
+It renders nothing for components without pages in the atlas.
+See [DocBlocks](/documentation/doc-blocks#leadstodocblock) to add it to custom docs.

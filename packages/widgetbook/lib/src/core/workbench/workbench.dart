@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:meta/meta.dart';
 
+import '../atlas/atlas.dart';
 import '../state/state.dart';
 import '../theme/theme.dart';
 import 'docs_preview.dart';
@@ -19,6 +20,14 @@ class Workbench extends StatelessWidget {
 
     if (state.docs != null) {
       return const DocsPreview();
+    }
+
+    final atlasFlows = state.atlasFlows;
+    if (atlasFlows != null) {
+      return AtlasHomePage(
+        key: ValueKey('atlas:${state.path}'),
+        flows: atlasFlows,
+      );
     }
 
     final scenario = state.scenario;

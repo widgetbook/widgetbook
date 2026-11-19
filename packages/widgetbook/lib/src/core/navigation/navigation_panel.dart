@@ -116,7 +116,7 @@ class _NavigationPanelState extends State<NavigationPanel> {
   }
 
   bool _isExpandedByDefault(TreeNode node) {
-    if (node is TreeNode<Story>) return false;
+    if (node is TreeNode<Story> || node is TreeNode<AtlasFlow>) return false;
     return widget.foldersExpandedByDefault;
   }
 

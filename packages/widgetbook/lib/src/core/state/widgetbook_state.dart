@@ -107,6 +107,16 @@ class WidgetbookState extends ChangeNotifier {
     return node is TreeNode<Scenario> ? node.data : null;
   }
 
+  /// The atlas flows of the selected atlas node, if any.
+  @internal
+  List<AtlasFlow>? get atlasFlows {
+    return switch (activeNode) {
+      final TreeNode<AtlasFlow> node => [node.data],
+      final TreeNode<List<AtlasFlow>> node => node.data,
+      _ => null,
+    };
+  }
+
   /// The current selected docs, if any.
   List<DocBlock>? get docs {
     final node = activeNode;
@@ -210,10 +220,13 @@ class WidgetbookState extends ChangeNotifier {
   /// Navigate to the docs page of the given [component].
   void goToDocs(Component component) => updatePath(component.docsPath);
 
+  /// Navigate to the [Config.home] page by deselecting the current story.
+  void goHome() => updatePath(null);
+
   /// Update the [path], causing a new [story] to bet returned.
   /// Resets the args during the update.
   @internal
-  void updatePath(String newPath) {
+  void updatePath(String? newPath) {
     // Reset args
     final oldStory = story;
 
