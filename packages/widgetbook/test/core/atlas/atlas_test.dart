@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:widgetbook/src/core/atlas/atlas_layout.dart';
 import 'package:widgetbook/src/core/navigation/folder_tree_tile.dart';
 import 'package:widgetbook/src/core/state/default_home_page.dart';

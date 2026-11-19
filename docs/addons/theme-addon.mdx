@@ -1,13 +1,12 @@
 # Theme Addon
 
 The Theme Addon lets you inject a theme widget into your tree, to make your stories styled and try them out with different themes.
-There are 3 different variants of the Theme Addon, which depend on the theme data and widget you use in your application:
+There are 2 different variants of the Theme Addon, which depend on the theme data and widget you use in your application:
 
-| Addon                 | Theme Data           | Inherited Widget |
-| --------------------- | -------------------- | ---------------- |
-| `MaterialThemeAddon`  | `ThemeData`          | `Theme`          |
-| `CupertinoThemeAddon` | `CupertinoThemeData` | `CupertinoTheme` |
-| `ThemeAddon`          | Custom               | Custom           |
+| Addon                | Theme Data  | Inherited Widget |
+| -------------------- | ----------- | ---------------- |
+| `MaterialThemeAddon` | `ThemeData` | `Theme`          |
+| `ThemeAddon`         | Custom      | Custom           |
 
 <Tabs
   values={[
@@ -37,6 +36,9 @@ There are 3 different variants of the Theme Addon, which depend on the theme dat
 
 If your app is built using `MaterialApp`, then you are probably using `ThemeData` to define your themes. Then `MaterialThemeAddon` is the right choice for you.
 
+`MaterialThemeAddon` expects the `ThemeData` of [`material_ui`](https://pub.dev/packages/material_ui).
+If your app still uses `package:flutter/material.dart`, use the generic [`ThemeAddon`](#custom-theme) with your `ThemeData` and pass your own `appBuilder` to `Config`.
+
 ```dart title=widgetbook/lib/widgetbook.config.dart
 import 'package:my_app/themes.dart'; // For AppThemes
 
@@ -53,18 +55,23 @@ final config = Config(
 
 ### Cupertino Theme
 
-If your app is built using `CupertinoApp`, then you are probably using `CupertinoThemeData` to define your themes. Then `CupertinoThemeAddon` is the right choice for you.
+If your app is built using `CupertinoApp`, use the generic `ThemeAddon` with your `CupertinoThemeData`, and pass a [custom `appBuilder`](/configure/root-widget) that returns a `CupertinoApp`.
 
 ```dart title=widgetbook/lib/widgetbook.config.dart
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:my_app/themes.dart'; // For AppThemes
 
 final config = Config(
   // ...
+  appBuilder: (context, child) => CupertinoApp(home: child), // [!code highlight]
   addons: [
-    CupertinoThemeAddon({ // [!code highlight]
-      'Light': AppThemes.light(), // [!code highlight]
-      'Dark': AppThemes.dark(), // [!code highlight]
-    }), // [!code highlight]
+    ThemeAddon<CupertinoThemeData>( // [!code highlight]
+      {
+        'Light': AppThemes.light(),
+        'Dark': AppThemes.dark(),
+      },
+      (context, theme, child) => CupertinoTheme(data: theme, child: child), // [!code highlight]
+    ), // [!code highlight]
   ],
 );
 ```
@@ -155,7 +162,6 @@ final $Default = _Story(
       modes: [
         // Use one of the following based on your addon
         MaterialThemeMode('Dark', ThemeData.dark()), // [!code highlight]
-        CupertinoThemeMode('Dark', CupertinoThemeData(brightness: Brightness.dark)), // [!code highlight]
         ThemeMode('Dark', myAppTheme, myAppThemeBuilder), // [!code highlight]
       ]
     ),

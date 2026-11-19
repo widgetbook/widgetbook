@@ -1,7 +1,7 @@
 /// @docImport '../widgetbook_app.dart';
 library;
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:meta/meta.dart';
 
 /// A widget that provides the theme used in the [WidgetbookApp].

@@ -14,12 +14,12 @@ screenshots:
     path: assets/logo.webp
 
 environment:
-  sdk: ">=3.10.0 <4.0.0"
-  flutter: ">=3.38.0"
+  sdk: ">=3.13.0 <4.0.0"
+  flutter: ">=3.47.0"
 
 dependencies:
-  analyzer: ">=8.0.0 <15.0.0"
-  build: ^4.0.0
+  analyzer: ">=8.2.0 <15.0.0"
+  build: ">=4.0.0 <6.0.0"
   code_builder: ^4.5.0
   collection: ^1.15.0
   crypto: ^3.0.0
@@ -29,6 +29,7 @@ dependencies:
   flutter_test:
     sdk: flutter
   glob: ^2.0.2
+  material_ui: ^1.11.1
   meta: ^1.8.0
   nested: ^1.0.0
   path: ^1.8.0

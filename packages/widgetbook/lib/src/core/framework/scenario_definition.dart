@@ -27,11 +27,10 @@ enum ScenarioStrategy {
   both,
 }
 
-typedef ModesMerger =
-    List<Mode> Function(
-      List<Mode> storyModes,
-      List<Mode> scenarioModes,
-    );
+typedef ModesMerger = List<Mode> Function(
+  List<Mode> storyModes,
+  List<Mode> scenarioModes,
+);
 
 /// The default function to merge modes of a story and a scenario.
 /// It puts the modes of the scenario first, and then adds the modes of the

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../atlas/atlas_layout.dart';
 import '../framework/framework.dart';

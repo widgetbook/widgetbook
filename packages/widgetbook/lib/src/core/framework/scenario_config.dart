@@ -13,8 +13,10 @@ import 'story.dart';
 ///
 /// Receives the active [WidgetTester] and the [Scenario] currently being
 /// executed.
-typedef ScenarioCallback =
-    Future<void> Function(WidgetTester tester, Scenario scenario);
+typedef ScenarioCallback = Future<void> Function(
+  WidgetTester tester,
+  Scenario scenario,
+);
 
 /// Builds the name of a crossed [Scenario] that is generated when a
 /// [ScenarioDefinition] with [ScenarioStrategy.perScenario] or
@@ -27,12 +29,11 @@ typedef ScenarioCallback =
 ///
 /// The returned name must not contain `/`, which is reserved for
 /// [Scenario.path].
-typedef ScenarioNameBuilder =
-    String Function(
-      ScenarioDefinition definition,
-      Story story,
-      Scenario scenario,
-    );
+typedef ScenarioNameBuilder = String Function(
+  ScenarioDefinition definition,
+  Story story,
+  Scenario scenario,
+);
 
 /// Separator used by [defaultScenarioNameBuilder] between the name of the
 /// base scenario and the name of the [ScenarioDefinition] it is crossed with.
@@ -58,12 +59,11 @@ String defaultScenarioNameBuilder(
 /// [testWidgetbook].
 ///
 /// Implementations must await `body` exactly once.
-typedef ScenarioWrapper =
-    Future<void> Function(
-      WidgetTester tester,
-      Scenario scenario,
-      Future<void> Function() body,
-    );
+typedef ScenarioWrapper = Future<void> Function(
+  WidgetTester tester,
+  Scenario scenario,
+  Future<void> Function() body,
+);
 
 /// Configuration applied to every [Scenario] discovered from a [Config].
 ///

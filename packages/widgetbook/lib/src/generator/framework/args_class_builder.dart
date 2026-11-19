@@ -58,12 +58,13 @@ class ArgsClassBuilder {
               )
               ..initializers.addAll(
                 params.map(
-                  (param) => refer('this')
-                      .property('${param.displayName}Arg')
-                      .assign(
-                        ArgBuilder(param).buildInitializer(),
-                      )
-                      .code,
+                  (param) =>
+                      refer('this')
+                          .property('${param.displayName}Arg')
+                          .assign(
+                            ArgBuilder(param).buildInitializer(),
+                          )
+                          .code,
                 ),
               ),
           ),

@@ -1,5 +1,13 @@
 ## Unreleased
 
+- **BREAKING**: Set minimum SDK version to 3.13.0 & minimum Flutter version to 3.47.0. ([#2068](https://github.com/widgetbook/widgetbook/pull/2068))
+- **FIX**: Keep the semantics format of `testWidgetbook` snapshots on Flutter 3.50, which otherwise switched to Flutter's own `SemanticsData.toJson()`. ([#2069](https://github.com/widgetbook/widgetbook/pull/2069))
+- **BREAKING**: Migrate from `package:flutter/material.dart` to `material_ui`.
+  `MaterialThemeAddon`, `materialAppBuilder` and `Config.lightTheme`/`darkTheme` now use its types.
+  Projects still on `package:flutter/material.dart` can pass their own `appBuilder` and use `ThemeAddon<ThemeData>`. ([#2070](https://github.com/widgetbook/widgetbook/pull/2070))
+- **BREAKING**: Remove `CupertinoThemeAddon`, `CupertinoThemeMode` and `cupertinoAppBuilder`.
+  Use `ThemeAddon<CupertinoThemeData>` and a custom `appBuilder` returning a `CupertinoApp` instead. ([#2071](https://github.com/widgetbook/widgetbook/pull/2071))
+- **REFACTOR**: Allow `build` 5.x. ([#2073](https://github.com/widgetbook/widgetbook/pull/2073))
 - **FEAT**: Add `Config.atlas` to map which stories lead to which other stories in named `AtlasFlow`s, shown as a graph on the default home page, with an "Atlas" entry and one entry per flow in the navigation tree, and by the new `LeadsToDocBlock`. Add `WidgetbookState.goHome` to deselect the current story.
 
 ## 4.0.0-beta.15

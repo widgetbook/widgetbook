@@ -3,12 +3,11 @@ import 'package:flutter/widgets.dart';
 import '../../fields/fields.dart';
 import '../../framework/framework.dart';
 
-typedef ThemeBuilder<T> =
-    Widget Function(
-      BuildContext context,
-      T theme,
-      Widget child,
-    );
+typedef ThemeBuilder<T> = Widget Function(
+  BuildContext context,
+  T theme,
+  Widget child,
+);
 
 class ThemeMode<T> extends Mode<T> {
   ThemeMode(
