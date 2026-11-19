@@ -11,12 +11,14 @@ import 'atlas_layout.dart';
 import 'atlas_navigation.dart';
 
 const _columnGap = 72.0;
-const _labeledColumnGap = 168.0;
+const _labeledColumnGap = 248.0;
 const _rowGap = 20.0;
 const _laneGap = 14.0;
 const _labeledLaneGap = 28.0;
-const _labelMaxWidth = 144.0;
+const _labelMaxWidth = 160.0;
 const _portSpacing = 12.0;
+const _arrowStub = 16.0;
+const _labeledArrowStub = _labelMaxWidth + 12;
 const _labeledPortSpacing = 28.0;
 const _textNodeSize = Size(176, 52);
 const _previewNodeWidth = 200.0;
@@ -165,7 +167,7 @@ class AtlasFlowGraph extends StatelessWidget {
               : _Edge.forward(
                   start: ports.start(from, to),
                   end: ports.end(from, to),
-                  columnGap: geometry.columnGap,
+                  stub: flow.hasLinkLabels ? _labeledArrowStub : _arrowStub,
                   link: flow.linkBetween(from, to),
                 ),
     ];
@@ -288,10 +290,7 @@ class _LinkLabel extends StatelessWidget {
       ),
     );
 
-    final description = this.description;
-    if (description == null) return pill;
-
-    return Tooltip(message: description, child: pill);
+    return Tooltip(message: description ?? label, child: pill);
   }
 }
 
@@ -579,19 +578,20 @@ class _Edge {
   _Edge._(this.path, this.tip, this.direction, this.labelAnchor, this.link);
 
   /// Runs from [start] on the right side of a node to [end] on the left side
-  /// of a later one, arriving along the line between both ends so that the
-  /// arrowhead points in the direction the link actually comes from. Its
-  /// label sits in the gap before the target, where no node can be.
+  /// of a later one. It leaves and arrives horizontally and ends in a straight
+  /// [stub], so the line visibly meets the node at a right angle, like its
+  /// arrowhead. Its label sits on the stub, at the height of the link's own
+  /// port, so labels of links into the same node do not overlap.
   factory _Edge.forward({
     required Offset start,
     required Offset end,
-    required double columnGap,
+    required double stub,
     required AtlasLink? link,
   }) {
-    final bend = math.min(columnGap, end.dx - start.dx) / 2;
+    final stubStart = end - Offset(stub, 0);
+    final bend = (stubStart.dx - start.dx) / 2;
     final control1 = start + Offset(bend, 0);
-    final approach = end - control1;
-    final control2 = end - approach / approach.distance * bend;
+    final control2 = stubStart - Offset(bend, 0);
 
     return _Edge._(
       Path()
@@ -601,15 +601,13 @@ class _Edge {
           control1.dy,
           control2.dx,
           control2.dy,
-          end.dx,
-          end.dy,
-        ),
+          stubStart.dx,
+          stubStart.dy,
+        )
+        ..lineTo(end.dx, end.dy),
       end,
-      approach.direction,
-      Offset(
-        end.dx - columnGap / 2,
-        end.dy - approach.dy / approach.dx * columnGap / 2,
-      ),
+      0,
+      Offset(end.dx - stub / 2 - _EdgePainter.arrowLength / 2, end.dy),
       link,
     );
   }
@@ -651,7 +649,7 @@ class _EdgePainter extends CustomPainter {
   final List<_Edge> edges;
   final Color color;
 
-  static const _arrowLength = 8.0;
+  static const arrowLength = 8.0;
   static const _arrowAngle = math.pi / 7;
 
   @override
@@ -670,7 +668,7 @@ class _EdgePainter extends CustomPainter {
           edge.tip -
               Offset.fromDirection(
                 edge.direction + side * _arrowAngle,
-                _arrowLength,
+                arrowLength,
               ),
           paint,
         );
