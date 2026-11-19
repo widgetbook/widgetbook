@@ -1,5 +1,6 @@
 export 'alignment_addon.dart';
 export 'builder_addon.dart';
+export 'comments_addon/addon.dart';
 export 'grid_addon.dart';
 export 'locale_addon.dart';
 export 'semantics_addon/addon.dart';

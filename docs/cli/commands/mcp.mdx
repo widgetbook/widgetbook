@@ -1,0 +1,21 @@
+# `mcp`
+
+Starts the Widgetbook [MCP](https://modelcontextprotocol.io) server, which gives coding agents access to [story comments](/agentic/story-comments).
+It also serves the local API that the `CommentsAddon` uses to store comments.
+
+The server communicates over stdio, so it is started by the coding agent rather than by hand.
+
+## Usage
+
+```bash
+widgetbook mcp
+```
+
+## Arguments
+
+| Argument | Mandatory | Default | Description                                                                  |
+| -------- | --------- | ------- | ---------------------------------------------------------------------------- |
+| `--root` | ➖        | `.`     | The project directory. Comments are stored in `<root>/.widgetbook/comments`. |
+| `--port` | ➖        | `7357`  | The local port that the `CommentsAddon` connects to.                         |
+
+When changing the port, pass the same value to the addon with `CommentsAddon(port: ...)`.

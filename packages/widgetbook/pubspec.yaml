@@ -36,6 +36,7 @@ dependencies:
   resizable_widget: ^1.0.5
   source_gen: ^4.0.0
   url_launcher: ^6.3.0
+  web: ^1.0.0
 
 dev_dependencies:
   build_test: ^3.0.0

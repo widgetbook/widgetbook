@@ -45,6 +45,7 @@ final config = Config(
       ),
     ),
     SemanticsAddon(),
+    CommentsAddon(),
   ],
   scenarioConfig: ScenarioConfig(
     definitions: [
