@@ -4,11 +4,17 @@ import 'package:path/path.dart' as p;
 import '../framework/framework.dart';
 import '../navigation/tree.dart';
 
+/// The columns, from `first` to `last` inclusive, that an [AtlasGroup] spans.
+@internal
+typedef AtlasGroupSpan = ({AtlasGroup group, int first, int last});
+
 /// Arranges the nodes of an [AtlasFlow] into columns, left to right.
 ///
-/// Links that close a cycle (e.g. going back or retrying) are [backLinks].
-/// Every other link points to a later column, as each node is placed by its
-/// longest path from an entry node, so the last screens of a flow end up last.
+/// Each node is placed by its longest path from an entry node, ignoring links
+/// that close a cycle, so the last screens of a flow end up last. With
+/// [AtlasFlow.groups], every group gets its own columns in declaration order,
+/// keeping that order within the group. Links to the same or an earlier
+/// column are [backLinks].
 @internal
 class AtlasLayout {
   factory AtlasLayout(AtlasFlow flow) {
@@ -19,14 +25,14 @@ class AtlasLayout {
     final onPath = <AtlasNode>{};
     final visited = <AtlasNode>{};
     final finished = <AtlasNode>[];
-    final backLinks = <(AtlasNode, AtlasNode)>{};
+    final cycleLinks = <(AtlasNode, AtlasNode)>{};
 
     void visit(AtlasNode node) {
       if (!visited.add(node)) return;
       onPath.add(node);
       for (final next in flow.leadsTo(node)) {
         if (onPath.contains(next)) {
-          backLinks.add((node, next));
+          cycleLinks.add((node, next));
         } else {
           visit(next);
         }
@@ -38,35 +44,60 @@ class AtlasLayout {
     entryNodes.forEach(visit);
     nodes.forEach(visit);
 
+    final ordered = finished.reversed.toList();
     final depths = <AtlasNode, int>{};
-    for (final node in finished.reversed) {
+    for (final node in ordered) {
       final depth = depths.putIfAbsent(node, () => 0);
       for (final next in flow.leadsTo(node)) {
-        if (backLinks.contains((node, next))) continue;
+        if (cycleLinks.contains((node, next))) continue;
         if ((depths[next] ?? -1) <= depth) depths[next] = depth + 1;
       }
     }
 
-    final columns = <List<AtlasNode>>[];
-    for (final node in finished.reversed) {
-      final depth = depths[node]!;
-      while (columns.length <= depth) {
-        columns.add([]);
+    final columnOf = <AtlasNode, int>{};
+    final groupSpans = <AtlasGroupSpan>[];
+    var offset = 0;
+    for (final group in [...flow.groups, null]) {
+      final members = ordered.where((node) => flow.groupOf(node) == group);
+      if (members.isEmpty) continue;
+
+      final levels = members.map((node) => depths[node]!).toSet().toList()
+        ..sort();
+      for (final node in members) {
+        columnOf[node] = offset + levels.indexOf(depths[node]!);
       }
-      columns[depth].add(node);
+      if (group != null) {
+        groupSpans.add((
+          group: group,
+          first: offset,
+          last: offset + levels.length - 1,
+        ));
+      }
+      offset += levels.length;
     }
 
-    return AtlasLayout._(columns, backLinks);
+    final columns = [for (var i = 0; i < offset; i++) <AtlasNode>[]];
+    for (final node in ordered) {
+      columns[columnOf[node]!].add(node);
+    }
+
+    final backLinks = {
+      for (final from in nodes)
+        for (final to in flow.leadsTo(from))
+          if (columnOf[to]! <= columnOf[from]!) (from, to),
+    };
+
+    return AtlasLayout._(columns, columnOf, backLinks, groupSpans);
   }
 
-  AtlasLayout._(this.columns, this.backLinks);
+  AtlasLayout._(this.columns, this._columnOf, this.backLinks, this.groupSpans);
 
   final List<List<AtlasNode>> columns;
+  final Map<AtlasNode, int> _columnOf;
   final Set<(AtlasNode, AtlasNode)> backLinks;
+  final List<AtlasGroupSpan> groupSpans;
 
-  int columnOf(AtlasNode node) {
-    return columns.indexWhere((column) => column.contains(node));
-  }
+  int columnOf(AtlasNode node) => _columnOf[node]!;
 
   bool isBackLink(AtlasNode from, AtlasNode to) {
     return backLinks.contains((from, to));

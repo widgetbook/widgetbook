@@ -81,6 +81,23 @@ final settings = AtlasFlow(
 );
 ```
 
+## Groups
+
+Large flows read better in sections, e.g. the steps of an onboarding.
+`AtlasGroup`s are laid out left to right in their declaration order, each under a header, and keep the order of their pages within their own columns.
+A page belongs to the first group that lists it, and pages of no group follow the groups.
+
+```dart
+final onboarding = AtlasFlow(
+  name: 'Onboarding',
+  groups: [
+    AtlasGroup(name: 'Account', pages: [welcome.$Default, signUp.$Default]),
+    AtlasGroup(name: 'Identity', pages: [identity.$Upload, identity.$Selfie]),
+  ],
+  links: { /* ... */ },
+);
+```
+
 ## Terminals
 
 Destinations without a story, such as an external link or logging out, are `AtlasTerminal`s.

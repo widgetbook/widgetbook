@@ -107,6 +107,18 @@ class AtlasTerminal implements AtlasNode {
   final List<AtlasNodeDecorator> decorators;
 }
 
+/// A named section of an [AtlasFlow], e.g. a step of an onboarding, shown as
+/// a header above its [pages].
+class AtlasGroup {
+  const AtlasGroup({
+    required this.name,
+    required this.pages,
+  });
+
+  final String name;
+  final List<AtlasNode> pages;
+}
+
 /// A named flow through the pages of an app, mapping each [AtlasNode] to the
 /// nodes it leads to.
 ///
@@ -118,16 +130,22 @@ class AtlasFlow {
     required this.name,
     required this.links,
     this.decorators = const [],
+    this.groups = const [],
   });
 
   final String name;
   final Map<AtlasNode, List<AtlasTarget>> links;
+
+  /// Sections laid out left to right in this order. A node belongs to the
+  /// first group listing it; nodes of no group follow the groups.
+  final List<AtlasGroup> groups;
   final List<AtlasNodeDecorator> decorators;
 
   late final Map<AtlasNode, AtlasNode> _canonical = () {
     final canonical = <AtlasNode, AtlasNode>{};
     final targets = links.values.expand((targets) => targets).map(_nodeOf);
-    for (final node in [...links.keys, ...targets]) {
+    final grouped = groups.expand((group) => group.pages);
+    for (final node in [...links.keys, ...targets, ...grouped]) {
       final normalized = _normalize(node);
       canonical.putIfAbsent(normalized, () => normalized);
     }
@@ -144,6 +162,18 @@ class AtlasFlow {
       for (final target in targets.whereType<AtlasLink>())
         (node(from), node(target.to)): target,
   };
+
+  late final Map<AtlasNode, AtlasGroup> _groupOf = () {
+    final groupOf = <AtlasNode, AtlasGroup>{};
+    for (final group in groups) {
+      for (final page in group.pages) {
+        groupOf.putIfAbsent(node(page), () => group);
+      }
+    }
+    return groupOf;
+  }();
+
+  AtlasGroup? groupOf(AtlasNode node) => _groupOf[this.node(node)];
 
   static AtlasNode _nodeOf(AtlasTarget target) {
     return switch (target) {
@@ -170,7 +200,7 @@ class AtlasFlow {
   }
 
   /// All nodes of this flow in declaration order, including nodes that only
-  /// appear as a target.
+  /// appear as a target or in a group.
   List<AtlasNode> get pages => _canonical.values.toList();
 
   List<AtlasNode> leadsTo(AtlasNode from) => _links[node(from)] ?? const [];

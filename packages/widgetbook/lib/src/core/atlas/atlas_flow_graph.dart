@@ -16,6 +16,8 @@ const _rowGap = 20.0;
 const _laneGap = 14.0;
 const _labeledLaneGap = 28.0;
 const _labelMaxWidth = 160.0;
+const _groupPadding = 16.0;
+const _groupHeaderHeight = 40.0;
 const _portSpacing = 12.0;
 const _labeledPortSpacing = 28.0;
 const _textNodeSize = Size(176, 52);
@@ -40,13 +42,21 @@ class AtlasGraphGeometry {
     final laneGap = flow.hasLinkLabels ? _labeledLaneGap : _laneGap;
 
     final layout = AtlasLayout(flow);
+    final hasGroups = layout.groupSpans.isNotEmpty;
+    final origin = hasGroups
+        ? const Offset(_groupPadding, _groupHeaderHeight)
+        : Offset.zero;
+    double columnLeft(int column) {
+      return origin.dx + column * (nodeSize.width + columnGap);
+    }
+
     final rects = <AtlasNode, Rect>{
       for (final (column, nodes) in layout.columns.indexed)
         for (final (row, node) in nodes.indexed)
           node:
               Offset(
-                column * (nodeSize.width + columnGap),
-                row * (nodeSize.height + _rowGap),
+                columnLeft(column),
+                origin.dy + row * (nodeSize.height + _rowGap),
               ) &
               nodeSize,
     };
@@ -57,18 +67,30 @@ class AtlasGraphGeometry {
           if (layout.isBackLink(from, to)) to,
     ].length;
 
-    final bottom = rects.values.fold(
-      0.0,
-      (max, rect) => math.max(max, rect.bottom),
-    );
-    final right = rects.values.fold(
-      0.0,
-      (max, rect) => math.max(max, rect.right),
-    );
+    final bottom =
+        rects.values.fold(0.0, (max, rect) => math.max(max, rect.bottom)) +
+        (hasGroups ? _groupPadding : 0);
+    final right =
+        rects.values.fold(0.0, (max, rect) => math.max(max, rect.right)) +
+        (hasGroups ? _groupPadding : 0);
+
+    final groups = [
+      for (final span in layout.groupSpans)
+        (
+          group: span.group,
+          rect: Rect.fromLTRB(
+            columnLeft(span.first) - _groupPadding,
+            0,
+            columnLeft(span.last) + nodeSize.width + _groupPadding,
+            bottom,
+          ),
+        ),
+    ];
 
     return AtlasGraphGeometry._(
       layout,
       rects,
+      groups,
       previewSize,
       columnGap,
       laneGap,
@@ -80,6 +102,7 @@ class AtlasGraphGeometry {
   AtlasGraphGeometry._(
     this.layout,
     this.rects,
+    this.groups,
     this.previewSize,
     this.columnGap,
     this.laneGap,
@@ -89,6 +112,10 @@ class AtlasGraphGeometry {
 
   final AtlasLayout layout;
   final Map<AtlasNode, Rect> rects;
+
+  /// The area of each [AtlasGroup], with room for its header at the top.
+  final List<({AtlasGroup group, Rect rect})> groups;
+
   final Size? previewSize;
   final double columnGap;
   final double laneGap;
@@ -204,6 +231,11 @@ class AtlasFlowGraph extends StatelessWidget {
       size: geometry.size,
       child: Stack(
         children: [
+          for (final (:group, :rect) in geometry.groups)
+            Positioned.fromRect(
+              rect: rect,
+              child: _GroupBand(name: group.name),
+            ),
           Positioned.fill(
             child: CustomPaint(
               painter: _EdgePainter(
@@ -286,6 +318,43 @@ class _ForwardPorts {
 
   Offset end(AtlasNode from, AtlasNode to) {
     return Offset(geometry.rects[to]!.left, _ends[(from, to)]!);
+  }
+}
+
+class _GroupBand extends StatelessWidget {
+  const _GroupBand({required this.name});
+
+  final String name;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = WidgetbookTheme.of(context);
+
+    return Material(
+      color: theme.colorScheme.onSurface.withAlpha(8),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: theme.dividerColor.withAlpha(60)),
+      ),
+      child: Align(
+        alignment: Alignment.topLeft,
+        child: SizedBox(
+          height: _groupHeaderHeight,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: _groupPadding),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: theme.textTheme.titleSmall,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 

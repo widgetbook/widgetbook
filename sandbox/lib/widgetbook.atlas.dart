@@ -18,6 +18,13 @@ const terms = AtlasTerminal(
 
 final authentication = AtlasFlow(
   name: 'Authentication',
+  groups: [
+    AtlasGroup(name: 'Entry', pages: [auth.$Welcome]),
+    AtlasGroup(
+      name: 'Credentials',
+      pages: [auth.$SignIn, signInFailed, auth.$SignUp],
+    ),
+  ],
   links: {
     auth.$Welcome: [
       AtlasLink(to: auth.$SignIn, label: 'Sign in'),

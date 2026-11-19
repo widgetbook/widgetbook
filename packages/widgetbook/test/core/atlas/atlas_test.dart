@@ -147,6 +147,30 @@ void main() {
     );
   });
 
+  group('$AtlasGroup', () {
+    test(
+      'given a page listed in two groups and one only in a group, '
+      'then it belongs to the first group and all pages are part of the flow',
+      () {
+        final auth = AtlasGroup(name: 'Auth', pages: [login, signUp]);
+        final flow = AtlasFlow(
+          name: 'Onboarding',
+          groups: [
+            auth,
+            AtlasGroup(name: 'Again', pages: [login, settings]),
+          ],
+          links: {
+            login: [home],
+          },
+        );
+
+        expect(flow.groupOf(login), auth);
+        expect(flow.groupOf(home), isNull);
+        expect(flow.pages, containsAll([page(signUp), page(settings)]));
+      },
+    );
+  });
+
   group('$AtlasLayout', () {
     test(
       'given a page reached both directly and through other pages, '
@@ -197,6 +221,66 @@ void main() {
           (page(signUp), page(login)),
           (page(home), page(home)),
         });
+      },
+    );
+
+    test(
+      'given groups, '
+      'then each group gets its own columns in declaration order '
+      'and ungrouped pages follow',
+      () {
+        final layout = AtlasLayout(
+          AtlasFlow(
+            name: 'Onboarding',
+            groups: [
+              AtlasGroup(name: 'Auth', pages: [login, signUp]),
+              AtlasGroup(name: 'App', pages: [home]),
+            ],
+            links: {
+              login: [signUp, home],
+              signUp: [home],
+              home: [settings],
+            },
+          ),
+        );
+
+        expect(layout.columns, [
+          [page(login)],
+          [page(signUp)],
+          [page(home)],
+          [page(settings)],
+        ]);
+        expect(
+          layout.groupSpans.map(
+            (span) => (span.group.name, span.first, span.last),
+          ),
+          [('Auth', 0, 1), ('App', 2, 2)],
+        );
+      },
+    );
+
+    test(
+      'given a link into an earlier group, '
+      'then it is a back link',
+      () {
+        final layout = AtlasLayout(
+          AtlasFlow(
+            name: 'Onboarding',
+            groups: [
+              AtlasGroup(name: 'App', pages: [home]),
+              AtlasGroup(name: 'Auth', pages: [login]),
+            ],
+            links: {
+              login: [home],
+            },
+          ),
+        );
+
+        expect(layout.columns, [
+          [page(home)],
+          [page(login)],
+        ]);
+        expect(layout.isBackLink(page(login), page(home)), isTrue);
       },
     );
 
@@ -722,6 +806,34 @@ void main() {
 
         expect(find.text('Back · HomePage / Home'), findsOneWidget);
         expect(find.text('Avatar · HomePage / Home'), findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      'given groups, '
+      'then their names are shown as headers',
+      (tester) async {
+        await pumpApp(
+          tester,
+          Config(
+            components: withProfile,
+            atlas: [
+              AtlasFlow(
+                name: 'Account',
+                groups: [
+                  AtlasGroup(name: 'Start', pages: [home]),
+                  AtlasGroup(name: 'Personal data', pages: [profile]),
+                ],
+                links: {
+                  home: [profile],
+                },
+              ),
+            ],
+          ),
+        );
+
+        expect(inAtlasPage(find.text('Start')), findsOneWidget);
+        expect(inAtlasPage(find.text('Personal data')), findsOneWidget);
       },
     );
 
