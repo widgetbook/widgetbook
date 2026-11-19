@@ -19,10 +19,27 @@ const terms = AtlasTerminal(
 final authentication = AtlasFlow(
   name: 'Authentication',
   links: {
-    auth.$Welcome: [auth.$SignIn, auth.$SignUp],
-    auth.$SignIn: [account.$Home, signInFailed, auth.$SignUp],
-    signInFailed: [auth.$SignIn],
-    auth.$SignUp: [account.$Home, auth.$SignIn, terms],
+    auth.$Welcome: [
+      AtlasLink(to: auth.$SignIn, label: 'Sign in'),
+      AtlasLink(to: auth.$SignUp, label: 'Create account'),
+    ],
+    auth.$SignIn: [
+      AtlasLink(to: account.$Home, label: 'Valid credentials'),
+      AtlasLink(to: signInFailed, label: 'Wrong password'),
+      AtlasLink(to: auth.$SignUp, label: 'No account yet'),
+    ],
+    signInFailed: [
+      AtlasLink(
+        to: auth.$SignIn,
+        label: 'Try again',
+        description: 'Clears the password field',
+      ),
+    ],
+    auth.$SignUp: [
+      account.$Home,
+      AtlasLink(to: auth.$SignIn, label: 'Has an account'),
+      const AtlasLink(to: terms, label: 'Terms'),
+    ],
   },
 );
 

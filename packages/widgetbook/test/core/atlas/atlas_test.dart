@@ -122,6 +122,31 @@ void main() {
     );
   });
 
+  group('$AtlasLink', () {
+    test(
+      'given a described link, '
+      'then it leads to its target and keeps its label and description',
+      () {
+        final flow = AtlasFlow(
+          name: 'Onboarding',
+          links: {
+            login: [
+              const AtlasLink(to: AtlasTerminal(label: 'Help')),
+              AtlasLink(to: home, label: 'Sign in', description: 'Submits'),
+            ],
+            home: [login],
+          },
+        );
+
+        expect(flow.leadsTo(login), hasLength(2));
+        expect(flow.linkBetween(login, home)?.label, 'Sign in');
+        expect(flow.linkBetween(login, home)?.description, 'Submits');
+        expect(flow.linkBetween(home, login), isNull);
+        expect(flow.hasLinkLabels, isTrue);
+      },
+    );
+  });
+
   group('$AtlasLayout', () {
     test(
       'given a page reached both directly and through other pages, '
@@ -655,6 +680,48 @@ void main() {
           inAtlasPage(find.text(IosViewports.iPhone13.name)),
           findsNothing,
         );
+      },
+    );
+
+    testWidgets(
+      'given labeled links, '
+      'then labels are shown on the graph and in the docs, '
+      'with the description as a tooltip',
+      (tester) async {
+        final state = await pumpApp(
+          tester,
+          Config(
+            components: withProfile,
+            atlas: [
+              AtlasFlow(
+                name: 'Account',
+                links: {
+                  home: [
+                    AtlasLink(
+                      to: profile,
+                      label: 'Avatar',
+                      description: 'Taps the avatar in the header',
+                    ),
+                  ],
+                  profile: [AtlasLink(to: home, label: 'Back')],
+                },
+              ),
+            ],
+          ),
+        );
+
+        expect(inAtlasPage(find.text('Avatar')), findsOneWidget);
+        expect(inAtlasPage(find.text('Back')), findsOneWidget);
+        expect(
+          inAtlasPage(find.byTooltip('Taps the avatar in the header')),
+          findsOneWidget,
+        );
+
+        state.updatePath(withProfile.last.docsPath);
+        await tester.pumpAndSettle();
+
+        expect(find.text('Back · HomePage / Home'), findsOneWidget);
+        expect(find.text('Avatar · HomePage / Home'), findsOneWidget);
       },
     );
 

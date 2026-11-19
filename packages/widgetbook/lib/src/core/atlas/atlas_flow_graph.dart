@@ -11,8 +11,13 @@ import 'atlas_layout.dart';
 import 'atlas_navigation.dart';
 
 const _columnGap = 72.0;
+const _labeledColumnGap = 168.0;
 const _rowGap = 20.0;
 const _laneGap = 14.0;
+const _labeledLaneGap = 28.0;
+const _labelMaxWidth = 144.0;
+const _portSpacing = 12.0;
+const _labeledPortSpacing = 28.0;
 const _textNodeSize = Size(176, 52);
 const _previewNodeWidth = 200.0;
 const _captionHeight = 48.0;
@@ -31,13 +36,16 @@ class AtlasGraphGeometry {
                 _captionHeight,
           );
 
+    final columnGap = flow.hasLinkLabels ? _labeledColumnGap : _columnGap;
+    final laneGap = flow.hasLinkLabels ? _labeledLaneGap : _laneGap;
+
     final layout = AtlasLayout(flow);
     final rects = <AtlasNode, Rect>{
       for (final (column, nodes) in layout.columns.indexed)
         for (final (row, node) in nodes.indexed)
           node:
               Offset(
-                column * (nodeSize.width + _columnGap),
+                column * (nodeSize.width + columnGap),
                 row * (nodeSize.height + _rowGap),
               ) &
               nodeSize,
@@ -62,8 +70,10 @@ class AtlasGraphGeometry {
       layout,
       rects,
       previewSize,
+      columnGap,
+      laneGap,
       bottom,
-      Size(right + 8, bottom + _laneGap * (backLinkCount + 1)),
+      Size(right + 8, bottom + laneGap * (backLinkCount + 1)),
     );
   }
 
@@ -71,6 +81,8 @@ class AtlasGraphGeometry {
     this.layout,
     this.rects,
     this.previewSize,
+    this.columnGap,
+    this.laneGap,
     this.nodesBottom,
     this.size,
   );
@@ -78,6 +90,8 @@ class AtlasGraphGeometry {
   final AtlasLayout layout;
   final Map<AtlasNode, Rect> rects;
   final Size? previewSize;
+  final double columnGap;
+  final double laneGap;
   final double nodesBottom;
   final Size size;
 }
@@ -131,6 +145,12 @@ class AtlasFlowGraph extends StatelessWidget {
     final theme = WidgetbookTheme.of(context);
     final registered = registeredStories(WidgetbookState.of(context).config);
 
+    final ports = _ForwardPorts(
+      flow,
+      geometry,
+      spacing: flow.hasLinkLabels ? _labeledPortSpacing : _portSpacing,
+    );
+
     var lanes = 0;
     final edges = [
       for (final from in flow.pages)
@@ -139,9 +159,15 @@ class AtlasFlowGraph extends StatelessWidget {
               ? _Edge.back(
                   from: rects[from]!,
                   to: rects[to]!,
-                  laneY: geometry.nodesBottom + _laneGap * ++lanes,
+                  laneY: geometry.nodesBottom + geometry.laneGap * ++lanes,
+                  link: flow.linkBetween(from, to),
                 )
-              : _Edge.forward(from: rects[from]!, to: rects[to]!),
+              : _Edge.forward(
+                  start: ports.start(from, to),
+                  end: ports.end(from, to),
+                  columnGap: geometry.columnGap,
+                  link: flow.linkBetween(from, to),
+                ),
     ];
 
     return SizedBox.fromSize(
@@ -166,9 +192,106 @@ class AtlasFlowGraph extends StatelessWidget {
                 isUnregistered: isUnregisteredPage(node, registered),
               ),
             ),
+          for (final edge in edges)
+            if (edge.link case AtlasLink(:final label?))
+              Positioned(
+                left: edge.labelAnchor.dx,
+                top: edge.labelAnchor.dy,
+                child: FractionalTranslation(
+                  translation: const Offset(-0.5, -0.5),
+                  child: _LinkLabel(
+                    label: label,
+                    description: edge.link!.description,
+                  ),
+                ),
+              ),
         ],
       ),
     );
+  }
+}
+
+/// Spreads the forward links of each node over its sides, ordered by where
+/// the other end of each link is, so links and their labels do not share a
+/// single point.
+class _ForwardPorts {
+  _ForwardPorts(AtlasFlow flow, this.geometry, {required this.spacing}) {
+    final links = [
+      for (final from in flow.pages)
+        for (final to in flow.leadsTo(from))
+          if (!geometry.layout.isBackLink(from, to)) (from, to),
+    ];
+
+    for (final node in flow.pages) {
+      final outgoing = links.where((link) => link.$1 == node).toList()
+        ..sort((a, b) => _y(a.$2).compareTo(_y(b.$2)));
+      final incoming = links.where((link) => link.$2 == node).toList()
+        ..sort((a, b) => _y(a.$1).compareTo(_y(b.$1)));
+
+      for (final (index, link) in outgoing.indexed) {
+        _starts[link] = _port(node, index, outgoing.length);
+      }
+      for (final (index, link) in incoming.indexed) {
+        _ends[link] = _port(node, index, incoming.length);
+      }
+    }
+  }
+
+  final AtlasGraphGeometry geometry;
+  final double spacing;
+  final _starts = <(AtlasNode, AtlasNode), double>{};
+  final _ends = <(AtlasNode, AtlasNode), double>{};
+
+  double _y(AtlasNode node) => geometry.rects[node]!.center.dy;
+
+  double _port(AtlasNode node, int index, int count) {
+    final rect = geometry.rects[node]!;
+    final step = math.min(spacing, (rect.height - 8) / count);
+    return rect.center.dy + (index - (count - 1) / 2) * step;
+  }
+
+  Offset start(AtlasNode from, AtlasNode to) {
+    return Offset(geometry.rects[from]!.right, _starts[(from, to)]!);
+  }
+
+  Offset end(AtlasNode from, AtlasNode to) {
+    return Offset(geometry.rects[to]!.left, _ends[(from, to)]!);
+  }
+}
+
+class _LinkLabel extends StatelessWidget {
+  const _LinkLabel({required this.label, required this.description});
+
+  final String label;
+  final String? description;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = WidgetbookTheme.of(context);
+
+    final pill = Material(
+      color: theme.colorScheme.surface,
+      shape: StadiumBorder(
+        side: BorderSide(color: theme.dividerColor.withAlpha(140)),
+      ),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: _labelMaxWidth),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+          child: Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: theme.textTheme.bodySmall,
+          ),
+        ),
+      ),
+    );
+
+    final description = this.description;
+    if (description == null) return pill;
+
+    return Tooltip(message: description, child: pill);
   }
 }
 
@@ -451,17 +574,21 @@ class _PlaceholderCard extends StatelessWidget {
 }
 
 /// A link drawn as [path], ending in an arrowhead at [tip] that points in
-/// [direction] (radians).
+/// [direction] (radians). Its [link]'s label is shown at [labelAnchor].
 class _Edge {
-  _Edge._(this.path, this.tip, this.direction);
+  _Edge._(this.path, this.tip, this.direction, this.labelAnchor, this.link);
 
-  /// Runs from the right side of a node to the left side of a later one,
-  /// arriving along the line between both ends so that the arrowhead points
-  /// in the direction the link actually comes from.
-  factory _Edge.forward({required Rect from, required Rect to}) {
-    final start = from.centerRight;
-    final end = to.centerLeft;
-    final bend = math.min(_columnGap, end.dx - start.dx) / 2;
+  /// Runs from [start] on the right side of a node to [end] on the left side
+  /// of a later one, arriving along the line between both ends so that the
+  /// arrowhead points in the direction the link actually comes from. Its
+  /// label sits in the gap before the target, where no node can be.
+  factory _Edge.forward({
+    required Offset start,
+    required Offset end,
+    required double columnGap,
+    required AtlasLink? link,
+  }) {
+    final bend = math.min(columnGap, end.dx - start.dx) / 2;
     final control1 = start + Offset(bend, 0);
     final approach = end - control1;
     final control2 = end - approach / approach.distance * bend;
@@ -479,6 +606,11 @@ class _Edge {
         ),
       end,
       approach.direction,
+      Offset(
+        end.dx - columnGap / 2,
+        end.dy - approach.dy / approach.dx * columnGap / 2,
+      ),
+      link,
     );
   }
 
@@ -488,6 +620,7 @@ class _Edge {
     required Rect from,
     required Rect to,
     required double laneY,
+    required AtlasLink? link,
   }) {
     final start = from.bottomCenter + Offset(from.width / 6, 0);
     final end = to.bottomCenter - Offset(to.width / 6, 0);
@@ -500,12 +633,16 @@ class _Edge {
         ..lineTo(end.dx, end.dy),
       end,
       -math.pi / 2,
+      Offset((start.dx + end.dx) / 2, laneY),
+      link,
     );
   }
 
   final Path path;
   final Offset tip;
   final double direction;
+  final Offset labelAnchor;
+  final AtlasLink? link;
 }
 
 class _EdgePainter extends CustomPainter {

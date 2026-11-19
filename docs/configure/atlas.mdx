@@ -59,6 +59,28 @@ Opening one renders the story with those args, and the args panel lists them.
 These states live in the atlas only, so they don't become stories or snapshots.
 Two pages are the same node when they share an `id`, or, without ids, the same story and the same args instance, so declare a page in a variable when it appears in several links.
 
+## Link Labels
+
+Wrap a target in an `AtlasLink` to label the arrow, e.g. with the action that leads there.
+The optional description is shown when hovering the label.
+
+```dart
+final settings = AtlasFlow(
+  name: 'Settings',
+  links: {
+    menu.$MainMenu: [
+      AtlasLink(to: profile.$Default, label: 'Profile'),
+      AtlasLink(
+        to: system.$Default,
+        label: 'System',
+        description: 'Pushes a page onto the menu navigator',
+      ),
+      imprint,
+    ],
+  },
+);
+```
+
 ## Terminals
 
 Destinations without a story, such as an external link or logging out, are `AtlasTerminal`s.

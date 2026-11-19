@@ -56,9 +56,19 @@ class _FlowLinks extends DocBlock {
           style: Theme.of(context).textTheme.titleMedium,
         ),
         if (leadsTo.isNotEmpty)
-          _NodeLinks(label: 'Leads to', flow: flow, nodes: leadsTo),
+          _NodeLinks(
+            label: 'Leads to',
+            flow: flow,
+            nodes: leadsTo,
+            linkTo: (node) => flow.linkBetween(page, node),
+          ),
         if (reachedFrom.isNotEmpty)
-          _NodeLinks(label: 'Reached from', flow: flow, nodes: reachedFrom),
+          _NodeLinks(
+            label: 'Reached from',
+            flow: flow,
+            nodes: reachedFrom,
+            linkTo: (node) => flow.linkBetween(node, page),
+          ),
       ],
     );
   }
@@ -69,11 +79,23 @@ class _NodeLinks extends StatelessWidget {
     required this.label,
     required this.flow,
     required this.nodes,
+    required this.linkTo,
   });
 
   final String label;
   final AtlasFlow flow;
   final List<AtlasNode> nodes;
+  final AtlasLink? Function(AtlasNode node) linkTo;
+
+  String _nameOf(AtlasNode node, Set<Story> registered) {
+    return switch (node) {
+      AtlasTerminal(:final label) => label,
+      AtlasPage(:final label) when isUnregisteredPage(node, registered) =>
+        label ?? 'Unregistered story',
+      AtlasPage() => '${node.story.component.name} / ${node.name}',
+      _ => '',
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,14 +109,13 @@ class _NodeLinks extends StatelessWidget {
         Text(label, style: Theme.of(context).textTheme.bodyMedium),
         for (final node in nodes)
           ActionChip(
-            label: Text(switch (node) {
-              AtlasTerminal(:final label) => label,
-              AtlasPage(:final label)
-                  when isUnregisteredPage(node, registered) =>
-                label ?? 'Unregistered story',
-              AtlasPage() => '${node.story.component.name} / ${node.name}',
-              _ => '',
-            }),
+            label: Text(
+              [
+                linkTo(node)?.label,
+                _nameOf(node, registered),
+              ].nonNulls.join(' · '),
+            ),
+            tooltip: linkTo(node)?.description,
             onPressed: isUnregisteredPage(node, registered)
                 ? null
                 : () => openAtlasNode(context, flow, node),
