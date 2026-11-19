@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:widgetbook/src/core/atlas/atlas_flow_graph.dart';
 import 'package:widgetbook/src/core/atlas/atlas_layout.dart';
 import 'package:widgetbook/src/core/navigation/folder_tree_tile.dart';
 import 'package:widgetbook/src/core/state/default_home_page.dart';
@@ -7,6 +8,35 @@ import 'package:widgetbook/src/core/widgetbook_app.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 import '../../helper/helper.dart';
+
+class _Label extends StatelessWidget {
+  const _Label(this.text);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) => Text(text);
+}
+
+class _LabelArgs extends StoryArgs<_Label> {
+  _LabelArgs(String text) : textArg = $initArg('text', Arg.fixed(text), null)!;
+
+  final Arg<String> textArg;
+
+  @override
+  List<Arg?> get list => [textArg];
+}
+
+class _LabelStory extends Story<_Label, _LabelArgs> {
+  _LabelStory()
+    : super(
+        name: 'Profile',
+        args: _LabelArgs('Default profile'),
+        builder: (context, args) => _Label(args.textArg.value),
+      );
+}
+
+AtlasPage page(Story story) => AtlasPage(story);
 
 void main() {
   late TestStory login;
@@ -47,9 +77,47 @@ void main() {
           },
         );
 
-        expect(flow.pages, [login, home, signUp]);
+        expect(flow.pages, [page(login), page(home), page(signUp)]);
         expect(flow.leadsTo(home), isEmpty);
-        expect(flow.reachedFrom(home), [login]);
+        expect(flow.reachedFrom(home), [page(login)]);
+      },
+    );
+
+    test(
+      'given a story and a page of it without args, '
+      'then both refer to the same node',
+      () {
+        final decorated = AtlasPage(login, decorators: [(_, _, c) => c]);
+        final flow = AtlasFlow(
+          name: 'Onboarding',
+          links: {
+            decorated: [home],
+            home: [login],
+          },
+        );
+
+        expect(flow.pages, hasLength(2));
+        expect(identical(flow.node(login), decorated), isTrue);
+      },
+    );
+
+    test(
+      'given pages of the same story with different args or ids, '
+      'then they are different nodes',
+      () {
+        final profile = _LabelStory();
+        final guest = AtlasPage(profile, args: _LabelArgs('Guest'));
+        final member = AtlasPage(profile, args: _LabelArgs('Member'));
+        final withId = AtlasPage(profile, id: 'profile');
+
+        final flow = AtlasFlow(
+          name: 'Account',
+          links: {
+            profile: [guest, member, withId, AtlasPage(profile, id: 'profile')],
+          },
+        );
+
+        expect(flow.pages, hasLength(4));
       },
     );
   });
@@ -71,10 +139,10 @@ void main() {
         );
 
         expect(layout.columns, [
-          [login],
-          [signUp],
-          [settings],
-          [home],
+          [page(login)],
+          [page(signUp)],
+          [page(settings)],
+          [page(home)],
         ]);
       },
     );
@@ -95,12 +163,15 @@ void main() {
         );
 
         expect(layout.columns, [
-          [login],
-          [signUp],
-          [home],
-          [settings],
+          [page(login)],
+          [page(signUp)],
+          [page(home)],
+          [page(settings)],
         ]);
-        expect(layout.backLinks, {(signUp, login), (home, home)});
+        expect(layout.backLinks, {
+          (page(signUp), page(login)),
+          (page(home), page(home)),
+        });
       },
     );
 
@@ -119,8 +190,8 @@ void main() {
         );
 
         expect(layout.columns, [
-          [home],
-          [settings],
+          [page(home)],
+          [page(settings)],
         ]);
       },
     );
@@ -138,6 +209,10 @@ void main() {
       'when no story is selected, '
       'then the default home page shows each flow',
       (tester) async {
+        tester.view.physicalSize = const Size(1600, 2000);
+        tester.view.devicePixelRatio = 1.0;
+        addTearDown(tester.view.resetPhysicalSize);
+
         final state = stateWith([
           AtlasFlow(
             name: 'Onboarding',
@@ -189,7 +264,7 @@ void main() {
 
     testWidgets(
       'given a flow referencing a story outside of the components, '
-      'then a descriptive error is thrown',
+      'then it is shown as a placeholder',
       (tester) async {
         final state = stateWith([
           AtlasFlow(
@@ -205,14 +280,8 @@ void main() {
           builder: (_) => const AtlasHomePage(),
         );
 
-        expect(
-          tester.takeException(),
-          isA<FlutterError>().having(
-            (error) => error.message,
-            'message',
-            contains('"Onboarding"'),
-          ),
-        );
+        expect(tester.takeException(), isNull);
+        expect(find.text('Not in Config.components'), findsOneWidget);
       },
     );
   });
@@ -399,6 +468,195 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(inTree('Atlas'), findsNothing);
+      },
+    );
+  });
+
+  group('Atlas nodes', () {
+    late _LabelStory profile;
+    late List<Component> withProfile;
+
+    setUp(() {
+      profile = _LabelStory();
+      withProfile = [
+        ...components,
+        Component<_Label, _LabelArgs>(
+          name: 'ProfilePage',
+          path: 'pages',
+          stories: [profile],
+        ),
+      ];
+    });
+
+    Future<WidgetbookState> pumpApp(
+      WidgetTester tester,
+      Config config,
+    ) async {
+      tester.view.physicalSize = const Size(1600, 1000);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+
+      await tester.pumpWidget(WidgetbookApp(config: config));
+      await tester.pumpAndSettle();
+
+      return WidgetbookState.of(tester.element(find.byType(AtlasHomePage)));
+    }
+
+    Finder inAtlasPage(Finder finder) {
+      return find.descendant(of: find.byType(AtlasHomePage), matching: finder);
+    }
+
+    testWidgets(
+      'given a page with args, '
+      'then its preview, its opened page and the args panel show those args',
+      (tester) async {
+        final guest = AtlasPage(
+          profile,
+          id: 'guest',
+          label: 'Profile · guest',
+          args: _LabelArgs('Guest profile'),
+        );
+
+        final state = await pumpApp(
+          tester,
+          Config(
+            components: withProfile,
+            atlas: [
+              AtlasFlow(
+                name: 'Account',
+                links: {
+                  home: [guest, profile],
+                },
+              ),
+            ],
+          ),
+        );
+
+        expect(inAtlasPage(find.text('Guest profile')), findsOneWidget);
+        expect(inAtlasPage(find.text('Default profile')), findsOneWidget);
+
+        await tester.findAndTap(inAtlasPage(find.text('Profile · guest')));
+
+        expect(state.path, 'Atlas/Account/guest');
+        expect(state.scenario?.args, guest.args);
+        expect(find.text('Guest profile'), findsNWidgets(2));
+      },
+    );
+
+    testWidgets(
+      'given no preview config, '
+      'then pages show their names only',
+      (tester) async {
+        await pumpApp(
+          tester,
+          Config(
+            components: withProfile,
+            atlasPreview: null,
+            atlas: [
+              AtlasFlow(
+                name: 'Account',
+                links: {
+                  home: [profile],
+                },
+              ),
+            ],
+          ),
+        );
+
+        expect(inAtlasPage(find.text('Profile')), findsOneWidget);
+        expect(inAtlasPage(find.text('Default profile')), findsNothing);
+      },
+    );
+
+    testWidgets(
+      'given a terminal and decorators, '
+      'then the terminal is shown and every node is decorated',
+      (tester) async {
+        Widget decorate(BuildContext context, AtlasNode node, Widget child) {
+          return KeyedSubtree(key: const ValueKey('decorated'), child: child);
+        }
+
+        final state = await pumpApp(
+          tester,
+          Config(
+            components: withProfile,
+            atlas: [
+              AtlasFlow(
+                name: 'Account',
+                decorators: [decorate],
+                links: {
+                  home: [
+                    const AtlasTerminal(
+                      label: 'Log out',
+                      description: 'Signs the user out',
+                    ),
+                  ],
+                },
+              ),
+            ],
+          ),
+        );
+
+        expect(find.byKey(const ValueKey('decorated')), findsNWidgets(2));
+
+        await tester.findAndTap(inAtlasPage(find.text('Log out')));
+
+        expect(state.path, isNull);
+      },
+    );
+
+    testWidgets(
+      'given a selected viewport, '
+      'then previews are rendered at its size',
+      (tester) async {
+        final viewport = ViewportAddon([IosViewports.iPhone13]);
+        final state = WidgetbookState(
+          config: Config(components: withProfile, addons: [viewport]),
+        );
+
+        expect(
+          atlasPreviewSize(state),
+          Size(
+            IosViewports.iPhone13.maxWidth,
+            IosViewports.iPhone13.maxHeight,
+          ),
+        );
+        expect(
+          atlasPreviewSize(WidgetbookState()),
+          const AtlasPreviewConfig().fallbackSize,
+        );
+      },
+    );
+
+    testWidgets(
+      'when tapping zoom in, '
+      'then the graph is scaled up',
+      (tester) async {
+        await pumpApp(
+          tester,
+          Config(
+            components: withProfile,
+            atlas: [
+              AtlasFlow(
+                name: 'Account',
+                links: {
+                  home: [profile],
+                },
+              ),
+            ],
+          ),
+        );
+
+        double scale() => tester
+            .widget<InteractiveViewer>(find.byType(InteractiveViewer))
+            .transformationController!
+            .value
+            .getMaxScaleOnAxis();
+
+        final before = scale();
+        await tester.findAndTap(find.byTooltip('Zoom in'));
+
+        expect(scale(), greaterThan(before));
       },
     );
   });

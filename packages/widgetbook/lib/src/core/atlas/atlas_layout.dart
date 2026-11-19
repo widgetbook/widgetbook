@@ -1,57 +1,59 @@
 import 'package:flutter/foundation.dart';
+import 'package:path/path.dart' as p;
 
 import '../framework/framework.dart';
+import '../navigation/tree.dart';
 
-/// Arranges the pages of an [AtlasFlow] into columns, left to right.
+/// Arranges the nodes of an [AtlasFlow] into columns, left to right.
 ///
 /// Links that close a cycle (e.g. going back or retrying) are [backLinks].
-/// Every other link points to a later column, as each page is placed by its
-/// longest path from an entry page, so the last screens of a flow end up last.
+/// Every other link points to a later column, as each node is placed by its
+/// longest path from an entry node, so the last screens of a flow end up last.
 @internal
 class AtlasLayout {
   factory AtlasLayout(AtlasFlow flow) {
-    final pages = flow.pages;
-    final targets = {for (final targets in flow.links.values) ...targets};
-    final entryPages = pages.where((page) => !targets.contains(page));
+    final nodes = flow.pages;
+    final targets = {for (final node in nodes) ...flow.leadsTo(node)};
+    final entryNodes = nodes.where((node) => !targets.contains(node));
 
-    final onPath = <Story>{};
-    final visited = <Story>{};
-    final finished = <Story>[];
-    final backLinks = <(Story, Story)>{};
+    final onPath = <AtlasNode>{};
+    final visited = <AtlasNode>{};
+    final finished = <AtlasNode>[];
+    final backLinks = <(AtlasNode, AtlasNode)>{};
 
-    void visit(Story page) {
-      if (!visited.add(page)) return;
-      onPath.add(page);
-      for (final next in flow.leadsTo(page)) {
+    void visit(AtlasNode node) {
+      if (!visited.add(node)) return;
+      onPath.add(node);
+      for (final next in flow.leadsTo(node)) {
         if (onPath.contains(next)) {
-          backLinks.add((page, next));
+          backLinks.add((node, next));
         } else {
           visit(next);
         }
       }
-      onPath.remove(page);
-      finished.add(page);
+      onPath.remove(node);
+      finished.add(node);
     }
 
-    entryPages.forEach(visit);
-    pages.forEach(visit);
+    entryNodes.forEach(visit);
+    nodes.forEach(visit);
 
-    final depths = <Story, int>{};
-    for (final page in finished.reversed) {
-      final depth = depths.putIfAbsent(page, () => 0);
-      for (final next in flow.leadsTo(page)) {
-        if (backLinks.contains((page, next))) continue;
+    final depths = <AtlasNode, int>{};
+    for (final node in finished.reversed) {
+      final depth = depths.putIfAbsent(node, () => 0);
+      for (final next in flow.leadsTo(node)) {
+        if (backLinks.contains((node, next))) continue;
         if ((depths[next] ?? -1) <= depth) depths[next] = depth + 1;
       }
     }
 
-    final columns = <List<Story>>[];
-    for (final page in finished.reversed) {
-      final depth = depths[page]!;
+    final columns = <List<AtlasNode>>[];
+    for (final node in finished.reversed) {
+      final depth = depths[node]!;
       while (columns.length <= depth) {
         columns.add([]);
       }
-      columns[depth].add(page);
+      columns[depth].add(node);
     }
 
     return AtlasLayout._(columns, backLinks);
@@ -59,26 +61,28 @@ class AtlasLayout {
 
   AtlasLayout._(this.columns, this.backLinks);
 
-  final List<List<Story>> columns;
-  final Set<(Story, Story)> backLinks;
+  final List<List<AtlasNode>> columns;
+  final Set<(AtlasNode, AtlasNode)> backLinks;
 
-  bool isBackLink(Story from, Story to) => backLinks.contains((from, to));
+  bool isBackLink(AtlasNode from, AtlasNode to) {
+    return backLinks.contains((from, to));
+  }
 }
 
-/// Throws if [config] has an [AtlasFlow] referencing a story that is not part
-/// of [Config.components], as such a story has no path to navigate to.
 @internal
-void assertAtlasStoriesRegistered(Config config) {
-  final registered = {
-    for (final component in config.components) ...component.stories,
-  };
+Set<Story> registeredStories(Config config) {
+  return {for (final component in config.components) ...component.stories};
+}
 
-  for (final flow in config.atlas) {
-    if (flow.pages.any((page) => !registered.contains(page))) {
-      throw FlutterError(
-        'The "${flow.name}" AtlasFlow references a story '
-        'that is not part of Config.components.',
-      );
-    }
-  }
+/// Whether [node] is a page whose story is not part of [Config.components],
+/// so it has neither a name nor a path to navigate to.
+@internal
+bool isUnregisteredPage(AtlasNode node, Set<Story> registered) {
+  return node is AtlasPage && !registered.contains(node.story);
+}
+
+/// The navigation path of a page with args, which is listed below its flow.
+@internal
+String atlasPagePath(AtlasFlow flow, AtlasPage page) {
+  return p.join(atlasPath, flow.name, page.pathSegment);
 }

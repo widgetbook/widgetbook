@@ -3,59 +3,140 @@ import 'dart:math' as math;
 import 'package:material_ui/material_ui.dart';
 import 'package:meta/meta.dart';
 
+import '../addons/addons.dart';
 import '../framework/framework.dart';
 import '../state/state.dart';
 import '../theme/theme.dart';
 import 'atlas_layout.dart';
+import 'atlas_navigation.dart';
 
-const _nodeSize = Size(176, 52);
 const _columnGap = 72.0;
 const _rowGap = 20.0;
 const _laneGap = 14.0;
+const _textNodeSize = Size(176, 52);
+const _previewNodeWidth = 200.0;
+const _captionHeight = 48.0;
 
-/// Draws the pages of an [AtlasFlow] as tappable nodes, laid out left to right
-/// by [AtlasLayout], connected by arrows to the pages they lead to.
+/// The positions of an [AtlasFlow]'s nodes and the overall [size] of its
+/// graph, so the graph can be fitted into the available space before it is
+/// built.
+@internal
+class AtlasGraphGeometry {
+  factory AtlasGraphGeometry(AtlasFlow flow, {Size? previewSize}) {
+    final nodeSize = previewSize == null
+        ? _textNodeSize
+        : Size(
+            _previewNodeWidth,
+            _previewNodeWidth * previewSize.height / previewSize.width +
+                _captionHeight,
+          );
+
+    final layout = AtlasLayout(flow);
+    final rects = <AtlasNode, Rect>{
+      for (final (column, nodes) in layout.columns.indexed)
+        for (final (row, node) in nodes.indexed)
+          node:
+              Offset(
+                column * (nodeSize.width + _columnGap),
+                row * (nodeSize.height + _rowGap),
+              ) &
+              nodeSize,
+    };
+
+    final backLinkCount = [
+      for (final from in flow.pages)
+        for (final to in flow.leadsTo(from))
+          if (layout.isBackLink(from, to)) to,
+    ].length;
+
+    final bottom = rects.values.fold(
+      0.0,
+      (max, rect) => math.max(max, rect.bottom),
+    );
+    final right = rects.values.fold(
+      0.0,
+      (max, rect) => math.max(max, rect.right),
+    );
+
+    return AtlasGraphGeometry._(
+      layout,
+      rects,
+      previewSize,
+      bottom,
+      Size(right + 8, bottom + _laneGap * (backLinkCount + 1)),
+    );
+  }
+
+  AtlasGraphGeometry._(
+    this.layout,
+    this.rects,
+    this.previewSize,
+    this.nodesBottom,
+    this.size,
+  );
+
+  final AtlasLayout layout;
+  final Map<AtlasNode, Rect> rects;
+  final Size? previewSize;
+  final double nodesBottom;
+  final Size size;
+}
+
+/// The size a page preview is rendered at: the viewport selected in the
+/// [ViewportAddon], or the [AtlasPreviewConfig.fallbackSize].
+@internal
+Size? atlasPreviewSize(WidgetbookState state) {
+  final preview = state.config.atlasPreview;
+  if (preview == null) return null;
+
+  final addon = state.config.addons?.whereType<ViewportAddon>().firstOrNull;
+  final viewport = addon?.valueFromQueryGroup(
+    state.queryGroups[addon.groupName],
+  );
+
+  if (viewport == null ||
+      !viewport.maxWidth.isFinite ||
+      !viewport.maxHeight.isFinite) {
+    return preview.fallbackSize;
+  }
+
+  return Size(viewport.maxWidth, viewport.maxHeight);
+}
+
+/// Draws the nodes of an [AtlasFlow] at the positions of [geometry],
+/// connected by arrows to the nodes they lead to.
 @internal
 class AtlasFlowGraph extends StatelessWidget {
-  const AtlasFlowGraph({super.key, required this.flow});
+  const AtlasFlowGraph({
+    super.key,
+    required this.flow,
+    required this.geometry,
+  });
 
   final AtlasFlow flow;
+  final AtlasGraphGeometry geometry;
 
   @override
   Widget build(BuildContext context) {
-    final layout = AtlasLayout(flow);
-    final rects = <Story, Rect>{
-      for (final (column, pages) in layout.columns.indexed)
-        for (final (row, page) in pages.indexed)
-          page:
-              Offset(
-                column * (_nodeSize.width + _columnGap),
-                row * (_nodeSize.height + _rowGap),
-              ) &
-              _nodeSize,
-    };
+    final rects = geometry.rects;
+    final theme = WidgetbookTheme.of(context);
+    final registered = registeredStories(WidgetbookState.of(context).config);
 
-    if (rects.isEmpty) return const SizedBox.shrink();
-
-    final bounds = rects.values.reduce((a, b) => a.expandToInclude(b));
     var lanes = 0;
     final edges = [
-      for (final MapEntry(key: from, value: targets) in flow.links.entries)
-        for (final to in targets)
-          layout.isBackLink(from, to)
+      for (final from in flow.pages)
+        for (final to in flow.leadsTo(from))
+          geometry.layout.isBackLink(from, to)
               ? _Edge.back(
                   from: rects[from]!,
                   to: rects[to]!,
-                  laneY: bounds.bottom + _laneGap * ++lanes,
+                  laneY: geometry.nodesBottom + _laneGap * ++lanes,
                 )
               : _Edge.forward(from: rects[from]!, to: rects[to]!),
     ];
 
-    final theme = WidgetbookTheme.of(context);
-
-    return SizedBox(
-      width: bounds.right + 8,
-      height: bounds.bottom + _laneGap * (lanes + 1),
+    return SizedBox.fromSize(
+      size: geometry.size,
       child: Stack(
         children: [
           Positioned.fill(
@@ -66,10 +147,15 @@ class AtlasFlowGraph extends StatelessWidget {
               ),
             ),
           ),
-          for (final MapEntry(key: page, value: rect) in rects.entries)
+          for (final MapEntry(key: node, value: rect) in rects.entries)
             Positioned.fromRect(
               rect: rect,
-              child: _AtlasNode(page: page),
+              child: _AtlasNodeView(
+                flow: flow,
+                node: node,
+                previewSize: geometry.previewSize,
+                isUnregistered: isUnregisteredPage(node, registered),
+              ),
             ),
         ],
       ),
@@ -77,10 +163,71 @@ class AtlasFlowGraph extends StatelessWidget {
   }
 }
 
-class _AtlasNode extends StatelessWidget {
-  const _AtlasNode({required this.page});
+class _AtlasNodeView extends StatefulWidget {
+  const _AtlasNodeView({
+    required this.flow,
+    required this.node,
+    required this.previewSize,
+    required this.isUnregistered,
+  });
 
-  final Story page;
+  final AtlasFlow flow;
+  final AtlasNode node;
+  final Size? previewSize;
+  final bool isUnregistered;
+
+  @override
+  State<_AtlasNodeView> createState() => _AtlasNodeViewState();
+}
+
+class _AtlasNodeViewState extends State<_AtlasNodeView> {
+  var _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final node = widget.node;
+    final card = switch (node) {
+      AtlasTerminal() => _TerminalCard(terminal: node),
+      AtlasPage() when widget.isUnregistered => _PlaceholderCard(page: node),
+      AtlasPage() => _PageCard(
+        page: node,
+        previewSize: widget.previewSize,
+        isLive: _isHovered,
+      ),
+      _ => const SizedBox.shrink(),
+    };
+
+    final decorators = [
+      ...switch (node) {
+        AtlasPage(:final decorators) => decorators,
+        AtlasTerminal(:final decorators) => decorators,
+        _ => const <AtlasNodeDecorator>[],
+      },
+      ...widget.flow.decorators,
+    ];
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: widget.isUnregistered
+            ? null
+            : () => openAtlasNode(context, widget.flow, node),
+        child: decorators.fold<Widget>(
+          card,
+          (child, decorator) => decorator(context, node, child),
+        ),
+      ),
+    );
+  }
+}
+
+class _NodeCard extends StatelessWidget {
+  const _NodeCard({required this.child, this.isMuted = false});
+
+  final Widget child;
+  final bool isMuted;
 
   @override
   Widget build(BuildContext context) {
@@ -89,34 +236,194 @@ class _AtlasNode extends StatelessWidget {
     return Card(
       margin: EdgeInsets.zero,
       clipBehavior: Clip.hardEdge,
+      color: isMuted ? theme.colorScheme.surfaceContainerHighest : null,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
         side: BorderSide(color: theme.dividerColor.withAlpha(100)),
       ),
-      child: InkWell(
-        onTap: () => WidgetbookState.of(context).goToStory(page),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                page.component.name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: theme.textTheme.bodySmall!.copyWith(
-                  color: theme.colorScheme.onSurface.withAlpha(120),
+      child: child,
+    );
+  }
+}
+
+/// A muted card as tall as a text-only node, centered in its slot so links
+/// still meet it in the middle.
+class _CompactNodeCard extends StatelessWidget {
+  const _CompactNodeCard({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        height: _textNodeSize.height,
+        child: _NodeCard(isMuted: true, child: child),
+      ),
+    );
+  }
+}
+
+class _Caption extends StatelessWidget {
+  const _Caption({required this.title, this.subtitle, this.icon});
+
+  final String title;
+  final String? subtitle;
+  final IconData? icon;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = WidgetbookTheme.of(context);
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Row(
+        children: [
+          if (icon != null) ...[
+            Icon(icon, size: 16),
+            const SizedBox(width: 8),
+          ],
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (subtitle != null)
+                  Text(
+                    subtitle!,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.bodySmall!.copyWith(
+                      color: theme.colorScheme.onSurface.withAlpha(120),
+                    ),
+                  ),
+                Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.titleSmall,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PageCard extends StatelessWidget {
+  const _PageCard({
+    required this.page,
+    required this.previewSize,
+    required this.isLive,
+  });
+
+  final AtlasPage page;
+  final Size? previewSize;
+  final bool isLive;
+
+  @override
+  Widget build(BuildContext context) {
+    final caption = _Caption(
+      title: page.name,
+      subtitle: page.story.component.name,
+    );
+
+    final previewSize = this.previewSize;
+    if (previewSize == null) return _NodeCard(child: caption);
+
+    return _NodeCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: _Preview(page: page, size: previewSize, isLive: isLive),
+          ),
+          SizedBox(height: _captionHeight, child: caption),
+        ],
+      ),
+    );
+  }
+}
+
+/// Renders [page] like the workbench does, through the app builder, addons and
+/// story setup, scaled down from [size]. Animations only run while [isLive].
+class _Preview extends StatelessWidget {
+  const _Preview({
+    required this.page,
+    required this.size,
+    required this.isLive,
+  });
+
+  final AtlasPage page;
+  final Size size;
+  final bool isLive;
+
+  @override
+  Widget build(BuildContext context) {
+    final config = WidgetbookState.of(context).config;
+
+    return ClipRect(
+      child: IgnorePointer(
+        child: TickerMode(
+          enabled: isLive,
+          child: FittedBox(
+            child: SizedBox.fromSize(
+              size: size,
+              child: MediaQuery(
+                data: MediaQuery.of(context).copyWith(size: size),
+                child: RepaintBoundary(
+                  child: page.args == null
+                      ? page.story.buildWithConfig(context, config)
+                      : page.scenario.buildWithConfig(context, config),
                 ),
               ),
-              Text(
-                page.name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: theme.textTheme.titleSmall,
-              ),
-            ],
+            ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _TerminalCard extends StatelessWidget {
+  const _TerminalCard({required this.terminal});
+
+  final AtlasTerminal terminal;
+
+  @override
+  Widget build(BuildContext context) {
+    return _CompactNodeCard(
+      child: Center(
+        child: Tooltip(
+          message: terminal.description ?? terminal.url ?? '',
+          child: _Caption(
+            title: terminal.label,
+            subtitle: terminal.description,
+            icon: terminal.url == null
+                ? Icons.flag_outlined
+                : Icons.open_in_new,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PlaceholderCard extends StatelessWidget {
+  const _PlaceholderCard({required this.page});
+
+  final AtlasPage page;
+
+  @override
+  Widget build(BuildContext context) {
+    return _CompactNodeCard(
+      child: Center(
+        child: _Caption(
+          title: page.label ?? 'Unregistered story',
+          subtitle: 'Not in Config.components',
+          icon: Icons.help_outline,
         ),
       ),
     );
@@ -128,7 +435,7 @@ class _AtlasNode extends StatelessWidget {
 class _Edge {
   _Edge._(this.path, this.tip, this.direction);
 
-  /// Runs from the right side of a page to the left side of a later one.
+  /// Runs from the right side of a node to the left side of a later one.
   factory _Edge.forward({required Rect from, required Rect to}) {
     final start = from.centerRight;
     final end = to.centerLeft;
@@ -150,8 +457,8 @@ class _Edge {
     );
   }
 
-  /// Runs below all pages along its own lane at [laneY], so back links do not
-  /// cross pages or overlap each other.
+  /// Runs below all nodes along its own lane at [laneY], so back links do not
+  /// cross nodes or overlap each other.
   factory _Edge.back({
     required Rect from,
     required Rect to,

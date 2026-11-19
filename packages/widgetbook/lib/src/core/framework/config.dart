@@ -60,6 +60,7 @@ class Config {
     this.docsBuilder = defaultDocsBuilder,
     this.foldersExpandedByDefault = true,
     this.atlas = const [],
+    this.atlasPreview = const AtlasPreviewConfig(),
   });
 
   /// The initial route for that will be used on first startup.
@@ -149,4 +150,7 @@ class Config {
   ///
   /// When not empty, the default [home] shows them as a graph.
   final List<AtlasFlow> atlas;
+
+  /// How atlas pages are previewed, or `null` to show their names only.
+  final AtlasPreviewConfig? atlasPreview;
 }

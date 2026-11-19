@@ -8,7 +8,7 @@
 - **BREAKING**: Remove `CupertinoThemeAddon`, `CupertinoThemeMode` and `cupertinoAppBuilder`.
   Use `ThemeAddon<CupertinoThemeData>` and a custom `appBuilder` returning a `CupertinoApp` instead. ([#2071](https://github.com/widgetbook/widgetbook/pull/2071))
 - **REFACTOR**: Allow `build` 5.x. ([#2073](https://github.com/widgetbook/widgetbook/pull/2073))
-- **FEAT**: Add `Config.atlas` to map which stories lead to which other stories in named `AtlasFlow`s, shown as a graph on the default home page, with an "Atlas" entry and one entry per flow in the navigation tree, and by the new `LeadsToDocBlock`. Add `WidgetbookState.goHome` to deselect the current story.
+- **FEAT**: Add `Config.atlas` to map which stories lead to which other stories in named `AtlasFlow`s, shown as a zoomable graph with live previews on the default home page, with an "Atlas" entry and one entry per flow in the navigation tree, and by the new `LeadsToDocBlock`. Pages can show a story in a specific state (`AtlasPage` with args), destinations without a story are `AtlasTerminal`s, and nodes can be decorated. Add `WidgetbookState.goHome` to deselect the current story.
 
 ## 4.0.0-beta.15
 

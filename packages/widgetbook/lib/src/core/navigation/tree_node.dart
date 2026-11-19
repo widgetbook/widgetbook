@@ -39,7 +39,7 @@ class TreeNode<T> {
   };
 
   bool get isTerminal => switch (this) {
-    TreeNode<AtlasFlow>() => true,
+    TreeNode<AtlasFlow>() => children.isEmpty,
     TreeNode<List<DocBlock>>() => true,
     TreeNode<Scenario>() => true,
     TreeNode<Story>() => children.isEmpty,
