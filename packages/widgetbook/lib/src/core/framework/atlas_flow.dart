@@ -2,6 +2,7 @@
 library;
 
 import 'package:flutter/widgets.dart';
+import 'package:meta/meta.dart';
 
 import 'scenario.dart';
 import 'story.dart';
@@ -107,6 +108,18 @@ class AtlasTerminal implements AtlasNode {
   final List<AtlasNodeDecorator> decorators;
 }
 
+/// A state of an [AtlasFlow], e.g. logged in or guest, with [links] of its
+/// own in addition to the links of the flow.
+class AtlasFlowVariant {
+  const AtlasFlowVariant({
+    required this.name,
+    required this.links,
+  });
+
+  final String name;
+  final Map<AtlasNode, List<AtlasTarget>> links;
+}
+
 /// A named section of an [AtlasFlow], e.g. a step of an onboarding, shown as
 /// a header above its [pages].
 class AtlasGroup {
@@ -128,37 +141,98 @@ class AtlasGroup {
 class AtlasFlow {
   AtlasFlow({
     required this.name,
-    required this.links,
+    this.links = const {},
+    this.variants = const [],
     this.decorators = const [],
     this.groups = const [],
-  });
+  }) : parent = null,
+       _linkMaps = [links];
+
+  AtlasFlow._derived(
+    AtlasFlow this.parent, {
+    required this.name,
+    required List<Map<AtlasNode, List<AtlasTarget>>> linkMaps,
+  }) : links = {for (final map in linkMaps) ...map},
+       variants = const [],
+       decorators = parent.decorators,
+       groups = parent.groups,
+       _linkMaps = linkMaps;
 
   final String name;
+
+  /// The links of this flow; with [variants], the links all of them share.
   final Map<AtlasNode, List<AtlasTarget>> links;
+
+  /// States of this flow, e.g. logged in and guest, each adding its own
+  /// links to [links]. Each is listed below the flow in the navigation tree.
+  final List<AtlasFlowVariant> variants;
 
   /// Sections laid out left to right in this order. A node belongs to the
   /// first group listing it; nodes of no group follow the groups.
   final List<AtlasGroup> groups;
   final List<AtlasNodeDecorator> decorators;
 
+  /// The flow this variant belongs to, or `null` if this is not a variant.
+  @internal
+  final AtlasFlow? parent;
+
+  final List<Map<AtlasNode, List<AtlasTarget>>> _linkMaps;
+
+  Iterable<MapEntry<AtlasNode, List<AtlasTarget>>> get _entries {
+    return _linkMaps.expand((map) => map.entries);
+  }
+
+  /// The [variants] as flows of their own, including the shared [links].
+  @internal
+  late final List<AtlasFlow> variantFlows = [
+    for (final variant in variants)
+      AtlasFlow._derived(
+        this,
+        name: variant.name,
+        linkMaps: [links, variant.links],
+      ),
+  ];
+
+  /// The flow whose layout is used for this one: with variants, the links of
+  /// all variants combined, so that nodes keep their position across them.
+  @internal
+  late final AtlasFlow layoutFlow = () {
+    final root = parent ?? this;
+    if (root.variants.isEmpty) return this;
+    if (parent != null) return parent!.layoutFlow;
+
+    return AtlasFlow._derived(
+      this,
+      name: name,
+      linkMaps: [links, for (final variant in variants) variant.links],
+    );
+  }();
+
   late final Map<AtlasNode, AtlasNode> _canonical = () {
     final canonical = <AtlasNode, AtlasNode>{};
-    final targets = links.values.expand((targets) => targets).map(_nodeOf);
+    final froms = _entries.map((entry) => entry.key);
+    final targets = _entries.expand((entry) => entry.value).map(_nodeOf);
     final grouped = groups.expand((group) => group.pages);
-    for (final node in [...links.keys, ...targets, ...grouped]) {
+    for (final node in [...froms, ...targets, ...grouped]) {
       final normalized = _normalize(node);
       canonical.putIfAbsent(normalized, () => normalized);
     }
     return canonical;
   }();
 
-  late final Map<AtlasNode, List<AtlasNode>> _links = {
-    for (final MapEntry(key: from, value: targets) in links.entries)
-      node(from): [for (final target in targets) node(_nodeOf(target))],
-  };
+  late final Map<AtlasNode, List<AtlasNode>> _links = () {
+    final links = <AtlasNode, List<AtlasNode>>{};
+    for (final MapEntry(key: from, value: targets) in _entries) {
+      final existing = links.putIfAbsent(node(from), () => []);
+      for (final target in targets.map(_nodeOf).map(node)) {
+        if (!existing.contains(target)) existing.add(target);
+      }
+    }
+    return links;
+  }();
 
   late final Map<(AtlasNode, AtlasNode), AtlasLink> _linkDetails = {
-    for (final MapEntry(key: from, value: targets) in links.entries)
+    for (final MapEntry(key: from, value: targets) in _entries)
       for (final target in targets.whereType<AtlasLink>())
         (node(from), node(target.to)): target,
   };

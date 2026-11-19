@@ -81,6 +81,42 @@ final settings = AtlasFlow(
 );
 ```
 
+## Variants
+
+A flow can have variants for its different states, e.g. a menu for logged-in users and for guests.
+The flow's `links` are shared by all variants, and each `AtlasFlowVariant` adds its own.
+Variants are listed below their flow in the navigation tree (e.g. `?path=Atlas/Settings/Guest`), and the flow page switches between them in place.
+Pages keep their position across variants, so switching shows exactly what differs.
+
+```dart
+final guestMenu = AtlasPage(
+  menu.$MainMenu,
+  id: 'main-menu-guest',
+  args: menu.MainMenuArgs.fixed(isLoggedIn: false),
+);
+
+final settings = AtlasFlow(
+  name: 'Settings',
+  links: {
+    menu.$MainMenu: [imprint],
+  },
+  variants: [
+    AtlasFlowVariant(
+      name: 'Logged in',
+      links: {
+        menu.$MainMenu: [AtlasLink(to: profile.$Default, label: 'Profile')],
+      },
+    ),
+    AtlasFlowVariant(
+      name: 'Guest',
+      links: {
+        guestMenu: [AtlasLink(to: login.$Default, label: 'Sign in'), imprint],
+      },
+    ),
+  ],
+);
+```
+
 ## Groups
 
 Large flows read better in sections, e.g. the steps of an onboarding.

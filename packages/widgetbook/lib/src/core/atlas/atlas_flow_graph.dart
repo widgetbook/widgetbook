@@ -244,9 +244,9 @@ class AtlasFlowGraph extends StatelessWidget {
               ),
             ),
           ),
-          for (final MapEntry(key: node, value: rect) in rects.entries)
+          for (final node in flow.pages)
             Positioned.fromRect(
-              rect: rect,
+              rect: rects[node]!,
               child: _AtlasNodeView(
                 flow: flow,
                 node: node,

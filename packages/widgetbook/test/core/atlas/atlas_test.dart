@@ -171,6 +171,59 @@ void main() {
     );
   });
 
+  group('$AtlasFlowVariant', () {
+    test(
+      'given shared links and variants, '
+      'then each variant has the shared and its own links '
+      'and the layout flow has all of them',
+      () {
+        final flow = AtlasFlow(
+          name: 'Settings',
+          links: {
+            home: [settings],
+          },
+          variants: [
+            AtlasFlowVariant(
+              name: 'Logged in',
+              links: {
+                home: [signUp],
+              },
+            ),
+            AtlasFlowVariant(
+              name: 'Guest',
+              links: {
+                home: [login],
+              },
+            ),
+          ],
+        );
+
+        final [loggedIn, guest] = flow.variantFlows;
+        expect(loggedIn.leadsTo(home), [page(settings), page(signUp)]);
+        expect(guest.leadsTo(home), [page(settings), page(login)]);
+        expect(guest.parent, flow);
+        expect(flow.layoutFlow.leadsTo(home), hasLength(3));
+        expect(guest.layoutFlow, flow.layoutFlow);
+      },
+    );
+
+    test(
+      'given links declared for a story and for a page of it, '
+      'then both are kept',
+      () {
+        final flow = AtlasFlow(
+          name: 'Onboarding',
+          links: {
+            login: [home],
+            AtlasPage(login): [signUp],
+          },
+        );
+
+        expect(flow.leadsTo(login), [page(home), page(signUp)]);
+      },
+    );
+  });
+
   group('$AtlasLayout', () {
     test(
       'given a page reached both directly and through other pages, '
@@ -834,6 +887,72 @@ void main() {
 
         expect(inAtlasPage(find.text('Start')), findsOneWidget);
         expect(inAtlasPage(find.text('Personal data')), findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      'given variants, '
+      'when switching between them, '
+      'then only their pages are shown and shared pages keep their position',
+      (tester) async {
+        final guestProfile = AtlasPage(
+          profile,
+          id: 'guest-profile',
+          label: 'Profile · guest',
+          args: _LabelArgs('Guest profile'),
+        );
+
+        final state = await pumpApp(
+          tester,
+          Config(
+            components: withProfile,
+            atlasPreview: null,
+            atlas: [
+              AtlasFlow(
+                name: 'Account',
+                links: {
+                  home: [settings],
+                },
+                variants: [
+                  AtlasFlowVariant(
+                    name: 'Logged in',
+                    links: {
+                      home: [profile],
+                    },
+                  ),
+                  AtlasFlowVariant(
+                    name: 'Guest',
+                    links: {
+                      home: [guestProfile],
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+
+        state.updatePath('Atlas/Account');
+        await tester.pumpAndSettle();
+
+        expect(inAtlasPage(find.text('Profile')), findsOneWidget);
+        final settingsPosition = tester.getTopLeft(
+          inAtlasPage(find.text('Settings')),
+        );
+
+        await tester.findAndTap(inAtlasPage(find.text('Guest')));
+
+        expect(state.path, 'Atlas/Account/Guest');
+        expect(inAtlasPage(find.text('Profile')), findsNothing);
+        expect(inAtlasPage(find.text('Profile · guest')), findsOneWidget);
+        expect(
+          tester.getTopLeft(inAtlasPage(find.text('Settings'))),
+          settingsPosition,
+        );
+
+        await tester.findAndTap(inAtlasPage(find.text('Profile · guest')));
+
+        expect(state.path, 'Atlas/Account/Guest/guest-profile');
       },
     );
 

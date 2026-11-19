@@ -18,7 +18,7 @@ class LeadsToDocBlock extends DocBlock {
     final stories = state.component!.stories.toSet();
 
     final entries = [
-      for (final flow in state.config.atlas)
+      for (final flow in state.config.atlas.expand(atlasVisibleFlows))
         for (final node in flow.pages)
           if (node is AtlasPage && stories.contains(node.story))
             (page: node, flow: flow),
@@ -52,7 +52,7 @@ class _FlowLinks extends DocBlock {
       spacing: 8,
       children: [
         Text(
-          '${page.name} · ${flow.name}',
+          [page.name, flow.parent?.name, flow.name].nonNulls.join(' · '),
           style: Theme.of(context).textTheme.titleMedium,
         ),
         if (leadsTo.isNotEmpty)

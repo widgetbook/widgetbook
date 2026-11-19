@@ -6,6 +6,7 @@ import '../framework/framework.dart';
 import '../state/state.dart';
 import '../theme/theme.dart';
 import 'atlas_flow_graph.dart';
+import 'atlas_layout.dart';
 
 const _overviewGraphHeight = 480.0;
 
@@ -28,14 +29,18 @@ class AtlasHomePage extends StatelessWidget {
     final previewSize = atlasPreviewSize(state);
 
     if (this.flows != null && flows.length == 1) {
-      final flow = flows.single;
+      final flow = _shownFlow(flows.single);
 
       return Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(flow.name, style: theme.textTheme.displaySmall),
+            Text(
+              (flow.parent ?? flow).name,
+              style: theme.textTheme.displaySmall,
+            ),
+            _VariantSwitcher(flow: flow),
             const SizedBox(height: 24),
             Expanded(
               child: _ZoomableGraph(flow: flow, previewSize: previewSize),
@@ -49,9 +54,13 @@ class AtlasHomePage extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       children: [
         Text('Atlas', style: theme.textTheme.displaySmall),
-        for (final flow in flows) ...[
+        for (final flow in flows.map(_shownFlow)) ...[
           const SizedBox(height: 32),
-          Text(flow.name, style: theme.textTheme.titleLarge),
+          Text(
+            (flow.parent ?? flow).name,
+            style: theme.textTheme.titleLarge,
+          ),
+          _VariantSwitcher(flow: flow),
           const SizedBox(height: 16),
           SizedBox(
             height: _overviewGraphHeight,
@@ -63,8 +72,49 @@ class AtlasHomePage extends StatelessWidget {
   }
 }
 
+/// The flow to draw for [flow]: its first variant if it has variants.
+AtlasFlow _shownFlow(AtlasFlow flow) {
+  return flow.variants.isEmpty ? flow : flow.variantFlows.first;
+}
+
+/// Switches between the variants of the flow that [flow] is a variant of, by
+/// navigating to the selected variant. Shows nothing for other flows.
+class _VariantSwitcher extends StatelessWidget {
+  const _VariantSwitcher({required this.flow});
+
+  final AtlasFlow flow;
+
+  @override
+  Widget build(BuildContext context) {
+    final parent = flow.parent;
+    if (parent == null) return const SizedBox.shrink();
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 12),
+      child: Material(
+        type: MaterialType.transparency,
+        child: Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            for (final variant in parent.variantFlows)
+              ChoiceChip(
+                label: Text(variant.name),
+                selected: variant == flow,
+                onSelected: (_) => WidgetbookState.of(
+                  context,
+                ).updatePath(atlasFlowPath(variant)),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 /// Fits the graph of [flow] into the available space and lets it be panned
-/// and zoomed.
+/// and zoomed. With variants, the layout of all of them is used, so nodes keep
+/// their position when switching.
 class _ZoomableGraph extends StatefulWidget {
   const _ZoomableGraph({required this.flow, required this.previewSize});
 
@@ -112,7 +162,7 @@ class _ZoomableGraphState extends State<_ZoomableGraph> {
   @override
   Widget build(BuildContext context) {
     final geometry = AtlasGraphGeometry(
-      widget.flow,
+      widget.flow.layoutFlow,
       previewSize: widget.previewSize,
     );
     final theme = WidgetbookTheme.of(context);

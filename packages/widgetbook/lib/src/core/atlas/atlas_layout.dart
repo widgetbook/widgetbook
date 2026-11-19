@@ -116,8 +116,23 @@ bool isUnregisteredPage(AtlasNode node, Set<Story> registered) {
   return node is AtlasPage && !registered.contains(node.story);
 }
 
+/// The navigation path of [flow], below its parent flow if it is a variant.
+@internal
+String atlasFlowPath(AtlasFlow flow) {
+  final parent = flow.parent;
+  return parent == null
+      ? p.join(atlasPath, flow.name)
+      : p.join(atlasPath, parent.name, flow.name);
+}
+
 /// The navigation path of a page with args, which is listed below its flow.
 @internal
 String atlasPagePath(AtlasFlow flow, AtlasPage page) {
-  return p.join(atlasPath, flow.name, page.pathSegment);
+  return p.join(atlasFlowPath(flow), page.pathSegment);
+}
+
+/// The flows shown for [flow]: its variants, or the flow itself.
+@internal
+List<AtlasFlow> atlasVisibleFlows(AtlasFlow flow) {
+  return flow.variants.isEmpty ? [flow] : flow.variantFlows;
 }

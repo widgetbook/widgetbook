@@ -53,8 +53,25 @@ final authentication = AtlasFlow(
 final accountManagement = AtlasFlow(
   name: 'Account',
   links: {
-    account.$Home: [account.$Profile, account.$Settings],
-    account.$Profile: [account.$Settings, account.$Home],
-    account.$Settings: [account.$Home],
+    account.$Home: [AtlasLink(to: account.$Settings, label: 'Settings')],
+    account.$Settings: [AtlasLink(to: account.$Home, label: 'Back')],
   },
+  variants: [
+    AtlasFlowVariant(
+      name: 'Logged in',
+      links: {
+        account.$Home: [AtlasLink(to: account.$Profile, label: 'Avatar')],
+        account.$Profile: [
+          AtlasLink(to: account.$Settings, label: 'Edit'),
+          AtlasLink(to: account.$Home, label: 'Back'),
+        ],
+      },
+    ),
+    AtlasFlowVariant(
+      name: 'Guest',
+      links: {
+        account.$Home: [AtlasLink(to: auth.$SignIn, label: 'Sign in')],
+      },
+    ),
+  ],
 );

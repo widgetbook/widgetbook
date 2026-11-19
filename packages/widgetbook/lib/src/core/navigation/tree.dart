@@ -83,17 +83,33 @@ class Tree {
         TreeNode<AtlasFlow>(flow.name, flow, atlasNode),
       );
 
-      for (final node in flow.pages) {
-        if (isUnregisteredPage(node, registered)) {
-          debugPrint(
-            'Widgetbook: the "${flow.name}" AtlasFlow references a story that '
-            'is not part of Config.components; it is shown as a placeholder.',
-          );
-        } else if (node is AtlasPage && node.args != null) {
-          flowNode.add(
-            TreeNode<Scenario>(node.pathSegment, node.scenario, flowNode),
-          );
-        }
+      if (flow.variants.isEmpty) {
+        _addAtlasPages(flowNode, flow, registered);
+      }
+      for (final variant in flow.variantFlows) {
+        final variantNode = flowNode.add(
+          TreeNode<AtlasFlow>(variant.name, variant, flowNode),
+        );
+        _addAtlasPages(variantNode, variant, registered);
+      }
+    }
+  }
+
+  static void _addAtlasPages(
+    TreeNode<AtlasFlow> flowNode,
+    AtlasFlow flow,
+    Set<Story> registered,
+  ) {
+    for (final node in flow.pages) {
+      if (isUnregisteredPage(node, registered)) {
+        debugPrint(
+          'Widgetbook: the "${flow.name}" AtlasFlow references a story that '
+          'is not part of Config.components; it is shown as a placeholder.',
+        );
+      } else if (node is AtlasPage && node.args != null) {
+        flowNode.add(
+          TreeNode<Scenario>(node.pathSegment, node.scenario, flowNode),
+        );
       }
     }
   }
