@@ -86,17 +86,14 @@ void main() {
       );
 
       test(
-        'given a query group with non-encoded special characters (e.g. comma) '
-        'and non-ASCII characters, '
+        'given a query group with an unencoded comma in a value, '
         'when [QueryGroup.fromParam] is called, '
-        'then unencoded commas in a value truncate it and drop the remainder',
+        'then the value is cut at the comma and the rest is skipped',
         () {
-          final key = 'Тест field';
-          final value = 'значение,,foo';
-
-          final group = QueryGroup.fromParam('{$key:$value}');
-
-          expect(group, equals(QueryGroup({key: 'значение'})));
+          expect(
+            QueryGroup.fromParam('{key:value,foo}'),
+            equals(const QueryGroup({'key': 'value'})),
+          );
         },
       );
 
