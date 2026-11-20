@@ -42,7 +42,7 @@ class NullableIntArg extends StyledArg<int?, IntArgStyle> with SingleFieldOnly {
       ),
       SliderIntArgStyle s => IntSliderField(
         name: 'value',
-        initialValue: value ?? 0,
+        initialValue: value ?? s.min,
         min: s.min,
         max: s.max,
         divisions: s.divisions,
