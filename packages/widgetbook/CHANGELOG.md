@@ -16,6 +16,7 @@
 - **BREAKING**: Remove the deprecated `Field.onChanged`, which has had no effect since its deprecation. ([#2086](https://github.com/widgetbook/widgetbook/pull/2086))
 - **BREAKING**: Make `Arg.value` read-only.
   Use `update(context, value)` to change an arg. ([#2087](https://github.com/widgetbook/widgetbook/pull/2087))
+- **FEAT**: `testWidgetbook` skips the PNG, semantics JSON and accessibility guideline evaluation when run with `--dart-define=WIDGETBOOK_SNAPSHOTS=false`, for gates that only check that every scenario still builds and runs. ([#2084](https://github.com/widgetbook/widgetbook/pull/2084) - by [@tomasatisocco](https://github.com/tomasatisocco))
 
 ## 4.0.0-beta.15
 
