@@ -43,7 +43,7 @@ class NullableDoubleArg extends StyledArg<double?, DoubleArgStyle>
       ),
       SliderDoubleArgStyle s => DoubleSliderField(
         name: 'value',
-        initialValue: value ?? 0.0,
+        initialValue: value ?? s.min,
         min: s.min,
         max: s.max,
         divisions: s.divisions,
