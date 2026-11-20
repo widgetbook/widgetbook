@@ -43,6 +43,27 @@ void main() {
         },
       );
 
+      test(
+        'given a non-hex string param, '
+        'when [toValue] is called, '
+        'then it returns null',
+        () {
+          expect(field.toValue('zz'), isNull);
+        },
+      );
+
+      test(
+        'given a query group with a non-hex param, '
+        'when [valueFrom] is called, '
+        'then it returns the initial value',
+        () {
+          final result = field.valueFrom(
+            const QueryGroup({'color_field': 'zz'}),
+          );
+          expect(result, equals(blue));
+        },
+      );
+
       testWidgets(
         'given a state that has no field value, '
         'then [toWidget] builds the initial value',

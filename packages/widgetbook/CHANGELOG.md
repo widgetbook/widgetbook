@@ -12,6 +12,7 @@
 - **FIX**: Render stories with a `:` in their name on web. ([#2061](https://github.com/widgetbook/widgetbook/pull/2061) - by [@GhagSagar23](https://github.com/GhagSagar23))
 - **FIX**: Keep nullable args and addons set to `null` after a reload, as URL query groups like `??{value:x}` were dropped when parsed. ([#2077](https://github.com/widgetbook/widgetbook/pull/2077))
 - **FIX**: Start `NullableDoubleArg` and `NullableIntArg` sliders at their `min` when the value is `null`, instead of `0` outside the slider range. ([#2079](https://github.com/widgetbook/widgetbook/pull/2079))
+- **FIX**: Use the initial value of `ColorArg` and `IterableArg` when their URL value is invalid, instead of failing to build the story. ([#2080](https://github.com/widgetbook/widgetbook/pull/2080))
 
 ## 4.0.0-beta.15
 
