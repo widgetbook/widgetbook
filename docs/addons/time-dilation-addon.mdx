@@ -2,6 +2,11 @@
 
 A utility addon designed for modifying the scheduler's [`timeDilation`](https://api.flutter.dev/flutter/scheduler/timeDilation.html) property.
 
+<Warning>
+  `timeDilation` is global to the Flutter app, so the selected value also slows down or speeds up the animations of the Widgetbook UI itself (e.g. dropdowns, panels and transitions), not only the story in the viewport.
+  Flutter does not support scoping time dilation to a part of the widget tree.
+</Warning>
+
 ## Usage
 
 ```dart title=widgetbook/lib/widgetbook.config.dart
