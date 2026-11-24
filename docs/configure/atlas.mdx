@@ -122,6 +122,8 @@ final settings = AtlasFlow(
 Large flows read better in sections, e.g. the steps of an onboarding.
 `AtlasGroup`s are laid out left to right in their declaration order, each under a header, and keep the order of their pages within their own columns.
 A page belongs to the first group that lists it, and pages of no group follow the groups.
+A group that no path of links connects to the group before it is stacked below that group instead, e.g. the different areas a menu leads to, so a hub and its areas fit on one canvas.
+In a flow with variants, a variant only shows the pages of its own links, and groups without such pages are hidden.
 
 ```dart
 final onboarding = AtlasFlow(

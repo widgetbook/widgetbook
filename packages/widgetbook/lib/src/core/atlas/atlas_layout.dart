@@ -4,17 +4,27 @@ import 'package:path/path.dart' as p;
 import '../framework/framework.dart';
 import '../navigation/tree.dart';
 
-/// The columns, from `first` to `last` inclusive, that an [AtlasGroup] spans.
+/// The columns, from `first` to `last` inclusive, that an [AtlasGroup] spans,
+/// its position in a stack of groups sharing these columns, and the number of
+/// rows it needs.
 @internal
-typedef AtlasGroupSpan = ({AtlasGroup group, int first, int last});
+typedef AtlasGroupSpan = ({
+  AtlasGroup group,
+  int first,
+  int last,
+  int stackIndex,
+  int rows,
+});
 
 /// Arranges the nodes of an [AtlasFlow] into columns, left to right.
 ///
 /// Each node is placed by its longest path from an entry node, ignoring links
 /// that close a cycle, so the last screens of a flow end up last. With
 /// [AtlasFlow.groups], every group gets its own columns in declaration order,
-/// keeping that order within the group. Links to the same or an earlier
-/// column are [backLinks].
+/// keeping that order within the group. A group that no path of forward links
+/// connects to the groups directly before it, e.g. one of several areas a hub
+/// leads to, is stacked below them in their columns.
+/// Links to the same or an earlier column are [backLinks].
 @internal
 class AtlasLayout {
   factory AtlasLayout(AtlasFlow flow) {
@@ -33,26 +43,69 @@ class AtlasLayout {
       }
     }
 
+    final reachable = <AtlasNode, Set<AtlasNode>>{};
+    for (final node in [...nodes]..sort((a, b) => depths[b]! - depths[a]!)) {
+      reachable[node] = {
+        for (final next in flow.leadsTo(node))
+          if (depths[next]! > depths[node]!) ...{next, ...?reachable[next]},
+      };
+    }
+
+    final members = <AtlasGroup?, List<AtlasNode>>{};
+    for (final node in ordered) {
+      members.putIfAbsent(flow.groupOf(node), () => []).add(node);
+    }
+
+    bool connected(AtlasGroup a, AtlasGroup b) {
+      bool reaches(AtlasGroup from, AtlasGroup to) {
+        final targets = members[to]!.toSet();
+        return members[from]!.any(
+          (node) => reachable[node]!.any(targets.contains),
+        );
+      }
+
+      return reaches(a, b) || reaches(b, a);
+    }
+
+    final slots = <List<AtlasGroup?>>[];
+    for (final group in flow.groups.where(members.containsKey)) {
+      final slot = slots.lastOrNull;
+      if (slot != null && slot.every((other) => !connected(group, other!))) {
+        slot.add(group);
+      } else {
+        slots.add([group]);
+      }
+    }
+    if (members.containsKey(null)) slots.add([null]);
+
     final columnOf = <AtlasNode, int>{};
+    final rowOf = <AtlasNode, int>{};
     final groupSpans = <AtlasGroupSpan>[];
     var offset = 0;
-    for (final group in [...flow.groups, null]) {
-      final members = ordered.where((node) => flow.groupOf(node) == group);
-      if (members.isEmpty) continue;
-
-      final levels = members.map((node) => depths[node]!).toSet().toList()
-        ..sort();
-      for (final node in members) {
-        columnOf[node] = offset + levels.indexOf(depths[node]!);
+    for (final slot in slots) {
+      var width = 0;
+      for (final (stackIndex, group) in slot.indexed) {
+        final groupMembers = members[group]!;
+        final levels =
+            groupMembers.map((node) => depths[node]!).toSet().toList()..sort();
+        final rows = List.filled(levels.length, 0);
+        for (final node in groupMembers) {
+          final level = levels.indexOf(depths[node]!);
+          columnOf[node] = offset + level;
+          rowOf[node] = rows[level]++;
+        }
+        if (group != null) {
+          groupSpans.add((
+            group: group,
+            first: offset,
+            last: offset + levels.length - 1,
+            stackIndex: stackIndex,
+            rows: rows.reduce((a, b) => a > b ? a : b),
+          ));
+        }
+        if (levels.length > width) width = levels.length;
       }
-      if (group != null) {
-        groupSpans.add((
-          group: group,
-          first: offset,
-          last: offset + levels.length - 1,
-        ));
-      }
-      offset += levels.length;
+      offset += width;
     }
 
     final columns = [for (var i = 0; i < offset; i++) <AtlasNode>[]];
@@ -66,17 +119,27 @@ class AtlasLayout {
           if (columnOf[to]! <= columnOf[from]!) (from, to),
     };
 
-    return AtlasLayout._(columns, columnOf, backLinks, groupSpans);
+    return AtlasLayout._(columns, columnOf, rowOf, backLinks, groupSpans);
   }
 
-  AtlasLayout._(this.columns, this._columnOf, this.backLinks, this.groupSpans);
+  AtlasLayout._(
+    this.columns,
+    this._columnOf,
+    this._rowOf,
+    this.backLinks,
+    this.groupSpans,
+  );
 
   final List<List<AtlasNode>> columns;
   final Map<AtlasNode, int> _columnOf;
+  final Map<AtlasNode, int> _rowOf;
   final Set<(AtlasNode, AtlasNode)> backLinks;
   final List<AtlasGroupSpan> groupSpans;
 
   int columnOf(AtlasNode node) => _columnOf[node]!;
+
+  /// The row of [node] within its group, or within the ungrouped nodes.
+  int rowOf(AtlasNode node) => _rowOf[node]!;
 
   bool isBackLink(AtlasNode from, AtlasNode to) {
     return backLinks.contains((from, to));

@@ -18,6 +18,7 @@ const _labeledLaneGap = 28.0;
 const _labelMaxWidth = 160.0;
 const _groupPadding = 16.0;
 const _groupHeaderHeight = 40.0;
+const _groupStackGap = 16.0;
 const _portSpacing = 12.0;
 const _labeledPortSpacing = 28.0;
 const _textNodeSize = Size(176, 52);
@@ -50,15 +51,34 @@ class AtlasGraphGeometry {
       return origin.dx + column * (nodeSize.width + columnGap);
     }
 
+    final rowHeight = nodeSize.height + _rowGap;
+    final nodesTop = <AtlasGroup, double>{};
+    final contentBottom = <AtlasGroup, double>{};
+    for (final span in [
+      ...layout.groupSpans,
+    ]..sort((a, b) => a.stackIndex - b.stackIndex)) {
+      final above = layout.groupSpans.where(
+        (other) =>
+            other.first == span.first &&
+            other.stackIndex == span.stackIndex - 1,
+      );
+      final top = above.isEmpty
+          ? 0.0
+          : contentBottom[above.single.group]! + _groupPadding + _groupStackGap;
+      nodesTop[span.group] = top + _groupHeaderHeight;
+      contentBottom[span.group] =
+          nodesTop[span.group]! + span.rows * rowHeight - _rowGap;
+    }
+
     final rects = <AtlasNode, Rect>{
-      for (final (column, nodes) in layout.columns.indexed)
-        for (final (row, node) in nodes.indexed)
-          node:
-              Offset(
-                columnLeft(column),
-                origin.dy + row * (nodeSize.height + _rowGap),
-              ) &
-              nodeSize,
+      for (final node in layout.columns.expand((nodes) => nodes))
+        node:
+            Offset(
+              columnLeft(layout.columnOf(node)),
+              (nodesTop[flow.groupOf(node)] ?? origin.dy) +
+                  layout.rowOf(node) * rowHeight,
+            ) &
+            nodeSize,
     };
 
     final backLinkCount = [
@@ -74,15 +94,24 @@ class AtlasGraphGeometry {
         rects.values.fold(0.0, (max, rect) => math.max(max, rect.right)) +
         (hasGroups ? _groupPadding : 0);
 
+    bool isLastInStack(AtlasGroupSpan span) {
+      return !layout.groupSpans.any(
+        (other) =>
+            other.first == span.first && other.stackIndex > span.stackIndex,
+      );
+    }
+
     final groups = [
       for (final span in layout.groupSpans)
         (
           group: span.group,
           rect: Rect.fromLTRB(
             columnLeft(span.first) - _groupPadding,
-            0,
+            nodesTop[span.group]! - _groupHeaderHeight,
             columnLeft(span.last) + nodeSize.width + _groupPadding,
-            bottom,
+            isLastInStack(span)
+                ? bottom
+                : contentBottom[span.group]! + _groupPadding,
           ),
         ),
     ];
@@ -95,7 +124,10 @@ class AtlasGraphGeometry {
       columnGap,
       laneGap,
       bottom,
-      Size(right + 8, bottom + laneGap * (backLinkCount + 1)),
+      Size(
+        right + 8 + (backLinkCount > 0 ? columnGap / 2 + 12 : 0),
+        bottom + laneGap * (backLinkCount + 1),
+      ),
     );
   }
 
@@ -214,6 +246,8 @@ class AtlasFlowGraph extends StatelessWidget {
             from: rects[from]!,
             to: rects[to]!,
             laneY: geometry.nodesBottom + geometry.laneGap * ++lanes,
+            gapOffset: (lanes % 5 - 2) * 4.0,
+            columnGap: geometry.columnGap,
             link: flow.linkBetween(from, to),
           ),
       for (final (from, to) in forwardLinks)
@@ -755,25 +789,36 @@ class _Edge {
   }
 
   /// Runs below all nodes along its own lane at [laneY], so back links do not
-  /// cross nodes or overlap each other.
+  /// overlap each other. Its vertical runs stay in the gaps right of the
+  /// columns of [from] and [to], shifted by [gapOffset], so they do not cross
+  /// nodes stacked below either.
   factory _Edge.back({
     required Rect from,
     required Rect to,
     required double laneY,
+    required double gapOffset,
+    required double columnGap,
     required AtlasLink? link,
   }) {
+    const clearance = 10.0;
     final start = from.bottomCenter + Offset(from.width / 6, 0);
     final end = to.bottomCenter - Offset(to.width / 6, 0);
+    final fromGap = from.right + columnGap / 2 + gapOffset;
+    final toGap = to.right + columnGap / 2 - gapOffset;
 
     return _Edge._(
       Path()
         ..moveTo(start.dx, start.dy)
-        ..lineTo(start.dx, laneY)
-        ..lineTo(end.dx, laneY)
+        ..lineTo(start.dx, start.dy + clearance)
+        ..lineTo(fromGap, start.dy + clearance)
+        ..lineTo(fromGap, laneY)
+        ..lineTo(toGap, laneY)
+        ..lineTo(toGap, end.dy + clearance)
+        ..lineTo(end.dx, end.dy + clearance)
         ..lineTo(end.dx, end.dy),
       end,
       -math.pi / 2,
-      Offset((start.dx + end.dx) / 2, laneY),
+      Offset((fromGap + toGap) / 2, laneY),
       link,
     );
   }

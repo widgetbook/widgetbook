@@ -345,6 +345,66 @@ void main() {
     );
 
     test(
+      'given groups no path connects, '
+      'then they are stacked into the same columns',
+      () {
+        final layout = AtlasLayout(
+          AtlasFlow(
+            name: 'Settings',
+            groups: [
+              AtlasGroup(name: 'Main menu', pages: [home]),
+              AtlasGroup(name: 'System', pages: [login]),
+              AtlasGroup(name: 'Profile', pages: [signUp]),
+              AtlasGroup(name: 'Legal', pages: [settings]),
+            ],
+            links: {
+              home: [login, signUp, settings],
+              login: [home],
+              settings: [home],
+            },
+          ),
+        );
+
+        expect(
+          layout.groupSpans.map(
+            (span) => (span.group.name, span.first, span.stackIndex),
+          ),
+          [
+            ('Main menu', 0, 0),
+            ('System', 1, 0),
+            ('Profile', 1, 1),
+            ('Legal', 1, 2),
+          ],
+        );
+      },
+    );
+
+    test(
+      'given groups connected through an ungrouped page, '
+      'then they are not stacked',
+      () {
+        final layout = AtlasLayout(
+          AtlasFlow(
+            name: 'Onboarding',
+            groups: [
+              AtlasGroup(name: 'Start', pages: [login]),
+              AtlasGroup(name: 'End', pages: [settings]),
+            ],
+            links: {
+              login: [home],
+              home: [settings],
+            },
+          ),
+        );
+
+        expect(
+          layout.groupSpans.map((span) => (span.group.name, span.first)),
+          [('Start', 0), ('End', 1)],
+        );
+      },
+    );
+
+    test(
       'given a link into an earlier group, '
       'then it is a back link',
       () {
@@ -424,6 +484,39 @@ void main() {
           [page(home)],
           [page(settings)],
         ]);
+      },
+    );
+  });
+
+  group('$AtlasGraphGeometry', () {
+    test(
+      'given stacked groups, '
+      'then their bands are below each other without overlapping',
+      () {
+        final geometry = AtlasGraphGeometry(
+          AtlasFlow(
+            name: 'Settings',
+            groups: [
+              AtlasGroup(name: 'Main menu', pages: [home]),
+              AtlasGroup(name: 'System', pages: [login]),
+              AtlasGroup(name: 'Profile', pages: [signUp, settings]),
+            ],
+            links: {
+              home: [login, signUp],
+              signUp: [settings],
+            },
+          ),
+        );
+
+        final [_, system, profile] = geometry.groups
+            .map((g) => g.rect)
+            .toList();
+        expect(profile.left, system.left);
+        expect(profile.top, greaterThanOrEqualTo(system.bottom));
+        for (final node in [page(signUp), page(settings)]) {
+          expect(profile.contains(geometry.rects[node]!.center), isTrue);
+        }
+        expect(system.contains(geometry.rects[page(login)]!.center), isTrue);
       },
     );
   });
