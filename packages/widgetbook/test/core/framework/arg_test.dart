@@ -6,19 +6,26 @@ enum _Priority { low, high }
 
 void main() {
   group('$Arg', () {
-    test(
-      'given a nullified nullable arg, '
-      'when it is un-nullified, '
-      'then its value is the initial value',
-      () {
-        final arg = NullableStringArg('hello', name: 'label');
+    for (final changedValue in [null, 'bye']) {
+      test(
+        'given a nullable arg ${changedValue == null ? 'left at its initial value' : 'changed to $changedValue'}, '
+        'when it is nullified and un-nullified, '
+        'then it shows and keeps the value from before',
+        () {
+          final arg = NullableStringArg('hello', name: 'label');
+          final previousValue = changedValue ?? 'hello';
+          final group = changedValue == null
+              ? QueryGroup.nullified
+              : arg.valueToQueryGroup(changedValue).nullify();
 
-        arg.syncValue(QueryGroup.nullified);
-        arg.syncValue(QueryGroup.nullified.unnullify());
+          arg.syncValue(group);
+          expect(arg.field.valueFrom(group), previousValue);
 
-        expect(arg.value, 'hello');
-      },
-    );
+          arg.syncValue(group.unnullify());
+          expect(arg.value, previousValue);
+        },
+      );
+    }
 
     test(
       'given an arg synced to a valid value, '
