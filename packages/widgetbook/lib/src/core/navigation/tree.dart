@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:path/path.dart' as p;
+import 'package:path/path.dart' show posix;
 
 import '../atlas/atlas_layout.dart';
-
 import '../docs/docs.dart';
 import '../framework/framework.dart';
 import 'tree_node.dart';
@@ -19,7 +18,7 @@ class Tree {
     }
 
     for (final component in config.components) {
-      final parts = p.split(component.path);
+      final parts = posix.split(component.path);
 
       // Start with root and keep adding parts down the path
       final lastNode = parts.fold<TreeNode>(

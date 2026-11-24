@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:path/path.dart' as p;
+import 'package:path/path.dart' show posix;
 
 import '../framework/framework.dart';
 import '../navigation/tree.dart';
@@ -208,14 +208,14 @@ bool isUnregisteredPage(AtlasNode node, Set<Story> registered) {
 String atlasFlowPath(AtlasFlow flow) {
   final parent = flow.parent;
   return parent == null
-      ? p.join(atlasPath, flow.name)
-      : p.join(atlasPath, parent.name, flow.name);
+      ? posix.join(atlasPath, flow.name)
+      : posix.join(atlasPath, parent.name, flow.name);
 }
 
 /// The navigation path of a page with args, which is listed below its flow.
 @internal
 String atlasPagePath(AtlasFlow flow, AtlasPage page) {
-  return p.join(atlasFlowPath(flow), page.pathSegment);
+  return posix.join(atlasFlowPath(flow), page.pathSegment);
 }
 
 /// The flows shown for [flow]: its variants, or the flow itself.

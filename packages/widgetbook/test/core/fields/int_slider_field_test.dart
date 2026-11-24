@@ -92,6 +92,31 @@ void main() {
           expect(updatedSlider.value, equals(8));
         },
       );
+
+      testWidgets(
+        'given a nullable arg without a value, '
+        'when its fields are built, '
+        'then the slider starts within the min and max range',
+        (tester) async {
+          final arg = NullableIntArg(
+            null,
+            name: 'count',
+            style: const SliderIntArgStyle(
+              min: 2,
+              max: 8,
+              divisions: 6,
+            ),
+          );
+
+          await tester.pumpWidgetWithState(
+            state: WidgetbookState(),
+            builder: (context) => arg.buildFields(context),
+          );
+
+          final slider = tester.widget<Slider>(find.byType(Slider));
+          expect(slider.value, equals(2.0));
+        },
+      );
     },
   );
 }

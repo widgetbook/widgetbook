@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:meta/meta.dart';
-import 'package:path/path.dart' as p;
+import 'package:path/path.dart' show posix;
 
 import '../docs/docs.dart';
 import '../framework/atlas_flow.dart';
@@ -69,7 +69,7 @@ class TreeNode<T> {
 
   /// Gets the path from root to this node without leading slash
   /// Example: root/child/grandchild
-  String get path => isRoot ? name : p.join(parent!.path, name);
+  String get path => isRoot ? name : posix.join(parent!.path, name);
 
   TreeNode<TChild> add<TChild>(TreeNode<TChild> node) {
     return _children.putIfAbsent(
@@ -86,7 +86,7 @@ class TreeNode<T> {
   /// This is more efficient than using [filter] with a path equality check,
   /// as it traverses the tree directly.
   TreeNode? findByPath(String path) {
-    final parts = p.split(path);
+    final parts = posix.split(path);
 
     TreeNode? currentNode = this;
     for (final part in parts) {

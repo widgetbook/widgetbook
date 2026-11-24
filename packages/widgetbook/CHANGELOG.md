@@ -9,6 +9,11 @@
   Use `ThemeAddon<CupertinoThemeData>` and a custom `appBuilder` returning a `CupertinoApp` instead. ([#2071](https://github.com/widgetbook/widgetbook/pull/2071))
 - **REFACTOR**: Allow `build` 5.x. ([#2073](https://github.com/widgetbook/widgetbook/pull/2073))
 - **FEAT**: Add `Config.atlas` to map which stories lead to which other stories in named `AtlasFlow`s, shown as a zoomable graph with live previews on the default home page, with an "Atlas" entry and one entry per flow in the navigation tree, and by the new `LeadsToDocBlock`. Pages can show a story in a specific state (`AtlasPage` with args), destinations without a story are `AtlasTerminal`s, links can be labeled with `AtlasLink`, flows can be sectioned with `AtlasGroup`s and have `AtlasFlowVariant`s, and nodes can be decorated. Add `WidgetbookState.goHome` to deselect the current story.
+- **FIX**: Skip malformed pairs in URL query groups instead of failing to open the route, and keep values with an unencoded `:` whole. ([#2060](https://github.com/widgetbook/widgetbook/pull/2060) - by [@flavianunes](https://github.com/flavianunes))
+- **FIX**: Render stories with a `:` in their name on web. ([#2061](https://github.com/widgetbook/widgetbook/pull/2061) - by [@GhagSagar23](https://github.com/GhagSagar23))
+- **FIX**: Keep nullable args and addons set to `null` after a reload, as URL query groups like `??{value:x}` were dropped when parsed. ([#2077](https://github.com/widgetbook/widgetbook/pull/2077))
+- **FIX**: Start `NullableDoubleArg` and `NullableIntArg` sliders at their `min` when the value is `null`, instead of `0` outside the slider range. ([#2079](https://github.com/widgetbook/widgetbook/pull/2079))
+- **FIX**: Use the initial value of `ColorArg` and `IterableArg` when their URL value is invalid, instead of failing to build the story. ([#2080](https://github.com/widgetbook/widgetbook/pull/2080))
 
 ## 4.0.0-beta.15
 

@@ -12,6 +12,11 @@ class TimeDilationMode extends Mode<double> {
   String get formattedValue => 'x$value';
 }
 
+/// An [Addon] for changing [timeDilation].
+///
+/// [timeDilation] is global to the Flutter app, so the selected value also
+/// affects the animations of the Widgetbook UI, not only the story in the
+/// viewport. Flutter does not support scoping it to a subtree.
 class TimeDilationAddon extends Addon<double> with SingleFieldOnly {
   TimeDilationAddon([double value = 1])
     : super(

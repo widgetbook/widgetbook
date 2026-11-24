@@ -8,7 +8,7 @@ class QueryGroup {
 
   /// Pattern to identify valid query group strings.
   /// Examples of valid strings: `{foo:bar}`, `??{foo:bar}`, `??`, `{}`
-  static final pattern = RegExp(r'^\??\{.*\}$|^\?\?$');
+  static final pattern = RegExp(r'^(\?\?)?\{.*\}$|^\?\?$');
 
   static const nullabilitySymbol = '??';
   static const QueryGroup empty = QueryGroup({});
@@ -43,6 +43,10 @@ class QueryGroup {
   }
 
   /// Decodes a string query group encoded value back to a [QueryGroup].
+  ///
+  /// Each pair is split on its first colon, so a value with a non-encoded
+  /// colon (e.g. `12:30`) is kept whole. Pairs without a colon or with an
+  /// empty key are skipped.
   // ignore: sort_constructors_first
   factory QueryGroup.fromParam(String value) {
     if (value == '{}') {
@@ -58,17 +62,17 @@ class QueryGroup {
         .substring(isNullified ? 3 : 1, value.length - 1)
         .split(RegExp(r',(?![^\[]*\])')); // Split on commas not within brackets
 
-    final fields = Map<String, String>.fromEntries(
-      params.map(
-        (param) {
-          final parts = param.split(':');
-          final decodedKey = tryDecodeComponent(parts[0]);
-          final decodedValue = tryDecodeComponent(parts[1]);
+    final fields = <String, String>{};
+    for (final param in params) {
+      final separatorIndex = param.indexOf(':');
+      if (separatorIndex <= 0) continue;
 
-          return MapEntry(decodedKey ?? parts[0], decodedValue ?? parts[1]);
-        },
-      ),
-    );
+      final fieldKey = param.substring(0, separatorIndex);
+      final fieldValue = param.substring(separatorIndex + 1);
+
+      fields[tryDecodeComponent(fieldKey) ?? fieldKey] =
+          tryDecodeComponent(fieldValue) ?? fieldValue;
+    }
 
     return QueryGroup(
       fields,

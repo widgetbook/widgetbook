@@ -35,13 +35,25 @@ void main() {
       );
 
       test(
-        'given a string param that does not exist in values, '
+        'given a string param that is not wrapped in brackets, '
         'when [toValue] is called, '
-        'then it throw an exception',
+        'then it returns null',
         () {
-          expect(() => field.toValue('x'), throwsA(isA<Exception>()));
-          expect(() => field.toValue('x]'), throwsA(isA<Exception>()));
-          expect(() => field.toValue('[x'), throwsA(isA<Exception>()));
+          expect(field.toValue('x'), isNull);
+          expect(field.toValue('x]'), isNull);
+          expect(field.toValue('[x'), isNull);
+        },
+      );
+
+      test(
+        'given a query group with an invalid param, '
+        'when [valueFrom] is called, '
+        'then it returns the initial value',
+        () {
+          final result = field.valueFrom(
+            const QueryGroup({'iterable_segmented_field': 'x'}),
+          );
+          expect(result, equals({1}));
         },
       );
 
