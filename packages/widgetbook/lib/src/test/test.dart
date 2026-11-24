@@ -14,46 +14,48 @@ import 'semantics/semantics_tree_serializer.dart';
 /// The default location is already an ignored path by default.
 const outputDir = 'build/.widgetbook';
 
-/// Runs every scenario of every story in [config] as a widget test.
+/// Whether each scenario writes its snapshot (PNG, semantics tree and
+/// accessibility guideline violations) to [outputDir].
 ///
-/// With [snapshots] (the default), each scenario writes a PNG and a JSON
-/// metadata file (semantics tree and accessibility guideline violations) to
-/// `build/.widgetbook`. Set it to `false` to only build and run the
-/// scenarios, failing on any error, without capturing or writing anything.
-/// That is enough for a CI gate that only checks every story still builds,
-/// and much faster on large catalogs.
-Future<void> testWidgetbook(Config config, {bool snapshots = true}) async {
+/// Run with `--dart-define=WIDGETBOOK_SNAPSHOTS=false` to only build and run
+/// the scenarios, for example in a CI gate that only checks every scenario
+/// still builds. It has to be `const`: `bool.fromEnvironment` called at
+/// runtime silently returns the default.
+const _snapshots = bool.fromEnvironment(
+  'WIDGETBOOK_SNAPSHOTS',
+  defaultValue: true,
+);
+
+Future<void> testWidgetbook(Config config) async {
   TestWidgetsFlutterBinding.ensureInitialized();
   await loadFonts();
 
   for (final component in config.components) {
-    testComponent(config, component, snapshots: snapshots);
+    testComponent(config, component);
   }
 }
 
 void testComponent(
   Config config,
-  Component component, {
-  bool snapshots = true,
-}) {
+  Component component,
+) {
   group('${component.name}', () {
     for (final story in component.stories) {
-      testStory(config, story, snapshots: snapshots);
+      testStory(config, story);
     }
   });
 }
 
 void testStory(
   Config config,
-  Story story, {
-  bool snapshots = true,
-}) {
+  Story story,
+) {
   group(
     story.name,
     () {
       final scenarios = story.allScenarios(config);
       for (final scenario in scenarios) {
-        testScenario(config, scenario, snapshots: snapshots);
+        testScenario(config, scenario);
       }
     },
     skip: story.excludeFromTests ? 'Excluded from snapshots' : null,
@@ -62,9 +64,8 @@ void testStory(
 
 void testScenario(
   Config config,
-  Scenario scenario, {
-  bool snapshots = true,
-}) {
+  Scenario scenario,
+) {
   final defaultViewport = Viewports.none;
   final targetViewport = scenario.viewport ?? defaultViewport;
 
@@ -81,9 +82,7 @@ void testScenario(
       tester.view.physicalConstraints = targetViewport.viewConstraints;
       tester.view.devicePixelRatio = targetViewport.pixelRatio;
 
-      final semanticsHandle = snapshots
-          ? tester.binding.ensureSemantics()
-          : null;
+      final semanticsHandle = tester.binding.ensureSemantics();
 
       Future<void> body() async {
         final key = UniqueKey();
@@ -102,7 +101,7 @@ void testScenario(
 
         await loadImages(tester);
 
-        if (snapshots) {
+        if (_snapshots) {
           await _captureSnapshot(
             tester,
             config,
@@ -121,7 +120,7 @@ void testScenario(
       final wrapper = config.scenarioConfig.wrapper;
       await (wrapper == null ? body() : wrapper(tester, scenario, body));
 
-      semanticsHandle?.dispose();
+      semanticsHandle.dispose();
       addTearDown(tester.view.reset);
     },
     // `null` (not `false`) so a non-excluded scenario inside an excluded story

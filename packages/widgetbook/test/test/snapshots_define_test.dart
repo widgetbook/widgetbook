@@ -33,7 +33,14 @@ class _BoxStory extends Story<_Box, _BoxArgs> {
 final executed = <String>{};
 
 /// A component name no other test writes snapshots for.
-const componentName = 'SnapshotsDisabled';
+const componentName = 'SnapshotsDefine';
+
+/// Mirrors the define `testWidgetbook` reads. CI runs this file twice: once
+/// as is, once with `--dart-define=WIDGETBOOK_SNAPSHOTS=false`.
+const snapshots = bool.fromEnvironment(
+  'WIDGETBOOK_SNAPSHOTS',
+  defaultValue: true,
+);
 
 Future<void> main() async {
   final snapshotDir = Directory('build/.widgetbook/$componentName');
@@ -58,15 +65,19 @@ Future<void> main() async {
     ],
   );
 
-  await testWidgetbook(config, snapshots: false);
+  await testWidgetbook(config);
 
   // Runs after the scenario tests registered by `testWidgetbook` above.
-  test('snapshots: false runs the scenarios without writing snapshots', () {
+  test('WIDGETBOOK_SNAPSHOTS=$snapshots runs the scenarios and '
+      '${snapshots ? 'writes' : 'skips'} their snapshots', () {
     expect(executed, {'scenario'}, reason: 'the scenario should still run');
     expect(
-      snapshotDir.existsSync(),
-      isFalse,
-      reason: 'no PNG or JSON should be written',
+      File('${snapshotDir.path}/Story/scenario.png').existsSync(),
+      snapshots,
+    );
+    expect(
+      File('${snapshotDir.path}/Story/scenario.json').existsSync(),
+      snapshots,
     );
   });
 }
