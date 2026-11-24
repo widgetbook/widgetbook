@@ -13,7 +13,7 @@ class ColorArg extends Arg<Color> with SingleFieldOnly {
   Field<Color> get field {
     return ColorField(
       name: 'value',
-      initialValue: value,
+      initialValue: initialValue,
     );
   }
 }
@@ -28,7 +28,7 @@ class NullableColorArg extends Arg<Color?> with SingleFieldOnly {
   Field<Color> get field {
     return ColorField(
       name: 'value',
-      initialValue: value ?? ColorField.defaultColor,
+      initialValue: initialValue ?? ColorField.defaultColor,
     );
   }
 }
