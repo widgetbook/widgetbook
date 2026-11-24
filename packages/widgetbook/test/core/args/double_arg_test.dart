@@ -88,5 +88,35 @@ void main() {
         expect(arg.value, 1.5);
       },
     );
+
+    test(
+      'given a nullified input arg changed to another value, '
+      'when it is un-nullified, '
+      'then its value is the changed value',
+      () {
+        final arg = NullableDoubleArg(1.5, name: 'double');
+        final group = arg.valueToQueryGroup(0.5).nullify();
+        arg.syncValue(group);
+
+        arg.syncValue(group.unnullify());
+
+        expect(arg.value, 0.5);
+      },
+    );
+
+    test(
+      'given a nullified slider arg changed to another value, '
+      'when it is un-nullified, '
+      'then its value is the changed value',
+      () {
+        final arg = NullableDoubleArg(1.5, name: 'double', style: slider);
+        final group = arg.valueToQueryGroup(0.5).nullify();
+        arg.syncValue(group);
+
+        arg.syncValue(group.unnullify());
+
+        expect(arg.value, 0.5);
+      },
+    );
   });
 }

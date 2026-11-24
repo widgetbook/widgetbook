@@ -102,5 +102,35 @@ void main() {
         expect(arg.value, 42);
       },
     );
+
+    test(
+      'given a nullified input arg changed to another value, '
+      'when it is un-nullified, '
+      'then its value is the changed value',
+      () {
+        final arg = NullableIntArg(42, name: 'int');
+        final group = arg.valueToQueryGroup(7).nullify();
+        arg.syncValue(group);
+
+        arg.syncValue(group.unnullify());
+
+        expect(arg.value, 7);
+      },
+    );
+
+    test(
+      'given a nullified slider arg changed to another value, '
+      'when it is un-nullified, '
+      'then its value is the changed value',
+      () {
+        final arg = NullableIntArg(42, name: 'int', style: slider);
+        final group = arg.valueToQueryGroup(7).nullify();
+        arg.syncValue(group);
+
+        arg.syncValue(group.unnullify());
+
+        expect(arg.value, 7);
+      },
+    );
   });
 }

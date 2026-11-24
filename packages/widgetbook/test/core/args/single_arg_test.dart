@@ -104,5 +104,40 @@ void main() {
         expect(arg.value, 'b');
       },
     );
+
+    test(
+      'given a nullified dropdown arg changed to another value, '
+      'when it is un-nullified, '
+      'then its value is the changed value',
+      () {
+        final arg = NullableSingleArg('b', name: 'single', values: values);
+        final group = arg.valueToQueryGroup('a').nullify();
+        arg.syncValue(group);
+
+        arg.syncValue(group.unnullify());
+
+        expect(arg.value, 'a');
+      },
+    );
+
+    test(
+      'given a nullified segmented arg changed to another value, '
+      'when it is un-nullified, '
+      'then its value is the changed value',
+      () {
+        final arg = NullableSingleArg(
+          'b',
+          name: 'single',
+          values: values,
+          style: segmented,
+        );
+        final group = arg.valueToQueryGroup('a').nullify();
+        arg.syncValue(group);
+
+        arg.syncValue(group.unnullify());
+
+        expect(arg.value, 'a');
+      },
+    );
   });
 }

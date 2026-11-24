@@ -48,5 +48,20 @@ void main() {
         expect(arg.value, initialColor);
       },
     );
+
+    test(
+      'given a nullified arg changed to another value, '
+      'when it is un-nullified, '
+      'then its value is the changed value',
+      () {
+        final arg = NullableColorArg(initialColor, name: 'color');
+        final group = arg.valueToQueryGroup(const Color(0xFF000000)).nullify();
+        arg.syncValue(group);
+
+        arg.syncValue(group.unnullify());
+
+        expect(arg.value, const Color(0xFF000000));
+      },
+    );
   });
 }

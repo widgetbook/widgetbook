@@ -55,5 +55,24 @@ void main() {
         expect(arg.value, ['b']);
       },
     );
+
+    test(
+      'given a nullified arg changed to another value, '
+      'when it is un-nullified, '
+      'then its value is the changed value',
+      () {
+        final arg = NullableIterableArg(
+          const ['b'],
+          name: 'iterable',
+          values: values,
+        );
+        final group = arg.valueToQueryGroup(const ['a']).nullify();
+        arg.syncValue(group);
+
+        arg.syncValue(group.unnullify());
+
+        expect(arg.value, const ['a']);
+      },
+    );
   });
 }

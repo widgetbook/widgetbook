@@ -64,5 +64,20 @@ void main() {
         expect(arg.value, initialDate);
       },
     );
+
+    test(
+      'given a nullified arg changed to another value, '
+      'when it is un-nullified, '
+      'then its value is the changed value',
+      () {
+        final arg = NullableDateTimeArg(initialDate, name: 'date');
+        final group = arg.valueToQueryGroup(DateTime(2040, 6)).nullify();
+        arg.syncValue(group);
+
+        arg.syncValue(group.unnullify());
+
+        expect(arg.value, DateTime(2040, 6));
+      },
+    );
   });
 }
