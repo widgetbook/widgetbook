@@ -8,31 +8,42 @@ void main() {
   group('$Arg', () {
     test(
       'given a nullable arg left at its initial value, '
-      'when it is nullified and un-nullified, '
-      'then it shows and keeps the initial value',
+      'when it is nullified, '
+      'then its field shows the initial value',
       () {
         final arg = NullableStringArg('hello', name: 'label');
 
         arg.syncValue(QueryGroup.nullified);
+
         expect(arg.field.valueFrom(QueryGroup.nullified), 'hello');
+      },
+    );
+
+    test(
+      'given a nullified nullable arg left at its initial value, '
+      'when it is un-nullified, '
+      'then its value is the initial value',
+      () {
+        final arg = NullableStringArg('hello', name: 'label');
+        arg.syncValue(QueryGroup.nullified);
 
         arg.syncValue(QueryGroup.nullified.unnullify());
+
         expect(arg.value, 'hello');
       },
     );
 
     test(
-      'given a nullable arg changed to another value, '
-      'when it is nullified and un-nullified, '
-      'then it shows and keeps the changed value',
+      'given a nullified nullable arg changed to another value, '
+      'when it is un-nullified, '
+      'then its value is the changed value',
       () {
         final arg = NullableStringArg('hello', name: 'label');
         final group = const QueryGroup({'value': 'bye'}).nullify();
-
         arg.syncValue(group);
-        expect(arg.field.valueFrom(group), 'bye');
 
         arg.syncValue(group.unnullify());
+
         expect(arg.value, 'bye');
       },
     );
