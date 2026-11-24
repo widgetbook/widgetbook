@@ -232,10 +232,11 @@ class AtlasFlowGraph extends StatelessWidget {
       child: Stack(
         children: [
           for (final (:group, :rect) in geometry.groups)
-            Positioned.fromRect(
-              rect: rect,
-              child: _GroupBand(name: group.name),
-            ),
+            if (flow.pages.any((node) => flow.groupOf(node) == group))
+              Positioned.fromRect(
+                rect: rect,
+                child: _GroupBand(name: group.name),
+              ),
           Positioned.fill(
             child: CustomPaint(
               painter: _EdgePainter(

@@ -208,6 +208,38 @@ void main() {
     );
 
     test(
+      'given groups listing pages of other variants, '
+      'then a variant only contains the pages of its own and the shared links',
+      () {
+        final flow = AtlasFlow(
+          name: 'Settings',
+          groups: [
+            AtlasGroup(name: 'Menu', pages: [login, signUp]),
+            AtlasGroup(name: 'Screens', pages: [home, settings]),
+          ],
+          variants: [
+            AtlasFlowVariant(
+              name: 'Logged in',
+              links: {
+                login: [home],
+              },
+            ),
+            AtlasFlowVariant(
+              name: 'Demo mode',
+              links: {
+                signUp: [settings],
+              },
+            ),
+          ],
+        );
+
+        final [loggedIn, demoMode] = flow.variantFlows;
+        expect(loggedIn.pages, [page(login), page(home)]);
+        expect(demoMode.pages, [page(signUp), page(settings)]);
+      },
+    );
+
+    test(
       'given links declared for a story and for a page of it, '
       'then both are kept',
       () {
@@ -334,6 +366,43 @@ void main() {
           [page(login)],
         ]);
         expect(layout.isBackLink(page(login), page(home)), isTrue);
+      },
+    );
+
+    test(
+      'given variants whose entry pages share a group, '
+      'when one of them is linked back to from pages of the other, '
+      'then both entry pages are in the same column',
+      () {
+        final flow = AtlasFlow(
+          name: 'Settings',
+          groups: [
+            AtlasGroup(name: 'Main menu', pages: [login, signUp]),
+          ],
+          variants: [
+            AtlasFlowVariant(
+              name: 'Logged in',
+              links: {
+                login: [home],
+                home: [login],
+              },
+            ),
+            AtlasFlowVariant(
+              name: 'Demo mode',
+              links: {
+                signUp: [home],
+              },
+            ),
+          ],
+        );
+
+        final layout = AtlasLayout(flow.layoutFlow);
+
+        expect(layout.columnOf(page(login)), layout.columnOf(page(signUp)));
+        expect(
+          layout.columnOf(page(home)),
+          greaterThan(layout.columnOf(page(login))),
+        );
       },
     );
 
@@ -953,6 +1022,51 @@ void main() {
         await tester.findAndTap(inAtlasPage(find.text('Profile · guest')));
 
         expect(state.path, 'Atlas/Account/Guest/guest-profile');
+      },
+    );
+
+    testWidgets(
+      'given a group without pages in the selected variant, '
+      'then its header is not shown',
+      (tester) async {
+        final state = await pumpApp(
+          tester,
+          Config(
+            components: withProfile,
+            atlasPreview: null,
+            atlas: [
+              AtlasFlow(
+                name: 'Account',
+                groups: [
+                  AtlasGroup(name: 'Start', pages: [home]),
+                  AtlasGroup(name: 'Personal data', pages: [profile]),
+                  AtlasGroup(name: 'Guest screens', pages: [settings]),
+                ],
+                variants: [
+                  AtlasFlowVariant(
+                    name: 'Logged in',
+                    links: {
+                      home: [profile],
+                    },
+                  ),
+                  AtlasFlowVariant(
+                    name: 'Guest',
+                    links: {
+                      home: [settings],
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+
+        state.updatePath('Atlas/Account/Logged in');
+        await tester.pumpAndSettle();
+
+        expect(inAtlasPage(find.text('Personal data')), findsOneWidget);
+        expect(inAtlasPage(find.text('Guest screens')), findsNothing);
+        expect(inAtlasPage(find.text('Settings')), findsNothing);
       },
     );
 

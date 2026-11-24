@@ -212,7 +212,9 @@ class AtlasFlow {
     final canonical = <AtlasNode, AtlasNode>{};
     final froms = _entries.map((entry) => entry.key);
     final targets = _entries.expand((entry) => entry.value).map(_nodeOf);
-    final grouped = groups.expand((group) => group.pages);
+    final grouped = parent == null
+        ? groups.expand((group) => group.pages)
+        : const <AtlasNode>[];
     for (final node in [...froms, ...targets, ...grouped]) {
       final normalized = _normalize(node);
       canonical.putIfAbsent(normalized, () => normalized);

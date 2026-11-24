@@ -19,38 +19,17 @@ typedef AtlasGroupSpan = ({AtlasGroup group, int first, int last});
 class AtlasLayout {
   factory AtlasLayout(AtlasFlow flow) {
     final nodes = flow.pages;
-    final targets = {for (final node in nodes) ...flow.leadsTo(node)};
-    final entryNodes = nodes.where((node) => !targets.contains(node));
+    final (:ordered, :depths) = _layer(flow);
 
-    final onPath = <AtlasNode>{};
-    final visited = <AtlasNode>{};
-    final finished = <AtlasNode>[];
-    final cycleLinks = <(AtlasNode, AtlasNode)>{};
-
-    void visit(AtlasNode node) {
-      if (!visited.add(node)) return;
-      onPath.add(node);
-      for (final next in flow.leadsTo(node)) {
-        if (onPath.contains(next)) {
-          cycleLinks.add((node, next));
-        } else {
-          visit(next);
-        }
-      }
-      onPath.remove(node);
-      finished.add(node);
-    }
-
-    entryNodes.forEach(visit);
-    nodes.forEach(visit);
-
-    final ordered = finished.reversed.toList();
-    final depths = <AtlasNode, int>{};
-    for (final node in ordered) {
-      final depth = depths.putIfAbsent(node, () => 0);
-      for (final next in flow.leadsTo(node)) {
-        if (cycleLinks.contains((node, next))) continue;
-        if ((depths[next] ?? -1) <= depth) depths[next] = depth + 1;
+    final parent = flow.parent;
+    if (parent != null && identical(parent.layoutFlow, flow)) {
+      final variantDepths = [
+        for (final variant in parent.variantFlows) _layer(variant).depths,
+      ];
+      for (final node in nodes) {
+        depths[node] = variantDepths
+            .map((depths) => depths[node] ?? 0)
+            .reduce((a, b) => a > b ? a : b);
       }
     }
 
@@ -101,6 +80,51 @@ class AtlasLayout {
 
   bool isBackLink(AtlasNode from, AtlasNode to) {
     return backLinks.contains((from, to));
+  }
+
+  /// Orders the nodes of [flow] from its entry nodes on and assigns each the
+  /// length of its longest path from an entry node, ignoring links that close
+  /// a cycle.
+  static ({List<AtlasNode> ordered, Map<AtlasNode, int> depths}) _layer(
+    AtlasFlow flow,
+  ) {
+    final nodes = flow.pages;
+    final targets = {for (final node in nodes) ...flow.leadsTo(node)};
+    final entryNodes = nodes.where((node) => !targets.contains(node));
+
+    final onPath = <AtlasNode>{};
+    final visited = <AtlasNode>{};
+    final finished = <AtlasNode>[];
+    final cycleLinks = <(AtlasNode, AtlasNode)>{};
+
+    void visit(AtlasNode node) {
+      if (!visited.add(node)) return;
+      onPath.add(node);
+      for (final next in flow.leadsTo(node)) {
+        if (onPath.contains(next)) {
+          cycleLinks.add((node, next));
+        } else {
+          visit(next);
+        }
+      }
+      onPath.remove(node);
+      finished.add(node);
+    }
+
+    entryNodes.forEach(visit);
+    nodes.forEach(visit);
+
+    final ordered = finished.reversed.toList();
+    final depths = <AtlasNode, int>{};
+    for (final node in ordered) {
+      final depth = depths.putIfAbsent(node, () => 0);
+      for (final next in flow.leadsTo(node)) {
+        if (cycleLinks.contains((node, next))) continue;
+        if ((depths[next] ?? -1) <= depth) depths[next] = depth + 1;
+      }
+    }
+
+    return (ordered: ordered, depths: depths);
   }
 }
 
