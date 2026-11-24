@@ -6,26 +6,36 @@ enum _Priority { low, high }
 
 void main() {
   group('$Arg', () {
-    for (final changedValue in [null, 'bye']) {
-      test(
-        'given a nullable arg ${changedValue == null ? 'left at its initial value' : 'changed to $changedValue'}, '
-        'when it is nullified and un-nullified, '
-        'then it shows and keeps the value from before',
-        () {
-          final arg = NullableStringArg('hello', name: 'label');
-          final previousValue = changedValue ?? 'hello';
-          final group = changedValue == null
-              ? QueryGroup.nullified
-              : arg.valueToQueryGroup(changedValue).nullify();
+    test(
+      'given a nullable arg left at its initial value, '
+      'when it is nullified and un-nullified, '
+      'then it shows and keeps the initial value',
+      () {
+        final arg = NullableStringArg('hello', name: 'label');
 
-          arg.syncValue(group);
-          expect(arg.field.valueFrom(group), previousValue);
+        arg.syncValue(QueryGroup.nullified);
+        expect(arg.field.valueFrom(QueryGroup.nullified), 'hello');
 
-          arg.syncValue(group.unnullify());
-          expect(arg.value, previousValue);
-        },
-      );
-    }
+        arg.syncValue(QueryGroup.nullified.unnullify());
+        expect(arg.value, 'hello');
+      },
+    );
+
+    test(
+      'given a nullable arg changed to another value, '
+      'when it is nullified and un-nullified, '
+      'then it shows and keeps the changed value',
+      () {
+        final arg = NullableStringArg('hello', name: 'label');
+        final group = const QueryGroup({'value': 'bye'}).nullify();
+
+        arg.syncValue(group);
+        expect(arg.field.valueFrom(group), 'bye');
+
+        arg.syncValue(group.unnullify());
+        expect(arg.value, 'bye');
+      },
+    );
 
     test(
       'given an arg synced to a valid value, '
