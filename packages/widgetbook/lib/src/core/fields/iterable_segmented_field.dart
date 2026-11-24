@@ -9,7 +9,6 @@ class IterableSegmentedField<T> extends Field<Iterable<T>> {
     required super.initialValue,
     this.labelBuilder = defaultLabelBuilder,
     this.emptySelectionAllowed = true,
-    @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
          toParam: (value) => "[${value.map(labelBuilder).join(',')}]",
          toValue: (param) {

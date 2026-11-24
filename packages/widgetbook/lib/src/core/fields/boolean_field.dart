@@ -6,7 +6,6 @@ final class BooleanField extends Field<bool> {
   BooleanField({
     required super.name,
     super.initialValue = true,
-    @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
          toParam: (value) => value.toString(),
          toValue: (param) => param == 'true',

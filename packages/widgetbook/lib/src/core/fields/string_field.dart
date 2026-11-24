@@ -7,7 +7,6 @@ final class StringField extends Field<String> {
     required super.name,
     super.initialValue = '',
     this.maxLines,
-    @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
          toParam: (value) => value,
          toValue: (param) => param,

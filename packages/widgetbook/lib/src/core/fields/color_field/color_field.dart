@@ -8,7 +8,6 @@ final class ColorField extends Field<Color> {
     required super.name,
     super.initialValue = defaultColor,
     this.initialColorSpace = ColorSpace.hex,
-    @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
          toParam: (color) => color.toARGB32().toRadixString(16),
          toValue: (param) {
