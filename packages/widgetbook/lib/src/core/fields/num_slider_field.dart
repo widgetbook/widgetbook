@@ -7,7 +7,6 @@ sealed class NumSliderField<T extends num> extends Field<T> {
     required super.name,
     this.divisions,
     T? initialValue,
-    @Deprecated('Fields should not be aware of their context') super.onChanged,
     required this.min,
     required this.max,
     required super.toParam,

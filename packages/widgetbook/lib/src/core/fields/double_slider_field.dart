@@ -10,7 +10,6 @@ final class DoubleSliderField extends NumSliderField<double> {
     required super.max,
     this.divisions,
     this.precision = 1,
-    @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
          toParam: (value) {
            if (precision != null) return value.toStringAsFixed(precision);

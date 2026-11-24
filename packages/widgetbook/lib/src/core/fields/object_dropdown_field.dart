@@ -8,7 +8,6 @@ final class ObjectDropdownField<T> extends Field<T> {
     required this.values,
     T? initialValue,
     this.labelBuilder = defaultLabelBuilder,
-    @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
          initialValue: initialValue ?? values.first,
          toParam: labelBuilder,
