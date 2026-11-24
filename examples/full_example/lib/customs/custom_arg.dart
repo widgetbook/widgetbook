@@ -11,17 +11,17 @@ class RangeArg extends Arg<RangeValues> {
   List<Field> get fields => [
     DoubleInputField(
       name: 'min',
-      initialValue: initialValue.start,
+      initialValue: value.start,
     ),
     DoubleInputField(
       name: 'max',
-      initialValue: initialValue.end,
+      initialValue: value.end,
     ),
   ];
 
   @override
   RangeValues valueFromQueryGroup(QueryGroup? group) {
-    if (group == null || group.isNullified) return initialValue;
+    if (group == null || group.isNullified) return value;
 
     return RangeValues(
       valueOf('min', group),

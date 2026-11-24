@@ -70,17 +70,17 @@ class PersonArg extends Arg<Person> {
   List<Field> get fields => [
     StringField(
       name: 'name',
-      initialValue: initialValue.name,
+      initialValue: value.name,
     ),
     IntInputField(
       name: 'age',
-      initialValue: initialValue.age,
+      initialValue: value.age,
     ),
   ];
 
   @override
   Person valueFromQueryGroup(QueryGroup? group) {
-    if (group == null || group.isNullified) return initialValue;
+    if (group == null || group.isNullified) return value;
 
     return Person(
       name: valueOf('name', group),

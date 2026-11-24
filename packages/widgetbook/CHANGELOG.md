@@ -15,7 +15,7 @@
 - **FIX**: Use the initial value of `ColorArg` and `IterableArg` when their URL value is invalid, instead of failing to build the story. ([#2080](https://github.com/widgetbook/widgetbook/pull/2080))
 - **BREAKING**: Remove the deprecated `Field.onChanged`, which has had no effect since its deprecation. ([#2086](https://github.com/widgetbook/widgetbook/pull/2086))
 - **BREAKING**: Make `Arg.value` read-only.
-  Use `update(context, value)` to change an arg, and `initialValue` as the default in custom args. ([#2087](https://github.com/widgetbook/widgetbook/pull/2087))
+  Use `update(context, value)` to change an arg. ([#2087](https://github.com/widgetbook/widgetbook/pull/2087))
 
 ## 4.0.0-beta.15
 
