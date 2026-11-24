@@ -11,6 +11,9 @@ To create a custom Arg, you need to:
 3. Override `valueFromQueryGroup` to deserialize from URL query parameters.
 4. Override `valueToQueryGroup` to serialize to URL query parameters.
 
+Use `initialValue` (the value passed to the constructor) as the default in `fields` and `valueFromQueryGroup`.
+`value` holds the current value, which changes with the knobs.
+
 ```dart title="person_arg.dart"
 class PersonArg extends Arg<Person> {
   PersonArg(
@@ -22,17 +25,17 @@ class PersonArg extends Arg<Person> {
   List<Field> get fields => [
     StringField(
       name: 'name',
-      initialValue: value.name,
+      initialValue: initialValue.name,
     ),
     IntInputField(
       name: 'age',
-      initialValue: value.age,
+      initialValue: initialValue.age,
     ),
   ];
 
   @override
   Person valueFromQueryGroup(QueryGroup? group) {
-    if (group == null || group.isNullified) return value;
+    if (group == null || group.isNullified) return initialValue;
 
     return Person(
       name: valueOf('name', group),
