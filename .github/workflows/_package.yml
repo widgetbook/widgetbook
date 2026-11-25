@@ -69,9 +69,9 @@ jobs:
       - name: Run Tests
         run: |
           if grep -q "sdk: flutter" pubspec.yaml; then
-            flutter test
+            flutter test -j 4
           else
-            dart test
+            dart test -j 4
           fi
 
   generator-test:
@@ -100,7 +100,7 @@ jobs:
           melos bootstrap --scope=$PACKAGE_NAME --include-dependencies
 
       - name: Run Generator Tests
-        run: dart test test/generator/ --platform vm
+        run: dart test test/generator/ --platform vm -j 4
 
   lint:
     runs-on: ubuntu-latest
