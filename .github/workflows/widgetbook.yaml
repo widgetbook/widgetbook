@@ -19,3 +19,4 @@ jobs:
     with:
       working_directory: packages/widgetbook
       min_flutter_version: 3.47.0
+      generator_tests: true
