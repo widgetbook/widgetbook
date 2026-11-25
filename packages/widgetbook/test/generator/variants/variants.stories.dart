@@ -1,3 +1,8 @@
+// Tests that multiple Meta variables generate one set of types per
+// constructor variant: unnamed (`_Story`), named (`_IconStory`), and
+// factory (`_OutlinedStory`) constructors, with per-variant defaults
+// matched by their initializer type instead of their variable name.
+
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 

@@ -1,3 +1,6 @@
+// Tests that generic type parameter bounds with type arguments
+// (e.g. <D, T extends BaseItem<D>>) are preserved in generated code.
+
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 

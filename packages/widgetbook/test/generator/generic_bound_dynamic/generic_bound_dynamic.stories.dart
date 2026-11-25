@@ -1,3 +1,6 @@
+// Tests that dynamic type arguments within generic bounds
+// (e.g. <D, T extends Map<dynamic, D>>) are preserved in generated code.
+
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 

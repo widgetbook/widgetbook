@@ -1,6 +1,6 @@
 // Compile-checks all generator fixtures and their golden part files.
 //
-// The golden tests (`test/generator/*/*_test.dart`) only compare the
+// The golden tests (`test/generator/generator_test.dart`) only compare the
 // generated output as text, and `**/*.g.dart` is excluded from analysis,
 // so invalid generated code would otherwise go unnoticed. Importing the
 // fixtures here forces `flutter test` to compile every `.stories.dart`

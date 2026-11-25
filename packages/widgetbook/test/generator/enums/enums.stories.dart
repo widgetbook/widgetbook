@@ -1,3 +1,6 @@
+// Tests that enum params generate EnumArg<T> with T.values passed as the
+// enum values list.
+
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 

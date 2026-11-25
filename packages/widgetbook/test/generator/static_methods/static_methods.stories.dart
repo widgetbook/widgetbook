@@ -1,3 +1,6 @@
+// Tests that static methods used as default parameter values are
+// properly qualified with the class name in the generated code.
+
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 

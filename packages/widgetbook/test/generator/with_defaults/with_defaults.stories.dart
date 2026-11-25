@@ -1,3 +1,6 @@
+// Tests that a top-level `defaults` variable pipes defaults.setup and
+// defaults.builder into the Story's super constructor initializers.
+
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 

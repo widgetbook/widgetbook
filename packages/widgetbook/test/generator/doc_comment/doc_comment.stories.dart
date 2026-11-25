@@ -1,3 +1,6 @@
+// Tests that doc comments with empty lines (///) are correctly stripped
+// without leaving orphaned /// markers in the generated output.
+
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 

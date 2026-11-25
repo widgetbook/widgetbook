@@ -1,3 +1,7 @@
+// Tests that generic type parameters (e.g. <T extends num>) are propagated
+// through all generated classes: Story<T>, Args<T>, Scenario<T>, and their
+// corresponding typedefs.
+
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 

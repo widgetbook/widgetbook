@@ -1,3 +1,6 @@
+// Tests that nullable type arguments within generic bounds
+// (e.g. <D, T extends Wrapper<D?>>) are preserved in generated code.
+
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 

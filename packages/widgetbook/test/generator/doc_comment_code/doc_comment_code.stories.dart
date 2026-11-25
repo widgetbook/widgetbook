@@ -1,3 +1,6 @@
+// Tests that doc comments containing code with $ interpolation are correctly
+// escaped in the generated output.
+
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 

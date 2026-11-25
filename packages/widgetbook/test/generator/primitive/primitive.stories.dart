@@ -1,3 +1,7 @@
+// Tests that required primitive params (String, int, bool) generate correct
+// Story and Args classes with StringArg, IntArg, BoolArg initializers,
+// typed getters, and a default builder that instantiates the widget.
+
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 

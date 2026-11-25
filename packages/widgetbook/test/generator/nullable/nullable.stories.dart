@@ -1,3 +1,7 @@
+// Tests that nullable params (String?, int?) generate nullable Arg fields
+// (Arg<T?>?), NullableStringArg/NullableIntArg initializers, and null-safe
+// getters using ?.value.
+
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 

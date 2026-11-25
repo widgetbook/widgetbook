@@ -1,3 +1,7 @@
+// Tests that explicit default values (this.label = 'hello', this.count = 42)
+// are propagated into Arg initializers (StringArg('hello'), IntArg(42)) and
+// into the .fixed() constructor parameters.
+
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 
