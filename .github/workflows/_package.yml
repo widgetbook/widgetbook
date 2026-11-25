@@ -69,7 +69,8 @@ jobs:
       - name: Run Tests
         run: |
           if grep -q "sdk: flutter" pubspec.yaml; then
-            flutter test
+            # test/generator runs on the vm in generator-test
+            flutter test $(find test -name '*_test.dart' -not -path 'test/generator/*')
           else
             dart test
           fi
