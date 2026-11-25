@@ -139,5 +139,38 @@ void main() {
         expect(arg.value, 'a');
       },
     );
+
+    test(
+      'given a dropdown arg changed to another value, '
+      'when it is nullified, '
+      'then its field shows the changed value',
+      () {
+        final arg = NullableSingleArg('b', name: 'single', values: values);
+        final group = arg.valueToQueryGroup('a').nullify();
+
+        arg.syncValue(group);
+
+        expect(arg.field.valueFrom(group), 'a');
+      },
+    );
+
+    test(
+      'given a segmented arg changed to another value, '
+      'when it is nullified, '
+      'then its field shows the changed value',
+      () {
+        final arg = NullableSingleArg(
+          'b',
+          name: 'single',
+          values: values,
+          style: segmented,
+        );
+        final group = arg.valueToQueryGroup('a').nullify();
+
+        arg.syncValue(group);
+
+        expect(arg.field.valueFrom(group), 'a');
+      },
+    );
   });
 }

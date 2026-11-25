@@ -79,5 +79,19 @@ void main() {
         expect(arg.value, DateTime(2040, 6));
       },
     );
+
+    test(
+      'given an arg changed to another value, '
+      'when it is nullified, '
+      'then its field shows the changed value',
+      () {
+        final arg = NullableDateTimeArg(initialDate, name: 'date');
+        final group = arg.valueToQueryGroup(DateTime(2040, 6)).nullify();
+
+        arg.syncValue(group);
+
+        expect(arg.field.valueFrom(group), DateTime(2040, 6));
+      },
+    );
   });
 }

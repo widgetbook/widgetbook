@@ -74,5 +74,23 @@ void main() {
         expect(arg.value, const ['a']);
       },
     );
+
+    test(
+      'given an arg changed to another value, '
+      'when it is nullified, '
+      'then its field shows the changed value',
+      () {
+        final arg = NullableIterableArg(
+          const ['b'],
+          name: 'iterable',
+          values: values,
+        );
+        final group = arg.valueToQueryGroup(const ['a']).nullify();
+
+        arg.syncValue(group);
+
+        expect(arg.field.valueFrom(group), const ['a']);
+      },
+    );
   });
 }

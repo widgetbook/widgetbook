@@ -132,5 +132,33 @@ void main() {
         expect(arg.value, 7);
       },
     );
+
+    test(
+      'given a input arg changed to another value, '
+      'when it is nullified, '
+      'then its field shows the changed value',
+      () {
+        final arg = NullableIntArg(42, name: 'int');
+        final group = arg.valueToQueryGroup(7).nullify();
+
+        arg.syncValue(group);
+
+        expect(arg.field.valueFrom(group), 7);
+      },
+    );
+
+    test(
+      'given a slider arg changed to another value, '
+      'when it is nullified, '
+      'then its field shows the changed value',
+      () {
+        final arg = NullableIntArg(42, name: 'int', style: slider);
+        final group = arg.valueToQueryGroup(7).nullify();
+
+        arg.syncValue(group);
+
+        expect(arg.field.valueFrom(group), 7);
+      },
+    );
   });
 }

@@ -45,5 +45,34 @@ void main() {
         expect(arg.value, 'hello');
       },
     );
+
+    test(
+      'given an arg changed to another value, '
+      'when it is nullified, '
+      'then its field shows the changed value',
+      () {
+        final arg = NullableStringArg('hello', name: 'string');
+        final group = arg.valueToQueryGroup('bye').nullify();
+
+        arg.syncValue(group);
+
+        expect(arg.field.valueFrom(group), 'bye');
+      },
+    );
+
+    test(
+      'given a nullified arg changed to another value, '
+      'when it is un-nullified, '
+      'then its value is the changed value',
+      () {
+        final arg = NullableStringArg('hello', name: 'string');
+        final group = arg.valueToQueryGroup('bye').nullify();
+        arg.syncValue(group);
+
+        arg.syncValue(group.unnullify());
+
+        expect(arg.value, 'bye');
+      },
+    );
   });
 }

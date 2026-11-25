@@ -60,5 +60,19 @@ void main() {
         expect(arg.value, false);
       },
     );
+
+    test(
+      'given an arg changed to another value, '
+      'when it is nullified, '
+      'then its field shows the changed value',
+      () {
+        final arg = NullableBoolArg(true, name: 'bool');
+        final group = arg.valueToQueryGroup(false).nullify();
+
+        arg.syncValue(group);
+
+        expect(arg.field.valueFrom(group), false);
+      },
+    );
   });
 }

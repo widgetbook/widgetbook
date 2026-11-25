@@ -64,5 +64,21 @@ void main() {
         expect(arg.value, const Duration(seconds: 2));
       },
     );
+
+    test(
+      'given an arg changed to another value, '
+      'when it is nullified, '
+      'then its field shows the changed value',
+      () {
+        final arg = NullableDurationArg(initialDuration, name: 'duration');
+        final group = arg
+            .valueToQueryGroup(const Duration(seconds: 2))
+            .nullify();
+
+        arg.syncValue(group);
+
+        expect(arg.field.valueFrom(group), const Duration(seconds: 2));
+      },
+    );
   });
 }
