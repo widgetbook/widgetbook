@@ -16,6 +16,7 @@
 - **BREAKING**: Remove the deprecated `Field.onChanged`, which has had no effect since its deprecation. ([#2086](https://github.com/widgetbook/widgetbook/pull/2086))
 - **BREAKING**: Make `Arg.value` read-only.
   Use `update(context, value)` to change an arg. ([#2087](https://github.com/widgetbook/widgetbook/pull/2087))
+- **FIX**: Keep a nullable arg's value when it is nullified and un-nullified, and fall back to an arg's initial value when its URL value is missing or invalid, instead of `''`, `0` or the previous value. ([#2088](https://github.com/widgetbook/widgetbook/pull/2088))
 
 ## 4.0.0-beta.15
 

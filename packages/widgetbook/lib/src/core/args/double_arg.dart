@@ -13,11 +13,11 @@ class DoubleArg extends StyledArg<double, DoubleArgStyle> with SingleFieldOnly {
     return switch (style) {
       InputDoubleArgStyle() => DoubleInputField(
         name: 'value',
-        initialValue: value,
+        initialValue: initialValue,
       ),
       SliderDoubleArgStyle s => DoubleSliderField(
         name: 'value',
-        initialValue: value,
+        initialValue: initialValue,
         min: s.min,
         max: s.max,
         divisions: s.divisions,
@@ -39,11 +39,11 @@ class NullableDoubleArg extends StyledArg<double?, DoubleArgStyle>
     return switch (style) {
       InputDoubleArgStyle() => DoubleInputField(
         name: 'value',
-        initialValue: value ?? 0.0,
+        initialValue: initialValue ?? 0.0,
       ),
       SliderDoubleArgStyle s => DoubleSliderField(
         name: 'value',
-        initialValue: value ?? s.min,
+        initialValue: initialValue ?? s.min,
         min: s.min,
         max: s.max,
         divisions: s.divisions,

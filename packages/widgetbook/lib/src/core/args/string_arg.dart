@@ -11,7 +11,7 @@ class StringArg extends Arg<String> with SingleFieldOnly {
   Field<String> get field {
     return StringField(
       name: 'value',
-      initialValue: value,
+      initialValue: initialValue,
     );
   }
 }
@@ -26,7 +26,7 @@ class NullableStringArg extends Arg<String?> with SingleFieldOnly {
   Field<String> get field {
     return StringField(
       name: 'value',
-      initialValue: value ?? '',
+      initialValue: initialValue ?? '',
     );
   }
 }
