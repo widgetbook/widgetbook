@@ -22,16 +22,16 @@ void main() {
     test(
       'given an arg without a range, '
       'when its value changes, '
-      'then its range stays around the initial value',
+      'then its range is around the changed value',
       () {
         final arg = DateTimeArg(initialDate, name: 'date');
 
-        arg.syncValue(arg.valueToQueryGroup(DateTime(2040, 6)));
+        arg.syncValue(arg.valueToQueryGroup(DateTime(2030, 6)));
 
         final field = arg.field as DateTimeField;
         expect(
           (field.start, field.end),
-          (DateTime(2025, 6), DateTime(2027, 6)),
+          (DateTime(2029, 6), DateTime(2031, 6)),
         );
       },
     );

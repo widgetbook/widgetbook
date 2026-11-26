@@ -17,8 +17,8 @@ class DateTimeArg extends Arg<DateTime> with SingleFieldOnly {
     return DateTimeField(
       name: 'value',
       initialValue: initialValue,
-      start: start ?? initialValue.subtract(const Duration(days: 365)),
-      end: end ?? initialValue.add(const Duration(days: 365)),
+      start: start ?? value.subtract(const Duration(days: 365)),
+      end: end ?? value.add(const Duration(days: 365)),
     );
   }
 }
