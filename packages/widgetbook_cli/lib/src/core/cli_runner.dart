@@ -7,6 +7,7 @@ import '../../metadata.dart';
 import '../commands/cloud.dart';
 import '../commands/coverage.dart';
 import '../commands/init.dart';
+import '../commands/mcp.dart';
 import '../commands/upgrade.dart';
 import 'cli_exception.dart';
 import 'context.dart';
@@ -47,6 +48,12 @@ class CliRunner extends CommandRunner<int> {
 
     addCommand(
       CoverageCommand(
+        context: context,
+      ),
+    );
+
+    addCommand(
+      McpCommand(
         context: context,
       ),
     );
@@ -93,7 +100,8 @@ class CliRunner extends CommandRunner<int> {
       exitCode = await super.runCommand(topLevelResults);
     }
 
-    if (topLevelResults.command?.name != 'update') {
+    // The mcp command speaks the MCP protocol on stdout.
+    if (!const {'update', 'mcp'}.contains(topLevelResults.command?.name)) {
       await _checkForUpdates();
     }
 

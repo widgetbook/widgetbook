@@ -1,0 +1,109 @@
+# Story Comments
+
+<Warning>
+  This feature is currently **experimental** and supported on **macOS** and
+  the **web**, so any breaking changes can be introduced at any minor version.
+</Warning>
+
+Story comments let you review a story the way you review a design: click a widget in Widgetbook, write what should change, and submit your comments to a coding agent.
+The agent reads each comment with the exact widget it refers to, changes the code, and replies in the same thread.
+
+Each comment is pinned to the **source location** of the clicked widget (for example `lib/lesson/phrase_card.dart:42:12`), so the agent knows which code to change and the pin follows the widget when the story scrolls, zooms or is hot reloaded.
+
+## Setup
+
+1. Add the `CommentsAddon` as the **last** addon, so that pins follow the story through the other addons:
+
+   ```dart title=widgetbook/lib/widgetbook.config.dart
+   final config = Config(
+     // ...
+     addons: [
+       ViewportAddon(Viewports.all),
+       ZoomAddon(),
+       CommentsAddon(), // [!code highlight]
+     ],
+   );
+   ```
+
+2. On macOS, allow the app to reach the local server by adding the `network.client` entitlement to `macos/Runner/DebugProfile.entitlements`.
+   The web needs no setup.
+
+   ```xml
+   <key>com.apple.security.network.client</key>
+   <true/>
+   ```
+
+3. Register the [`widgetbook mcp`](/cli/commands/mcp) server with your coding agent, from the root of your project.
+   For example, for Claude Code:
+
+   ```bash
+   claude mcp add widgetbook -- widgetbook mcp
+   ```
+
+   The server stores the comments and makes them available to the agent.
+
+4. Run Widgetbook in debug mode, e.g. `flutter run -d macos` or `flutter run -d chrome`.
+
+## Workflow
+
+1. Click **Comment** at the bottom of a story.
+   Hovering a widget highlights it together with its source location.
+2. Click a widget, write your comment, and click **Add comment** (or press Enter; Shift+Enter starts a new line).
+   Clicks do not reach the story while commenting, but you can still scroll it.
+3. Add more comments, then click **Send to agent** to send them as one review.
+   **Discard** deletes the comments you have not sent yet.
+4. The agent addresses each comment, replies, and marks it as finished.
+5. After a hot reload, check the change and **Resolve** the comment, or reply to reopen it.
+
+Comments you have not sent yet show as outlined pins, sent ones as filled pins.
+
+| Status        | Meaning                                    | Set by |
+| ------------- | ------------------------------------------ | ------ |
+| `draft`       | Added, but not sent to the agent yet.      | You    |
+| `open`        | Sent and waiting for the agent.            | You    |
+| `inProgress`  | The agent is working on it.                | Agent  |
+| `done`        | The agent finished it; check the change.   | Agent  |
+| `resolved`    | You checked the change.                    | You    |
+
+Only you can resolve a comment.
+Replying to a `done` comment reopens it.
+
+## How the agent receives comments
+
+The `widgetbook mcp` server offers these tools to the agent:
+
+| Tool                 | Description                                                                       |
+| -------------------- | --------------------------------------------------------------------------------- |
+| `list_comments`      | Lists the comments that wait for the agent.                                       |
+| `get_comment`        | Returns a thread with the widget's source location and a screenshot with the pin. |
+| `reply_to_comment`   | Replies to a thread.                                                              |
+| `set_comment_status` | Marks a comment as `inProgress` or `done`.                                        |
+| `wait_for_comments`  | Waits until you submit the next review.                                           |
+
+To start, ask your agent to address the Widgetbook comments, or use the `address_comments` prompt of the server (`/mcp__widgetbook__address_comments` in Claude Code).
+The agent then waits for your next review with `wait_for_comments`.
+
+Claude Code can also receive each review as soon as you click **Send to agent**, using its [channels](https://code.claude.com/docs/en/channels) research preview:
+
+```bash
+claude --dangerously-load-development-channels server:widgetbook
+```
+
+## Storage
+
+Comments are stored as one JSON file per thread, next to its screenshot, in `.widgetbook/comments` of the directory that `widgetbook mcp` runs in.
+They persist across sessions and stay local, as the directory ignores itself in git.
+Agents without MCP support can read these files directly.
+
+## Limitations
+
+- Pins rely on the widget creation locations that Flutter tracks in **debug builds**.
+  In profile and release builds, comments fall back to the position within the story.
+- When the code changes, e.g. a widget is inserted above a commented one, a pin finds its widget again by what it shows.
+  If several widgets could be the commented one and none shows that anymore, the pin is marked with `?` until you check it.
+- When a commented widget is removed, its pin moves to the closest enclosing widget or stays at its last position, and the thread says that the widget was not found.
+- Only one `widgetbook mcp` server can serve the UI at a time.
+  A second server still gives its agent access to the stored comments, and takes over the port once the first one stops.
+- The server only accepts comments on code inside the directory it runs in, so a Widgetbook never stores its comments in another project.
+- On the web, the server only accepts requests from Widgetbook served on `localhost`, as with `flutter run -d chrome`.
+  A deployed Widgetbook cannot store comments.
