@@ -9,16 +9,10 @@ class IterableSegmentedField<T> extends Field<Iterable<T>> {
     required super.initialValue,
     this.labelBuilder = defaultLabelBuilder,
     this.emptySelectionAllowed = true,
-    @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
          toParam: (value) => "[${value.map(labelBuilder).join(',')}]",
          toValue: (param) {
-           if (!param.startsWith('[') || !param.endsWith(']')) {
-             throw Exception(
-               'Invalid parameter format: '
-               '$param. Expected format: [item1,item2,...]',
-             );
-           }
+           if (!param.startsWith('[') || !param.endsWith(']')) return null;
 
            final parsedParam = param.substring(1, param.length - 1);
            if (parsedParam.isEmpty) return [];

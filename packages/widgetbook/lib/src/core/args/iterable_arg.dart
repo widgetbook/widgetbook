@@ -14,7 +14,7 @@ class IterableArg<T> extends Arg<Iterable<T>> with SingleFieldOnly {
   Field<Iterable<T>> get field {
     return IterableSegmentedField<T>(
       name: 'value',
-      initialValue: value,
+      initialValue: initialValue,
       values: values,
     );
   }
@@ -33,7 +33,7 @@ class NullableIterableArg<T> extends Arg<Iterable<T>?> with SingleFieldOnly {
   Field<Iterable<T>> get field {
     return IterableSegmentedField<T>(
       name: 'value',
-      initialValue: value ?? [],
+      initialValue: initialValue ?? [],
       values: values,
     );
   }

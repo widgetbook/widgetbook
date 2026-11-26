@@ -57,7 +57,6 @@ sealed class Field<T> {
     required this.initialValue,
     required this.toParam,
     required this.toValue,
-    @Deprecated('Fields should not be aware of their context') this.onChanged,
   });
 
   /// The unique identifier for this field within its group.
@@ -75,10 +74,6 @@ sealed class Field<T> {
   /// Decoders for converting a query parameter to a value of type [T].
   /// Can return `null` if the parameter is invalid.
   final T? Function(String param) toValue;
-
-  /// @nodoc
-  @Deprecated('Fields should not be aware of their context')
-  final void Function(BuildContext context, T? value)? onChanged;
 
   /// Extracts the value from [group],
   /// fallback to [initialValue] if field is not found or cannot be decoded.

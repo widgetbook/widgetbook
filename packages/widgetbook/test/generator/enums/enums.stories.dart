@@ -3,6 +3,10 @@ import 'package:widgetbook/widgetbook.dart';
 
 part 'enums.stories.g.dart';
 
+/// Tests that enum params generate EnumArg<T> with T.values passed as the
+/// enum values list.
+const description = 'generates EnumArg for enum parameters';
+
 enum Priority { low, medium, high }
 
 class EnumWidget extends StatelessWidget {

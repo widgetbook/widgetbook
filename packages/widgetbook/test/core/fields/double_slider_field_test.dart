@@ -127,6 +127,31 @@ void main() {
           expect(updatedSlider.value, equals(7.5));
         },
       );
+
+      testWidgets(
+        'given a nullable arg without a value, '
+        'when its fields are built, '
+        'then the slider starts within the min and max range',
+        (tester) async {
+          final arg = NullableDoubleArg(
+            null,
+            name: 'opacity',
+            style: const SliderDoubleArgStyle(
+              min: 2.0,
+              max: 8.0,
+              divisions: 6,
+            ),
+          );
+
+          await tester.pumpWidgetWithState(
+            state: WidgetbookState(),
+            builder: (context) => arg.buildFields(context),
+          );
+
+          final slider = tester.widget<Slider>(find.byType(Slider));
+          expect(slider.value, equals(2.0));
+        },
+      );
     },
   );
 }

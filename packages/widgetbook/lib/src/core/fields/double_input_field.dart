@@ -6,7 +6,6 @@ final class DoubleInputField extends NumInputField<double> {
   DoubleInputField({
     required super.name,
     super.initialValue = 0,
-    @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
          formatters: [
            FilteringTextInputFormatter.allow(

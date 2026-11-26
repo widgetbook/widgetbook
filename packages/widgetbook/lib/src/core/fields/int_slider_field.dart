@@ -6,7 +6,6 @@ final class IntSliderField extends NumSliderField<int> {
   IntSliderField({
     required super.name,
     super.initialValue = 0,
-    @Deprecated('Fields should not be aware of their context') super.onChanged,
     required super.min,
     required super.max,
     this.divisions,

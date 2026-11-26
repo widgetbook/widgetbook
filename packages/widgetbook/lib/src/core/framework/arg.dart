@@ -23,9 +23,10 @@ Arg<T>? $initArg<T>(
 @optionalTypeArgs
 abstract class Arg<T> extends FieldsComposable<T> {
   Arg(
-    this.value, {
+    T value, {
     String? name,
-  }) : _name = name,
+  }) : _value = value,
+       _name = name,
        super(
          name: name ?? '',
          initialValue: value,
@@ -37,13 +38,17 @@ abstract class Arg<T> extends FieldsComposable<T> {
   @internal
   Arg.empty() : _name = null, super.empty();
 
-  // TODO: Revisit the decision before stable release
-  // We had two option to make sure that the `value` is always in sync with
-  // the query parameters:
-  // 1. Immutable option with `copyWith` method: Decided against it because
-  //    it would require more boilerplate when implementing custom Args.
-  // 2. Mutable option with `syncValue` method.
-  late T value; // `late` is added to allow `empty` constructor for BuilderArg
+  late T _value; // `late` is added to allow `empty` constructor for BuilderArg
+
+  /// The current value of this arg, synced from the URL query parameters.
+  ///
+  /// Use [initialValue] as the default when implementing [fields] or
+  /// [valueFromQueryGroup], as [value] changes with the user's input.
+  /// To change the value, use [update].
+  T get value => _value;
+
+  @internal
+  set value(T newValue) => _value = newValue;
 
   final String? _name;
   late final String $generatedName;

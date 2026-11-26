@@ -8,6 +8,16 @@
 - **BREAKING**: Remove `CupertinoThemeAddon`, `CupertinoThemeMode` and `cupertinoAppBuilder`.
   Use `ThemeAddon<CupertinoThemeData>` and a custom `appBuilder` returning a `CupertinoApp` instead. ([#2071](https://github.com/widgetbook/widgetbook/pull/2071))
 - **REFACTOR**: Allow `build` 5.x. ([#2073](https://github.com/widgetbook/widgetbook/pull/2073))
+- **FIX**: Skip malformed pairs in URL query groups instead of failing to open the route, and keep values with an unencoded `:` whole. ([#2060](https://github.com/widgetbook/widgetbook/pull/2060) - by [@flavianunes](https://github.com/flavianunes))
+- **FIX**: Render stories with a `:` in their name on web. ([#2061](https://github.com/widgetbook/widgetbook/pull/2061) - by [@GhagSagar23](https://github.com/GhagSagar23))
+- **FIX**: Keep nullable args and addons set to `null` after a reload, as URL query groups like `??{value:x}` were dropped when parsed. ([#2077](https://github.com/widgetbook/widgetbook/pull/2077))
+- **FIX**: Start `NullableDoubleArg` and `NullableIntArg` sliders at their `min` when the value is `null`, instead of `0` outside the slider range. ([#2079](https://github.com/widgetbook/widgetbook/pull/2079))
+- **FIX**: Use the initial value of `ColorArg` and `IterableArg` when their URL value is invalid, instead of failing to build the story. ([#2080](https://github.com/widgetbook/widgetbook/pull/2080))
+- **BREAKING**: Remove the deprecated `Field.onChanged`, which has had no effect since its deprecation. ([#2086](https://github.com/widgetbook/widgetbook/pull/2086))
+- **BREAKING**: Make `Arg.value` read-only.
+  Use `update(context, value)` to change an arg. ([#2087](https://github.com/widgetbook/widgetbook/pull/2087))
+- **FIX**: Keep a nullable arg's value when it is nullified and un-nullified, and fall back to an arg's initial value when its URL value is missing or invalid, instead of `''`, `0` or the previous value. ([#2088](https://github.com/widgetbook/widgetbook/pull/2088))
+- **FEAT**: `testWidgetbook` skips the accessibility guideline evaluation and the PNG and JSON metadata of each scenario when run with `--dart-define=WIDGETBOOK_SNAPSHOTS=false`, for gates that only check that every scenario still builds and runs. ([#2084](https://github.com/widgetbook/widgetbook/pull/2084) - by [@tomasatisocco](https://github.com/tomasatisocco))
 - **FEAT**: Add the experimental `CommentsAddon` to pin comments to the widgets of a story and hand them to a coding agent through `widgetbook mcp`. Pins follow their widget through scrolling, zoom and hot reload. Supports macOS and the web. ([#2063](https://github.com/widgetbook/widgetbook/pull/2063))
 
 ## 4.0.0-beta.15

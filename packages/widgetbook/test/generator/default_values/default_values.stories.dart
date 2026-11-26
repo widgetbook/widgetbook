@@ -3,6 +3,11 @@ import 'package:widgetbook/widgetbook.dart';
 
 part 'default_values.stories.g.dart';
 
+/// Tests that explicit default values (this.label = 'hello', this.count = 42)
+/// are propagated into Arg initializers (StringArg('hello'), IntArg(42)) and
+/// into the .fixed() constructor parameters.
+const description = 'generates args with explicit default values';
+
 class DefaultsWidget extends StatelessWidget {
   const DefaultsWidget({
     super.key,

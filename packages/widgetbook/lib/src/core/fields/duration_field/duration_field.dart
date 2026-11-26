@@ -7,7 +7,6 @@ final class DurationField extends Field<Duration> {
     required super.name,
     super.initialValue = defaultDuration,
     this.units = DurationUnit.defaults,
-    @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : assert(units.isNotEmpty, 'At least one DurationUnit must be enabled.'),
        super(
          toParam: (value) => value.inMilliseconds.toString(),

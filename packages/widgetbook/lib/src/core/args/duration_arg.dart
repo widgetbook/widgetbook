@@ -16,7 +16,7 @@ class DurationArg extends Arg<Duration> with SingleFieldOnly {
   Field<Duration> get field {
     return DurationField(
       name: 'value',
-      initialValue: value,
+      initialValue: initialValue,
       units: units,
     );
   }
@@ -37,7 +37,7 @@ class NullableDurationArg extends Arg<Duration?> with SingleFieldOnly {
   Field<Duration> get field {
     return DurationField(
       name: 'value',
-      initialValue: value ?? DurationField.defaultDuration,
+      initialValue: initialValue ?? DurationField.defaultDuration,
       units: units,
     );
   }

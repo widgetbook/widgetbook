@@ -3,6 +3,11 @@ import 'package:widgetbook/widgetbook.dart';
 
 part 'doc_comment_code.stories.g.dart';
 
+/// Tests that doc comments containing code with $ interpolation are correctly
+/// escaped in the generated output.
+const description =
+    r'generates correct docComment for doc comments with code containing $ signs';
+
 /// Displays a [label].
 ///
 /// ```dart

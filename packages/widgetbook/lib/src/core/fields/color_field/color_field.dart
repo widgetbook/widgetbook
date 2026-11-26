@@ -8,17 +8,15 @@ final class ColorField extends Field<Color> {
     required super.name,
     super.initialValue = defaultColor,
     this.initialColorSpace = ColorSpace.hex,
-    @Deprecated('Fields should not be aware of their context') super.onChanged,
   }) : super(
          toParam: (color) => color.toARGB32().toRadixString(16),
          toValue: (param) {
            if (param == '0') return Colors.transparent;
-           return Color(
-             int.parse(
-               param.length == 6 ? '00$param' : param,
-               radix: 16,
-             ),
+           final argb = int.tryParse(
+             param.length == 6 ? '00$param' : param,
+             radix: 16,
            );
+           return argb == null ? null : Color(argb);
          },
        );
 
