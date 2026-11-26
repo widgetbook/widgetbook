@@ -178,7 +178,7 @@ flutter test --dart-define=WIDGETBOOK_SNAPSHOTS=false
 ```
 
 Each scenario is still pumped, its `setUp`, `run` and `tearDown` still execute, images still load and semantics stay enabled, so a story that throws, overflows or fails to load an asset still fails the run.
-What is skipped is the screenshot, the semantics JSON and the accessibility guideline evaluation, so nothing is written to `build/.widgetbook`.
+What is skipped is the accessibility guideline evaluation and the PNG and JSON metadata of each scenario, so nothing is written to `build/.widgetbook`.
 
 Use it where only "every scenario still builds" matters, such as a CI gate on a large catalog. The same test file captures snapshots when run without the define, locally and for Widgetbook Cloud.
 
