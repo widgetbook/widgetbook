@@ -38,6 +38,7 @@ List<DocBlock> defaultDocsBuilder() {
     const ComponentNameDocBlock(),
     const DartCommentDocBlock(),
     const StoriesDocBlock(),
+    const LeadsToDocBlock(),
   ];
 }
 
@@ -58,6 +59,8 @@ class Config {
     this.accessibilityConfig = const AccessibilityConfig(),
     this.docsBuilder = defaultDocsBuilder,
     this.foldersExpandedByDefault = true,
+    this.atlas = const [],
+    this.atlasPreview = const AtlasPreviewConfig(),
   });
 
   /// The initial route for that will be used on first startup.
@@ -142,4 +145,12 @@ class Config {
   /// setting. Ancestors of a node that is deep-linked via the `path` query
   /// parameter are still expanded on startup, so that the node is visible.
   final bool foldersExpandedByDefault;
+
+  /// The [AtlasFlow]s mapping which pages lead to which other pages.
+  ///
+  /// When not empty, the default [home] shows them as a graph.
+  final List<AtlasFlow> atlas;
+
+  /// How atlas pages are previewed, or `null` to show their names only.
+  final AtlasPreviewConfig? atlasPreview;
 }

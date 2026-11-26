@@ -8,6 +8,7 @@ import 'package:path/path.dart' show posix;
 import '../state/state.dart';
 import '../utils.dart';
 import 'addon.dart';
+import 'atlas_flow.dart';
 import 'builder_arg.dart';
 import 'component.dart';
 import 'config.dart';
@@ -29,7 +30,8 @@ typedef StoryWidgetBuilder<
 > = TWidget Function(BuildContext context, TArgs args);
 
 @optionalTypeArgs
-abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> {
+abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
+    implements AtlasNode {
   Story({
     String? name,
     this.designLink,

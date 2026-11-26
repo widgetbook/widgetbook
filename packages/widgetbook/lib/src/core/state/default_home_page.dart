@@ -2,7 +2,9 @@ import 'package:material_ui/material_ui.dart';
 import 'package:meta/meta.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../atlas/atlas.dart';
 import '../theme/theme.dart';
+import 'widgetbook_state.dart';
 
 @internal
 class DefaultHomePage extends StatelessWidget {
@@ -10,6 +12,10 @@ class DefaultHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (WidgetbookState.of(context).config.atlas.isNotEmpty) {
+      return const AtlasHomePage();
+    }
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Center(

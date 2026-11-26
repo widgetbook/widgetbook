@@ -365,6 +365,10 @@
           "href": "/configure/header-widget"
         },
         {
+          "title": "Atlas",
+          "href": "/configure/atlas"
+        },
+        {
           "title": "Widgetbook Theme",
           "href": "/configure/widgetbook-theme"
         },

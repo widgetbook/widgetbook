@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:path/path.dart' show posix;
 
 import '../docs/docs.dart';
+import '../framework/atlas_flow.dart';
 import '../framework/scenario.dart';
 import '../framework/story.dart';
 
@@ -29,6 +30,8 @@ class TreeNode<T> {
   }
 
   bool get isClickable => switch (this) {
+    TreeNode<List<AtlasFlow>>() => true,
+    TreeNode<AtlasFlow>() => true,
     TreeNode<List<DocBlock>>() => true,
     TreeNode<Scenario>() => true,
     TreeNode<Story>() => true,
@@ -36,6 +39,7 @@ class TreeNode<T> {
   };
 
   bool get isTerminal => switch (this) {
+    TreeNode<AtlasFlow>() => children.isEmpty,
     TreeNode<List<DocBlock>>() => true,
     TreeNode<Scenario>() => true,
     TreeNode<Story>() => children.isEmpty,
