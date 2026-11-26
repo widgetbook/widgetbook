@@ -169,6 +169,19 @@ still appears in the running Widgetbook app.
   a scenario genuinely cannot render in a headless test.
 </Info>
 
+## Running Without Snapshots
+
+Run with `WIDGETBOOK_SNAPSHOTS=false` to build and run every scenario without capturing it:
+
+```bash
+flutter test --dart-define=WIDGETBOOK_SNAPSHOTS=false
+```
+
+Each scenario is still pumped, its `setUp`, `run` and `tearDown` still execute, images still load and semantics stay enabled, so a story that throws, overflows or fails to load an asset still fails the run.
+What is skipped is the accessibility guideline evaluation and the PNG and JSON metadata of each scenario, so nothing is written to `build/.widgetbook`.
+
+Use it where only "every scenario still builds" matters, such as a CI gate on a large catalog. The same test file captures snapshots when run without the define, locally and for Widgetbook Cloud.
+
 ## Generated Snapshot Artifacts
 
 By default, artifacts are written to:

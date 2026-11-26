@@ -17,6 +17,7 @@
 - **BREAKING**: Make `Arg.value` read-only.
   Use `update(context, value)` to change an arg. ([#2087](https://github.com/widgetbook/widgetbook/pull/2087))
 - **FIX**: Keep a nullable arg's value when it is nullified and un-nullified, and fall back to an arg's initial value when its URL value is missing or invalid, instead of `''`, `0` or the previous value. ([#2088](https://github.com/widgetbook/widgetbook/pull/2088))
+- **FEAT**: `testWidgetbook` skips the accessibility guideline evaluation and the PNG and JSON metadata of each scenario when run with `--dart-define=WIDGETBOOK_SNAPSHOTS=false`, for gates that only check that every scenario still builds and runs. ([#2084](https://github.com/widgetbook/widgetbook/pull/2084) - by [@tomasatisocco](https://github.com/tomasatisocco))
 
 ## 4.0.0-beta.15
 

@@ -14,6 +14,18 @@ import 'semantics/semantics_tree_serializer.dart';
 /// The default location is already an ignored path by default.
 const outputDir = 'build/.widgetbook';
 
+/// Whether each scenario writes its snapshot (PNG, semantics tree and
+/// accessibility guideline violations) to [outputDir].
+///
+/// Run with `--dart-define=WIDGETBOOK_SNAPSHOTS=false` to only build and run
+/// the scenarios, for example in a CI gate that only checks every scenario
+/// still builds. It has to be `const`: `bool.fromEnvironment` called at
+/// runtime silently returns the default.
+const _snapshots = bool.fromEnvironment(
+  'WIDGETBOOK_SNAPSHOTS',
+  defaultValue: true,
+);
+
 Future<void> testWidgetbook(Config config) async {
   TestWidgetsFlutterBinding.ensureInitialized();
   await loadFonts();
@@ -89,52 +101,15 @@ void testScenario(
 
         await loadImages(tester);
 
-        final violations = (await evaluateGuidelines(
-          tester,
-          config.accessibilityConfig.guidelines,
-        )).map((violation) => violation.toJson()).toList();
-
-        final element = tester.element(find.byKey(key));
-        final imageFuture = captureImage(element, 1);
-
-        final semanticsNode = tester.getSemantics(find.byKey(key));
-
-        // Run on separate isolate as async operations cannot be run inside
-        // testWidgets directly.
-        final binding = TestWidgetsFlutterBinding.instance;
-        await binding.runAsync(() async {
-          final image = await imageFuture;
-          final byteData = await image.toByteData(format: ImageByteFormat.png);
-          final imageBytes = byteData!.buffer.asUint8List();
-
-          final jsonEncoder = const JsonEncoder.withIndent('  ');
-
-          final semanticsData = SemanticsTreeSerializer.toJson(
-            semanticsNode,
+        if (_snapshots) {
+          await _captureSnapshot(
+            tester,
+            config,
+            scenario,
+            key,
+            targetViewport.pixelRatio,
           );
-
-          final metadata = ScenarioMetadata(
-            scenario: scenario,
-            imageBytes: imageBytes,
-            imageWidth: image.width,
-            imageHeight: image.height,
-            pixelRatio: targetViewport.pixelRatio,
-            semanticsData: semanticsData,
-            violations: violations,
-          );
-
-          await metadata.directory.create(recursive: true);
-
-          await Future.wait([
-            metadata.imageFile.writeAsBytes(imageBytes, flush: true),
-            metadata.jsonFile.writeAsString(
-              jsonEncoder.convert(metadata),
-              flush: true,
-            ),
-          ]);
-
-          image.dispose();
-        });
+        }
 
         await config.scenarioConfig.tearDown?.call(tester, scenario);
       }
@@ -152,6 +127,63 @@ void testScenario(
     // still inherits the story group's `skip`.
     skip: scenario.excludeFromTests ? true : null,
   );
+}
+
+/// Captures the PNG, semantics tree and accessibility guideline violations of
+/// the scenario built under [key], and writes them to [outputDir].
+Future<void> _captureSnapshot(
+  WidgetTester tester,
+  Config config,
+  Scenario scenario,
+  Key key,
+  double pixelRatio,
+) async {
+  final violations = (await evaluateGuidelines(
+    tester,
+    config.accessibilityConfig.guidelines,
+  )).map((violation) => violation.toJson()).toList();
+
+  final element = tester.element(find.byKey(key));
+  final imageFuture = captureImage(element, 1);
+
+  final semanticsNode = tester.getSemantics(find.byKey(key));
+
+  // Run on separate isolate as async operations cannot be run inside
+  // testWidgets directly.
+  final binding = TestWidgetsFlutterBinding.instance;
+  await binding.runAsync(() async {
+    final image = await imageFuture;
+    final byteData = await image.toByteData(format: ImageByteFormat.png);
+    final imageBytes = byteData!.buffer.asUint8List();
+
+    final jsonEncoder = const JsonEncoder.withIndent('  ');
+
+    final semanticsData = SemanticsTreeSerializer.toJson(
+      semanticsNode,
+    );
+
+    final metadata = ScenarioMetadata(
+      scenario: scenario,
+      imageBytes: imageBytes,
+      imageWidth: image.width,
+      imageHeight: image.height,
+      pixelRatio: pixelRatio,
+      semanticsData: semanticsData,
+      violations: violations,
+    );
+
+    await metadata.directory.create(recursive: true);
+
+    await Future.wait([
+      metadata.imageFile.writeAsBytes(imageBytes, flush: true),
+      metadata.jsonFile.writeAsString(
+        jsonEncoder.convert(metadata),
+        flush: true,
+      ),
+    ]);
+
+    image.dispose();
+  });
 }
 
 /// Same as [captureImage] from `flutter_test` but has [pixelRatio] parameter.
