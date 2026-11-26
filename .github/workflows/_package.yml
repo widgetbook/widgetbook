@@ -75,6 +75,12 @@ jobs:
             dart test
           fi
 
+      - name: Run Tests Without Snapshots
+        run: |
+          if [ -f "test/test/snapshots_define_test.dart" ]; then
+            flutter test test/test/snapshots_define_test.dart --dart-define=WIDGETBOOK_SNAPSHOTS=false
+          fi
+
   generator-test:
     if: inputs.generator_tests
     runs-on: ubuntu-latest
