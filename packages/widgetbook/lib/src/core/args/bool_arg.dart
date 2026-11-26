@@ -11,7 +11,7 @@ class BoolArg extends Arg<bool> with SingleFieldOnly {
   Field<bool> get field {
     return BooleanField(
       name: 'value',
-      initialValue: value,
+      initialValue: initialValue,
     );
   }
 }
@@ -26,7 +26,7 @@ class NullableBoolArg extends Arg<bool?> with SingleFieldOnly {
   Field<bool> get field {
     return BooleanField(
       name: 'value',
-      initialValue: value ?? false,
+      initialValue: initialValue ?? false,
     );
   }
 }

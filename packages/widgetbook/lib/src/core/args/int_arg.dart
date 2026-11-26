@@ -13,11 +13,11 @@ class IntArg extends StyledArg<int, IntArgStyle> with SingleFieldOnly {
     return switch (style) {
       InputIntArgStyle() => IntInputField(
         name: 'value',
-        initialValue: value,
+        initialValue: initialValue,
       ),
       SliderIntArgStyle s => IntSliderField(
         name: 'value',
-        initialValue: value,
+        initialValue: initialValue,
         min: s.min,
         max: s.max,
         divisions: s.divisions,
@@ -38,11 +38,11 @@ class NullableIntArg extends StyledArg<int?, IntArgStyle> with SingleFieldOnly {
     return switch (style) {
       InputIntArgStyle() => IntInputField(
         name: 'value',
-        initialValue: value ?? 0,
+        initialValue: initialValue ?? 0,
       ),
       SliderIntArgStyle s => IntSliderField(
         name: 'value',
-        initialValue: value ?? s.min,
+        initialValue: initialValue ?? s.min,
         min: s.min,
         max: s.max,
         divisions: s.divisions,

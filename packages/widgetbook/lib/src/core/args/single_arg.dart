@@ -19,13 +19,13 @@ class SingleArg<T> extends StyledArg<T, SingleArgStyle> with SingleFieldOnly {
       DropdownSingleArgStyle() => ObjectDropdownField<T>(
         name: 'value',
         values: values,
-        initialValue: value,
+        initialValue: initialValue,
         labelBuilder: labelBuilder ?? ObjectDropdownField.defaultLabelBuilder,
       ),
       SegmentedSingleArgStyle() => ObjectSegmentedField<T>(
         name: 'value',
         values: values,
-        initialValue: value,
+        initialValue: initialValue,
         labelBuilder: labelBuilder ?? ObjectSegmentedField.defaultLabelBuilder,
       ),
     };
@@ -51,13 +51,13 @@ class NullableSingleArg<T> extends StyledArg<T?, SingleArgStyle>
       DropdownSingleArgStyle() => ObjectDropdownField<T>(
         name: 'value',
         values: values,
-        initialValue: value,
+        initialValue: initialValue,
         labelBuilder: labelBuilder ?? ObjectDropdownField.defaultLabelBuilder,
       ),
       SegmentedSingleArgStyle() => ObjectSegmentedField<T>(
         name: 'value',
         values: values,
-        initialValue: value,
+        initialValue: initialValue,
         labelBuilder: labelBuilder ?? ObjectSegmentedField.defaultLabelBuilder,
       ),
     };
