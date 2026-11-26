@@ -84,8 +84,10 @@ String _readDescription(File file) {
 AssetId _inputId(String name) => AssetId('_test_pkg', 'lib/$name.stories.dart');
 
 /// Runs the [StoryGenerator] on all [fixtures] using a single resolver,
-/// returning the raw generator output per fixture name.
-Future<Map<String, String>> _generateAll() async {
+/// returning a getter for the raw generator output per fixture name. A getter
+/// rethrows its fixture's generation error, so that failures stay isolated to
+/// the affected fixture's test.
+Future<Map<String, String Function()>> _generateAll() async {
   final packageConfig = (await findPackageConfig(Directory.current))!;
   final sources = {
     for (final name in fixtures.keys)
@@ -98,16 +100,24 @@ Future<Map<String, String>> _generateAll() async {
     sources,
     (resolver) async {
       final generator = StoryGenerator();
-      final outputs = <String, String>{};
+      final outputs = <String, String Function()>{};
       for (final name in fixtures.keys) {
-        final inputId = _inputId(name);
-        final library = await resolver.libraryFor(inputId);
-        final buildStep = _MockBuildStep();
-        when(() => buildStep.inputId).thenReturn(inputId);
-        outputs[name] = await generator.generate(
-          LibraryReader(library),
-          buildStep,
-        );
+        try {
+          final inputId = _inputId(name);
+          final library = await resolver.libraryFor(inputId);
+          final buildStep = _MockBuildStep();
+          when(() => buildStep.inputId).thenReturn(inputId);
+          final output = await generator.generate(
+            LibraryReader(library),
+            buildStep,
+          );
+          outputs[name] = () => output;
+        } catch (error, stackTrace) {
+          if (error is UnsupportedError && '$error'.contains('packageConfig')) {
+            rethrow;
+          }
+          outputs[name] = () => Error.throwWithStackTrace(error, stackTrace);
+        }
       }
       return outputs;
     },
@@ -135,7 +145,7 @@ $generatorOutput
 }
 
 void main() {
-  late final Map<String, String> outputs;
+  late final Map<String, String Function()> outputs;
   String? skipReason;
 
   setUpAll(() async {
@@ -156,7 +166,7 @@ void main() {
         return;
       }
 
-      final actual = _buildGoldenContent(name, outputs[name]!);
+      final actual = _buildGoldenContent(name, outputs[name]!());
       final goldenFile = File('test/generator/$name/$name.stories.g.dart');
 
       if (_updateGoldens) {
