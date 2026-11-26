@@ -670,6 +670,20 @@ class _CommentsLayerState extends State<CommentsLayer> {
     );
   }
 
+  Future<void> _discardDrafts() async {
+    final drafts = [
+      for (final comment in _comments)
+        if (comment.status == CommentStatus.draft) comment.id,
+    ];
+
+    await _run('Could not discard the drafts', () async {
+      for (final id in drafts) {
+        await widget.client.delete(id);
+      }
+    });
+    if (mounted && drafts.contains(_openId)) setState(() => _openId = null);
+  }
+
   Widget _buildToolbar() {
     if (_error != null && _locator == null) {
       return _Toolbar(
@@ -697,7 +711,11 @@ class _CommentsLayerState extends State<CommentsLayer> {
     return _Toolbar(
       children: [
         _ToolbarLabel(
-          drafts == 0 ? 'Click a widget to comment' : 'Commenting · $drafts',
+          switch (drafts) {
+            0 => 'Click a widget to comment',
+            1 => '1 draft',
+            _ => '$drafts drafts',
+          },
         ),
         _ToolbarButton(
           icon: _pinsHidden
@@ -705,19 +723,40 @@ class _CommentsLayerState extends State<CommentsLayer> {
               : Icons.visibility_outlined,
           onPressed: () => setState(() => _pinsHidden = !_pinsHidden),
         ),
-        FilledButton(
-          style: FilledButton.styleFrom(
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.black,
-            visualDensity: VisualDensity.compact,
+        if (drafts > 0)
+          Flexible(
+            child: TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white70,
+                visualDensity: VisualDensity.compact,
+              ),
+              onPressed: _discardDrafts,
+              child: const Text(
+                'Discard',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ),
-          onPressed: drafts == 0
-              ? null
-              : () => _run(
-                  'Could not submit the review',
-                  () => widget.client.submit(widget.storyPath),
-                ),
-          child: const Text('Submit'),
+        Flexible(
+          child: FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.black,
+              visualDensity: VisualDensity.compact,
+            ),
+            onPressed: drafts == 0
+                ? null
+                : () => _run(
+                    'Could not send the comments',
+                    () => widget.client.submit(widget.storyPath),
+                  ),
+            child: Text(
+              drafts == 0 ? 'Send to agent' : 'Send $drafts to agent',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
         ),
         _ToolbarButton(
           icon: Icons.close,
@@ -887,7 +926,7 @@ class _PinBadge extends StatelessWidget {
             height: radius * 2,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: _color,
+              color: status == CommentStatus.draft ? _surface : _color,
               shape: BoxShape.circle,
               border: Border.all(
                 color: uncertain ? _uncertainColor : Colors.white,
@@ -933,12 +972,17 @@ class _Card extends StatelessWidget {
 class _MessageField extends StatefulWidget {
   const _MessageField({
     required this.hint,
+    required this.actionLabel,
     required this.onSubmit,
     this.onCancel,
     this.autofocus = false,
   });
 
   final String hint;
+
+  /// The label of the button that saves the text, e.g. "Add comment".
+  /// Enter does the same, and Shift+Enter starts a new line.
+  final String actionLabel;
 
   /// Sends the text and reports whether it was saved. The text stays in
   /// the field when it was not, so that it is not lost.
@@ -969,28 +1013,58 @@ class _MessageFieldState extends State<_MessageField> {
 
   @override
   Widget build(BuildContext context) {
+    final onCancel = widget.onCancel;
+
     return CallbackShortcuts(
       bindings: {
-        if (widget.onCancel != null)
-          const SingleActivator(LogicalKeyboardKey.escape): widget.onCancel!,
+        const SingleActivator(LogicalKeyboardKey.enter): _submit,
+        if (onCancel != null)
+          const SingleActivator(LogicalKeyboardKey.escape): onCancel,
       },
-      child: TextField(
-        controller: _controller,
-        autofocus: widget.autofocus,
-        minLines: 1,
-        maxLines: 4,
-        textInputAction: TextInputAction.send,
-        onSubmitted: (_) => _submit(),
-        style: const TextStyle(color: Colors.white, fontSize: 13),
-        decoration: InputDecoration(
-          isDense: true,
-          hintText: widget.hint,
-          border: InputBorder.none,
-          suffixIcon: IconButton(
-            icon: const Icon(Icons.arrow_upward, size: 18),
-            onPressed: _submit,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          TextField(
+            controller: _controller,
+            autofocus: widget.autofocus,
+            minLines: 1,
+            maxLines: 4,
+            textInputAction: TextInputAction.send,
+            onSubmitted: (_) => _submit(),
+            style: const TextStyle(color: Colors.white, fontSize: 13),
+            decoration: InputDecoration(
+              isDense: true,
+              hintText: widget.hint,
+              border: InputBorder.none,
+            ),
           ),
-        ),
+          Wrap(
+            alignment: WrapAlignment.end,
+            spacing: 4,
+            runSpacing: 4,
+            children: [
+              if (onCancel != null)
+                TextButton(
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.white70,
+                    visualDensity: VisualDensity.compact,
+                  ),
+                  onPressed: onCancel,
+                  child: const Text('Cancel'),
+                ),
+              FilledButton(
+                style: FilledButton.styleFrom(
+                  backgroundColor: _accent,
+                  foregroundColor: Colors.white,
+                  visualDensity: VisualDensity.compact,
+                ),
+                onPressed: _submit,
+                child: Text(widget.actionLabel),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -1006,7 +1080,8 @@ class _CommentComposer extends StatelessWidget {
   Widget build(BuildContext context) {
     return _Card(
       child: _MessageField(
-        hint: 'Add a comment',
+        hint: 'What should change here?',
+        actionLabel: 'Add comment',
         autofocus: true,
         onSubmit: onSubmit,
         onCancel: onCancel,
@@ -1038,7 +1113,7 @@ class _ThreadCard extends StatelessWidget {
     CommentStatus.draft => 'Draft · not submitted',
     CommentStatus.open => 'Waiting for the agent',
     CommentStatus.inProgress => 'Agent is working on it',
-    CommentStatus.done => 'Done · verify and resolve',
+    CommentStatus.done => 'Agent finished · check and resolve',
     CommentStatus.resolved => 'Resolved',
   };
 
@@ -1105,7 +1180,11 @@ class _ThreadCard extends StatelessWidget {
             ),
           ),
           if (status != CommentStatus.draft)
-            _MessageField(hint: 'Reply', onSubmit: onReply),
+            _MessageField(
+              hint: 'Reply',
+              actionLabel: 'Reply',
+              onSubmit: onReply,
+            ),
           Wrap(
             spacing: 4,
             children: [

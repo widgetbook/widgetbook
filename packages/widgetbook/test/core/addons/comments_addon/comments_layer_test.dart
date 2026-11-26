@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart' hide Viewport;
 import 'package:widgetbook/src/core/addons/comments_addon/comment.dart';
@@ -385,7 +386,7 @@ void main() {
       expect((anchor['location'] as Map)['widget'], 'Text');
       expect((anchor['location'] as Map)['occurrence'], 2);
       expect(client.lastScreenshot, isNotEmpty);
-      expect(find.text('Commenting · 1'), findsOneWidget);
+      expect(find.text('1 draft'), findsOneWidget);
       await unmount(tester);
     });
 
@@ -471,7 +472,7 @@ void main() {
 
       expect(tester.takeException(), isNull);
       expect(client.comments.single['anchor'], isNotNull);
-      expect(find.text('Commenting · 1'), findsOneWidget);
+      expect(find.text('1 draft'), findsOneWidget);
       await unmount(tester);
     });
 
@@ -535,6 +536,103 @@ void main() {
       await unmount(tester);
     });
 
+    Future<void> openComposer(WidgetTester tester, String item) async {
+      await tester.tap(find.text('Comment'));
+      await tester.pump();
+      await tester.tapAt(tester.getCenter(find.text(item)));
+      await tester.pump();
+    }
+
+    Future<void> settle(WidgetTester tester) async {
+      await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 200)),
+      );
+      await tester.pump();
+      await tester.pump();
+    }
+
+    testWidgets('adds a comment with its button', (tester) async {
+      final client = _FakeClient();
+      await pumpLayer(tester, client);
+      await openComposer(tester, 'Item 2');
+      await tester.enterText(find.byType(TextField), 'Use a larger title');
+
+      await tester.runAsync(() async {
+        await tester.tap(find.text('Add comment'));
+        await Future<void>.delayed(const Duration(milliseconds: 200));
+      });
+      await settle(tester);
+
+      expect(client.comments.single['status'], 'draft');
+      expect(find.text('1 draft'), findsOneWidget);
+      expect(find.text('Send 1 to agent'), findsOneWidget);
+      await unmount(tester);
+    });
+
+    testWidgets('adds a comment with Enter, and Shift+Enter keeps typing', (
+      tester,
+    ) async {
+      final client = _FakeClient();
+      await pumpLayer(tester, client);
+      await openComposer(tester, 'Item 2');
+      await tester.enterText(find.byType(TextField), 'Use a larger title');
+
+      await tester.sendKeyDownEvent(LogicalKeyboardKey.shift);
+      await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+      await tester.sendKeyUpEvent(LogicalKeyboardKey.shift);
+      await tester.pump();
+      expect(client.comments, isEmpty);
+
+      await tester.runAsync(() async {
+        await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+        await Future<void>.delayed(const Duration(milliseconds: 200));
+      });
+      await settle(tester);
+
+      expect(client.comments, hasLength(1));
+      await unmount(tester);
+    });
+
+    testWidgets('discards all drafts', (tester) async {
+      final client = _FakeClient();
+      await pumpLayer(tester, client);
+      await tester.tap(find.text('Comment'));
+      await tester.pump();
+      await addComment(tester, 'Item 1', 'First');
+      await addComment(tester, 'Item 3', 'Second');
+      expect(find.text('2 drafts'), findsOneWidget);
+      expect(find.text('Send 2 to agent'), findsOneWidget);
+
+      await tester.tap(find.text('Discard'));
+      await settle(tester);
+
+      expect(client.comments, isEmpty);
+      expect(find.text('Click a widget to comment'), findsOneWidget);
+      await unmount(tester);
+    });
+
+    testWidgets('says when the agent finished a comment', (tester) async {
+      final client = _FakeClient();
+      await pumpLayer(tester, client);
+      await tester.tap(find.text('Comment'));
+      await tester.pump();
+      await addComment(tester, 'Item 1', 'Use the brand color');
+      client.comments.single['status'] = 'done';
+      client.comments.single['messages'] = [
+        ...client.comments.single['messages'] as List,
+        {'author': 'agent', 'text': 'Switched to the brand color'},
+      ];
+      await tester.pump(const Duration(milliseconds: 100));
+      await settle(tester);
+
+      await tester.tap(find.text('1'));
+      await tester.pump();
+
+      expect(find.text('Agent finished · check and resolve'), findsOneWidget);
+      expect(find.textContaining('Done'), findsNothing);
+      await unmount(tester);
+    });
+
     testWidgets('submits drafts and resolves comments', (tester) async {
       final client = _FakeClient();
       await pumpLayer(tester, client);
@@ -542,7 +640,7 @@ void main() {
       await tester.pump();
       await addComment(tester, 'Item 1', 'Use the brand color');
 
-      await tester.tap(find.text('Submit'));
+      await tester.tap(find.text('Send 1 to agent'));
       await tester.pump();
       await tester.pump();
       expect(client.comments.single['status'], 'open');

@@ -48,19 +48,22 @@ Each comment is pinned to the **source location** of the clicked widget (for exa
 
 1. Click **Comment** at the bottom of a story.
    Hovering a widget highlights it together with its source location.
-2. Click a widget and write your comment.
+2. Click a widget, write your comment, and click **Add comment** (or press Enter; Shift+Enter starts a new line).
    Clicks do not reach the story while commenting, but you can still scroll it.
-3. Add more comments, then click **Submit** to send them to the agent as one review.
-4. The agent addresses each comment, replies, and marks it as **done**.
-5. After a hot reload, verify the change and **Resolve** the comment, or reply to reopen it.
+3. Add more comments, then click **Send to agent** to send them as one review.
+   **Discard** deletes the comments you have not sent yet.
+4. The agent addresses each comment, replies, and marks it as finished.
+5. After a hot reload, check the change and **Resolve** the comment, or reply to reopen it.
+
+Comments you have not sent yet show as outlined pins, sent ones as filled pins.
 
 | Status        | Meaning                                    | Set by |
 | ------------- | ------------------------------------------ | ------ |
-| `draft`       | Placed, but not submitted yet.             | You    |
-| `open`        | Submitted and waiting for the agent.       | You    |
+| `draft`       | Added, but not sent to the agent yet.      | You    |
+| `open`        | Sent and waiting for the agent.            | You    |
 | `inProgress`  | The agent is working on it.                | Agent  |
-| `done`        | The agent addressed it; verify the change. | Agent  |
-| `resolved`    | You verified the change.                   | You    |
+| `done`        | The agent finished it; check the change.   | Agent  |
+| `resolved`    | You checked the change.                    | You    |
 
 Only you can resolve a comment.
 Replying to a `done` comment reopens it.
@@ -80,7 +83,7 @@ The `widgetbook mcp` server offers these tools to the agent:
 To start, ask your agent to address the Widgetbook comments, or use the `address_comments` prompt of the server (`/mcp__widgetbook__address_comments` in Claude Code).
 The agent then waits for your next review with `wait_for_comments`.
 
-Claude Code can also receive each submitted review as soon as you click **Submit**, using its [channels](https://code.claude.com/docs/en/channels) research preview:
+Claude Code can also receive each review as soon as you click **Send to agent**, using its [channels](https://code.claude.com/docs/en/channels) research preview:
 
 ```bash
 claude --dangerously-load-development-channels server:widgetbook
