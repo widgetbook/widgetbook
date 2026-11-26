@@ -3,6 +3,11 @@ import 'package:widgetbook/widgetbook.dart';
 
 part 'doc_comment.stories.g.dart';
 
+/// Tests that doc comments with empty lines (///) are correctly stripped
+/// without leaving orphaned /// markers in the generated output.
+const description =
+    'generates correct docComment for doc comments with empty lines';
+
 /// A widget with documentation.
 ///
 /// This has an empty line above.

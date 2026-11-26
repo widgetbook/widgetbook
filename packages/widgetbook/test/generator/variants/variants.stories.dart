@@ -3,6 +3,12 @@ import 'package:widgetbook/widgetbook.dart';
 
 part 'variants.stories.g.dart';
 
+/// Tests that multiple Meta variables generate one set of types per
+/// constructor variant: unnamed (`_Story`), named (`_IconStory`), and
+/// factory (`_OutlinedStory`) constructors, with per-variant defaults
+/// matched by their initializer type instead of their variable name.
+const description = 'generates prefixed types per constructor variant';
+
 class VariantButton extends StatelessWidget {
   const VariantButton({
     super.key,
