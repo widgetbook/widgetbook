@@ -1,16 +1,18 @@
-// Tests a widget with multiple constructors where the named constructor is
-// declared first:
-// - `Meta(MultiConstructorWidget.new)` resolves to the unnamed constructor
-//   (`count` param) regardless of declaration order.
-// - `Meta(MultiConstructorWidget.other)` generates the `_OtherStory` /
-//   `_OtherArgs` variant types (`label` param).
-// - The component widget is inferred from the tear-offs, as no `ComponentMeta`
-//   is declared.
-
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 part 'multi_constructor.stories.g.dart';
+
+/// Tests a widget with multiple constructors where the named constructor is
+/// declared first:
+/// - `Meta(MultiConstructorWidget.new)` resolves to the unnamed constructor
+///   (`count` param) regardless of declaration order.
+/// - `Meta(MultiConstructorWidget.other)` generates the `_OtherStory` /
+///   `_OtherArgs` variant types (`label` param).
+/// - The component widget is inferred from the tear-offs, as no `ComponentMeta`
+///   is declared.
+const description =
+    'resolves constructor variants by tear-off regardless of declaration order';
 
 class MultiConstructorWidget extends StatelessWidget {
   const MultiConstructorWidget.other({

@@ -1,10 +1,11 @@
-// Tests that a top-level `defaults` variable pipes defaults.setup and
-// defaults.builder into the Story's super constructor initializers.
-
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 part 'with_defaults.stories.g.dart';
+
+/// Tests that a top-level `defaults` variable pipes defaults.setup and
+/// defaults.builder into the Story's super constructor initializers.
+const description = 'pipes defaults.setup and defaults.builder into Story';
 
 class DefaultsVarWidget extends StatelessWidget {
   const DefaultsVarWidget({super.key, required this.label});

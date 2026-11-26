@@ -1,11 +1,12 @@
-// Tests that nullable params (String?, int?) generate nullable Arg fields
-// (Arg<T?>?), NullableStringArg/NullableIntArg initializers, and null-safe
-// getters using ?.value.
-
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 part 'nullable.stories.g.dart';
+
+/// Tests that nullable params (String?, int?) generate nullable Arg fields
+/// (Arg<T?>?), NullableStringArg/NullableIntArg initializers, and null-safe
+/// getters using ?.value.
+const description = 'generates nullable Arg fields for nullable params';
 
 class NullableWidget extends StatelessWidget {
   const NullableWidget({

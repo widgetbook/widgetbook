@@ -1,10 +1,11 @@
-// Tests that generic type parameter bounds with type arguments
-// (e.g. <D, T extends BaseItem<D>>) are preserved in generated code.
-
 import 'package:flutter/widgets.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 part 'generic_bound.stories.g.dart';
+
+/// Tests that generic type parameter bounds with type arguments
+/// (e.g. <D, T extends BaseItem<D>>) are preserved in generated code.
+const description = 'preserves type arguments on generic bounds';
 
 class BaseItem<T> {
   const BaseItem({required this.value});

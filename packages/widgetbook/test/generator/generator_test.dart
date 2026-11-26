@@ -3,8 +3,9 @@
 // Each fixture `{name}/{name}.stories.dart` is run through the generator and
 // the output is compared against `{name}/{name}.stories.g.dart`. All fixtures
 // are resolved by a single analyzer instance, as starting one per fixture
-// dominates the runtime. To add a fixture, create its directory and register
-// it in [fixtures].
+// dominates the runtime. To add a fixture, create
+// `{name}/{name}.stories.dart` with a top-level `description` string constant
+// and generate its golden.
 //
 // Set `UPDATE_GOLDENS=true` to overwrite the golden files with the current
 // generator output:
@@ -22,6 +23,8 @@ library;
 
 import 'dart:io';
 
+import 'package:analyzer/dart/analysis/utilities.dart';
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:build/build.dart';
 import 'package:build_test/build_test.dart';
 import 'package:dart_style/dart_style.dart';
@@ -31,29 +34,8 @@ import 'package:source_gen/source_gen.dart';
 import 'package:test/test.dart';
 import 'package:widgetbook/src/generator/framework/story_generator.dart';
 
-const fixtures = {
-  'custom_args': 'generates required builder when using a custom args type',
-  'default_values': 'generates args with explicit default values',
-  'doc_comment':
-      'generates correct docComment for doc comments with empty lines',
-  'doc_comment_code':
-      'generates correct docComment for doc comments with code containing '
-      r'$ signs',
-  'enums': 'generates EnumArg for enum parameters',
-  'generic': 'propagates generic type parameters through generated classes',
-  'generic_bound': 'preserves type arguments on generic bounds',
-  'generic_bound_dynamic': 'preserves dynamic type arguments on generic bounds',
-  'generic_bound_nullable':
-      'preserves nullable type arguments on generic bounds',
-  'multi_constructor':
-      'resolves constructor variants by tear-off regardless of declaration '
-      'order',
-  'nullable': 'generates nullable Arg fields for nullable params',
-  'primitive': 'generates Story and Args classes for primitive types',
-  'static_methods': 'generates args with static method default values',
-  'variants': 'generates prefixed types per constructor variant',
-  'with_defaults': 'pipes defaults.setup and defaults.builder into Story',
-};
+/// Fixture name -> description, discovered from `{name}/{name}.stories.dart`.
+final fixtures = _discoverFixtures();
 
 class _MockBuildStep extends Mock implements BuildStep {}
 
@@ -62,6 +44,42 @@ final _updateGoldens = Platform.environment['UPDATE_GOLDENS'] == 'true';
 final _formatter = DartFormatter(
   languageVersion: DartFormatter.latestLanguageVersion,
 );
+
+Map<String, String> _discoverFixtures() {
+  final files =
+      Directory('test/generator')
+          .listSync(recursive: true)
+          .whereType<File>()
+          .where((file) => file.path.endsWith('.stories.dart'))
+          .toList()
+        ..sort((a, b) => a.path.compareTo(b.path));
+
+  return {
+    for (final file in files)
+      file.uri.pathSegments.last.replaceFirst('.stories.dart', ''):
+          _readDescription(file),
+  };
+}
+
+/// Reads the `description` constant syntactically, as the fixtures depend on
+/// Flutter and cannot be imported here.
+String _readDescription(File file) {
+  final unit = parseString(content: file.readAsStringSync()).unit;
+  final initializer = unit.declarations
+      .whereType<TopLevelVariableDeclaration>()
+      .expand((declaration) => declaration.variables.variables)
+      .where((variable) => variable.name.lexeme == 'description')
+      .map((variable) => variable.initializer)
+      .firstOrNull;
+
+  if (initializer case StringLiteral(:final stringValue?)) {
+    return stringValue;
+  }
+
+  throw StateError(
+    '${file.path} must declare a top-level `description` string constant.',
+  );
+}
 
 AssetId _inputId(String name) => AssetId('_test_pkg', 'lib/$name.stories.dart');
 
