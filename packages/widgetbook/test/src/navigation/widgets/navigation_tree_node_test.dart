@@ -27,7 +27,7 @@ void main() {
           );
 
           expect(
-            find.byType(ListView),
+            find.byType(AnimatedAlign),
             findsNWidgets(
               // Leaf components don't have a list view rendered for them
               treeRoot.count - treeRoot.leaves.length - leafComponentsCount,
@@ -48,7 +48,7 @@ void main() {
           );
 
           expect(
-            find.byType(ListView),
+            find.byType(AnimatedAlign),
             findsNWidgets(
               treeRoot.count - treeRoot.leaves.length,
             ),
