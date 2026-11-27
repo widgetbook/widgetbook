@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:widgetbook/src/knobs/string_knob.dart';
-import 'package:widgetbook/src/routing/routing.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 void main() {

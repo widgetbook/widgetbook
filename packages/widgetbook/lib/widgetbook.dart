@@ -26,5 +26,6 @@ export 'src/knobs/knobs.dart'
         ObjectSegmentedKnob,
         StringKnob;
 export 'src/navigation/nodes/nodes.dart';
+export 'src/routing/app_route_config.dart';
 export 'src/state/state.dart';
 export 'src/widgetbook.dart';
