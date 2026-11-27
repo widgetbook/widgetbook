@@ -2,6 +2,7 @@
 
 - **BREAKING**: Set minimum SDK version to 3.13.0. ([#2068](https://github.com/widgetbook/widgetbook/pull/2068))
 - **FEAT**: Add `material_ui` in `widgetbook init` and use it in the generated config. ([#2070](https://github.com/widgetbook/widgetbook/pull/2070))
+- **FEAT**: Add `widgetbook test`, which runs the scenarios of the stories selected via `--path` or `--filter`, runs `build_runner` first, and exits with a distinct code per failure. ([#2096](https://github.com/widgetbook/widgetbook/pull/2096))
 
 ## 4.0.0-beta.15
 

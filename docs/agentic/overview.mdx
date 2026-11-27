@@ -31,7 +31,7 @@ Fixing drift afterwards costs more than preventing it.
 
 Give the agent a feedback loop it can read without a human in the middle.
 
-`flutter test` gives the agent two things to read:
+[`widgetbook test --path <file>`](/cli/commands/test) runs the scenarios of the stories the agent just changed and gives it two things to read:
 
 1. **Scenario and interaction tests.** [Scenarios](/testing/overview) assert real behavior, so a failure is a concrete error rather than a guess.
 2. **Accessibility results.** [Accessibility guidelines](/testing/accessibility) are evaluated on every captured scenario and written into the scenario metadata, including which element broke which rule.
@@ -40,7 +40,7 @@ Give the agent a feedback loop it can read without a human in the middle.
 The agent reads both and iterates on its own.
 
 Alongside that loop, the [Figma MCP server](https://developers.figma.com/docs/figma-mcp-server/) lets the agent check its render against the design itself.
-That is a separate step the agent runs, not part of `flutter test`, and it catches a hardcoded value that looks correct but bypasses your tokens.
+That is a separate step the agent runs, not part of `widgetbook test`, and it catches a hardcoded value that looks correct but bypasses your tokens.
 
 ## Review
 

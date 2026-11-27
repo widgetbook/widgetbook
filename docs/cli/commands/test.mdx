@@ -1,0 +1,76 @@
+# `test`
+
+<Warning>
+  This command is currently **experimental**, so any breaking changes can be
+  introduced at any minor version.
+</Warning>
+
+Runs the [scenarios](/testing/run-scenarios) of the selected stories via `flutter test`.
+It closes three gaps of running `flutter test` directly:
+
+- It runs only the selected components, stories or scenarios, and `Button` never matches `IconButton`.
+- It runs `build_runner` first, so a new story is never silently left out.
+- It exits with a code and a message that name what went wrong.
+
+## Usage
+
+Run it from your Widgetbook project:
+
+```bash
+widgetbook test                                             # whole catalog
+widgetbook test --path lib/src/counter.stories.dart
+widgetbook test --path lib/src/buttons/ --path 'lib/**/avatar*.stories.dart'
+widgetbook test --filter Counter
+widgetbook test --filter Counter/Default
+widgetbook test --filter "Counter/Default/Loading • Dark Mode"
+widgetbook test --filter '*/Default'                        # every component's Default story
+widgetbook test --path lib/src/counter.stories.dart -- --reporter expanded
+```
+
+The command:
+
+1. Runs `dart run build_runner build`, unless `--no-build-runner` is passed or `build_runner` is already running (e.g. `build_runner watch`).
+2. Combines `--path` and `--filter` into one `--name` regex.
+3. Runs `flutter test <target> [--name <regex>] [--dart-define=WIDGETBOOK_SNAPSHOTS=false] [<flutter test arguments>]` and streams its output.
+
+## Arguments
+
+| Argument                | Mandatory | Default\*                   | Description                                                                         |
+| ----------------------- | --------- | --------------------------- | ----------------------------------------------------------------------------------- |
+| `--path`                | ➖        |                             | A `.stories.dart` file, a folder or a glob whose components are tested. Repeatable. |
+| `--filter`              | ➖        |                             | `Component`, `Component/Story` or `Component/Story/Scenario`. Repeatable.           |
+| `--[no-]snapshots`      | ➖        | `--snapshots`               | Write the snapshot (PNG and JSON) of each scenario.                                 |
+| `--[no-]build-runner`   | ➖        | `--build-runner`            | Run `build_runner build` first.                                                     |
+| `--target`              | ➖        | `test/widgetbook_test.dart` | The test file that calls `testWidgetbook`, as created by `widgetbook init`.         |
+| `-- <arguments>`        | ➖        |                             | Arguments passed to `flutter test` unchanged.                                       |
+
+## Selecting Scenarios
+
+- Everything matched by any `--path` or `--filter` runs. Without either, the whole catalog runs.
+- Each level of a `--filter` matches a whole name. `*` matches any name at its level.
+- `--path` is resolved to component names by reading the stories files, including a `ComponentMeta(name: ...)` override.
+  A folder selects every `*.stories.dart` file below it, and globs are expanded by the CLI, so quoted patterns behave the same on every shell.
+- Test names are `"<Component> <Story> <Scenario>"`, so names that contain spaces can select a few extra scenarios.
+  A selection may run more than needed, but never less.
+- Folders are not part of test names, so select a folder with `--path`, not `--filter`.
+
+## Running Without Snapshots
+
+`--no-snapshots` passes `--dart-define=WIDGETBOOK_SNAPSHOTS=false`, so scenarios still build and run, but no PNG or JSON is written.
+See [Running Without Snapshots](/testing/run-scenarios#running-without-snapshots).
+
+The CLI is installed globally while `widgetbook` comes from your project, so the flag first checks the `widgetbook` version in `pubspec.lock` to make sure it is not silently ignored.
+
+## Exit Codes
+
+| Exit code | Situation                                             |
+| --------- | ----------------------------------------------------- |
+| `0`       | Every selected scenario passed.                       |
+| `65`      | A `--path` file declares no Widgetbook component.     |
+| `66`      | A `--path` or the `--target` matches no file.         |
+| `69`      | The project's `widgetbook` does not support a flag.   |
+| `70`      | `build_runner` failed, so no scenario ran.            |
+| `75`      | Every selected scenario is excluded via `excludeFromTests`. |
+| `79`      | The selection matched no scenario, e.g. because the generated code is stale. |
+| `130`     | The run was interrupted (Ctrl-C).                     |
+| Other     | A scenario failed; the exit code of `flutter test`.   |

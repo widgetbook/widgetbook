@@ -7,6 +7,7 @@ import '../../metadata.dart';
 import '../commands/cloud.dart';
 import '../commands/coverage.dart';
 import '../commands/init.dart';
+import '../commands/test.dart';
 import '../commands/upgrade.dart';
 import 'cli_exception.dart';
 import 'context.dart';
@@ -47,6 +48,12 @@ class CliRunner extends CommandRunner<int> {
 
     addCommand(
       CoverageCommand(
+        context: context,
+      ),
+    );
+
+    addCommand(
+      TestCommand(
         context: context,
       ),
     );

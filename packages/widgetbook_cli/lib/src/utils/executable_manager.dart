@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:process/process.dart';
@@ -28,6 +29,58 @@ extension ExecutableManager on ProcessManager {
       args,
       workingDirectory: workingDirectory,
     );
+  }
+
+  /// Starts [executable] with the given [args] inside the [workingDirectory]
+  /// and returns its exit code once it exits.
+  ///
+  /// Its output is forwarded to [stdout] and [stderr] as it is written, and
+  /// each line of it is passed to [onLine]. A `SIGINT` (Ctrl-C) is forwarded
+  /// to it, so the CLI exits with its code instead of leaving it behind.
+  /// As `flutter test` exits with `0` when interrupted, an interrupted run
+  /// returns `130` instead, so it is never mistaken for a passing one.
+  Future<int> stream(
+    String executable,
+    List<String> args, {
+    String? workingDirectory,
+    void Function(String line)? onLine,
+  }) async {
+    final process = await start(
+      [executable, ...args],
+      workingDirectory: workingDirectory,
+      // Only needed for the `.bat` wrappers of `flutter` and `dart`; a shell
+      // would not forward the signal to the child.
+      runInShell: Platform.isWindows,
+    );
+
+    var interrupted = false;
+    final sigint = ProcessSignal.sigint.watch().listen((signal) {
+      interrupted = true;
+      process.kill(signal);
+    });
+
+    Future<void> forward(Stream<List<int>> output, IOSink sink) {
+      return output
+          .map((bytes) {
+            sink.add(bytes);
+            return bytes;
+          })
+          .transform(const Utf8Decoder(allowMalformed: true))
+          .transform(const LineSplitter())
+          .forEach((line) => onLine?.call(line));
+    }
+
+    try {
+      await Future.wait([
+        forward(process.stdout, stdout),
+        forward(process.stderr, stderr),
+      ]);
+
+      final exitCode = await process.exitCode;
+      return interrupted && exitCode == 0 ? 130 : exitCode;
+    } finally {
+      await sigint.cancel();
+    }
   }
 
   /// Executes [ProcessManager.run] on a given [executable].
