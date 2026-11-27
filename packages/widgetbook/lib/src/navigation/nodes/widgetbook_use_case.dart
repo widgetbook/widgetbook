@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../state/state.dart';
 import 'widgetbook_node.dart';
 
 /// A navigation node that represents a specific use case of a widget.
@@ -26,7 +27,8 @@ class WidgetbookUseCase extends WidgetbookNode {
     required super.name,
     required this.builder,
     this.designLink,
-  }) : super(
+  }) : globalKey = GlobalKey(),
+       super(
          children: null,
          isInitiallyExpanded: false,
        );
@@ -77,9 +79,17 @@ class WidgetbookUseCase extends WidgetbookNode {
   /// that show the expected appearance of this use case.
   final String? designLink;
 
+  /// A key to preserve the state of the builder widget across rebuilds.
+  final GlobalKey globalKey;
+
   /// Builds the widget for this use case using the provided [context].
   Widget build(BuildContext context) {
-    return builder(context);
+    final preserveUseCaseState = WidgetbookState.of(context).preserveUseCaseState;
+
+    return KeyedSubtree(
+      key: preserveUseCaseState ? globalKey : null,
+      child: builder(context),
+    );
   }
 
   /// Creates a copy of this [WidgetbookUseCase].
