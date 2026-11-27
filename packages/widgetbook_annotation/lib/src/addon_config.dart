@@ -107,6 +107,16 @@ class ZoomAddonConfig extends AddonConfig<String> {
       );
 }
 
+/// [AddonConfig] for the InteractiveViewerAddon.
+class InteractiveViewerAddonConfig extends AddonConfig<String> {
+  const InteractiveViewerAddonConfig(
+    bool enabled,
+  ) : super(
+        'interactive-viewer',
+        'enabled:$enabled',
+      );
+}
+
 /// [AddonConfig] for the SemanticsAddon.
 @experimental
 class SemanticsAddonConfig extends AddonConfig<String> {
