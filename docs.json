@@ -802,6 +802,10 @@
             {
               "title": "coverage",
               "href": "/cli/commands/coverage"
+            },
+            {
+              "title": "test",
+              "href": "/cli/commands/test"
             }
           ]
         }

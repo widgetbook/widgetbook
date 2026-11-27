@@ -22,6 +22,7 @@ dependencies:
   crypto: ^3.0.0
   dio: ^5.7.0
   file: ^7.0.0
+  glob: ^2.1.0
   mason_logger: ">=0.2.16 <1.0.0"
   meta: ^1.16.0
   mime: ^2.0.0
@@ -29,6 +30,7 @@ dependencies:
   platform: ^3.2.0
   pool: ^1.5.1
   process: ^5.0.3
+  pub_semver: ^2.1.0
   pub_updater: ">=0.4.0 <1.0.0"
   retry: ^3.1.2
   xml: ^7.0.0

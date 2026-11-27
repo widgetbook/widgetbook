@@ -21,6 +21,7 @@ const expectedUsage = [
       '  cloud      Manage your Widgetbook Cloud projects.\n'
       '  coverage   Checks the percentage of package widgets that are covered by a component in Widgetbook.\n'
       '  init       Initializes the widgetbook workspace.\n'
+      '  test       Runs the scenarios of the selected stories via flutter test.\n'
       '  upgrade    Upgrade Widgetbook CLI\n'
       '\n'
       'Run "widgetbook help <command>" for more information about a command.',

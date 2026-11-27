@@ -11,4 +11,6 @@ export 'project_disconnect.dart';
 export 'project_disconnect_args.dart';
 export 'review_skip.dart';
 export 'review_skip_args.dart';
+export 'test.dart';
+export 'test_args.dart';
 export 'upgrade.dart';
